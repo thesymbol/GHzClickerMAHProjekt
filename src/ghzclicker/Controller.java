@@ -17,4 +17,15 @@ public class Controller {
 		return hertz;
 	}
 	
+	public void Merging(){
+		if(hertz==1000){
+			hertz=0;
+			kiloHertz++;
+		}
+		if(kiloHertz==1000){
+			kiloHertz=0;
+			megaHertz++;
+		}
+	}
+	
 }
