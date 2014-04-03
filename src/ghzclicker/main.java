@@ -6,5 +6,8 @@ public class main {
 		System.out.println("Jag är cool 2.0");
 		System.out.println("Jag är cool 3.0");
 		System.out.println("Jag är cool 2.0 asdasdasd");
+		System.out.println("Jag är cool 2.0 asdasdasdasdasdasdqweasdzxc");		
+		System.out.println("Jag är cool 2.0 asdasdasdasdasdasdqweasdzxc");			
+		System.out.println("Jag är cool 2.0 asdasdasdasdasdasdqweasdzxc");
 	}
 }
