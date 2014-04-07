@@ -9,13 +9,12 @@ public class Controller {
 	private long petaHertz=0;
 	private long exaHertz=0;
 	
-	/*
-	 * 
-	 */
-	public long GIVEMEYOURHERTZ(){
+	
+	public void hertzClicked(){
+		//Om man ska kunna få olika mängd hertz per klick får vi ändra så det inte är "hertz++".
 		hertz++;
-		return hertz;
 	}
+	
 	
 	public void Merging(){
 		if(hertz==1000){
@@ -26,6 +25,5 @@ public class Controller {
 			kiloHertz=0;
 			megaHertz++;
 		}
-	}
-	
+	}	
 }
