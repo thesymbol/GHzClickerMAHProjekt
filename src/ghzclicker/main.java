@@ -1,13 +1,17 @@
 package ghzclicker;
 
+import javax.swing.JFrame;
+
+
 public class main {
-	public static void main(String[] args) {
-		System.out.println("Jag är cool 1.0");
-		System.out.println("Jag är cool 2.0");
-		System.out.println("Jag är cool 3.0");
-		System.out.println("Jag är cool 2.0 asdasdasd");
-		System.out.println("Jag är cool 2.0 asdasdasdasdasdasdqweasdzxc");		
-		System.out.println("Jag är cool 2.0 asdasdasdasdasdasdqweasdzxc");			
-		System.out.println("Jag är cool 2.0 asdasdasdasdasdasdqweasdzxc");
+	public static void main(String[] args) {		
+		Controller controller = new Controller();	
+		WOWABUTTON button = new WOWABUTTON(controller);
+		
+		JFrame frame1 = new JFrame("Doge");
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.add(button);
+		frame1.pack();
+		frame1.setVisible(true);
 	}
 }
