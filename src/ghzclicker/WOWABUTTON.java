@@ -7,8 +7,10 @@ import java.util.*;
 import javax.swing.*;
 
 public class WOWABUTTON extends JPanel implements ActionListener {
+	private String hertz;
 	private Controller controller;
 	private JButton btnHertz = new JButton("hertz");
+	private JLabel lblText = new JLabel("");
 	
 	
 	public WOWABUTTON(Controller controller){
@@ -16,12 +18,12 @@ public class WOWABUTTON extends JPanel implements ActionListener {
 		setPreferredSize(new Dimension(300,300));
 		setLayout(null);
 		
-		btnHertz.setBounds(50, 50, 200, 50);
+		lblText.setBounds(50, 50, 200, 50);
+		btnHertz.setBounds(50, 100, 200, 50);
 		
 		
 		add(btnHertz);
-		
-		
+		add(lblText);
 		
 		btnHertz.addActionListener(this);
 	}
@@ -30,6 +32,16 @@ public class WOWABUTTON extends JPanel implements ActionListener {
 		if (e.getSource() ==btnHertz) {
 			controller.hertzClicked();
 		}
+	}
+	
+	
+	
+	/** 
+	 * MICHAEL TESTAR DETTA
+	 */
+	public void uppdate(String hertz){		
+		lblText.setText(hertz);
+		
 	}
 	
 
