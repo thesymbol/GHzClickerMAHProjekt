@@ -17,13 +17,21 @@ public class Controller {
 	
 	
 	public void Merging(){
-		if(hertz==1000){
-			hertz=0;
+		if(hertz>=1000){
+			hertz=-1000;
 			kiloHertz++;
 		}
-		if(kiloHertz==1000){
-			kiloHertz=0;
+		if(kiloHertz>=1000){
+			kiloHertz=-1000;
 			megaHertz++;
+		}
+		if(megaHertz>=1000){
+			megaHertz=-1000;
+			gigaHertz++;
+		}
+		if(gigaHertz>=1000){
+			gigaHertz=-1000;
+			teraHertz++;
 		}
 	}	
 }
