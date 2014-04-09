@@ -6,7 +6,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class MenyGUI extends JPanel implements ActionListener {
+public class MenuGUI extends JPanel implements ActionListener {
 	private String hertz;
 	private Controller controller;
 	
@@ -17,12 +17,13 @@ public class MenyGUI extends JPanel implements ActionListener {
 	private JButton btnProcessor = new JButton("Processor");
 	private JButton btnHarddrive = new JButton("Hard drive");
 	private JButton btnMotherBoard = new JButton("MotherBoard");
+	private JButton btnPowerSupply = new JButton("Power Supply");
 	private JLabel lblText = new JLabel("");
 
 	
 	
 	
-	public MenyGUI(Controller controller){
+	public MenuGUI(Controller controller){
 		
 		this.controller=controller;
 		
@@ -39,23 +40,28 @@ public class MenyGUI extends JPanel implements ActionListener {
 		btnProcessor.setBounds(600, 150, 200, 75);
 		btnHarddrive.setBounds(600 , 225, 200, 75);
 		btnMotherBoard.setBounds(600, 300 , 200, 75);
+		btnPowerSupply.setBounds(600 , 375 , 200 , 75);
 		
 		//adding the button and label to the frame.
 		add(btnHertz);
 		add(btnRam);
-		add(btnGraficCard);
-		add(btnProcessor);
 		add(btnHarddrive);
+		add(btnPowerSupply);
+		add(btnProcessor);
+		add(btnGraficCard);
 		add(btnMotherBoard);
+		
 		add(lblText);
 		
 		btnHertz.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		//Hertz button
 		if (e.getSource() ==btnHertz) {
 			controller.hertzClicked();
 		}
+		
 	}
 	
 	
