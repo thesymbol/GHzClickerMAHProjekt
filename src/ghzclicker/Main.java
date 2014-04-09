@@ -3,7 +3,7 @@ package ghzclicker;
 import javax.swing.JFrame;
 
 
-public class main {
+public class Main {
 	public static void main(String[] args) {		
 		Controller controller = new Controller();	
 		MenyGUI button = new MenyGUI(controller);

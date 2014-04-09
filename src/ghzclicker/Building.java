@@ -3,7 +3,7 @@ package ghzclicker;
 /**
  * Describes a base for a building.
  * 
- * @author Marcus Orwén
+ * @author Marcus OrwÃ©n
  */
 public class Building {
 	private String name; 		// name of building
