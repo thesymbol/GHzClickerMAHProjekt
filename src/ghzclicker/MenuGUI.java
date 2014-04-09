@@ -23,7 +23,7 @@ public class MenuGUI extends JPanel implements ActionListener {
 	private JButton btnPowerSupply = new JButton("Power Supply");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
-	ImageIcon img = new ImageIcon("C:/Users/Administratör/Downloads/RAM.png");
+	ImageIcon img = new ImageIcon("res/RAM.png");
 	private	JButton btnRam = new JButton(img);
 	
 
