@@ -2,8 +2,10 @@ package ghzclicker;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class MenuGUI extends JPanel implements ActionListener {
@@ -13,7 +15,7 @@ public class MenuGUI extends JPanel implements ActionListener {
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");	
-	private JButton btnRam = new JButton("RAM");
+//	private JButton btnRam = new JButton("");
 	private JButton btnGraficCard = new JButton("Graphics card");
 	private JButton btnProcessor = new JButton("Processor");
 	private JButton btnHarddrive = new JButton("Hard drive");
@@ -21,6 +23,14 @@ public class MenuGUI extends JPanel implements ActionListener {
 	private JButton btnPowerSupply = new JButton("Power Supply");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
+	ImageIcon img = new ImageIcon("C:/Users/Administratör/Downloads/RAM.png");
+	private	JButton btnRam = new JButton(img);
+	
+
+
+	
+
+	
 
 
 	
