@@ -86,7 +86,7 @@ public class Controller {
 	 public void saveGame(){
 		 try{
 			 String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
-			 File newTextFile = new File("D:/GhzSaveGame.txt");
+			 File newTextFile = new File("res/GhzSaveGame.txt");
 			 FileWriter fw = new FileWriter(newTextFile);
 			 fw.write(txt);
 			 fw.close();
