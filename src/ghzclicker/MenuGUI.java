@@ -18,12 +18,8 @@ public class MenuGUI extends JPanel implements ActionListener {
 	private JButton btnProcessor = new JButton("Processor");
 	private JButton btnHarddrive = new JButton("Hard drive");
 	private JButton btnMotherBoard = new JButton("MotherBoard");
-<<<<<<< HEAD
 	private JButton btnPowerSupply = new JButton("Power Supply");
-	private JLabel lblText = new JLabel("");
-=======
 
->>>>>>> branch 'master' of ssh://git@github.com/thesymbol/GHzClickerMAHProjekt.git
 
 	
 	
