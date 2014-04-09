@@ -56,16 +56,16 @@ public class Controller {
 	 public String stringiFy(){
 		dog="";
 		if(gigaHertz>0){
-			dog+=Long.toString(gigaHertz)+" , "; 			 
+			dog+=Long.toString(gigaHertz)+"GHz , "; 			 
 		}
 		if(megaHertz>0) {
-			dog+=Long.toString(megaHertz)+" , ";
+			dog+=Long.toString(megaHertz)+"MHz , ";
 		}	
 		if(kiloHertz>0){
-			dog+=Long.toString(kiloHertz)+" , ";
+			dog+=Long.toString(kiloHertz)+"KHz , ";
 		}	
 		if(hertz>0){
-			dog+=Long.toString(hertz);
+			dog+=Long.toString(hertz) + "Hz";
 		}
 		return dog;
 //		dog+=Long.toString(megaHertz);
