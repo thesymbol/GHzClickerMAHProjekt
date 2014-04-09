@@ -53,46 +53,28 @@ public class Controller {
 	 * MICHAEL TESTAR DETTA
 	 * Denna gör hertz till en lång string
 	 */
-	 
-		toString(gigaHertz);
-
-		dog+=Long.toString(megaHertz);
-		dog+="MHz ,";
-		dog+=Long.toString(kiloHertz);
-		dog+="KHz ,";
-		dog+=Long.toString(hertz);
-		dog+="Hz";
-		 return dog;
+	 public String stringiFy(){
+		dog="";
+		if(gigaHertz>0){
+			dog+=Long.toString(gigaHertz)+" , "; 			 
+		}
+		if(megaHertz>0) {
+			dog+=Long.toString(megaHertz)+" , ";
+		}	
+		if(kiloHertz>0){
+			dog+=Long.toString(kiloHertz)+" , ";
+		}	
+		if(hertz>0){
+			dog+=Long.toString(hertz);
+		}
+		return dog;
+//		dog+=Long.toString(megaHertz);
+//		dog+="MHz ,";
+//		dog+=Long.toString(kiloHertz);
+//		dog+="KHz ,";
+//		dog+=Long.toString(hertz);
+//		dog+="Hz";
+//		 return dog;
 	 }
-
-
-	
-	
-}
-		dog+=Long.toString(megaHertz);
-		dog+="MHz ,";
-		dog+=Long.toString(kiloHertz);
-		dog+="KHz ,";
-		dog+=Long.toString(hertz);
-		dog+="Hz";
-		 return dog;
-	 }
-
-
-	
-	
-}		dog+="GHz ,";
-		dog+="GHz ,";
-		dog+=Long.toString(megaHertz);
-		dog+="MHz ,";
-		dog+=Long.toString(kiloHertz);
-		dog+="KHz ,";
-		dog+=Long.toString(hertz);
-		dog+="Hz";
-		 return dog;
-	 }
-
-
-	
 	
 }
