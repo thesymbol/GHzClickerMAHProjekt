@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {		
 		Controller controller = new Controller();	
 		MenuGUI button = new MenuGUI(controller);
-//		Michaelssaker MS = new Michaelssaker(controller,button);
+		MichaelStuff MS = new MichaelStuff(controller,button);
 		
 
 		JFrame frame1 = new JFrame("GHz Clicker");
@@ -18,5 +18,9 @@ public class Main {
 		frame1.pack();
 		frame1.setLocationRelativeTo(null);
 		frame1.setVisible(true);
+		
+		 Thread TMS = new Thread(MS);
+		 TMS.run();
+		 
 	}
 }
