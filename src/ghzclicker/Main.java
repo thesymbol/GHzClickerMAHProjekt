@@ -9,7 +9,9 @@ public class Main {
 		MenuGUI button = new MenuGUI(controller);
 		MichaelStuff MS = new MichaelStuff(controller,button);
 		
-		JFrame frame1 = new JFrame("Doge");
+
+		JFrame frame1 = new JFrame("GHz Clicker");
+
 		
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.add(button);
