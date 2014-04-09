@@ -56,7 +56,7 @@ public class Controller {
 	 public String stringiFy(){
 		dog="";
 		if(gigaHertz>0){
-			dog+=Long.toString(gigaHertz)+"GHz , "; 			 
+			dog+=Long.toString(gigaHertz)+"GHz , ";
 		}
 		if(megaHertz>0) {
 			dog+=Long.toString(megaHertz)+"MHz , ";
