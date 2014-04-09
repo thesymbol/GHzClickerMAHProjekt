@@ -1,7 +1,7 @@
 package ghzclicker;
 
 public class Controller {
-	private long hertz=000;
+	private long hertz=997;
 	private long kiloHertz=000;
 	private long megaHertz=000;
 	private long gigaHertz=000;
@@ -23,23 +23,23 @@ public class Controller {
 	
 	public void merging() {
 		if(hertz>=1000){
-			modulus=hertz%1000;			
+			modulus=hertz%999;			
 			hertz-=modulus*1000;
 			kiloHertz+=modulus;
 		}
 		if(kiloHertz>=1000){
-			modulus=hertz%1000;	
+			modulus=kiloHertz%999;	
 			kiloHertz-=modulus*1000;
-			gigaHertz+=modulus;
-		}
-		if(megaHertz>=1000){
-			modulus=gigaHertz%1000;	
-			gigaHertz-=modulus*1000;
 			megaHertz+=modulus;
 		}
-		if(kiloHertz>=1000){
-			modulus=megaHertz%1000;	
+		if(megaHertz>=1000){
+			modulus=megaHertz%999;	
 			megaHertz-=modulus*1000;
+			gigaHertz+=modulus;
+		}
+		if(gigaHertz>=1000){
+			modulus=gigaHertz%999;	
+			gigaHertz-=modulus*1000;
 			teraHertz+=modulus;
 		}	
 		
