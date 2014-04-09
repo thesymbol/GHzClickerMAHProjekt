@@ -10,10 +10,6 @@ public class Controller {
 	private long exaHertz=000;
 	private long baseValueClick=0;
 	
-	private boolean visibleKhz = false;
-	private boolean visibleMhz = false;
-	private boolean visibleGhz = false;
-	
 	//Michaels test veribaler
 	private String dog;
 	private long modulus;
@@ -30,19 +26,16 @@ public class Controller {
 			modulus=hertz%999;			
 			hertz-=modulus*1000;
 			kiloHertz+=modulus;
-			visibleKhz = true;
 		}
 		if(kiloHertz>=1000){
 			modulus=kiloHertz%999;	
 			kiloHertz-=modulus*1000;
 			megaHertz+=modulus;
-			visibleMhz = true;
 		}
 		if(megaHertz>=1000){
 			modulus=megaHertz%999;	
 			megaHertz-=modulus*1000;
 			gigaHertz+=modulus;
-			visibleGhz = true;
 		}
 		if(gigaHertz>=1000){
 			modulus=gigaHertz%999;	
@@ -62,21 +55,15 @@ public class Controller {
 	 */
 	 public String stringiFy(){
 		dog="";
-		if(visibleGhz){
-			if(gigaHertz>=0){
-				dog+=Long.toString(gigaHertz)+"GHz , "; 			 
-			}
+		if(gigaHertz>=0){
+			dog+=Long.toString(gigaHertz)+"GHz , "; 			 
 		}
-		if(visibleMhz){
-			if(megaHertz>0) {
-				dog+=Long.toString(megaHertz)+"MHz , ";
-			}	
-		}
-		if(visibleKhz){
-			if(kiloHertz>0){
-				dog+=Long.toString(kiloHertz)+"KHz , ";
-			}	
-		}
+		if(megaHertz>=0) {
+			dog+=Long.toString(megaHertz)+"MHz , ";
+		}	
+		if(kiloHertz>=0){
+			dog+=Long.toString(kiloHertz)+"KHz , ";
+		}	
 		if(hertz>=0){
 			dog+=Long.toString(hertz) + "Hz";
 		}
