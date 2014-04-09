@@ -10,7 +10,7 @@ public class MenuGUI extends JPanel implements ActionListener {
 	private String hertz;
 	private Controller controller;
 	
-	//Making buttons with buildings and hertz button.
+	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");	
 	private JButton btnRam = new JButton("RAM");
@@ -19,6 +19,8 @@ public class MenuGUI extends JPanel implements ActionListener {
 	private JButton btnHarddrive = new JButton("Hard drive");
 	private JButton btnMotherBoard = new JButton("MotherBoard");
 	private JButton btnPowerSupply = new JButton("Power Supply");
+	private JButton btnSave = new JButton("Save");
+	private JButton btnLoad = new JButton("Load");
 
 
 	
@@ -42,6 +44,8 @@ public class MenuGUI extends JPanel implements ActionListener {
 		btnHarddrive.setBounds(600 , 225, 200, 75);
 		btnMotherBoard.setBounds(600, 300 , 200, 75);
 		btnPowerSupply.setBounds(600 , 375 , 200 , 75);
+		btnSave.setBounds(50,700,100,50);
+		btnLoad.setBounds(200,700,100,50);
 		
 		//adding the button and label to the frame.
 		add(btnHertz);
@@ -51,6 +55,8 @@ public class MenuGUI extends JPanel implements ActionListener {
 		add(btnProcessor);
 		add(btnGraficCard);
 		add(btnMotherBoard);
+		add(btnSave);
+		add(btnLoad);
 		
 		add(lblText);
 		
