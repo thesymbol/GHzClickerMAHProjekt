@@ -55,11 +55,11 @@ public class Controller {
 	 */
 	 public String stringiFy(){
 		dog=Long.toString(gigaHertz);
-		dog+="G ,";
+		dog+="GHz ,";
 		dog+=Long.toString(megaHertz);
-		dog+="M ,";
+		dog+="MHz ,";
 		dog+=Long.toString(kiloHertz);
-		dog+="K ,";
+		dog+="KHz ,";
 		dog+=Long.toString(hertz);
 		dog+="Hz";
 		 return dog;
