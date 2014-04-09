@@ -55,9 +55,13 @@ public class Controller {
 	 */
 	 public String stringiFy(){
 		dog=Long.toString(gigaHertz);
+		dog+="G ,";
 		dog+=Long.toString(megaHertz);
+		dog+="M ,";
 		dog+=Long.toString(kiloHertz);
+		dog+="K ,";
 		dog+=Long.toString(hertz);
+		dog+="Hz";
 		 return dog;
 	 }
 
