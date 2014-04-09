@@ -11,6 +11,7 @@ public class Controller {
 	private long exaHertz=000;
 	private long baseValueClick=0;
 	
+	
 	//Michaels test veribaler
 	private String dog;
 	private long modulus;
@@ -57,7 +58,7 @@ public class Controller {
 	 public String stringiFy(){
 		dog="";
 		if(gigaHertz>=0){
-			dog+=Long.toString(gigaHertz)+"GHz   "; 			 
+			dog+=Long.toString(gigaHertz)+"GHz , ";		 
 		}
 		if(megaHertz>=0) {
 			dog+=Long.toString(megaHertz)+"MHz   ";
