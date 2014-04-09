@@ -1,13 +1,13 @@
 package ghzclicker;
 
 public class Controller {
-	private long hertz=0;
-	private long kiloHertz=0;
-	private long megaHertz=0;
-	private long gigaHertz=0;
-	private long teraHertz=0;
-	private long petaHertz=0;
-	private long exaHertz=0;
+	private long hertz=000;
+	private long kiloHertz=000;
+	private long megaHertz=000;
+	private long gigaHertz=000;
+	private long teraHertz=000;
+	private long petaHertz=000;
+	private long exaHertz=000;
 	private long baseValueClick=0;
 	
 	//Michaels test veribaler

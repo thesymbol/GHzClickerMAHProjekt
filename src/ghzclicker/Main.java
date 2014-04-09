@@ -17,8 +17,8 @@ public class Main {
 		frame1.setLocationRelativeTo(null);
 		frame1.setVisible(true);
 		
-		 Thread TMS = new Thread(MS);
-		 TMS.run();
+		Thread TMS = new Thread(MS);
+		TMS.run();
 		 
 	}
 }
