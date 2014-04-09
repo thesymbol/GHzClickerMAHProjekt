@@ -12,12 +12,13 @@ public class MenuGUI extends JPanel implements ActionListener {
 	
 	//Making buttons with buildings and hertz button.
 	private JButton btnHertz = new JButton("hertz");
+	private JLabel lblText = new JLabel("");	
 	private JButton btnRam = new JButton("RAM Minne");
 	private JButton btnGraficCard = new JButton("Grafic card");
 	private JButton btnProcessor = new JButton("Processor");
 	private JButton btnHarddrive = new JButton("Hard drive");
 	private JButton btnMotherBoard = new JButton("MotherBoard");
-	private JLabel lblText = new JLabel("");
+
 
 	
 	
