@@ -58,6 +58,7 @@ public class MenuGUI extends JPanel implements ActionListener {
 		add(btnSave);
 		add(btnLoad);
 		
+		lblText.setFont(new Font("Serif", Font.BOLD, 16));
 		add(lblText);
 		
 		btnHertz.addActionListener(this);
