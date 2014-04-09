@@ -1,4 +1,5 @@
 package ghzclicker;
+import java.io.*;
 
 public class Controller {
 	private long hertz=997;
@@ -56,13 +57,13 @@ public class Controller {
 	 public String stringiFy(){
 		dog="";
 		if(gigaHertz>=0){
-			dog+=Long.toString(gigaHertz)+"GHz , "; 			 
+			dog+=Long.toString(gigaHertz)+"GHz   "; 			 
 		}
 		if(megaHertz>=0) {
-			dog+=Long.toString(megaHertz)+"MHz , ";
+			dog+=Long.toString(megaHertz)+"MHz   ";
 		}	
 		if(kiloHertz>=0){
-			dog+=Long.toString(kiloHertz)+"KHz , ";
+			dog+=Long.toString(kiloHertz)+"KHz   ";
 		}	
 		if(hertz>=0){
 			dog+=Long.toString(hertz) + "Hz";
@@ -75,6 +76,23 @@ public class Controller {
 //		dog+=Long.toString(hertz);
 //		dog+="Hz";
 //		 return dog;
+	 }
+	 /**
+	  * Viktor testar
+	  * Ser om jag kan spara spelet
+	  * Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ 
+	  */
+	 public void saveGame(){
+		 try{
+			 String txt = gigaHertz + "GHz   " + megaHertz + "MHz   " + kiloHertz + "KHz   " + hertz + "Hz";
+			 File newTextFile = new File("D:/GhzSaveGame.txt");
+			 FileWriter fw = new FileWriter(newTextFile);
+			 fw.write(txt);
+			 fw.close();
+		 }catch(IOException iox){
+			 iox.printStackTrace();
+		 }
+		 
 	 }
 	
 }

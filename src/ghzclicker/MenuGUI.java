@@ -62,12 +62,17 @@ public class MenuGUI extends JPanel implements ActionListener {
 		add(lblText);
 		
 		btnHertz.addActionListener(this);
+		btnSave.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		//Hertz button
 		if (e.getSource() ==btnHertz) {
 			controller.hertzClicked();
+		}
+		
+		if(e.getSource() == btnSave){
+			controller.saveGame();
 		}
 		}
 		
