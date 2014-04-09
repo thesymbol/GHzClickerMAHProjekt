@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 public class Main {
 	public static void main(String[] args) {		
 		Controller controller = new Controller();	
-		MenyGUI button = new MenyGUI(controller);
+		MenuGUI button = new MenuGUI(controller);
 //		Michaelssaker MS = new Michaelssaker(controller,button);
 		
 		JFrame frame1 = new JFrame("Doge");

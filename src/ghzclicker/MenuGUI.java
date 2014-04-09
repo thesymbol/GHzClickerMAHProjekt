@@ -6,7 +6,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class MenyGUI extends JPanel implements ActionListener {
+public class MenuGUI extends JPanel implements ActionListener {
 	private String hertz;
 	private Controller controller;
 	
@@ -22,7 +22,7 @@ public class MenyGUI extends JPanel implements ActionListener {
 	
 	
 	
-	public MenyGUI(Controller controller){
+	public MenuGUI(Controller controller){
 		
 		this.controller=controller;
 		
