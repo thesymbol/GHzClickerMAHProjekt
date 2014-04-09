@@ -10,9 +10,6 @@ public class Controller {
 	private long exaHertz=000;
 	private long baseValueClick=0;
 	
-	private boolean visibleKhz = false;
-	private boolean visibleMhz = false;
-	private boolean visibleGhz = false;
 	
 	//Michaels test veribaler
 	private String dog;
@@ -59,13 +56,13 @@ public class Controller {
 	 */
 	 public String stringiFy(){
 		dog="";
-		if(gigaHertz>0){
+		if(gigaHertz>=0){
 			dog+=Long.toString(gigaHertz)+"GHz , ";
 		}
-		if(megaHertz>0) {
+		if(megaHertz>=0) {
 			dog+=Long.toString(megaHertz)+"MHz , ";
 		}	
-		if(kiloHertz>0){
+		if(kiloHertz>=0){
 			dog+=Long.toString(kiloHertz)+"KHz , ";
 		}	
 		if(hertz>=0){
