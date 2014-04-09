@@ -61,9 +61,8 @@ public class MenuGUI extends JPanel implements ActionListener {
 		if (e.getSource() ==btnHertz) {
 			controller.hertzClicked();
 		}
+		}
 		
-	}
-	
 	
 	
 	/** 
