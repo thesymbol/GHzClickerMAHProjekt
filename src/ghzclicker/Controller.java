@@ -66,7 +66,7 @@ public class Controller {
 			dog+=Long.toString(kiloHertz)+"K   ";
 		}	
 		if(hertz>=0){
-			dog+=Long.toString(hertz) + "H";
+			dog+=Long.toString(hertz) + "Hz";
 		}
 		return dog;
 

@@ -28,14 +28,6 @@ public class MenuGUI extends JPanel implements ActionListener {
 	ImageIcon img = new ImageIcon("res/RAM.png");
 	private	JButton btnRam = new JButton(img);
 	
-
-
-	
-
-	
-
-
-	
 	
 	
 	public MenuGUI(Controller controller){
