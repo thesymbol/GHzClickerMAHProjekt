@@ -1,6 +1,7 @@
 package ghzclicker;
 
-import java.util.Timer;
+import java.util.*;
+import javax.swing.*;
 
 public class MichaelStuff extends java.util.TimerTask {
 	private Controller controller;
@@ -19,16 +20,15 @@ public class MichaelStuff extends java.util.TimerTask {
 		
 	}
 	
-	
-	
 	public void run(){
 		while(true){
+			double start = getCurrentTime();
 			controller.merging();
 			hertz=controller.stringiFy();
 
 
 			GUI.uppdate(hertz);		
-
+			sleep(start + MS_PER_FRAME - getCurrentTime());
 		}
 	}	
 	 
