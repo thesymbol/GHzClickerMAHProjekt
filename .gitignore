@@ -1,1 +1,15 @@
-/bin
+
+bin*/
+.directory
+.mailmap
+.DS_Store
+desktop.ini
+*~
+*.stackdump
+*.bak
+*.REMOTE.*
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.orig
+*.rej
