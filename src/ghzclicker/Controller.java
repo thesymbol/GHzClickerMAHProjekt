@@ -2,13 +2,13 @@ package ghzclicker;
 import java.io.*;
 
 public class Controller {
-	private long hertz=997;
-	private long kiloHertz=000;
-	private long megaHertz=000;
-	private long gigaHertz=000;
-	private long teraHertz=000;
-	private long petaHertz=000;
-	private long exaHertz=000;
+	private long hertz=20010;
+	private long kiloHertz=110;
+	private long megaHertz=11111;
+	private long gigaHertz=115;
+	private long teraHertz=116;
+	private long petaHertz=0;
+	private long exaHertz=0;
 	private long baseValueClick=0;
 	
 	//Michaels test veribaler
@@ -24,27 +24,27 @@ public class Controller {
 	
 	public void merging() {
 		if(hertz>=1000){
-			modulus=hertz%999;			
+			modulus=hertz/1000;			
 			hertz-=modulus*1000;
 			kiloHertz+=modulus;
 		}
 		if(kiloHertz>=1000){
-			modulus=kiloHertz%999;	
+			modulus=kiloHertz/10;	
 			kiloHertz-=modulus*1000;
 			megaHertz+=modulus;
 		}
 		if(megaHertz>=1000){
-			modulus=megaHertz%999;	
+			modulus=megaHertz/1000;	
 			megaHertz-=modulus*1000;
 			gigaHertz+=modulus;
 		}
 		if(gigaHertz>=1000){
-			modulus=gigaHertz%999;	
+			modulus=gigaHertz/1000;	
 			gigaHertz-=modulus*1000;
 			teraHertz+=modulus;
-		}	
-		
+		}			
 	}
+	
 		
 	
 
@@ -57,25 +57,19 @@ public class Controller {
 	 public String stringiFy(){
 		dog="";
 		if(gigaHertz>=0){
-			dog+=Long.toString(gigaHertz)+"GHz   "; 			 
+			dog+=Long.toString(gigaHertz)+"G   "; 			 
 		}
 		if(megaHertz>=0) {
-			dog+=Long.toString(megaHertz)+"MHz   ";
+			dog+=Long.toString(megaHertz)+"M   ";
 		}	
 		if(kiloHertz>=0){
-			dog+=Long.toString(kiloHertz)+"KHz   ";
+			dog+=Long.toString(kiloHertz)+"K   ";
 		}	
 		if(hertz>=0){
-			dog+=Long.toString(hertz) + "Hz";
+			dog+=Long.toString(hertz) + "H";
 		}
 		return dog;
-//		dog+=Long.toString(megaHertz);
-//		dog+="MHz ,";
-//		dog+=Long.toString(kiloHertz);
-//		dog+="KHz ,";
-//		dog+=Long.toString(hertz);
-//		dog+="Hz";
-//		 return dog;
+
 	 }
 	 /**
 	  * Viktor testar
