@@ -48,6 +48,7 @@ public class MenuGUI extends JPanel{
 		
 		btnHertz.addActionListener(listener);
 		btnSave.addActionListener(listener);
+		btnLoad.addActionListener(listener);
 	}
 	
 	/**
@@ -62,6 +63,13 @@ public class MenuGUI extends JPanel{
 	 */
 	public JButton getBtnSave() {
 		return btnSave;
+	}
+	
+	/**
+	 * get load btn
+	 */
+	public JButton getBtnLoad() {
+		return btnLoad;
 	}
 	
 	/**

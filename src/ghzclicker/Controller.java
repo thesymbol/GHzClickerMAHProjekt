@@ -139,25 +139,25 @@ public class Controller {
 	}
 	
 	public void loadGame(){
-//		try {
-//		BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
-//		StringBuffer sb = new StringBuffer();
-//		String line;
-//		while((line = reader.readLine())!=null){
-//			sb.append(line);
-//		}
-//		reader.close();
-//		String [] store = sb.toString().split(":");
-//		
-//		for (int i = 0; i < store.length-1; i++) {
-//			System.out.print(store[i] + " ");
-//		}
-//	} catch (FileNotFoundException e) {
-//		System.out.println("File not found");
-//	} catch (IOException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
+			StringBuffer sb = new StringBuffer();
+			String line;
+			while((line = reader.readLine())!=null){
+				sb.append(line);
+			}
+			reader.close();
+			String [] store = sb.toString().split(":");
+		
+			for (int i = 0; i < store.length-1; i++) {
+				System.out.print(store[i] + " ");
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
  
 	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
@@ -201,6 +201,11 @@ public class Controller {
 			// Save button
 			if(e.getSource() == gui.getBtnSave()){
 				saveGame();
+			}
+			
+			// Load button
+			if(e.getSource() == gui.getBtnLoad()) {
+				loadGame();
 			}
 
 			//Building purcheses.
