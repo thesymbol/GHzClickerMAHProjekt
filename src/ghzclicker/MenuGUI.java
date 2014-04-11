@@ -14,23 +14,22 @@ public class MenuGUI extends JPanel implements ActionListener {
 	
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
-	private JLabel lblText = new JLabel("");	
-//	private JButton btnRam = new JButton("");
-	private JButton btnGraficCard = new JButton("Graphics card");
-	private JButton btnProcessor = new JButton("Processor");
-	private JButton btnHarddrive = new JButton("Hard drive");
-	private JButton btnMotherBoard = new JButton("MotherBoard");
-	private JButton btnPowerSupply = new JButton("Power Supply");
+	private JLabel lblText = new JLabel("");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
-	
-	//Testing to add pictures
-	ImageIcon img = new ImageIcon("res/RAM.png");
-	private	JButton btnRam = new JButton(img);
-	
-	
-	
-	public MenuGUI(Controller controller){
+	private JPanel pnlBuilding;
+
+	public MenuGUI(Controller controller, ArrayList<String> buildingNames, ArrayList<String> buildingImages){
+		
+		JButton[] buildingBtnArray = new JButton[buildingNames.size()];
+		for(int i = 0; i < buildingNames.size(); i++) {
+			buildingBtnArray[i] = new JButton(buildingNames.get(i), new ImageIcon(buildingImages.get(i)));
+			buildingBtnArray[i].setVerticalTextPosition(JButton.CENTER);
+			buildingBtnArray[i].setHorizontalTextPosition(JButton.CENTER);
+			buildingBtnArray[i].setForeground(Color.MAGENTA);
+			buildingBtnArray[i].setToolTipText(buildingNames.get(i));
+		}
+		pnlBuilding = new JPanel(new GridLayout(buildingBtnArray.length, 1));
 		
 		this.controller=controller;
 		
@@ -39,26 +38,20 @@ public class MenuGUI extends JPanel implements ActionListener {
 		setLayout(null);
 		
 		//setting locations and size.
-		
 		lblText.setBounds(50, 50, 200, 50);
 		btnHertz.setBounds(50, 100, 200, 50);
-		btnRam.setBounds(600, 0, 200, 75);
-		btnGraficCard.setBounds(600, 75, 200, 75);
-		btnProcessor.setBounds(600, 150, 200, 75);
-		btnHarddrive.setBounds(600 , 225, 200, 75);
-		btnMotherBoard.setBounds(600, 300 , 200, 75);
-		btnPowerSupply.setBounds(600 , 375 , 200 , 75);
 		btnSave.setBounds(50,700,100,50);
 		btnLoad.setBounds(200,700,100,50);
 		
+		pnlBuilding.setBounds(600, 0, 200, buildingBtnArray.length*75);
+		
 		//adding the button and label to the frame.
 		add(btnHertz);
-		add(btnRam);
-		add(btnHarddrive);
-		add(btnPowerSupply);
-		add(btnProcessor);
-		add(btnGraficCard);
-		add(btnMotherBoard);
+		for(JButton btn : buildingBtnArray) {
+			btn.setSize(new Dimension(200, 75));
+			pnlBuilding.add(btn);
+		}
+		add(pnlBuilding);
 		add(btnSave);
 		add(btnLoad);
 		
@@ -78,7 +71,7 @@ public class MenuGUI extends JPanel implements ActionListener {
 		if(e.getSource() == btnSave){
 			controller.saveGame();
 		}
-		}
+	}
 		
 	
 	

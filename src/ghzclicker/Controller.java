@@ -1,5 +1,6 @@
 package ghzclicker;
 import java.io.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -14,18 +15,39 @@ public class Controller {
 	private long exaHertz=0;
 	private long baseValueClick=0;
 	
+	private ArrayList<Building> buildings;
+	
 	//Michaels test veribaler
 	private String dog;
 	private long modulus;
 	
 	public Controller() {
+		buildings = new ArrayList<Building>();
+		buildings.add(new Building("RAM", 0, 0, "res/RAM.png"));
+		buildings.add(new Building("Graphics card", 0, 0, ""));
+		buildings.add(new Building("Processor", 0, 0, ""));
+		buildings.add(new Building("Hard drive", 0, 0, ""));
+		buildings.add(new Building("MotherBoard", 0, 0, ""));
+		buildings.add(new Building("Power Supply", 0, 0, ""));
+		
+		// Create nessesary things for buttons in the GUI
+		ArrayList<String> buildingNames = new ArrayList<String>();
+		ArrayList<String> buildingImages = new ArrayList<String>();
+		for(Building building : buildings) {
+			buildingNames.add(building.getName());
+			buildingImages.add(building.getImageLocation());
+		}
+		
+		
 		JFrame frame1 = new JFrame("GHz Clicker");
-		gui = new MenuGUI(this);
+		gui = new MenuGUI(this, buildingNames, buildingImages);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.add(gui);
 		frame1.pack();
 		frame1.setLocationRelativeTo(null);
 		frame1.setVisible(true);
+		
+		
 	}
 	
 	
