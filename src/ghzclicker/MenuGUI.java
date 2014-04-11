@@ -64,6 +64,9 @@ public class MenuGUI extends JPanel{
 		return btnSave;
 	}
 	
+	public JButton getBtnLoad(){
+		return btnLoad;
+	}
 	/**
 	 * get arraylist with buildings buttons
 	 */
