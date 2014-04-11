@@ -57,6 +57,9 @@ public class Controller {
 		hertz+=baseValueClick*clickModifier;
 	}
 	
+	/**
+	 * Calculate the transfer from Hertz -> KiloHertz
+	 */
 	public void merging() {
 		if(hertz>=1000){
 			modulus=hertz/1000;			
