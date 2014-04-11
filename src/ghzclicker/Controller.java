@@ -102,7 +102,7 @@ public class Controller {
 	 * MICHAEL TESTAR DETTA
 	 * Denna gör hertz till en lång string
 	 */
-	 public String stringiFy(){
+	public String stringiFy(){
 		dog="";
 		if(gigaHertz>=0){
 			dog+=Long.toString(gigaHertz)+"G   "; 			 
@@ -117,69 +117,69 @@ public class Controller {
 			dog+=Long.toString(hertz) + "Hz";
 		}
 		return dog;
-
-	 }
-	 /**
-	  * Viktor testar
-	  * Ser om jag kan spara spelet
-	  * Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ 
-	  */
-	 public void saveGame(){
-		 try{
-			 String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
-			 File newTextFile = new File("res/GhzSaveGame.txt");
-			 FileWriter fw = new FileWriter(newTextFile);
-			 fw.write(txt);
-			 fw.close();
-		 }catch(IOException iox){
-			 iox.printStackTrace();
-		 }
-		 
-	 }
-	 
-	 public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
-		 ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
-	 	 for(Building building : buildings) {
-	 		 JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
-	 		 btn.setName(building.getName());
-	 		 btn.setVerticalTextPosition(JButton.CENTER);
-	 		 btn.setHorizontalTextPosition(JButton.CENTER);
-	 		 btn.setForeground(Color.MAGENTA);
-	 		 btn.setToolTipText(building.getName());
-	 		 btn.addActionListener(listener);
-	 		 btnBuildings.add(btn);
-	 	 }
-		 return btnBuildings;
-	 }
-	 
-	 /**
-	  * Calculate cost for each building
-	  */
-	 public void calculateBuildingCosts() {
-		 for(int i = 0; i < buildings.size(); i++) {
+	}
+	/**
+	 * Viktor testar
+	 * Ser om jag kan spara spelet
+	 * Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ 
+	 */
+	public void saveGame(){
+		try{
+			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
+			File newTextFile = new File("res/GhzSaveGame.txt");
+			FileWriter fw = new FileWriter(newTextFile);
+			fw.write(txt);
+			fw.close();
+		}catch(IOException iox){
+			iox.printStackTrace();
+		}
+	}
+ 
+	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
+		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
+		for(Building building : buildings) {
+			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
+			btn.setName(building.getName());
+			btn.setVerticalTextPosition(JButton.CENTER);
+			btn.setHorizontalTextPosition(JButton.CENTER);
+			btn.setForeground(Color.MAGENTA);
+			btn.setToolTipText(building.getName());
+			btn.addActionListener(listener);
+			btnBuildings.add(btn);
+		}
+		return btnBuildings;
+	}
+ 
+	/**
+	 * Calculate cost for each building
+	 */
+	public void calculateBuildingCosts() {
+		for(int i = 0; i < buildings.size(); i++) {
 			int cost = (int)(buildings.get(i).getBaseCost()*(buildings.get(i).getOwned()*1.1)); // cost algorithm
 			if(buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
 			gui.updateJButtonCost(i, cost);
 		}
-	 }
+	}
 
-	 /**
-	  * 
-	  */
-	 private class Listener implements ActionListener {
+	/**
+	 * Action listener for button presses
+	 */
+	private class Listener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Hertz button
+			// Hertz button
 			if (e.getSource() == gui.getBtnHertz()) {
 				hertzClicked();
 			}
-			
+
+			// Save button
 			if(e.getSource() == gui.getBtnSave()){
 				saveGame();
 			}
-			
+
+			//Building purcheses.
 			for(int i = 0; i < gui.getBtnBuildings().size(); i++) {
 				if(e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
@@ -187,6 +187,5 @@ public class Controller {
 				}
 			}
 		}
-	 }
-	
+	}
 }
