@@ -57,6 +57,10 @@ public class Controller {
 		hertz += baseValueClick * clickModifier;
 	}
 
+	
+	/**
+	 * Calculate the transfer from Hertz -> KiloHertz
+	 */
 	public void merging() {
 		if (hertz >= 1000) {
 			modulus = hertz / 1000;
@@ -135,20 +139,19 @@ public class Controller {
 			iox.printStackTrace();
 		}
 	}
-
-	public void loadGame() {
+	
+	public void loadGame(){
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File(
-					"res/GhzSaveGame.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
 			StringBuffer sb = new StringBuffer();
 			String line;
-			while ((line = reader.readLine()) != null) {
+			while((line = reader.readLine())!=null){
 				sb.append(line);
 			}
 			reader.close();
-			String[] store = sb.toString().split(":");
-
-			for (int i = 0; i < store.length - 1; i++) {
+			String [] store = sb.toString().split(":");
+		
+			for (int i = 0; i < store.length-1; i++) {
 				System.out.print(store[i] + " ");
 			}
 		} catch (FileNotFoundException e) {
@@ -203,8 +206,9 @@ public class Controller {
 			if (e.getSource() == gui.getBtnSave()) {
 				saveGame();
 			}
+			
 			// Load button
-			if (e.getSource() == gui.getBtnLoad()) {
+			if(e.getSource() == gui.getBtnLoad()) {
 				loadGame();
 			}
 

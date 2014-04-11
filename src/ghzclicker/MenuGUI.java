@@ -48,6 +48,7 @@ public class MenuGUI extends JPanel{
 		
 		btnHertz.addActionListener(listener);
 		btnSave.addActionListener(listener);
+		btnLoad.addActionListener(listener);
 	}
 	
 	/**
@@ -63,10 +64,13 @@ public class MenuGUI extends JPanel{
 	public JButton getBtnSave() {
 		return btnSave;
 	}
-	
-	public JButton getBtnLoad(){
+	/**
+	 * get load btn
+	 */
+	public JButton getBtnLoad() {
 		return btnLoad;
 	}
+	
 	/**
 	 * get arraylist with buildings buttons
 	 */
