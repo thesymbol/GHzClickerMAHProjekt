@@ -1,7 +1,10 @@
 package ghzclicker;
 import java.io.*;
 
+import javax.swing.JFrame;
+
 public class Controller {
+	private MenuGUI gui;
 	private long hertz=20010;
 	private long kiloHertz=110;
 	private long megaHertz=11111;
@@ -14,6 +17,16 @@ public class Controller {
 	//Michaels test veribaler
 	private String dog;
 	private long modulus;
+	
+	public Controller() {
+		JFrame frame1 = new JFrame("GHz Clicker");
+		gui = new MenuGUI(this);
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.add(gui);
+		frame1.pack();
+		frame1.setLocationRelativeTo(null);
+		frame1.setVisible(true);
+	}
 	
 	
 	public void hertzClicked(){
@@ -45,9 +58,21 @@ public class Controller {
 		}			
 	}
 	
-		
+	/**
+	 * Game Loop calls this metod to update the game ~30 time a second
+	 */
+	public void update() {
+		merging();
+		String hertz = stringiFy();
+		gui.update(hertz);
+	}
 	
-
+	/**
+	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
+	 */
+	public void updateEverySecond() {
+		System.out.println("Every 1 second update");
+	}
 
 	
 	/** 

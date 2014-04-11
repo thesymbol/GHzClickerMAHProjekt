@@ -85,7 +85,7 @@ public class MenuGUI extends JPanel implements ActionListener {
 	/** 
 	 * MICHAEL TESTAR DETTA
 	 */
-	public void uppdate(String hertz){		
+	public void update(String hertz){		
 		lblText.setText(hertz);
 		
 	}
