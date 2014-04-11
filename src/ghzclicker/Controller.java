@@ -1,7 +1,12 @@
 package ghzclicker;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Controller {
@@ -24,24 +29,17 @@ public class Controller {
 	
 	public Controller() {
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("RAM", 0, 0, "res/RAM.png"));
+		buildings.add(new Building("RAM", 10, 0.2, "res/RAM.png"));
 		buildings.add(new Building("Graphics card", 0, 0, ""));
 		buildings.add(new Building("Processor", 0, 0, ""));
 		buildings.add(new Building("Hard drive", 0, 0, ""));
 		buildings.add(new Building("MotherBoard", 0, 0, ""));
 		buildings.add(new Building("Power Supply", 0, 0, ""));
 		
-		// Create nessesary things for buttons in the GUI
-		ArrayList<String> buildingNames = new ArrayList<String>();
-		ArrayList<String> buildingImages = new ArrayList<String>();
-		for(Building building : buildings) {
-			buildingNames.add(building.getName());
-			buildingImages.add(building.getImageLocation());
-		}
-		
+		Listener listener = new Listener();
+		gui = new MenuGUI(createBuildingBtns(listener), listener);
 		
 		JFrame frame1 = new JFrame("GHz Clicker");
-		gui = new MenuGUI(this, buildingNames, buildingImages);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.add(gui);
 		frame1.pack();
@@ -89,6 +87,7 @@ public class Controller {
 		merging();
 		String hertz = stringiFy();
 		gui.update(hertz);
+		calculateBuildingCosts();
 	}
 	
 	/**
@@ -136,6 +135,58 @@ public class Controller {
 			 iox.printStackTrace();
 		 }
 		 
+	 }
+	 
+	 public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
+		 ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
+	 	 for(Building building : buildings) {
+	 		 JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
+	 		 btn.setName(building.getName());
+	 		 btn.setVerticalTextPosition(JButton.CENTER);
+	 		 btn.setHorizontalTextPosition(JButton.CENTER);
+	 		 btn.setForeground(Color.MAGENTA);
+	 		 btn.setToolTipText(building.getName());
+	 		 btn.addActionListener(listener);
+	 		 btnBuildings.add(btn);
+	 	 }
+		 return btnBuildings;
+	 }
+	 
+	 /**
+	  * Calculate cost for each building
+	  */
+	 public void calculateBuildingCosts() {
+		 for(int i = 0; i < buildings.size(); i++) {
+			int cost = (int)(buildings.get(i).getBaseCost()*(buildings.get(i).getOwned()*1.1)); // cost algorithm
+			if(buildings.get(i).getOwned() == 0) {
+				cost = buildings.get(i).getBaseCost();
+			}
+			gui.updateJButtonCost(i, cost);
+		}
+	 }
+
+	 /**
+	  * 
+	  */
+	 private class Listener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Hertz button
+			if (e.getSource() == gui.getBtnHertz()) {
+				hertzClicked();
+			}
+			
+			if(e.getSource() == gui.getBtnSave()){
+				saveGame();
+			}
+			
+			for(int i = 0; i < gui.getBtnBuildings().size(); i++) {
+				if(e.getSource() == gui.getBtnBuildings().get(i)) {
+					Building building = buildings.get(i);
+					building.setOwned(building.getOwned() + 1);
+				}
+			}
+		}
 	 }
 	
 }

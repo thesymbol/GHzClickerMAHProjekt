@@ -8,30 +8,18 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class MenuGUI extends JPanel implements ActionListener {
-	private String hertz;
-	private Controller controller;
-	
+public class MenuGUI extends JPanel{
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
 	private JPanel pnlBuilding;
+	private ArrayList<JButton> btnBuildings;
 
-	public MenuGUI(Controller controller, ArrayList<String> buildingNames, ArrayList<String> buildingImages){
-		
-		JButton[] buildingBtnArray = new JButton[buildingNames.size()];
-		for(int i = 0; i < buildingNames.size(); i++) {
-			buildingBtnArray[i] = new JButton(buildingNames.get(i), new ImageIcon(buildingImages.get(i)));
-			buildingBtnArray[i].setVerticalTextPosition(JButton.CENTER);
-			buildingBtnArray[i].setHorizontalTextPosition(JButton.CENTER);
-			buildingBtnArray[i].setForeground(Color.MAGENTA);
-			buildingBtnArray[i].setToolTipText(buildingNames.get(i));
-		}
-		pnlBuilding = new JPanel(new GridLayout(buildingBtnArray.length, 1));
-		
-		this.controller=controller;
+	public MenuGUI(ArrayList<JButton> btnBuildings, ActionListener listener){
+		this.btnBuildings = btnBuildings;
+		pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
 		
 		//main panel
 		setPreferredSize(new Dimension(800,800));
@@ -43,11 +31,11 @@ public class MenuGUI extends JPanel implements ActionListener {
 		btnSave.setBounds(50,700,100,50);
 		btnLoad.setBounds(200,700,100,50);
 		
-		pnlBuilding.setBounds(600, 0, 200, buildingBtnArray.length*75);
+		pnlBuilding.setBounds(600, 0, 200, btnBuildings.size()*75);
 		
 		//adding the button and label to the frame.
 		add(btnHertz);
-		for(JButton btn : buildingBtnArray) {
+		for(JButton btn : btnBuildings) {
 			btn.setSize(new Dimension(200, 75));
 			pnlBuilding.add(btn);
 		}
@@ -58,31 +46,39 @@ public class MenuGUI extends JPanel implements ActionListener {
 		lblText.setFont(new Font("Serif", Font.BOLD, 16));
 		add(lblText);
 		
-		btnHertz.addActionListener(this);
-		btnSave.addActionListener(this);
+		btnHertz.addActionListener(listener);
+		btnSave.addActionListener(listener);
 	}
-
-	public void actionPerformed(ActionEvent e) {
-		//Hertz button
-		if (e.getSource() ==btnHertz) {
-			controller.hertzClicked();
-		}
-		
-		if(e.getSource() == btnSave){
-			controller.saveGame();
-		}
-	}
-		
 	
+	/**
+	 * get hertz button
+	 */
+	public JButton getBtnHertz() {
+		return btnHertz;
+	}
+	
+	/**
+	 * get save btn
+	 */
+	public JButton getBtnSave() {
+		return btnSave;
+	}
+	
+	/**
+	 * get arraylist with buildings buttons
+	 */
+	public ArrayList<JButton> getBtnBuildings() {
+		return btnBuildings;
+	}
+	
+	public void updateJButtonCost(int i, int cost) {
+		btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
+	}
 	
 	/** 
 	 * MICHAEL TESTAR DETTA
 	 */
 	public void update(String hertz){		
 		lblText.setText(hertz);
-		
 	}
-	
-
-	
 }
