@@ -14,7 +14,7 @@ public class Controller {
 	private long petaHertz=0;
 	private long exaHertz=0;
 	private long baseValueClick=1;
-	private long clickModifier;
+	private long clickModifier=1;
 	
 	private ArrayList<Building> buildings;
 	
