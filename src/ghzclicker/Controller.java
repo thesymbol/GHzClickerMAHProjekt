@@ -137,6 +137,28 @@ public class Controller {
 			iox.printStackTrace();
 		}
 	}
+	
+	public void loadGame(){
+//		try {
+//		BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
+//		StringBuffer sb = new StringBuffer();
+//		String line;
+//		while((line = reader.readLine())!=null){
+//			sb.append(line);
+//		}
+//		reader.close();
+//		String [] store = sb.toString().split(":");
+//		
+//		for (int i = 0; i < store.length-1; i++) {
+//			System.out.print(store[i] + " ");
+//		}
+//	} catch (FileNotFoundException e) {
+//		System.out.println("File not found");
+//	} catch (IOException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+	}
  
 	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
@@ -170,7 +192,6 @@ public class Controller {
 	 * Action listener for button presses
 	 */
 	private class Listener implements ActionListener {
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Hertz button
 			if (e.getSource() == gui.getBtnHertz()) {
