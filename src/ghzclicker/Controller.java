@@ -13,7 +13,8 @@ public class Controller {
 	private long teraHertz=116;
 	private long petaHertz=0;
 	private long exaHertz=0;
-	private long baseValueClick=0;
+	private long baseValueClick=1;
+	private long clickModifier;
 	
 	private ArrayList<Building> buildings;
 	
@@ -50,11 +51,12 @@ public class Controller {
 		
 	}
 	
-	
+	/**
+	 * This is how much hertz we gona get per klick
+	 */
 	public void hertzClicked(){
-		//Om man ska kunna få olika mängd hertz per klick får vi ändra så det inte är "hertz++".
-		hertz++;
-		//hertz+=baseValueClick*modifier;
+		
+		hertz+=baseValueClick*clickModifier;
 	}
 	
 	public void merging() {
