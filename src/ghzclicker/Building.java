@@ -10,6 +10,7 @@ public class Building {
 	private int baseCost;			// base cost that will later be calculated with controller
 	private double baseHPS;			// base "hertz" per second later will be calculated with modifier
 	private String imageLocation;	// building's image location for button.
+	private int owned = 0;			// Amount of this build that is owned.
 	
 	/**
 	 * Construct a building
@@ -60,5 +61,23 @@ public class Building {
 	 */
 	public String getImageLocation() {
 		return imageLocation;
+	}
+	
+	/**
+	 * Set's how many of this building is owned
+	 * 
+	 * @param owned The amount owned
+	 */
+	public void setOwned(int owned) {
+		this.owned = owned;
+	}
+	
+	/**
+	 * Get the amount of buildings owned
+	 * 
+	 * @return Amount of buildings owned
+	 */
+	public int getOwned() {
+		return owned;
 	}
 }
