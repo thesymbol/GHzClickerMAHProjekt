@@ -7,17 +7,26 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
+/**
+ * 
+ * @author Matte
+ *
+ *A Class that makes up the whole GUI
+ */
 public class MenuGUI extends JPanel{
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");
-	private JLabel lblHertz = new JLabel("Hertz per second : ");
+	private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
 	private JPanel pnlBuilding;
 	private ArrayList<JButton> btnBuildings;
-
+/**
+ *  A Constructor that is putting all the buttons into the GUI and sets the size of the labels, buttons etc.
+ * @param btnBuildings , adding the buildings to the GUI
+ * @param listener , adding listeners to the buttons.
+ */
 	public MenuGUI(ArrayList<JButton> btnBuildings, ActionListener listener){
 		this.btnBuildings = btnBuildings;
 		pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
@@ -29,7 +38,7 @@ public class MenuGUI extends JPanel{
 		//setting locations and size.
 		lblText.setBounds(50, 50, 200, 50);
 		btnHertz.setBounds(50, 125, 200, 50);
-		lblHertz.setBounds(50, 75, 200, 50);
+		lblHertzPerSecond.setBounds(50, 75, 200, 50);
 		btnSave.setBounds(50,700,100,50);
 		btnLoad.setBounds(200,700,100,50);
 		
@@ -37,7 +46,7 @@ public class MenuGUI extends JPanel{
 		
 		//adding the button and label to the frame.
 		add(btnHertz);
-		add(lblHertz);
+		add(lblHertzPerSecond);
 		for(JButton btn : btnBuildings) {
 			btn.setSize(new Dimension(200, 75));
 			pnlBuilding.add(btn);
@@ -90,5 +99,8 @@ public class MenuGUI extends JPanel{
 	 */
 	public void update(String hertz){		
 		lblText.setText(hertz);
+	}
+	public void updateHertzPerSecond(String hertzPerSecond){
+		lblHertzPerSecond.setText(hertzPerSecond);
 	}
 }
