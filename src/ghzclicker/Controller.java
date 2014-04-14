@@ -143,10 +143,10 @@ public class Controller {
 	 * building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		hertz += hertzPerSecond;
-		// network = new NetworkClient("localhost");
-		// network.sendData("Every 1 second");
-		// network.close();
+		// hertz += hertzPerSecond;
+		network = new NetworkClient("localhost");
+		network.sendData("Every 1 second");
+		network.close();
 	}
 
 	/**
@@ -242,8 +242,10 @@ public class Controller {
 	
 	public void grayiFy(){
 		for(int i = 0; i < gui.getBtnBuildings().size(); i++){
-			if((gigaHertz*1000000000)+(megaHertz*1000000)+(kiloHertz*1000)+hertz<buildings.get(i).getPrice()){
-				gui.getBtnBuildings().setEnabled(true);
+			if(((gigaHertz*1000000000)+(megaHertz*1000000)+(kiloHertz*1000)+hertz) < buildings.get(i).getPrice()){
+				gui.getBtnBuildings().get(i).setEnabled(true);
+			} else {
+				gui.getBtnBuildings().get(i).setEnabled(false);
 			}
 		}
 	}
