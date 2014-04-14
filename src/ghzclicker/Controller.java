@@ -22,21 +22,25 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
+	private long hertzPerSecond = 0;
 
 	private ArrayList<Building> buildings;
 
 	// Michaels test veribaler
 	private String dog;
+	private String statistics;
 	private long modulus;
 
 	public Controller() {
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("RAM", 10, 0.2, "res/RAM.png"));
+		buildings.add(new Building("Hard drive", 10, 0.2, ""));
+		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
+		buildings.add(new Building("Power Supply", 0, 0, ""));
+		buildings.add(new Building("Hard Drive(SSD)" , 0, 0, ""));
 		buildings.add(new Building("Graphics card", 0, 0, ""));
 		buildings.add(new Building("Processor", 0, 0, ""));
-		buildings.add(new Building("Hard drive", 0, 0, ""));
 		buildings.add(new Building("MotherBoard", 0, 0, ""));
-		buildings.add(new Building("Power Supply", 0, 0, ""));
+
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
@@ -89,10 +93,30 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
-		String hertz = stringiFy();
+		String hertz = stringiFy();		
 		gui.update(hertz);
 		calculateBuildingCosts();
 	}
+	
+
+
+	public void uppdateHertzPerSecond() {
+			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+				hertzPerSecond += buildings.get(i).getOwned()
+						* buildings.get(i).getHPS();
+			}
+			gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+		}
+	
+	public void uppdateStatistics(){
+		
+		for(int i = 0; i< gui.getBtnBuildings().size(); i++){
+			statistics = "Total buildings : " + buildings.get(i).getOwned();
+		}
+		gui.updateStatistics(statistics);
+	}
+
+
 
 	/**
 	 * This gets updated by the gameloop every second (used for the timing on
@@ -103,6 +127,7 @@ public class Controller {
 		network.sendData("Every 1 second");
 		network.close();
 	}
+
 
 	/**
 	 * MICHAEL TESTAR DETTA Denna gör hertz till en lång string
@@ -123,6 +148,7 @@ public class Controller {
 		}
 		return dog;
 	}
+
 
 	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
@@ -217,8 +243,13 @@ public class Controller {
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
+					uppdateHertzPerSecond(); // Michael testar, denna gör så
+												// varje gång en byggnad köps så
+												// uppdateras HertzPersecond
+												// Value
 				}
 			}
+
 		}
 	}
 }

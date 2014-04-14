@@ -11,6 +11,7 @@ public class Building {
 	private double baseHPS;			// base "hertz" per second later will be calculated with modifier
 	private String imageLocation;	// building's image location for button.
 	private int owned = 0;			// Amount of this build that is owned.
+	private int hertzPerSecond;
 	
 	/**
 	 * Construct a building
@@ -79,5 +80,14 @@ public class Building {
 	 */
 	public int getOwned() {
 		return owned;
+	}
+	
+	/**
+	 * Get the amount of hertzPerSecond
+	 * 
+	 * @return Amount of hertzPerSecond
+	 */
+	public int getHPS() {
+		return hertzPerSecond;
 	}
 }
