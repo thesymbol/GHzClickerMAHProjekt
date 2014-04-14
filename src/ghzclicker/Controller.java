@@ -131,7 +131,7 @@ public class Controller {
 	 */
 	public void uppdateStatistics() {
 
-		for (int i = 0; i < buildings.size(); i++) {
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			statistics +=  buildings.get(i).getOwned() + "\n";
 						
 		}
