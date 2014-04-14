@@ -131,8 +131,8 @@ public class Controller {
 	 */
 	public void uppdateStatistics() {
 
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			statistics += buildings.get(i).getOwned() + "\n";
+		for (int i = 0; i < buildings.size(); i++) {
+			statistics +=  buildings.get(i).getOwned() + "\n";
 						
 		}
 		gui.updateStatistics(statistics);
@@ -241,7 +241,7 @@ public class Controller {
 	}
 	
 	public void grayiFy(){
-		for(int i = 0; i < buildings.size(); i++){
+		for(int i = 0; i < gui.getBtnBuildings().size(); i++){
 			if((gigaHertz*1000000000)+(megaHertz*1000000)+(kiloHertz*1000)+hertz<buildings.get(i).getPrice()){
 				gui.getBtnBuildings().setEnabled(true);
 			}

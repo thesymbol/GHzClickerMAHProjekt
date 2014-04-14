@@ -127,7 +127,10 @@ public class MenuGUI extends JFrame {
 	public void updateHertzPerSecond(String hertzPerSecond) {
 		lblHertzPerSecond.setText("Hertz per second :" + hertzPerSecond);
 	}
-
+	/**
+	 *  Showing statistic of your current game.
+	 * @param statistics , shows the text from statistics variable
+	 */
 	public void updateStatistics(String statistics) {
 		taStatistics.setText("Total buildings :" + statistics);
 	}
