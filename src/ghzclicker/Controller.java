@@ -12,16 +12,16 @@ import javax.swing.JFrame;
 
 public class Controller {
 	private MenuGUI gui;
-	private long hertz = 20010;
-	private long kiloHertz = 110;
-	private long megaHertz = 11111;
-	private long gigaHertz = 115;
-	private long teraHertz = 116;
+	private long hertz = 0;
+	private long kiloHertz = 0;
+	private long megaHertz = 0;
+	private long gigaHertz = 0;
+	private long teraHertz = 0;
 	private long petaHertz = 0;
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 0;
+	private long hertzPerSecond = 300;
 
 	private ArrayList<Building> buildings;
 
@@ -34,11 +34,10 @@ public class Controller {
 		buildings.add(new Building("Hard drive", 10, 0.2, ""));
 		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
 		buildings.add(new Building("Power Supply", 0, 0, ""));
-		buildings.add(new Building("Hard Drive(SSD)" , 0, 0, ""));
+		buildings.add(new Building("Hard Drive(SSD)", 0, 0, ""));
 		buildings.add(new Building("Graphics card", 0, 0, ""));
 		buildings.add(new Building("Processor", 0, 0, ""));
 		buildings.add(new Building("MotherBoard", 0, 0, ""));
-
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
@@ -59,7 +58,6 @@ public class Controller {
 
 		hertz += baseValueClick * clickModifier;
 	}
-
 
 	/**
 	 * Calculate the transfer from Hertz -> KiloHertz
@@ -86,37 +84,41 @@ public class Controller {
 			teraHertz += modulus;
 		}
 	}
+	
+	public void reMerge() {
+		if (hertz<0){
+			modulus = (int) (Math.pow(hertz, 2.0)/2) / 1000;
+			
+			
+		}
+	}
 
 	/**
 	 * Game Loop calls this metod to update the game ~30 time a second
 	 */
 	public void update() {
 		merging();
-		String hertz = stringiFy();		
+		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
 	}
-	
-
 
 	public void uppdateHertzPerSecond() {
-			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-				hertzPerSecond += buildings.get(i).getOwned()
-						* buildings.get(i).getHPS();
-			}
-			gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+			hertzPerSecond += buildings.get(i).getOwned()
+					* buildings.get(i).getBaseHPS();
 		}
-
-
+		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+	}
 
 	/**
 	 * This gets updated by the gameloop every second (used for the timing on
 	 * building generating "Hertz"
 	 */
 	public void updateEverySecond() {
+		hertz+=hertzPerSecond;
 		System.out.println("Every 1 second update");
 	}
-
 
 	/**
 	 * MICHAEL TESTAR DETTA Denna gör hertz till en lång string
@@ -138,7 +140,6 @@ public class Controller {
 		return dog;
 	}
 
-
 	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
 	 * på mitt windows8 tillåts inte programmet att skapa och spara en fil på
@@ -157,18 +158,19 @@ public class Controller {
 		}
 	}
 
-	public void loadGame(){
+	public void loadGame() {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File(
+					"res/GhzSaveGame.txt")));
 			StringBuffer sb = new StringBuffer();
 			String line;
-			while((line = reader.readLine())!=null){
+			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 			}
 			reader.close();
-			String [] store = sb.toString().split(":");
+			String[] store = sb.toString().split(":");
 
-			for (int i = 0; i < store.length-1; i++) {
+			for (int i = 0; i < store.length - 1; i++) {
 				System.out.print(store[i] + " ");
 			}
 		} catch (FileNotFoundException e) {
@@ -182,7 +184,8 @@ public class Controller {
 	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {
-			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
+			JButton btn = new JButton(building.getName(), new ImageIcon(
+					building.getImageLocation()));
 			btn.setName(building.getName());
 			btn.setVerticalTextPosition(JButton.CENTER);
 			btn.setHorizontalTextPosition(JButton.CENTER);
@@ -199,7 +202,8 @@ public class Controller {
 	 */
 	public void calculateBuildingCosts() {
 		for (int i = 0; i < buildings.size(); i++) {
-			int cost = (int) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
+			int cost = (int) (buildings.get(i).getBaseCost() * (Math.pow(1.1,
+					buildings.get(i).getOwned()))); // cost algorithm
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
@@ -223,7 +227,7 @@ public class Controller {
 			}
 
 			// Load button
-			if(e.getSource() == gui.getBtnLoad()) {
+			if (e.getSource() == gui.getBtnLoad()) {
 				loadGame();
 			}
 
@@ -231,7 +235,7 @@ public class Controller {
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
-					building.setOwned(building.getOwned() + 1);
+					building.setOwned(building.getOwned() + 1);					
 					uppdateHertzPerSecond(); // Michael testar, denna gör så
 												// varje gång en byggnad köps så
 												// uppdateras HertzPersecond

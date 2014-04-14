@@ -8,10 +8,10 @@ package ghzclicker;
 public class Building {
 	private String name; 			// name of building
 	private int baseCost;			// base cost that will later be calculated with controller
-	private double baseHPS;			// base "hertz" per second later will be calculated with modifier
+	private double baseHPS = 0;		// base "hertz" per second later will be calculated with modifier
 	private String imageLocation;	// building's image location for button.
 	private int owned = 0;			// Amount of this build that is owned.
-	private int hertzPerSecond;
+	
 	
 	/**
 	 * Construct a building
@@ -80,14 +80,5 @@ public class Building {
 	 */
 	public int getOwned() {
 		return owned;
-	}
-	
-	/**
-	 * Get the amount of hertzPerSecond
-	 * 
-	 * @return Amount of hertzPerSecond
-	 */
-	public int getHPS() {
-		return hertzPerSecond;
 	}
 }
