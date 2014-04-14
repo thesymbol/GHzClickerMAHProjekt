@@ -29,6 +29,7 @@ public class Controller {
 	private String dog;
 	private String statistics;
 	private long modulus;
+	private long remodulus;
 
 	public Controller() {
 		buildings = new ArrayList<Building>();
@@ -88,10 +89,23 @@ public class Controller {
 	
 	public void reMerge() {
 		if (hertz<0){
-			modulus = (int) (Math.pow(hertz, 2.0)/2) / 1000;
-			
-			
+			remodulus = (int) (Math.pow(hertz, 2.0)/2) / 1000;
+			kiloHertz -= 1+(remodulus/1000);
+			hertz=remodulus+1000;
 		}
+		if (kiloHertz<0){
+			remodulus = (int) (Math.pow(kiloHertz, 2.0)/2) / 1000;
+			megaHertz -= 1+(remodulus/1000);
+			kiloHertz=remodulus+1000;
+		}
+		if (megaHertz<0){
+			remodulus = (int) (Math.pow(megaHertz, 2.0)/2) / 1000;
+			gigaHertz -= 1+(remodulus/1000);
+			megaHertz=remodulus+1000;
+		}
+			
+			
+		
 	}
 
 	/**
@@ -99,9 +113,11 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
+		reMerge();
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
+		
 	}
 
 	public void uppdateHertzPerSecond() {
@@ -216,6 +232,7 @@ public class Controller {
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
+			buildings.get(i).setPrice(cost);
 			gui.updateJButtonCost(i, cost);
 		}
 	}
@@ -244,7 +261,8 @@ public class Controller {
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
-					building.setOwned(building.getOwned() + 1);					
+					building.setOwned(building.getOwned() + 1);		
+					hertz-=building.get(i).getPrice();
 					uppdateHertzPerSecond(); // Michael testar, denna gör så
 												// varje gång en byggnad köps så
 												// uppdateras HertzPersecond
