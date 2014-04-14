@@ -165,8 +165,7 @@ public class Controller {
 	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {
-			JButton btn = new JButton(building.getName(), new ImageIcon(
-					building.getImageLocation()));
+			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
 			btn.setName(building.getName());
 			btn.setVerticalTextPosition(JButton.CENTER);
 			btn.setHorizontalTextPosition(JButton.CENTER);
@@ -183,8 +182,7 @@ public class Controller {
 	 */
 	public void calculateBuildingCosts() {
 		for (int i = 0; i < buildings.size(); i++) {
-			int cost = (int) (buildings.get(i).getBaseCost() * (buildings
-					.get(i).getOwned() * 1.1)); // cost algorithm
+			int cost = (int) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
