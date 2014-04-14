@@ -38,7 +38,7 @@ public class Controller {
 
 	public Controller() {
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("Hard drive", 10, 0.2, ""));
+		buildings.add(new Building("Hard drive", 700, 0.2, ""));
 		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
 		buildings.add(new Building("Power Supply", 0, 0, ""));
 		buildings.add(new Building("Hard Drive(SSD)", 0, 0, ""));
@@ -82,26 +82,29 @@ public class Controller {
 			teraHertz += modulus;
 		}
 	}
-	
+
 	public void reMerge() {
-		if (hertz<0){
-			remodulus = (int) (Math.pow(hertz, 2.0)/2) / 1000;
-			kiloHertz -= 1+(remodulus/1000);
-			hertz=remodulus+1000;
+		if (hertz < 0) {
+			remodulus = Math.abs(hertz) / 1000;
+			kiloHertz -= 1 + remodulus;
+			hertz += remodulus * 1000 + 1000;
 		}
-		if (kiloHertz<0){
-			remodulus = (int) (Math.pow(kiloHertz, 2.0)/2) / 1000;
-			megaHertz -= 1+(remodulus/1000);
-			kiloHertz=remodulus+1000;
+		if (kiloHertz < 0) {
+			remodulus = Math.abs(kiloHertz) / 1000;
+			megaHertz -= 1 + remodulus;
+			kiloHertz += remodulus * 1000 + 1000;
 		}
-		if (megaHertz<0){
-			remodulus = (int) (Math.pow(megaHertz, 2.0)/2) / 1000;
-			gigaHertz -= 1+(remodulus/1000);
-			megaHertz=remodulus+1000;
+		if (megaHertz < 0) {
+			remodulus = Math.abs(megaHertz) / 1000;
+			gigaHertz -= 1 + remodulus;
+			megaHertz += remodulus * 1000 + 1000;
 		}
-			
-			
-		
+		if (gigaHertz < 0) {
+			remodulus = Math.abs(gigaHertz) / 1000;
+			teraHertz -= 1 + remodulus;
+			gigaHertz += remodulus * 1000 + 1000;
+		}
+
 	}
 
 	/**
@@ -113,24 +116,20 @@ public class Controller {
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
-		
+
 	}
 
-	
 	public void uppdateHertzPerSecond() {
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned()
 					* buildings.get(i).getBaseHPS();
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			hertzPerSecond += buildings.get(i).getOwned()
-					* buildings.get(i).getHPS();
 		}
 		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
 	}
-	
-	public void uppdateStatistics(){
-		
-		for(int i = 0; i< gui.getBtnBuildings().size(); i++){
+
+	public void uppdateStatistics() {
+
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			statistics = "Total buildings : " + buildings.get(i).getOwned();
 		}
 		gui.updateStatistics(statistics);
@@ -141,10 +140,10 @@ public class Controller {
 	 * building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		hertz+=hertzPerSecond;
-		network = new NetworkClient("localhost");
-		network.sendData("Every 1 second");
-		network.close();
+		hertz += hertzPerSecond;
+		// network = new NetworkClient("localhost");
+		// network.sendData("Every 1 second");
+		// network.close();
 	}
 
 	/**
@@ -262,8 +261,8 @@ public class Controller {
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
-					building.setOwned(building.getOwned() + 1);		
-					hertz-=building.get(i).getPrice();
+					building.setOwned(building.getOwned() + 1);
+					hertz -= buildings.get(i).getPrice();
 					uppdateHertzPerSecond(); // Michael testar, denna gör så
 												// varje gång en byggnad köps så
 												// uppdateras HertzPersecond

@@ -11,7 +11,7 @@ public class Building {
 	private double baseHPS = 0;		// base "hertz" per second later will be calculated with modifier
 	private String imageLocation;	// building's image location for button.
 	private int owned = 0;			// Amount of this build that is owned.
-	private long price;
+	private long price;				// The price of a bulding
 	
 	
 	/**
