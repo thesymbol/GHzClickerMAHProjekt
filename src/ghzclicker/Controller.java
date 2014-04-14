@@ -126,7 +126,9 @@ public class Controller {
 		}
 		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
 	}
-
+	/**
+	 * this will update the statistics all the time.
+	 */
 	public void uppdateStatistics() {
 
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
@@ -234,6 +236,14 @@ public class Controller {
 			}
 			buildings.get(i).setPrice(cost);
 			gui.updateJButtonCost(i, cost);
+		}
+	}
+	
+	public void grayiFy(){
+		for(int i = 0; i < buildings.size(); i++){
+			if((gigaHertz*1000000000)+(megaHertz*1000000)+(kiloHertz*1000)+hertz<buildings.get(i).getPrice()){
+				gui.getBtnBuildings().setEnabled(false);
+			}
 		}
 	}
 
