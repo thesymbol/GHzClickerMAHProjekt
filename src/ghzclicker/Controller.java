@@ -30,12 +30,14 @@ public class Controller {
 
 	public Controller() {
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("RAM", 10, 0.2, "res/RAM.png"));
+		buildings.add(new Building("Hard drive", 10, 0.2, ""));
+		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
+		buildings.add(new Building("Power Supply", 0, 0, ""));
+		buildings.add(new Building("Hard Drive(SSD)" , 0, 0, ""));
 		buildings.add(new Building("Graphics card", 0, 0, ""));
 		buildings.add(new Building("Processor", 0, 0, ""));
-		buildings.add(new Building("Hard drive", 0, 0, ""));
 		buildings.add(new Building("MotherBoard", 0, 0, ""));
-		buildings.add(new Building("Power Supply", 0, 0, ""));
+
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
