@@ -20,6 +20,7 @@ public class MenuGUI extends JPanel{
 	private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
+	private JTextArea taStatistics = new JTextArea();
 	private JPanel pnlBuilding;
 	private ArrayList<JButton> btnBuildings;
 /**
@@ -41,6 +42,7 @@ public class MenuGUI extends JPanel{
 		lblHertzPerSecond.setBounds(50, 75, 200, 50);
 		btnSave.setBounds(50,700,100,50);
 		btnLoad.setBounds(200,700,100,50);
+		taStatistics.setBounds(500 , 600, 300,200);
 		
 		pnlBuilding.setBounds(600, 0, 200, btnBuildings.size()*75);
 		
@@ -54,6 +56,8 @@ public class MenuGUI extends JPanel{
 		add(pnlBuilding);
 		add(btnSave);
 		add(btnLoad);
+		add(taStatistics);
+		taStatistics.setEditable(false);
 		
 		lblText.setFont(new Font("Serif", Font.BOLD, 16));
 		add(lblText);
@@ -103,4 +107,8 @@ public class MenuGUI extends JPanel{
 	public void updateHertzPerSecond(String hertzPerSecond){
 		lblHertzPerSecond.setText(hertzPerSecond);
 	}
+	public void updateStatistics(String statistics ){
+		taStatistics.setText(statistics);
+	}
+
 }
