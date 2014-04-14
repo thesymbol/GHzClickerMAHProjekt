@@ -13,7 +13,7 @@ import javax.swing.*;
  *
  *A Class that makes up the whole GUI
  */
-public class MenuGUI extends JPanel{
+public class MenuGUI extends JFrame {
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");
@@ -35,6 +35,8 @@ public class MenuGUI extends JPanel{
 		//main panel
 		setPreferredSize(new Dimension(800,800));
 		setLayout(null);
+		
+		setName("GHz Clicker");
 		
 		//setting locations and size.
 		lblText.setBounds(50, 50, 200, 50);
@@ -65,6 +67,11 @@ public class MenuGUI extends JPanel{
 		btnHertz.addActionListener(listener);
 		btnSave.addActionListener(listener);
 		btnLoad.addActionListener(listener);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 	
 	/**

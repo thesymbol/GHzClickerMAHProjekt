@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,17 +42,8 @@ public class Controller {
 		buildings.add(new Building("Processor", 0, 0, ""));
 		buildings.add(new Building("MotherBoard", 0, 0, ""));
 
-
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
-
-		JFrame frame1 = new JFrame("GHz Clicker");
-		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame1.add(gui);
-		frame1.pack();
-		frame1.setLocationRelativeTo(null);
-		frame1.setVisible(true);
-
 	}
 
 	/**
@@ -98,15 +90,13 @@ public class Controller {
 		calculateBuildingCosts();
 	}
 	
-
-
 	public void uppdateHertzPerSecond() {
-			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-				hertzPerSecond += buildings.get(i).getOwned()
-						* buildings.get(i).getHPS();
-			}
-			gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+			hertzPerSecond += buildings.get(i).getOwned()
+					* buildings.get(i).getHPS();
 		}
+		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+	}
 	
 	public void uppdateStatistics(){
 		
@@ -115,8 +105,6 @@ public class Controller {
 		}
 		gui.updateStatistics(statistics);
 	}
-
-
 
 	/**
 	 * This gets updated by the gameloop every second (used for the timing on
