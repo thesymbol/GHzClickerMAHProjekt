@@ -12,6 +12,7 @@ public class MenuGUI extends JPanel{
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");
+	private JLabel lblHertz = new JLabel("Hertz per second : ");
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
 	private JPanel pnlBuilding;
@@ -27,7 +28,8 @@ public class MenuGUI extends JPanel{
 		
 		//setting locations and size.
 		lblText.setBounds(50, 50, 200, 50);
-		btnHertz.setBounds(50, 100, 200, 50);
+		btnHertz.setBounds(50, 125, 200, 50);
+		lblHertz.setBounds(50, 75, 200, 50);
 		btnSave.setBounds(50,700,100,50);
 		btnLoad.setBounds(200,700,100,50);
 		
@@ -35,6 +37,7 @@ public class MenuGUI extends JPanel{
 		
 		//adding the button and label to the frame.
 		add(btnHertz);
+		add(lblHertz);
 		for(JButton btn : btnBuildings) {
 			btn.setSize(new Dimension(200, 75));
 			pnlBuilding.add(btn);
