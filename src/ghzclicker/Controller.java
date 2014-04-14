@@ -21,6 +21,7 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
+	private long hertzPerSecond = 0;
 
 	private ArrayList<Building> buildings;
 
@@ -95,6 +96,18 @@ public class Controller {
 		gui.update(hertz);
 		calculateBuildingCosts();
 	}
+	
+
+
+	public void uppdateHertzPerSecond() {
+			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+				hertzPerSecond += buildings.get(i).getOwned()
+						* buildings.get(i).getHPT();
+			}
+			gui.updateHertzPerSecond(hertzPerSecond);
+		}
+
+
 
 	/**
 	 * This gets updated by the gameloop every second (used for the timing on
@@ -219,8 +232,13 @@ public class Controller {
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
+					uppdateHertzPerSecond(); // Michael testar, denna gör så
+												// varje gång en byggnad köps så
+												// uppdateras HertzPersecond
+												// Value
 				}
 			}
+
 		}
 	}
 }
