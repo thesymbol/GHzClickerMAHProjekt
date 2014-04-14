@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 
 public class Controller {
 	private MenuGUI gui;
+	private NetworkClient network;
 	private long hertz = 20010;
 	private long kiloHertz = 110;
 	private long megaHertz = 11111;
@@ -53,7 +54,6 @@ public class Controller {
 	 * This is how much hertz we gona get per klick
 	 */
 	public void hertzClicked() {
-
 		hertz += baseValueClick * clickModifier;
 	}
 
@@ -99,7 +99,9 @@ public class Controller {
 	 * building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		System.out.println("Every 1 second update");
+		network = new NetworkClient("localhost");
+		network.sendData("Every 1 second");
+		network.close();
 	}
 
 	/**
