@@ -102,9 +102,9 @@ public class Controller {
 	public void uppdateHertzPerSecond() {
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 				hertzPerSecond += buildings.get(i).getOwned()
-						* buildings.get(i).getHPT();
+						* buildings.get(i).getHPS();
 			}
-			gui.updateHertzPerSecond(hertzPerSecond);
+			gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
 		}
 
 
