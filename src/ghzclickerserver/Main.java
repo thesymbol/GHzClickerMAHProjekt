@@ -6,7 +6,7 @@ package ghzclickerserver;
  */
 public class Main {
 	public static void main(String[] args) {
-		NetworkServer network = new NetworkServer();
-		System.out.println(network.getData().get(0));
+		@SuppressWarnings("unused")
+		Controller controller = new Controller();
 	}
 }

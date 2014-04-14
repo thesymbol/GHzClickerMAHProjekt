@@ -1,19 +1,24 @@
 package ghzclicker;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.util.*;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 /**
  * 
  * @author Matte
  *
  *A Class that makes up the whole GUI
  */
-public class MenuGUI extends JPanel{
+public class MenuGUI extends JFrame {
+	private static final long serialVersionUID = 1L;
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");
@@ -35,6 +40,8 @@ public class MenuGUI extends JPanel{
 		//main panel
 		setPreferredSize(new Dimension(800,800));
 		setLayout(null);
+		
+		setName("GHz Clicker");
 		
 		//setting locations and size.
 		lblText.setBounds(50, 50, 200, 50);
@@ -65,6 +72,11 @@ public class MenuGUI extends JPanel{
 		btnHertz.addActionListener(listener);
 		btnSave.addActionListener(listener);
 		btnLoad.addActionListener(listener);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 	
 	/**

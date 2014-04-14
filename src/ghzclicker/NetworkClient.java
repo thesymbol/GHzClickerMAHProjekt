@@ -13,7 +13,8 @@ import java.util.ArrayList;
  */
 public class NetworkClient {
 	private Socket client;
-	
+	private BufferedReader in;
+	private PrintStream out;
 	public NetworkClient(String ip) {
 		this(ip, 13337);
 	}
@@ -21,43 +22,37 @@ public class NetworkClient {
 	public NetworkClient(String ip, int port) {
 		try {
 			client = new Socket(ip, port);							// Connect to server with ip and port
+			in = new BufferedReader(new InputStreamReader(client.getInputStream()));	// Get data from server
+			out = new PrintStream(client.getOutputStream());	// send data from client
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("ERROR: Could not connect to server ip: " + ip + " port: " + port);
 		}
 	}
 	
 	public ArrayList<String> getData() {
-		BufferedReader input;
 		ArrayList<String> response = new ArrayList<String>();
 		try {
-			input = new BufferedReader(new InputStreamReader(client.getInputStream()));	// Get data from server
 			String responseLine;
-            while ((responseLine = input.readLine()) != null) {
+            while ((responseLine = in.readLine()) != null) {
             	response.add(responseLine);
             }
-			input.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("ERROR: Could not get data from server");
 		}
 		return response;
 	}
 	
 	public void sendData(String data) {
-		PrintStream output;
-		try {
-			output = new PrintStream(client.getOutputStream());	// send data from client
-			output.println(data);
-			output.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		out.println(data);
 	}
 	
 	public void close() {
 		try {
+			in.close();
+			out.close();
 			client.close();
 	    } catch (IOException e) {
-	    	System.out.println(e);
+	    	System.err.println("ERROR: Could not close socket");
 	    }
 	}
 }

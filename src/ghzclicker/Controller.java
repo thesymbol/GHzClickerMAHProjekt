@@ -3,15 +3,20 @@ package ghzclicker;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 public class Controller {
 	private MenuGUI gui;
+	private NetworkClient network;
 	private long hertz = 0;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
@@ -43,21 +48,12 @@ public class Controller {
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
-
-		JFrame frame1 = new JFrame("GHz Clicker");
-		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame1.add(gui);
-		frame1.pack();
-		frame1.setLocationRelativeTo(null);
-		frame1.setVisible(true);
-
 	}
 
 	/**
 	 * This is how much hertz we gona get per klick
 	 */
 	public void hertzClicked() {
-
 		hertz += baseValueClick * clickModifier;
 	}
 
@@ -120,10 +116,14 @@ public class Controller {
 		
 	}
 
+	
 	public void uppdateHertzPerSecond() {
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned()
 					* buildings.get(i).getBaseHPS();
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+			hertzPerSecond += buildings.get(i).getOwned()
+					* buildings.get(i).getHPS();
 		}
 		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
 	}
@@ -142,7 +142,9 @@ public class Controller {
 	 */
 	public void updateEverySecond() {
 		hertz+=hertzPerSecond;
-		System.out.println("Every 1 second update");
+		network = new NetworkClient("localhost");
+		network.sendData("Every 1 second");
+		network.close();
 	}
 
 	/**
@@ -201,7 +203,6 @@ public class Controller {
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
