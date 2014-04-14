@@ -89,7 +89,7 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
-		String hertz = stringiFy();
+		String hertz = stringiFy();		
 		gui.update(hertz);
 		calculateBuildingCosts();
 	}
@@ -101,6 +101,7 @@ public class Controller {
 	public void updateEverySecond() {
 		System.out.println("Every 1 second update");
 	}
+
 
 	/**
 	 * MICHAEL TESTAR DETTA Denna gör hertz till en lång string
@@ -121,6 +122,7 @@ public class Controller {
 		}
 		return dog;
 	}
+
 
 	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
