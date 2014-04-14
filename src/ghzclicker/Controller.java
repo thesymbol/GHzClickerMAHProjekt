@@ -57,7 +57,7 @@ public class Controller {
 		hertz += baseValueClick * clickModifier;
 	}
 
-	
+
 	/**
 	 * Calculate the transfer from Hertz -> KiloHertz
 	 */
@@ -139,7 +139,7 @@ public class Controller {
 			iox.printStackTrace();
 		}
 	}
-	
+
 	public void loadGame(){
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
@@ -150,7 +150,7 @@ public class Controller {
 			}
 			reader.close();
 			String [] store = sb.toString().split(":");
-		
+
 			for (int i = 0; i < store.length-1; i++) {
 				System.out.print(store[i] + " ");
 			}
@@ -204,7 +204,7 @@ public class Controller {
 			if (e.getSource() == gui.getBtnSave()) {
 				saveGame();
 			}
-			
+
 			// Load button
 			if(e.getSource() == gui.getBtnLoad()) {
 				loadGame();
