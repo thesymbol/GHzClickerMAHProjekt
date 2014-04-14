@@ -1,12 +1,16 @@
 package ghzclicker;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.util.*;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 /**
  * 
  * @author Matte
@@ -14,6 +18,7 @@ import javax.swing.*;
  *A Class that makes up the whole GUI
  */
 public class MenuGUI extends JFrame {
+	private static final long serialVersionUID = 1L;
 	//Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
 	private JLabel lblText = new JLabel("");
