@@ -27,6 +27,7 @@ public class Controller {
 
 	// Michaels test veribaler
 	private String dog;
+	private String statistics;
 	private long modulus;
 
 	public Controller() {
@@ -106,6 +107,14 @@ public class Controller {
 			}
 			gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
 		}
+	
+	public void uppdateStatistics(){
+		
+		for(int i = 0; i< gui.getBtnBuildings().size(); i++){
+			statistics = "Total buildings : " + buildings.get(i).getOwned();
+		}
+		gui.updateStatistics(statistics);
+	}
 
 
 
