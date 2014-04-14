@@ -15,19 +15,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Controller {
-<<<<<<< HEAD
-	private long hertz=997;
-	private long kiloHertz=000;
-	private long megaHertz=000;
-	private long gigaHertz=000;
-	private long teraHertz=000;
-	private long petaHertz=000;
-	private long exaHertz=000;
-	private long baseValueClick=0;
-	
-	
-	//Michaels test veribaler
-=======
 	private MenuGUI gui;
 	private NetworkClient network;
 	private long hertz = 0;
@@ -40,13 +27,12 @@ public class Controller {
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
 	private long hertzPerSecond = 300;
+	private String statistics;
 
 	private ArrayList<Building> buildings;
 
 	// Michaels test veribaler
->>>>>>> branch 'master' of ssh://git@github.com/thesymbol/GHzClickerMAHProjekt.git
 	private String dog;
-	private String statistics;
 	private long modulus;
 	private long remodulus;
 
@@ -67,12 +53,6 @@ public class Controller {
 	/**
 	 * This is how much hertz we gona get per klick
 	 */
-<<<<<<< HEAD
-	 public String stringiFy(){
-		dog="";
-		if(gigaHertz>=0){
-			dog+=Long.toString(gigaHertz)+"GHz , ";		 
-=======
 	public void hertzClicked() {
 		hertz += baseValueClick * clickModifier;
 	}
@@ -85,7 +65,6 @@ public class Controller {
 			modulus = hertz / 1000;
 			hertz -= modulus * 1000;
 			kiloHertz += modulus;
->>>>>>> branch 'master' of ssh://git@github.com/thesymbol/GHzClickerMAHProjekt.git
 		}
 		if (kiloHertz >= 1000) {
 			modulus = kiloHertz / 10;
@@ -153,7 +132,8 @@ public class Controller {
 	public void uppdateStatistics() {
 
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			statistics = "Total buildings : " + buildings.get(i).getOwned();
+			statistics += buildings.get(i).getOwned() + "\n";
+						
 		}
 		gui.updateStatistics(statistics);
 	}
@@ -260,12 +240,10 @@ public class Controller {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
 	public void grayiFy(){
 		for(int i = 0; i < buildings.size(); i++){
 			if((gigaHertz*1000000000)+(megaHertz*1000000)+(kiloHertz*1000)+hertz<buildings.get(i).getPrice()){
-				gui.getBtnBuildings().setEnabled(false);
+				gui.getBtnBuildings().setEnabled(true);
 			}
 		}
 	}
@@ -305,5 +283,4 @@ public class Controller {
 
 		}
 	}
->>>>>>> branch 'master' of ssh://git@github.com/thesymbol/GHzClickerMAHProjekt.git
 }

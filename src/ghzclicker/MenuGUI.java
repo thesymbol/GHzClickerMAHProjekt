@@ -129,7 +129,7 @@ public class MenuGUI extends JFrame {
 	}
 
 	public void updateStatistics(String statistics) {
-		taStatistics.setText(statistics);
+		taStatistics.setText("Total buildings :" + statistics);
 	}
 
 }
