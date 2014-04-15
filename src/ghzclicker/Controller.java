@@ -175,6 +175,9 @@ public class Controller {
 	public void saveGame() {
 		try {
 			String txt = gigaHertz + ":" + megaHertz + ":" + kiloHertz + ":" + hertz + ":";
+			for (int i = 0; i < buildings.size(); i++) {
+				txt += buildings.get(i).getOwned() + ":";
+			}
 			File newTextFile = new File("res/GhzSaveGame.txt");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
@@ -194,10 +197,35 @@ public class Controller {
 			}
 			reader.close();
 			String[] store = sb.toString().split(":");
-
-			for (int i = 0; i < store.length; i++) {
-				System.out.print(store[i] + " ");
-			}
+			
+			int ghz = Integer.parseInt(store[0]);
+			int mhz = Integer.parseInt(store[1]);
+			int khz = Integer.parseInt(store[2]);
+			int hz = Integer.parseInt(store[3]);
+			int hddCount = Integer.parseInt(store[4]);
+			int ramCount = Integer.parseInt(store[5]);
+			int pwrCount = Integer.parseInt(store[6]);
+			int ssdCount = Integer.parseInt(store[7]);
+			int graphicsCount = Integer.parseInt(store[8]);
+			int processorCount = Integer.parseInt(store[9]);
+			int motherboardCount = Integer.parseInt(store[10]);
+			
+			hertz = hz;
+			kiloHertz = khz;
+			megaHertz = mhz;
+			gigaHertz = ghz;
+			buildings.get(0).setOwned(hddCount);
+			buildings.get(1).setOwned(ramCount);
+			buildings.get(2).setOwned(pwrCount);
+			buildings.get(3).setOwned(ssdCount);
+			buildings.get(4).setOwned(graphicsCount);
+			buildings.get(5).setOwned(processorCount);
+			buildings.get(6).setOwned(motherboardCount);
+			
+			//Prints loaded data in console
+			System.out.println(ghz + " " + mhz + " " + khz + " " + hz + " " + hddCount + " " + ramCount + " " + pwrCount + " " + ssdCount + " " + graphicsCount + " " + processorCount + " " + motherboardCount);
+			
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		} catch (IOException e) {
