@@ -131,6 +131,7 @@ public class Controller {
 	}
 
 	public void uppdateHertzPerSecond() {
+		hertzPerSecond=0;
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
 		}
@@ -141,7 +142,7 @@ public class Controller {
 	 * this will update the statistics all the time.
 	 */
 	public void uppdateStatistics() {
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+		for (int i = 0; i < buildings.size(); i++) {
 			statistics += buildings.get(i).getOwned() + "\n";
 		}
 		gui.updateStatistics(statistics);
@@ -272,7 +273,7 @@ public class Controller {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
 					hertz -= buildings.get(i).getPrice();
-					 /
+					 
 				}
 			}
 
