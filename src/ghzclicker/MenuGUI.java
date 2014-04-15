@@ -1,5 +1,6 @@
 package ghzclicker;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -62,6 +63,8 @@ public class MenuGUI extends JFrame {
 		for (JButton btn : btnBuildings) {
 			btn.setSize(new Dimension(200, 75));
 			pnlBuilding.add(btn);
+			btn.setFont(new Font("helvetica" , Font.BOLD, 16));
+			btn.setForeground(Color.black);
 		}
 		add(pnlBuilding);
 		add(btnSave);
@@ -109,7 +112,11 @@ public class MenuGUI extends JFrame {
 	public ArrayList<JButton> getBtnBuildings() {
 		return btnBuildings;
 	}
-
+	/**
+	 * Update the cost of the buildings.
+	 * @param i , which building.
+	 * @param cost , the price of the builing.
+	 */
 	public void updateJButtonCost(int i, int cost) {
 		btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
 	}
@@ -120,7 +127,10 @@ public class MenuGUI extends JFrame {
 	public void update(String hertz) {
 		lblText.setText(hertz);
 	}
-
+	/**
+	 * Update and sets your new HertzPerSecond all the time.
+	 * @param hertzPerSecond , variable with your hertz/sec.
+	 */
 	public void updateHertzPerSecond(String hertzPerSecond) {
 		lblHertzPerSecond.setText("Hertz per second: " + hertzPerSecond);
 	}

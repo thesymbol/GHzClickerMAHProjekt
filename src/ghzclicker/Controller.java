@@ -20,7 +20,7 @@ public class Controller {
 	private long hertz = 300;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
-	private long gigaHertz = 0;
+	private long gigaHertz = 50;
 	private long teraHertz = 0;
 	private long petaHertz = 0;
 	private long exaHertz = 0;
@@ -41,9 +41,9 @@ public class Controller {
 		network.sendData("Test socket");
 		network.close();
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("Hard drive", 50, 1, "res/Hard drive.png"));
+		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 2, "res/NewRAM.png"));
-		buildings.add(new Building("Power Supply", 1000, 100, "res/PowerSupply.png"));
+		buildings.add(new Building("Power Supply", 1000, 100, "res/NewPowerSupply.png"));
 		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/HardDrive(SSD).png"));
 		buildings.add(new Building("Graphics card", 30000, 20, "res/GraphicsCard.png"));
 		buildings.add(new Building("Processor", 150000, 30, "res/Processor.png"));
@@ -174,7 +174,7 @@ public class Controller {
 	 */
 	public void saveGame() {
 		try {
-			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
+			String txt = gigaHertz + ":" + megaHertz + ":" + kiloHertz + ":" + hertz + ":";
 			File newTextFile = new File("res/GhzSaveGame.txt");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
@@ -195,7 +195,7 @@ public class Controller {
 			reader.close();
 			String[] store = sb.toString().split(":");
 
-			for (int i = 0; i < store.length - 1; i++) {
+			for (int i = 0; i < store.length; i++) {
 				System.out.print(store[i] + " ");
 			}
 		} catch (FileNotFoundException e) {
