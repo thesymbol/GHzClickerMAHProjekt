@@ -1,6 +1,5 @@
 package ghzclicker;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -17,7 +16,7 @@ import javax.swing.JButton;
 public class Controller {
 	private MenuGUI gui;
 	private NetworkClient network;
-	private long hertz = 300;
+	private long hertz = 0;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
 	private long gigaHertz = 0;
@@ -47,10 +46,10 @@ public class Controller {
 		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/HardDrive(SSD).png"));
 		buildings.add(new Building("Graphics card", 30000, 20, "res/GraphicsCard.png"));
 		buildings.add(new Building("Processor", 150000, 30, "res/Processor.png"));
-		buildings.add(new Building("MotherBoard", 1000000,400, "res/Motherboard.png"));
+		buildings.add(new Building("MotherBoard", 1000000, 400, "res/Motherboard.png"));
 
 		Listener listener = new Listener();
-		gui = new MenuGUI(createBuildingBtns(listener), listener);
+		gui = new MenuGUI(createBuildingBtns(), listener);
 	}
 
 	/**
@@ -127,11 +126,11 @@ public class Controller {
 	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		 hertz += hertzPerSecond;
+		hertz += hertzPerSecond;
 	}
 
 	public void uppdateHertzPerSecond() {
-		hertzPerSecond=0;
+		hertzPerSecond = 0;
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
 		}
@@ -178,7 +177,7 @@ public class Controller {
 			for (int i = 0; i < buildings.size(); i++) {
 				txt += buildings.get(i).getOwned() + ":";
 			}
-			File newTextFile = new File("res/GhzSaveGame.txt");
+			File newTextFile = new File("res/GhzSaveGame.save");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
 			fw.close();
@@ -189,7 +188,7 @@ public class Controller {
 
 	public void loadGame() {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.save")));
 			StringBuffer sb = new StringBuffer();
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -197,7 +196,7 @@ public class Controller {
 			}
 			reader.close();
 			String[] store = sb.toString().split(":");
-			
+
 			int ghz = Integer.parseInt(store[0]);
 			int mhz = Integer.parseInt(store[1]);
 			int khz = Integer.parseInt(store[2]);
@@ -209,7 +208,7 @@ public class Controller {
 			int graphicsCount = Integer.parseInt(store[8]);
 			int processorCount = Integer.parseInt(store[9]);
 			int motherboardCount = Integer.parseInt(store[10]);
-			
+
 			hertz = hz;
 			kiloHertz = khz;
 			megaHertz = mhz;
@@ -221,11 +220,10 @@ public class Controller {
 			buildings.get(4).setOwned(graphicsCount);
 			buildings.get(5).setOwned(processorCount);
 			buildings.get(6).setOwned(motherboardCount);
-			
-			//Prints loaded data in console
+
+			// Prints loaded data in console
 			System.out.println(ghz + " " + mhz + " " + khz + " " + hz + " " + hddCount + " " + ramCount + " " + pwrCount + " " + ssdCount + " " + graphicsCount + " " + processorCount + " " + motherboardCount);
-			
-			
+
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		} catch (IOException e) {
@@ -233,16 +231,12 @@ public class Controller {
 		}
 	}
 
-	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
+	public ArrayList<JButton> createBuildingBtns() {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {
 			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
-			btn.setName(building.getName());
-			btn.setVerticalTextPosition(JButton.CENTER);
-			btn.setHorizontalTextPosition(JButton.CENTER);
-			btn.setForeground(Color.MAGENTA);
+			btn.setName(building.getName()); // set the name of the button
 			btn.setToolTipText(building.getName());
-			btn.addActionListener(listener);
 			btnBuildings.add(btn);
 		}
 		return btnBuildings;

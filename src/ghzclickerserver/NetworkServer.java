@@ -13,65 +13,65 @@ public class NetworkServer {
 	private BufferedReader in;
 	private PrintStream out;
 	private Socket client = null;
-	
+
 	public NetworkServer() {
 		this(13337);
 	}
-	
+
 	public NetworkServer(int port) {
 		try {
-			server = new ServerSocket(port);						// Accept connections on specified port
+			server = new ServerSocket(port); // Accept connections on specified port
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not open server socket on port: " + port);
 		}
 	}
-	
+
 	public void accept() {
 		try {
-			client = server.accept();	// Get client connected
-			out = new PrintStream(client.getOutputStream());	// send data from client
-			in = new BufferedReader(new InputStreamReader(client.getInputStream()));	// Get data from server
+			client = server.accept(); // Get client connected
+			out = new PrintStream(client.getOutputStream()); // send data from client
+			in = new BufferedReader(new InputStreamReader(client.getInputStream())); // Get data from server
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not accept client request");
-		} 
+		}
 	}
-	
+
 	public ArrayList<String> getData() {
 		ArrayList<String> response = new ArrayList<String>();
 		try {
 			String responseLine;
-            while ((responseLine = in.readLine()) != null) {
-            	response.add(responseLine);
-            }
+			while ((responseLine = in.readLine()) != null) {
+				response.add(responseLine);
+			}
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not get data from client");
 		}
 		return response;
 	}
-	
+
 	public void sendData(String data) {
 		try {
 			out.println(data);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("ERROR: Could not send message");
 		}
 	}
-	
+
 	public void closeClient() {
 		try {
 			in.close();
 			out.close();
 			client.close();
-	    } catch (IOException e) {
-	    	System.err.println("ERROR: Could not close socket");
-	    }
+		} catch (IOException e) {
+			System.err.println("ERROR: Could not close socket");
+		}
 	}
-	
+
 	public void closeServer() {
 		try {
 			server.close();
 		} catch (Exception e) {
-	    	System.err.println("ERROR: Could not close socket");
-	    }
+			System.err.println("ERROR: Could not close socket");
+		}
 	}
 }
