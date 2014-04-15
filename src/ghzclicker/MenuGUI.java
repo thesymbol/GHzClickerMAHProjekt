@@ -54,7 +54,7 @@ public class MenuGUI extends JFrame {
 		btnLoad.setBounds(200, 700, 100, 50);
 		taStatistics.setBounds(500, 600, 300, 200);
 
-		pnlBuilding.setBounds(600, 0, 200, btnBuildings.size() * 75);
+		pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 85);
 
 		// adding the button and label to the frame.
 		add(btnHertz);
