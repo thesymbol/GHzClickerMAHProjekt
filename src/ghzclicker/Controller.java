@@ -250,9 +250,9 @@ public class Controller {
 	public void grayiFy() {
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			if (((gigaHertz * 1000000000) + (megaHertz * 1000000) + (kiloHertz * 1000) + hertz) < buildings.get(i).getPrice()) {
-				gui.getBtnBuildings().get(i).setEnabled(true);
-			} else {
 				gui.getBtnBuildings().get(i).setEnabled(false);
+			} else {
+				gui.getBtnBuildings().get(i).setEnabled(true);
 			}
 		}
 	}
