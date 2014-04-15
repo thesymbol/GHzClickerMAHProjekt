@@ -20,13 +20,13 @@ public class Controller {
 	private long hertz = 300;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
-	private long gigaHertz = 50;
+	private long gigaHertz = 0;
 	private long teraHertz = 0;
 	private long petaHertz = 0;
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 300;
+	private long hertzPerSecond = 0;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
@@ -131,7 +131,7 @@ public class Controller {
 	}
 
 	public void uppdateHertzPerSecond() {
-//		hertzPerSecond=0;
+		hertzPerSecond=0;
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
 		}
