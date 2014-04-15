@@ -46,7 +46,7 @@ public class NetworkClient {
 	public void sendData(String data) {
 		try {
 			out.println(data);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("ERROR: Could not send message");
 		}
 	}

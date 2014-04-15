@@ -55,16 +55,30 @@ public class MenuGUI extends JFrame {
 		btnLoad.setBounds(200, 700, 100, 50);
 		taStatistics.setBounds(500, 600, 300, 200);
 
-		pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 85);
+		pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
 		// adding the button and label to the frame.
 		add(btnHertz);
 		add(lblHertzPerSecond);
 		for (JButton btn : btnBuildings) {
+
+			// Set listener for button
+			btn.addActionListener(listener);
+
+			// set size of button
 			btn.setSize(new Dimension(200, 75));
-			pnlBuilding.add(btn);
-			btn.setFont(new Font("helvetica" , Font.BOLD, 16));
+
+			// Position text over image
+			btn.setVerticalTextPosition(JButton.CENTER);
+			btn.setHorizontalTextPosition(JButton.CENTER);
+
+			// Set to disabled in begining.
+			btn.setEnabled(false);
+
+			btn.setFont(new Font("helvetica", Font.BOLD, 16));
 			btn.setForeground(Color.black);
+
+			pnlBuilding.add(btn);
 		}
 		add(pnlBuilding);
 		add(btnSave);
@@ -112,8 +126,10 @@ public class MenuGUI extends JFrame {
 	public ArrayList<JButton> getBtnBuildings() {
 		return btnBuildings;
 	}
+
 	/**
 	 * Update the cost of the buildings.
+	 * 
 	 * @param i , which building.
 	 * @param cost , the price of the builing.
 	 */
@@ -127,8 +143,10 @@ public class MenuGUI extends JFrame {
 	public void update(String hertz) {
 		lblText.setText(hertz);
 	}
+
 	/**
 	 * Update and sets your new HertzPerSecond all the time.
+	 * 
 	 * @param hertzPerSecond , variable with your hertz/sec.
 	 */
 	public void updateHertzPerSecond(String hertzPerSecond) {
