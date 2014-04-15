@@ -6,14 +6,13 @@ package ghzclicker;
  * @author Marcus Orwén
  */
 public class Building {
-	private String name; 			// name of building
-	private int baseCost;			// base cost that will later be calculated with controller
-	private double baseHPS = 0;		// base "hertz" per second later will be calculated with modifier
-	private String imageLocation;	// building's image location for button.
-	private int owned = 0;			// Amount of this build that is owned.
-	private long price;				// The price of a bulding
-	
-	
+	private String name; // name of building
+	private int baseCost; // base cost that will later be calculated with controller
+	private double baseHPS = 0; // base "hertz" per second later will be calculated with modifier
+	private String imageLocation; // building's image location for button.
+	private int owned = 0; // Amount of this build that is owned.
+	private long price; // The price of a bulding
+
 	/**
 	 * Construct a building
 	 * 
@@ -28,7 +27,7 @@ public class Building {
 		this.baseHPS = baseHPS;
 		this.imageLocation = imageLocation;
 	}
-	
+
 	/**
 	 * Get building's name
 	 * 
@@ -37,7 +36,7 @@ public class Building {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Get building's base cost
 	 * 
@@ -46,7 +45,7 @@ public class Building {
 	public int getBaseCost() {
 		return baseCost;
 	}
-	
+
 	/**
 	 * Get building's base "Hertz" per second
 	 * 
@@ -55,7 +54,7 @@ public class Building {
 	public double getBaseHPS() {
 		return baseHPS;
 	}
-	
+
 	/**
 	 * Get location of image for the button
 	 * 
@@ -64,7 +63,7 @@ public class Building {
 	public String getImageLocation() {
 		return imageLocation;
 	}
-	
+
 	/**
 	 * Set's how many of this building is owned
 	 * 
@@ -73,7 +72,7 @@ public class Building {
 	public void setOwned(int owned) {
 		this.owned = owned;
 	}
-	
+
 	/**
 	 * Get the amount of buildings owned
 	 * 
@@ -82,11 +81,11 @@ public class Building {
 	public int getOwned() {
 		return owned;
 	}
-	
+
 	public void setPrice(long price) {
 		this.price = price;
 	}
-	
+
 	public long getPrice() {
 		return price;
 	}
