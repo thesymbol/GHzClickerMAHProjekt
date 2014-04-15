@@ -38,13 +38,13 @@ public class Controller {
 
 	public Controller() {
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("Hard drive", 700, 0.2, "res/Hard drive.png"));
-		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
-		buildings.add(new Building("Power Supply", 0, 0, "res/PowerSupply.png"));
-		buildings.add(new Building("Hard Drive(SSD)", 0, 0, ""));
-		buildings.add(new Building("Graphics card", 0, 0, "res/GraphicsCard.png"));
-		buildings.add(new Building("Processor", 0, 0, "res/Processor.png"));
-		buildings.add(new Building("MotherBoard", 0, 0, "res/Motherboard.png"));
+		buildings.add(new Building("Hard drive", 5, 1, "res/Hard drive.png"));
+		buildings.add(new Building("RAM", 10, 2, "res/RAM.png"));
+		buildings.add(new Building("Power Supply", 10, 5, "res/PowerSupply.png"));
+		buildings.add(new Building("Hard Drive(SSD)", 10, 10, ""));
+		buildings.add(new Building("Graphics card", 10, 20, "res/GraphicsCard.png"));
+		buildings.add(new Building("Processor", 10, 30, "res/Processor.png"));
+		buildings.add(new Building("MotherBoard", 10, 40, "res/Motherboard.png"));
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
