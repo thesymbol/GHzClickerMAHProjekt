@@ -17,7 +17,7 @@ import javax.swing.JButton;
 public class Controller {
 	private MenuGUI gui;
 	private NetworkClient network;
-	private long hertz = 0;
+	private long hertz = 50;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
 	private long gigaHertz = 0;
@@ -39,7 +39,7 @@ public class Controller {
 	public Controller() {
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 700, 0.2, "res/Hard drive.png"));
-		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
+		buildings.add(new Building("RAM", 50, 0.5, "res/NewRAM.png"));
 		buildings.add(new Building("Power Supply", 0, 0, "res/PowerSupply.png"));
 		buildings.add(new Building("Hard Drive(SSD)", 0, 0, "res/HardDrive(SSD).png"));
 		buildings.add(new Building("Graphics card", 0, 0, "res/GraphicsCard.png"));
