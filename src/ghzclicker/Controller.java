@@ -26,7 +26,7 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 300;
+	private long hertzPerSecond = 0;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
@@ -117,6 +117,7 @@ public class Controller {
 		gui.update(hertz);
 		calculateBuildingCosts();
 		grayiFy();
+		uppdateHertzPerSecond();
 	}
 
 	/**
@@ -141,9 +142,8 @@ public class Controller {
 	 */
 	public void uppdateStatistics() {
 
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+		for (int i = 0; i < buildings.size(); i++) {
 			statistics += buildings.get(i).getOwned() + "\n";
-
 		}
 		gui.updateStatistics(statistics);
 	}
@@ -272,7 +272,6 @@ public class Controller {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
 					hertz -= buildings.get(i).getPrice();
-					uppdateHertzPerSecond(); // Michael testar, denna gör så varje gång en byggnad köps så uppdateras HertzPersecond Value
 				}
 			}
 
