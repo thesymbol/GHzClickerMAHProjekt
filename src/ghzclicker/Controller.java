@@ -26,7 +26,7 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 0;
+	private long hertzPerSecond = 300;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
@@ -110,12 +110,12 @@ public class Controller {
 	/**
 	 * Game Loop calls this metod to update the game ~30 time a second
 	 */
-	public void update() {
+	public void update() {		
 		merging();
 		reMerge();
 		String hertz = stringiFy();
 		gui.update(hertz);
-		calculateBuildingCosts();
+		calculateBuildingCosts();	
 		grayiFy();
 		uppdateHertzPerSecond();
 	}
@@ -131,7 +131,7 @@ public class Controller {
 	}
 
 	public void uppdateHertzPerSecond() {
-		hertzPerSecond=0;
+//		hertzPerSecond=0;
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
 		}
