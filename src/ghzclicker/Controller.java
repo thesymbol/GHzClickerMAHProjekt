@@ -17,7 +17,7 @@ import javax.swing.JButton;
 public class Controller {
 	private MenuGUI gui;
 	private NetworkClient network;
-	private long hertz = 50;
+	private long hertz = 300;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
 	private long gigaHertz = 0;
