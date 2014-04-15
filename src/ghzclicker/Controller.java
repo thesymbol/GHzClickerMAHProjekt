@@ -26,7 +26,7 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 300;
+	private long hertzPerSecond = 0;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
@@ -140,15 +140,9 @@ public class Controller {
 	 * this will update the statistics all the time.
 	 */
 	public void uppdateStatistics() {
-
-		for (int i = 0; i < buildings.size(); i++) {
-			statistics += buildings.get(i).getOwned() + "\n";
-
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			statistics += buildings.get(i).getOwned() + "\n";
-
 		}
-
 		gui.updateStatistics(statistics);
 	}
 
@@ -177,8 +171,7 @@ public class Controller {
 	 */
 	public void saveGame() {
 		try {
-			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";"+ hertz + ";";
-			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
+			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";"+ hertz +";";
 			File newTextFile = new File("res/GhzSaveGame.txt");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
@@ -238,11 +231,6 @@ public class Controller {
 		}
 	}
 
-	public void grayiFy() {
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			if ((gigaHertz * 1000000000) + (megaHertz * 1000000)
-					+ (kiloHertz * 1000) + hertz < buildings.get(i).getPrice()) {
-				gui.getBtnBuildings().setEnabled(true);
 
 	/**
 	 * Gray out buttons
