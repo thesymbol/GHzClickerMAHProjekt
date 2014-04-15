@@ -1,5 +1,6 @@
 package ghzclicker;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -62,6 +63,8 @@ public class MenuGUI extends JFrame {
 		for (JButton btn : btnBuildings) {
 			btn.setSize(new Dimension(200, 75));
 			pnlBuilding.add(btn);
+			btn.setFont(new Font("helvetica" , Font.BOLD, 16));
+			btn.setForeground(Color.black);
 		}
 		add(pnlBuilding);
 		add(btnSave);
