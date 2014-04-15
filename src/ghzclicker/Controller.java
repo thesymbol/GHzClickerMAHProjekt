@@ -193,9 +193,9 @@ public class Controller {
 				sb.append(line);
 			}
 			reader.close();
-			String[] store = sb.toString().split(":");
+			String[] store = sb.toString().split(";");
 
-			for (int i = 0; i < store.length - 1; i++) {
+			for (int i = 0; i < store.length; i++) {
 				System.out.print(store[i] + " ");
 			}
 		} catch (FileNotFoundException e) {
