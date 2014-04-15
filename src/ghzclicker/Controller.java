@@ -26,7 +26,7 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 1;
+	private long hertzPerSecond = 0;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
