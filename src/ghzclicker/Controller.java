@@ -41,7 +41,7 @@ public class Controller {
 		network.sendData("Test socket");
 		network.close();
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("Hard drive", 50, 1, "res/Hard drive.png"));
+		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 2, "res/NewRAM.png"));
 		buildings.add(new Building("Power Supply", 1000, 100, "res/NewPowerSupply.png"));
 		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/HardDrive(SSD).png"));
