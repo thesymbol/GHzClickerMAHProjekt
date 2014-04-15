@@ -174,7 +174,7 @@ public class Controller {
 	 */
 	public void saveGame() {
 		try {
-			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
+			String txt = gigaHertz + ":" + megaHertz + ":" + kiloHertz + ":" + hertz + ":";
 			File newTextFile = new File("res/GhzSaveGame.txt");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
@@ -193,7 +193,7 @@ public class Controller {
 				sb.append(line);
 			}
 			reader.close();
-			String[] store = sb.toString().split(";");
+			String[] store = sb.toString().split(":");
 
 			for (int i = 0; i < store.length; i++) {
 				System.out.print(store[i] + " ");
