@@ -117,6 +117,7 @@ public class Controller {
 		gui.update(hertz);
 		calculateBuildingCosts();
 		grayiFy();
+		uppdateHertzPerSecond();
 	}
 
 	/**
@@ -271,7 +272,7 @@ public class Controller {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
 					hertz -= buildings.get(i).getPrice();
-					uppdateHertzPerSecond(); // Michael testar, denna gör så varje gång en byggnad köps så uppdateras HertzPersecond Value
+					 /
 				}
 			}
 
