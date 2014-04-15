@@ -17,7 +17,7 @@ import javax.swing.JButton;
 public class Controller {
 	private MenuGUI gui;
 	private NetworkClient network;
-	private long hertz = 0;
+	private long hertz = 50;
 	private long kiloHertz = 0;
 	private long megaHertz = 0;
 	private long gigaHertz = 0;
@@ -37,15 +37,18 @@ public class Controller {
 	private long remodulus;
 
 	public Controller() {
+		network = new NetworkClient("localhost");
+		network.sendData("Test socket");
+		network.close();
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 50, 1, "res/Hard drive.png"));
-		buildings.add(new Building("RAM", 300, 2, "res/RAM.png"));
+		buildings.add(new Building("RAM", 300, 2, "res/NewRAM.png"));
 		buildings.add(new Building("Power Supply", 1000, 100, "res/PowerSupply.png"));
 		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/HardDrive(SSD).png"));
 		buildings.add(new Building("Graphics card", 30000, 20, "res/GraphicsCard.png"));
-		buildings.add(new Building("Processor", 150000, 30 , "res/Processor.png"));
-		buildings.add(new Building("MotherBoard", 1000000, 40 , "res/Motherboard.png"));
-		
+		buildings.add(new Building("Processor", 150000, 30, "res/Processor.png"));
+		buildings.add(new Building("MotherBoard", 1000000,400, "res/Motherboard.png"));
+
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(listener), listener);
 	}
@@ -124,10 +127,7 @@ public class Controller {
 	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		hertz += hertzPerSecond;
-//		network = new NetworkClient("localhost");
-//		network.sendData("Every 1 second");
-//		network.close();
+		 hertz += hertzPerSecond;
 	}
 
 	public void uppdateHertzPerSecond() {
@@ -142,6 +142,7 @@ public class Controller {
 	 * this will update the statistics all the time.
 	 */
 	public void uppdateStatistics() {
+
 		for (int i = 0; i < buildings.size(); i++) {
 			statistics += buildings.get(i).getOwned() + "\n";
 		}
@@ -173,7 +174,7 @@ public class Controller {
 	 */
 	public void saveGame() {
 		try {
-			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";"+ hertz +";";
+			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
 			File newTextFile = new File("res/GhzSaveGame.txt");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
@@ -233,7 +234,6 @@ public class Controller {
 		}
 	}
 
-
 	/**
 	 * Gray out buttons
 	 */
@@ -273,7 +273,6 @@ public class Controller {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
 					hertz -= buildings.get(i).getPrice();
-					 
 				}
 			}
 
