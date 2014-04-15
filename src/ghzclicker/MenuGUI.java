@@ -109,7 +109,11 @@ public class MenuGUI extends JFrame {
 	public ArrayList<JButton> getBtnBuildings() {
 		return btnBuildings;
 	}
-
+	/**
+	 * Update the cost of the buildings.
+	 * @param i , which building.
+	 * @param cost , the price of the builing.
+	 */
 	public void updateJButtonCost(int i, int cost) {
 		btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
 	}
@@ -120,7 +124,10 @@ public class MenuGUI extends JFrame {
 	public void update(String hertz) {
 		lblText.setText(hertz);
 	}
-
+	/**
+	 * Update and sets your new HertzPerSecond all the time.
+	 * @param hertzPerSecond , variable with your hertz/sec.
+	 */
 	public void updateHertzPerSecond(String hertzPerSecond) {
 		lblHertzPerSecond.setText("Hertz per second: " + hertzPerSecond);
 	}
