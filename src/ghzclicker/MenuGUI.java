@@ -31,13 +31,10 @@ public class MenuGUI extends JFrame {
 	private ArrayList<JButton> btnBuildings;
 
 	/**
-	 * A Constructor that is putting all the buttons into the GUI and sets the
-	 * size of the labels, buttons etc.
+	 * A Constructor that is putting all the buttons into the GUI and sets the size of the labels, buttons etc.
 	 * 
-	 * @param btnBuildings
-	 *            , adding the buildings to the GUI
-	 * @param listener
-	 *            , adding listeners to the buttons.
+	 * @param btnBuildings , adding the buildings to the GUI
+	 * @param listener , adding listeners to the buttons.
 	 */
 	public MenuGUI(ArrayList<JButton> btnBuildings, ActionListener listener) {
 		this.btnBuildings = btnBuildings;
@@ -127,8 +124,10 @@ public class MenuGUI extends JFrame {
 	public void updateHertzPerSecond(String hertzPerSecond) {
 		lblHertzPerSecond.setText("Hertz per second :" + hertzPerSecond);
 	}
+
 	/**
-	 *  Showing statistic of your current game.
+	 * Showing statistic of your current game.
+	 * 
 	 * @param statistics , shows the text from statistics variable
 	 */
 	public void updateStatistics(String statistics) {

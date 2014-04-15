@@ -116,37 +116,36 @@ public class Controller {
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
-
-	}
-
-	public void uppdateHertzPerSecond() {
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			hertzPerSecond += buildings.get(i).getOwned()
-					* buildings.get(i).getBaseHPS();
-		}
-		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
-	}
-	/**
-	 * this will update the statistics all the time.
-	 */
-	public void uppdateStatistics() {
-
-		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			statistics +=  buildings.get(i).getOwned() + "\n";
-						
-		}
-		gui.updateStatistics(statistics);
+		grayiFy();
 	}
 
 	/**
-	 * This gets updated by the gameloop every second (used for the timing on
-	 * building generating "Hertz"
+	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
 		// hertz += hertzPerSecond;
 		network = new NetworkClient("localhost");
 		network.sendData("Every 1 second");
 		network.close();
+	}
+
+	public void uppdateHertzPerSecond() {
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
+		}
+		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+	}
+
+	/**
+	 * this will update the statistics all the time.
+	 */
+	public void uppdateStatistics() {
+
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+			statistics += buildings.get(i).getOwned() + "\n";
+
+		}
+		gui.updateStatistics(statistics);
 	}
 
 	/**
@@ -170,14 +169,11 @@ public class Controller {
 	}
 
 	/**
-	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
-	 * på mitt windows8 tillåts inte programmet att skapa och spara en fil på
-	 * C:/
+	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/
 	 */
 	public void saveGame() {
 		try {
-			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";"
-					+ hertz + ";";
+			String txt = gigaHertz + ";" + megaHertz + ";" + kiloHertz + ";" + hertz + ";";
 			File newTextFile = new File("res/GhzSaveGame.txt");
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(txt);
@@ -189,8 +185,7 @@ public class Controller {
 
 	public void loadGame() {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File(
-					"res/GhzSaveGame.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.txt")));
 			StringBuffer sb = new StringBuffer();
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -212,8 +207,7 @@ public class Controller {
 	public ArrayList<JButton> createBuildingBtns(ActionListener listener) {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {
-			JButton btn = new JButton(building.getName(), new ImageIcon(
-					building.getImageLocation()));
+			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
 			btn.setName(building.getName());
 			btn.setVerticalTextPosition(JButton.CENTER);
 			btn.setHorizontalTextPosition(JButton.CENTER);
@@ -230,8 +224,7 @@ public class Controller {
 	 */
 	public void calculateBuildingCosts() {
 		for (int i = 0; i < buildings.size(); i++) {
-			int cost = (int) (buildings.get(i).getBaseCost() * (Math.pow(1.1,
-					buildings.get(i).getOwned()))); // cost algorithm
+			int cost = (int) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
@@ -239,10 +232,13 @@ public class Controller {
 			gui.updateJButtonCost(i, cost);
 		}
 	}
-	
-	public void grayiFy(){
-		for(int i = 0; i < gui.getBtnBuildings().size(); i++){
-			if(((gigaHertz*1000000000)+(megaHertz*1000000)+(kiloHertz*1000)+hertz) < buildings.get(i).getPrice()){
+
+	/**
+	 * Gray out buttons
+	 */
+	public void grayiFy() {
+		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
+			if (((gigaHertz * 1000000000) + (megaHertz * 1000000) + (kiloHertz * 1000) + hertz) < buildings.get(i).getPrice()) {
 				gui.getBtnBuildings().get(i).setEnabled(true);
 			} else {
 				gui.getBtnBuildings().get(i).setEnabled(false);
@@ -276,10 +272,7 @@ public class Controller {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
 					hertz -= buildings.get(i).getPrice();
-					uppdateHertzPerSecond(); // Michael testar, denna gör så
-												// varje gång en byggnad köps så
-												// uppdateras HertzPersecond
-												// Value
+					uppdateHertzPerSecond(); // Michael testar, denna gör så varje gång en byggnad köps så uppdateras HertzPersecond Value
 				}
 			}
 
