@@ -26,7 +26,7 @@ public class Controller {
 	private long exaHertz = 0;
 	private long baseValueClick = 1;
 	private long clickModifier = 1;
-	private long hertzPerSecond = 0;
+	private long hertzPerSecond = 1;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
@@ -37,6 +37,9 @@ public class Controller {
 	private long remodulus;
 
 	public Controller() {
+		network = new NetworkClient("localhost");
+		network.sendData("Test socket");
+		network.close();
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 700, 0.2, "res/Hard drive.png"));
 		buildings.add(new Building("RAM", 50, 0.5, "res/RAM.png"));
@@ -124,10 +127,7 @@ public class Controller {
 	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		// hertz += hertzPerSecond;
-		network = new NetworkClient("localhost");
-		network.sendData("Every 1 second");
-		network.close();
+		hertz += hertzPerSecond;
 	}
 
 	public void uppdateHertzPerSecond() {

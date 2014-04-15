@@ -122,7 +122,7 @@ public class MenuGUI extends JFrame {
 	}
 
 	public void updateHertzPerSecond(String hertzPerSecond) {
-		lblHertzPerSecond.setText("Hertz per second :" + hertzPerSecond);
+		lblHertzPerSecond.setText("Hertz per second: " + hertzPerSecond);
 	}
 
 	/**

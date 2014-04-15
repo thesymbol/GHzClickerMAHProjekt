@@ -44,7 +44,11 @@ public class NetworkClient {
 	}
 
 	public void sendData(String data) {
-		out.println(data);
+		try {
+			out.println(data);
+		} catch(Exception e) {
+			System.err.println("ERROR: Could not send message");
+		}
 	}
 
 	public void close() {
@@ -52,7 +56,7 @@ public class NetworkClient {
 			in.close();
 			out.close();
 			client.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.err.println("ERROR: Could not close socket");
 		}
 	}
