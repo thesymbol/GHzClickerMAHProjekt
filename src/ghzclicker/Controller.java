@@ -29,6 +29,7 @@ public class Controller {
 	private String statistics;
 
 	private ArrayList<Building> buildings;
+	private ArrayList<Long> ALHertz;
 
 	// Michaels test veribaler
 	private String dog;
@@ -50,7 +51,33 @@ public class Controller {
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(), listener);
+		
+		
+		/**
+		 * Michael försöker göra en göra en arraylist
+		 * försöker
+		 */		
+		ALHertz = new ArrayList<Long>();
+		ALHertz.add(new Long (hertz));
+		ALHertz.add(new Long (kiloHertz));
+		ALHertz.add(new Long (megaHertz));
+		ALHertz.add(new Long (gigaHertz));
+		ALHertz.add(new Long (teraHertz));
 	}
+	
+	public void merge1() {
+		for(int i=0; i<ALHertz.size();i++){
+			
+			
+			modulus = hertz / 1000;
+			hertz -= modulus * 1000;
+			kiloHertz += modulus;
+		
+		}	
+		
+	}
+
+	
 
 	/**
 	 * This is how much hertz we gona get per klick
