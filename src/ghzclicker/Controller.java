@@ -297,7 +297,6 @@ public class Controller {
 					hertz -= buildings.get(i).getPrice();
 				}
 			}
-
 		}
 	}
 }
