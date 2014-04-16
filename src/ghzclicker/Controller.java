@@ -84,7 +84,10 @@ public class Controller {
 			teraHertz += modulus;
 		}
 	}
-
+	
+	/**
+	 * Calculate the transfer from kiloHertz -> Hertz
+	 */
 	public void reMerge() {
 		if (hertz < 0) {
 			remodulus = Math.abs(hertz) / 1000;
@@ -128,7 +131,10 @@ public class Controller {
 	public void updateEverySecond() {
 		hertz += hertzPerSecond;
 	}
-
+	
+	/**
+	 * This gets updated by the gameloop and calculate what your Hertz Per Second.
+	 */
 	public void uppdateHertzPerSecond() {
 		hertzPerSecond = 0;
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
@@ -149,7 +155,7 @@ public class Controller {
 	}
 
 	/**
-	 * MICHAEL TESTAR DETTA Denna gör hertz till en lång string
+	 * Denna gör hertz till en lång string
 	 */
 	public String stringiFy() {
 		dog = "";
