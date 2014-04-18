@@ -39,39 +39,39 @@ public class Controller {
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(), listener);
-			
+
 		hertz = new ArrayList<Integer>();
-		hertz.add(new Integer (999));
-		hertz.add(new Integer (0));
-		hertz.add(new Integer (0));
-		hertz.add(new Integer (0));
-		hertz.add(new Integer (0));
-		hertz.add(new Integer (0));
-		hertz.add(new Integer (0));
+		hertz.add(new Integer(999));
+		hertz.add(new Integer(0));
+		hertz.add(new Integer(0));
+		hertz.add(new Integer(0));
+		hertz.add(new Integer(0));
+		hertz.add(new Integer(0));
+		hertz.add(new Integer(0));
 	}
-	
+
 	public void merging() {
 		int diff;
-		for (int i =0;i<hertz.size();i++) {
-			if(hertz.get(i)>=1000){
+		for (int i = 0; i < hertz.size(); i++) {
+			if (hertz.get(i) >= 1000) {
 				diff = hertz.get(i) / 1000;
 				hertz.set(i, (hertz.get(i) - diff * 1000));
-				hertz.set(i+1, (hertz.get(i+1) + diff));				
-			}				
-		}			
-	}
-	
-	public void reMerge() {
-		int diff;
-		for(int i = hertz.size() - 1; i > 0; i--) {
-			if (hertz.get(i) < 0) {
-				diff = Math.abs(hertz.get(i)) / 1000;
-				hertz.set(i, (hertz.get(i) - 1 + diff));
-				hertz.set(i-1, (hertz.get(i-1) + diff * 1000 + 1000));
+				hertz.set(i + 1, (hertz.get(i + 1) + diff));
 			}
 		}
 	}
-	
+
+	public void reMerge() {
+		int diff;
+		for (int i = hertz.size() - 1; i > 0; i--) {
+			if (hertz.get(i) < 0) {
+				diff = Math.abs(hertz.get(i)) / 1000;
+				hertz.set(i, (hertz.get(i) - 1 + diff));
+				hertz.set(i - 1, (hertz.get(i - 1) + diff * 1000 + 1000));
+			}
+		}
+	}
+
 	/**
 	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
 	 */
@@ -79,8 +79,8 @@ public class Controller {
 		String letters = "Hz;K;M;G;T;P;E";
 		String[] splitted = letters.split(";");
 		String ret = "";
-		for(int i = 0; i < hertz.size(); i++) {
-			if(hertz.get(i) >= 0) {
+		for (int i = 0; i < hertz.size(); i++) {
+			if (hertz.get(i) >= 0) {
 				ret += Integer.toString(hertz.get(i)) + splitted[i] + " ";
 			}
 		}
@@ -92,7 +92,7 @@ public class Controller {
 	 */
 	public void hertzClicked() {
 		hertz.set(0, hertz.get(0) + baseValueClick * clickModifier);
-		//hertz += baseValueClick * clickModifier;
+		// hertz += baseValueClick * clickModifier;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class Controller {
 		reMerge();
 		String hertz = stringiFy();
 		gui.update(hertz);
-		calculateBuildingCosts();	
+		calculateBuildingCosts();
 		grayiFy();
 		uppdateHertzPerSecond();
 	}
@@ -113,9 +113,9 @@ public class Controller {
 	 */
 	public void updateEverySecond() {
 		hertz.set(0, hertz.get(0) + hertzPerSecond);
-		//hertz += hertzPerSecond;
+		// hertz += hertzPerSecond;
 	}
-	
+
 	/**
 	 * This gets updated by the gameloop and calculate what your Hertz Per Second.
 	 */
@@ -144,7 +144,7 @@ public class Controller {
 	public void saveGame() {
 		try {
 			String txt = "";
-			for(int i = 0; i < hertz.size(); i++) {
+			for (int i = 0; i < hertz.size(); i++) {
 				txt += hertz.get(i) + ":";
 			}
 			for (int i = 0; i < buildings.size(); i++) {
@@ -177,9 +177,9 @@ public class Controller {
 			int graphicsCount = Integer.parseInt(store[11]);
 			int processorCount = Integer.parseInt(store[12]);
 			int motherboardCount = Integer.parseInt(store[13]);
-			
+
 			// TODO: Not rely on the hertz size (i) for the store array.
-			for(int i = 0; i < hertz.size(); i++) {
+			for (int i = 0; i < hertz.size(); i++) {
 				hertz.set(i, Integer.parseInt(store[i]));
 			}
 
@@ -192,7 +192,7 @@ public class Controller {
 			buildings.get(6).setOwned(motherboardCount);
 
 			// Prints loaded data in console
-			for(int i = 0; i < store.length; i++) {
+			for (int i = 0; i < store.length; i++) {
 				System.out.print(store[i] + " ");
 			}
 			System.out.println();
@@ -237,7 +237,7 @@ public class Controller {
 	public void grayiFy() {
 		int currTotalHertz = 0;
 		int n = 1;
-		for(int i = 0; i < hertz.size(); i++) {
+		for (int i = 0; i < hertz.size(); i++) {
 			currTotalHertz += hertz.get(i) * n;
 			n *= 1000;
 		}

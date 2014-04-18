@@ -140,7 +140,7 @@ public class MenuGUI extends JFrame {
 	/**
 	 * Update and sets your new hertz value all the time
 	 * 
-	 * @param hertz 
+	 * @param hertz
 	 */
 	public void update(String hertz) {
 		lblText.setText(hertz);
