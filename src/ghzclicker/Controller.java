@@ -45,10 +45,10 @@ public class Controller {
 		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 2, "res/NewRAM.png"));
 		buildings.add(new Building("Power Supply", 1000, 100, "res/NewPowerSupply.png"));
-		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/HardDrive(SSD).png"));
-		buildings.add(new Building("Graphics card", 30000, 20, "res/GraphicsCard.png"));
-		buildings.add(new Building("Processor", 150000, 30, "res/Processor.png"));
-		buildings.add(new Building("MotherBoard", 1000000, 400, "res/Motherboard.png"));
+		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/NewHardDrive(SSD).png"));
+		buildings.add(new Building("Graphics card", 30000, 20, "res/NewGraphicsCard.png"));
+		buildings.add(new Building("Processor", 150000, 30, "res/NewProcessor.png"));
+		buildings.add(new Building("MotherBoard", 1000000, 400, "res/NewMotherboard.png"));
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(), listener);
