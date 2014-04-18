@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,12 +29,13 @@ public class Controller {
 	private String statistics;
 
 	private ArrayList<Building> buildings;
-	private ArrayList<Long> ALHertz;
+	private ArrayList<Integer> hertz;
 
 	// Michaels test veribaler
 	private String dog;
 	private long modulus;
 	private long remodulus;
+	private String test="hKMG";
 
 	public Controller() {
 		network = new NetworkClient("localhost");
@@ -57,25 +58,35 @@ public class Controller {
 		 * Michael försöker göra en göra en arraylist
 		 * försöker
 		 */		
-		ALHertz = new ArrayList<Long>();
-		ALHertz.add(new Long (hertz));
-		ALHertz.add(new Long (kiloHertz));
-		ALHertz.add(new Long (megaHertz));
-		ALHertz.add(new Long (gigaHertz));
-		ALHertz.add(new Long (teraHertz));
+//		hertz = new ArrayList<Integer>();
+//		hertz.add(new Integer (0));
+//		hertz.add(new Integer (0));
+//		hertz.add(new Integer (0));
+//		hertz.add(new Integer (0));
+//		hertz.add(new Integer (0));
 	}
 	
-	public void merge1() {
-		for(int i=0; i<ALHertz.size();i++){
-			
-			
-			modulus = hertz / 1000;
-			hertz -= modulus * 1000;
-			kiloHertz += modulus;
-		
-		}	
-		
-	}
+//	public void merge1() {
+//		for (int i =0;i<hertz.size()-1;i++) {
+//			if(hertz.get(i)==1000){
+//				modulus = hertz.get(i) / 1000;
+//				hertz.set(i) -= modulus * 1000;
+//				hertz.set(i+1) += modulus;				
+//			}				
+//		}			
+//	}	
+//	
+//	public void stringfy2(int i,String test){
+//		stringfy2(i-1,test);
+//		dog+=Long.toString(hertz.get(i))+test.charAt(i)+"h   ";	
+//		
+//	}
+//	
+//	public void stringfy1(){
+//		for (int i=0; i>hertz.size();i++){
+//			
+//		}
+//	}
 
 	
 
