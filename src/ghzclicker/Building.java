@@ -11,7 +11,7 @@ public class Building {
 	private double baseHPS = 0; // base "hertz" per second later will be calculated with modifier
 	private String imageLocation; // building's image location for button.
 	private int owned = 0; // Amount of this build that is owned.
-	private long price; // The price of a bulding
+	private int price; // The price of a bulding
 
 	/**
 	 * Construct a building
@@ -82,11 +82,11 @@ public class Building {
 		return owned;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
-	public long getPrice() {
+	public int getPrice() {
 		return price;
 	}
 }

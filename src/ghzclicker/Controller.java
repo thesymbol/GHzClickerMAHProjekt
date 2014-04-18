@@ -16,26 +16,13 @@ import javax.swing.JButton;
 public class Controller {
 	private MenuGUI gui;
 	private NetworkClient network;
-	private long hertz = 0;
-	private long kiloHertz = 0;
-	private long megaHertz = 0;
-	private long gigaHertz = 0;
-	private long teraHertz = 0;
-	private long petaHertz = 0;
-	private long exaHertz = 0;
-	private long baseValueClick = 1;
-	private long clickModifier = 1;
-	private long hertzPerSecond = 0;
+	private int baseValueClick = 1;
+	private int clickModifier = 1;
+	private int hertzPerSecond = 0;
 	private String statistics;
 
 	private ArrayList<Building> buildings;
 	private ArrayList<Integer> hertz;
-
-	// Michaels test veribaler
-	private String dog;
-	private long modulus;
-	private long remodulus;
-	private String test="hKMG";
 
 	public Controller() {
 		network = new NetworkClient("localhost");
@@ -52,108 +39,66 @@ public class Controller {
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(), listener);
-		
-		
-		/**
-		 * Michael försöker göra en göra en arraylist
-		 * försöker
-		 */		
-//		hertz = new ArrayList<Integer>();
-//		hertz.add(new Integer (0));
-//		hertz.add(new Integer (0));
-//		hertz.add(new Integer (0));
-//		hertz.add(new Integer (0));
-//		hertz.add(new Integer (0));
+			
+		hertz = new ArrayList<Integer>();
+		hertz.add(new Integer (999));
+		hertz.add(new Integer (0));
+		hertz.add(new Integer (0));
+		hertz.add(new Integer (0));
+		hertz.add(new Integer (0));
+		hertz.add(new Integer (0));
+		hertz.add(new Integer (0));
 	}
 	
-//	public void merge1() {
-//		for (int i =0;i<hertz.size()-1;i++) {
-//			if(hertz.get(i)==1000){
-//				modulus = hertz.get(i) / 1000;
-//				hertz.set(i) -= modulus * 1000;
-//				hertz.set(i+1) += modulus;				
-//			}				
-//		}			
-//	}	
-//	
-//	public void stringfy2(int i,String test){
-//		stringfy2(i-1,test);
-//		dog+=Long.toString(hertz.get(i))+test.charAt(i)+"h   ";	
-//		
-//	}
-//	
-//	public void stringfy1(){
-//		for (int i=0; i>hertz.size();i++){
-//			
-//		}
-//	}
-
+	public void merging() {
+		int diff;
+		for (int i =0;i<hertz.size();i++) {
+			if(hertz.get(i)>=1000){
+				diff = hertz.get(i) / 1000;
+				hertz.set(i, (hertz.get(i) - diff * 1000));
+				hertz.set(i+1, (hertz.get(i+1) + diff));				
+			}				
+		}			
+	}
 	
+	public void reMerge() {
+		int diff;
+		for(int i = hertz.size() - 1; i > 0; i--) {
+			if (hertz.get(i) < 0) {
+				diff = Math.abs(hertz.get(i)) / 1000;
+				hertz.set(i, (hertz.get(i) - 1 + diff));
+				hertz.set(i-1, (hertz.get(i-1) + diff * 1000 + 1000));
+			}
+		}
+	}
+	
+	/**
+	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
+	 */
+	public String stringiFy() {
+		String letters = "Hz;K;M;G;T;P;E";
+		String[] splitted = letters.split(";");
+		String ret = "";
+		for(int i = 0; i < hertz.size(); i++) {
+			if(hertz.get(i) >= 0) {
+				ret += Integer.toString(hertz.get(i)) + splitted[i] + " ";
+			}
+		}
+		return ret;
+	}
 
 	/**
 	 * This is how much hertz we gona get per klick
 	 */
 	public void hertzClicked() {
-		hertz += baseValueClick * clickModifier;
-	}
-
-	/**
-	 * Calculate the transfer from Hertz -> KiloHertz
-	 */
-	public void merging() {
-		if (hertz >= 1000) {
-			modulus = hertz / 1000;
-			hertz -= modulus * 1000;
-			kiloHertz += modulus;
-		}
-		if (kiloHertz >= 1000) {
-			modulus = kiloHertz / 10;
-			kiloHertz -= modulus * 1000;
-			megaHertz += modulus;
-		}
-		if (megaHertz >= 1000) {
-			modulus = megaHertz / 1000;
-			megaHertz -= modulus * 1000;
-			gigaHertz += modulus;
-		}
-		if (gigaHertz >= 1000) {
-			modulus = gigaHertz / 1000;
-			gigaHertz -= modulus * 1000;
-			teraHertz += modulus;
-		}
-	}
-	
-	/**
-	 * Calculate the transfer from kiloHertz -> Hertz
-	 */
-	public void reMerge() {
-		if (hertz < 0) {
-			remodulus = Math.abs(hertz) / 1000;
-			kiloHertz -= 1 + remodulus;
-			hertz += remodulus * 1000 + 1000;
-		}
-		if (kiloHertz < 0) {
-			remodulus = Math.abs(kiloHertz) / 1000;
-			megaHertz -= 1 + remodulus;
-			kiloHertz += remodulus * 1000 + 1000;
-		}
-		if (megaHertz < 0) {
-			remodulus = Math.abs(megaHertz) / 1000;
-			gigaHertz -= 1 + remodulus;
-			megaHertz += remodulus * 1000 + 1000;
-		}
-		if (gigaHertz < 0) {
-			remodulus = Math.abs(gigaHertz) / 1000;
-			teraHertz -= 1 + remodulus;
-			gigaHertz += remodulus * 1000 + 1000;
-		}
-
+		hertz.set(0, hertz.get(0) + baseValueClick * clickModifier);
+		//hertz += baseValueClick * clickModifier;
 	}
 
 	/**
 	 * Game Loop calls this metod to update the game ~30 time a second
 	 */
-	public void update() {		
+	public void update() {
 		merging();
 		reMerge();
 		String hertz = stringiFy();
@@ -167,7 +112,8 @@ public class Controller {
 	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		hertz += hertzPerSecond;
+		hertz.set(0, hertz.get(0) + hertzPerSecond);
+		//hertz += hertzPerSecond;
 	}
 	
 	/**
@@ -193,31 +139,14 @@ public class Controller {
 	}
 
 	/**
-	 * Denna gör hertz till en lång string
-	 */
-	public String stringiFy() {
-		dog = "";
-		if (gigaHertz >= 0) {
-			dog += Long.toString(gigaHertz) + "G   ";
-		}
-		if (megaHertz >= 0) {
-			dog += Long.toString(megaHertz) + "M   ";
-		}
-		if (kiloHertz >= 0) {
-			dog += Long.toString(kiloHertz) + "K   ";
-		}
-		if (hertz >= 0) {
-			dog += Long.toString(hertz) + "Hz";
-		}
-		return dog;
-	}
-
-	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/
 	 */
 	public void saveGame() {
 		try {
-			String txt = gigaHertz + ":" + megaHertz + ":" + kiloHertz + ":" + hertz + ":";
+			String txt = "";
+			for(int i = 0; i < hertz.size(); i++) {
+				txt += hertz.get(i) + ":";
+			}
 			for (int i = 0; i < buildings.size(); i++) {
 				txt += buildings.get(i).getOwned() + ":";
 			}
@@ -241,22 +170,19 @@ public class Controller {
 			reader.close();
 			String[] store = sb.toString().split(":");
 
-			int ghz = Integer.parseInt(store[0]);
-			int mhz = Integer.parseInt(store[1]);
-			int khz = Integer.parseInt(store[2]);
-			int hz = Integer.parseInt(store[3]);
-			int hddCount = Integer.parseInt(store[4]);
-			int ramCount = Integer.parseInt(store[5]);
-			int pwrCount = Integer.parseInt(store[6]);
-			int ssdCount = Integer.parseInt(store[7]);
-			int graphicsCount = Integer.parseInt(store[8]);
-			int processorCount = Integer.parseInt(store[9]);
-			int motherboardCount = Integer.parseInt(store[10]);
+			int hddCount = Integer.parseInt(store[7]);
+			int ramCount = Integer.parseInt(store[8]);
+			int pwrCount = Integer.parseInt(store[9]);
+			int ssdCount = Integer.parseInt(store[10]);
+			int graphicsCount = Integer.parseInt(store[11]);
+			int processorCount = Integer.parseInt(store[12]);
+			int motherboardCount = Integer.parseInt(store[13]);
+			
+			// TODO: Not rely on the hertz size (i) for the store array.
+			for(int i = 0; i < hertz.size(); i++) {
+				hertz.set(i, Integer.parseInt(store[i]));
+			}
 
-			hertz = hz;
-			kiloHertz = khz;
-			megaHertz = mhz;
-			gigaHertz = ghz;
 			buildings.get(0).setOwned(hddCount);
 			buildings.get(1).setOwned(ramCount);
 			buildings.get(2).setOwned(pwrCount);
@@ -266,7 +192,10 @@ public class Controller {
 			buildings.get(6).setOwned(motherboardCount);
 
 			// Prints loaded data in console
-			System.out.println(ghz + " " + mhz + " " + khz + " " + hz + " " + hddCount + " " + ramCount + " " + pwrCount + " " + ssdCount + " " + graphicsCount + " " + processorCount + " " + motherboardCount);
+			for(int i = 0; i < store.length; i++) {
+				System.out.print(store[i] + " ");
+			}
+			System.out.println();
 
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
@@ -302,10 +231,19 @@ public class Controller {
 
 	/**
 	 * Gray out buttons
+	 * 
+	 * TODO: Fix this so grayout works correct for the higher numbers
 	 */
 	public void grayiFy() {
+		int currTotalHertz = 0;
+		int n = 1;
+		for(int i = 0; i < hertz.size(); i++) {
+			currTotalHertz += hertz.get(i) * n;
+			n *= 1000;
+		}
+		System.out.println("Total hertz: " + currTotalHertz);
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			if (((gigaHertz * 1000000000) + (megaHertz * 1000000) + (kiloHertz * 1000) + hertz) < buildings.get(i).getPrice()) {
+			if (currTotalHertz < buildings.get(i).getPrice()) {
 				gui.getBtnBuildings().get(i).setEnabled(false);
 			} else {
 				gui.getBtnBuildings().get(i).setEnabled(true);
@@ -338,7 +276,7 @@ public class Controller {
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
 					building.setOwned(building.getOwned() + 1);
-					hertz -= buildings.get(i).getPrice();
+					hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
 				}
 			}
 		}
