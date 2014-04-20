@@ -60,6 +60,19 @@ public class Controller {
 			}
 		}
 	}
+	
+	public void reMerge1() {
+		int diff;
+		for (int i = 0; i < hertz.size() - 1; i++) {
+			if (hertz.get(i) < 0) {
+				diff = Math.abs(hertz.get(i)) / 1000;
+			
+				hertz.set(i+1, (hertz.get(i+1) - (1 + diff)));
+			
+				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));			
+			}
+		}
+	}
 
 	public void reMerge() {
 		int diff;
@@ -100,7 +113,7 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
-		reMerge();
+		reMerge1();
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
