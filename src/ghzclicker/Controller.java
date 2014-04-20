@@ -30,12 +30,12 @@ public class Controller {
 		network.close();
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
-		buildings.add(new Building("RAM", 300, 2, "res/NewRAM.png"));
-		buildings.add(new Building("Power Supply", 1000, 100, "res/NewPowerSupply.png"));
-		buildings.add(new Building("Hard Drive(SSD)", 7000, 10, "res/NewHardDrive(SSD).png"));
-		buildings.add(new Building("Graphics card", 30000, 20, "res/NewGraphicsCard.png"));
-		buildings.add(new Building("Processor", 150000, 30, "res/NewProcessor.png"));
-		buildings.add(new Building("MotherBoard", 1000000, 400, "res/NewMotherboard.png"));
+		buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
+		buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
+		buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
+		buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
+		buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
+		buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
 
 		Listener listener = new Listener();
 		gui = new MenuGUI(createBuildingBtns(), listener);
@@ -49,7 +49,10 @@ public class Controller {
 		hertz.add(new Integer(0));
 		hertz.add(new Integer(0));
 	}
-
+	
+	/**
+	 * This dose so if hertz=1000, we will get 1Khz and 0 Hertz
+	 */
 	public void merging() {
 		int diff;
 		for (int i = 0; i < hertz.size(); i++) {
@@ -61,7 +64,10 @@ public class Controller {
 		}
 	}
 	
-	public void reMerge1() {
+	/**
+	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz 
+	 */
+	public void reMerge() {
 		int diff;
 		for (int i = 0; i < hertz.size() - 1; i++) {
 			if (hertz.get(i) < 0) {
@@ -70,18 +76,7 @@ public class Controller {
 				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));			
 			}
 		}
-	}
-
-	public void reMerge() {
-		int diff;
-		for (int i = hertz.size() - 1; i > 0; i--) {
-			if (hertz.get(i) < 0) {
-				diff = Math.abs(hertz.get(i)) / 1000;
-				hertz.set(i, (hertz.get(i) - 1 + diff));
-				hertz.set(i - 1, (hertz.get(i - 1) + diff * 1000 + 1000));
-			}
-		}
-	}
+	}	
 
 	/**
 	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
