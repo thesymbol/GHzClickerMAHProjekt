@@ -65,10 +65,8 @@ public class Controller {
 		int diff;
 		for (int i = 0; i < hertz.size() - 1; i++) {
 			if (hertz.get(i) < 0) {
-				diff = Math.abs(hertz.get(i)) / 1000;
-			
-				hertz.set(i+1, (hertz.get(i+1) - (1 + diff)));
-			
+				diff = Math.abs(hertz.get(i)) / 1000;			
+				hertz.set(i+1, (hertz.get(i+1) - (1 + diff)));			
 				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));			
 			}
 		}
@@ -269,6 +267,8 @@ public class Controller {
 	 */
 	private class Listener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			int currTotalHertz = 0;
+			int n = 1;
 			// Hertz button
 			if (e.getSource() == gui.getBtnHertz()) {
 				hertzClicked();
@@ -286,12 +286,20 @@ public class Controller {
 
 			// Building purcheses.
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-				if (e.getSource() == gui.getBtnBuildings().get(i)) {
+				
+				if (e.getSource() == gui.getBtnBuildings().get(i)) {					
 					Building building = buildings.get(i);
-					building.setOwned(building.getOwned() + 1);
-					hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
+					for (int j = 0; i < hertz.size(); j++) {
+						currTotalHertz += hertz.get(j) * n;
+						n *= 1000;
+					}
+					if(currTotalHertz >=  buildings.get(i).getPrice()){
+						building.setOwned(building.getOwned() + 1);
+						hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
+					}
 				}
 			}
 		}
-	}
+	}		
 }
+
