@@ -289,7 +289,7 @@ public class Controller {
 				
 				if (e.getSource() == gui.getBtnBuildings().get(i)) {					
 					Building building = buildings.get(i);
-					for (int j = 0; i < hertz.size(); j++) {
+					for (int j = 0; j < hertz.size(); j++) {
 						currTotalHertz += hertz.get(j) * n;
 						n *= 1000;
 					}
