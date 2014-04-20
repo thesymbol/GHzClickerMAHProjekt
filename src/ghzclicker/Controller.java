@@ -49,7 +49,7 @@ public class Controller {
 		hertz.add(new Integer(0));
 		hertz.add(new Integer(0));
 	}
-	
+
 	/**
 	 * This dose so if hertz=1000, we will get 1Khz and 0 Hertz
 	 */
@@ -63,20 +63,20 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	/**
-	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz 
+	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz
 	 */
 	public void reMerge() {
 		int diff;
 		for (int i = 0; i < hertz.size() - 1; i++) {
 			if (hertz.get(i) < 0) {
-				diff = Math.abs(hertz.get(i)) / 1000;			
-				hertz.set(i+1, (hertz.get(i+1) - (1 + diff)));			
-				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));			
+				diff = Math.abs(hertz.get(i)) / 1000;
+				hertz.set(i + 1, (hertz.get(i + 1) - (1 + diff)));
+				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));
 			}
 		}
-	}	
+	}
 
 	/**
 	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
@@ -106,7 +106,6 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
-		reMerge1();
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
@@ -281,20 +280,19 @@ public class Controller {
 
 			// Building purcheses.
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-				
-				if (e.getSource() == gui.getBtnBuildings().get(i)) {					
+
+				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
 					for (int j = 0; j < hertz.size(); j++) {
 						currTotalHertz += hertz.get(j) * n;
 						n *= 1000;
 					}
-					if(currTotalHertz >=  buildings.get(i).getPrice()){
+					if (currTotalHertz >= buildings.get(i).getPrice()) {
 						building.setOwned(building.getOwned() + 1);
 						hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
 					}
 				}
 			}
 		}
-	}		
+	}
 }
-
