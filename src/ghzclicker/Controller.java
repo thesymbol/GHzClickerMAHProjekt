@@ -114,6 +114,7 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
+		reMerge();
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
