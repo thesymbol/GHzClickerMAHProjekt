@@ -101,6 +101,7 @@ public class MenuGUI extends JFrame {
 
 	/**
 	 * get hertz button
+	 * @return the Hertz button.
 	 */
 	public JButton getBtnHertz() {
 		return btnHertz;
@@ -108,6 +109,7 @@ public class MenuGUI extends JFrame {
 
 	/**
 	 * get save btn
+	 * @return the save button.
 	 */
 	public JButton getBtnSave() {
 		return btnSave;
@@ -115,6 +117,7 @@ public class MenuGUI extends JFrame {
 
 	/**
 	 * get load btn
+	 * @return the load button.
 	 */
 	public JButton getBtnLoad() {
 		return btnLoad;
@@ -122,6 +125,7 @@ public class MenuGUI extends JFrame {
 
 	/**
 	 * get arraylist with buildings buttons
+	 * @return the buildings arraylist button.
 	 */
 	public ArrayList<JButton> getBtnBuildings() {
 		return btnBuildings;

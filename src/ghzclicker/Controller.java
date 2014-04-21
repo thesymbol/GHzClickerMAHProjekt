@@ -12,7 +12,12 @@ import java.util.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+/**
+ *  Taking care of all the logic within the application.
+ *  
+ * @author Marcus Orwén , Mattias Holst , Viktor Saltarski , Michael Bergstrand
+ *
+ */
 public class Controller {
 	private MenuGUI gui;
 	private NetworkClient network;
@@ -23,7 +28,10 @@ public class Controller {
 
 	private ArrayList<Building> buildings;
 	private ArrayList<Integer> hertz;
-
+	/**
+	 * Constructor which adds the network and the building buttons
+	 * Adding hertz to an ArrayList.
+	 */
 	public Controller() {
 		network = new NetworkClient("localhost");
 		network.sendData("Test socket");
@@ -106,7 +114,7 @@ public class Controller {
 	 */
 	public void update() {
 		merging();
-		reMerge1();
+		reMerge();
 		String hertz = stringiFy();
 		gui.update(hertz);
 		calculateBuildingCosts();
@@ -164,7 +172,9 @@ public class Controller {
 			iox.printStackTrace();
 		}
 	}
-
+	/**
+	 * Loading the file from the selected location.
+	 */
 	public void loadGame() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.save")));
@@ -209,7 +219,10 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * An ArrayList to create the buttons for the buildings.
+	 * @return the building buttons.
+	 */
 	public ArrayList<JButton> createBuildingBtns() {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {

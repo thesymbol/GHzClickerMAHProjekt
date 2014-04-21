@@ -3,10 +3,16 @@ package ghzclicker;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * A loop which will let the application to run for forever and keep updating the game.
+ * @author Marcus Orwén
+ *
+ */
 public class GameLoop {
 	private Controller controller;
-
+	/**
+	 * 
+	 */
 	public GameLoop() {
 		controller = new Controller();
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
