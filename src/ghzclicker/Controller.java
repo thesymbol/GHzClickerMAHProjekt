@@ -148,9 +148,11 @@ public class Controller {
 	 */
 	public void uppdateStatistics() {
 		  statistics="";
+		  int howManyBuildings = 0;
 		  for (int i = 0; i < buildings.size(); i++) {
-		   statistics += buildings.get(i).getOwned();
+			 howManyBuildings+=buildings.get(i).getOwned();
 		  }
+		  statistics += howManyBuildings;
 		  statistics+= "\n Total Harddrives : " + buildings.get(0).getOwned() + "\n Total RAM : ";
 		  statistics+= buildings.get(1).getOwned() + "\n Total PowerSupplies : ";
 		  statistics+= buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : ";
@@ -160,8 +162,9 @@ public class Controller {
 		  statistics+= buildings.get(6).getOwned();
 		  
 		  gui.updateStatistics(statistics);
-		 }
+	}
 
+		
 	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/
 	 */
