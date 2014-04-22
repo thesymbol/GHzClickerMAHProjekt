@@ -18,7 +18,7 @@ public class GameLoop {
 	 * 
 	 */
 	public GameLoop() {
-		controller = new Controller();
+//		controller = new Controller();
 		dcontroller= new dController();
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
