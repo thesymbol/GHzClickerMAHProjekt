@@ -8,10 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- * Describes a network client.
- * You can connect to a server on specified ip and port.
- * The client can then send and recieve data to/from the server.
- * And lastly close the connection if so needed.
+ * Describes a network client. You can connect to a server on specified ip and port. The client can then send and recieve data to/from the server. And lastly close the connection if so needed.
  * 
  * @author Marcus Orwén
  */
@@ -19,7 +16,7 @@ public class NetworkClient {
 	private Socket client;
 	private BufferedReader in;
 	private PrintStream out;
-	
+
 	/**
 	 * Constructs a client object with port 13337 and specified server ip
 	 * 

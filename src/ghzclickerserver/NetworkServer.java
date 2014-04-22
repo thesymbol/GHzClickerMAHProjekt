@@ -9,10 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- * Describes a network server.
- * The server listens on a port for clients to accept.
- * The server can then send and recieve data to/from the client.
- * And lastly close the connection's if so needed.
+ * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client. And lastly close the connection's if so needed.
  * 
  * @author Marcus Orwén
  */
