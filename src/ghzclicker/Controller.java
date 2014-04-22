@@ -147,22 +147,24 @@ public class Controller {
 	 * this will update the statistics all the time.
 	 */
 	public void uppdateStatistics() {
-		statistics="";
-		for (int i = 0; i < buildings.size(); i++) {
-			statistics += buildings.get(i).getOwned() + "\n Total Harddrives : ";
-		}
-		statistics +="\n Total Harddrives : ";
-		statistics += buildings.get(0).getOwned() + "\n Total RAM : ";
-		statistics += buildings.get(1).getOwned() + "\n Total PowerSupplies : ";
-		statistics += buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : ";
-		statistics += buildings.get(3).getOwned() + "\n Total Graphics Cards : ";
-		statistics += buildings.get(4).getOwned() + "\n Total Processors : ";
-		statistics += buildings.get(5).getOwned() + "\n Total Motherboards : ";
-		statistics += buildings.get(6).getOwned();
-		
-		gui.updateStatistics(statistics);
+		  statistics="";
+		  int howManyBuildings = 0;
+		  for (int i = 0; i < buildings.size(); i++) {
+			 howManyBuildings+=buildings.get(i).getOwned();
+		  }
+		  statistics += howManyBuildings;
+		  statistics+= "\n Total Harddrives : " + buildings.get(0).getOwned() + "\n Total RAM : ";
+		  statistics+= buildings.get(1).getOwned() + "\n Total PowerSupplies : ";
+		  statistics+= buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : ";
+		  statistics+= buildings.get(3).getOwned() + "\n Total Graphics Cards : ";
+		  statistics+= buildings.get(4).getOwned() + "\n Total Processors : ";
+		  statistics+= buildings.get(5).getOwned() + "\n Total Motherboards : ";
+		  statistics+= buildings.get(6).getOwned();
+		  
+		  gui.updateStatistics(statistics);
 	}
 
+		
 	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/
 	 */
