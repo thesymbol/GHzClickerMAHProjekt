@@ -147,17 +147,19 @@ public class Controller {
 	 * this will update the statistics all the time.
 	 */
 	public void uppdateStatistics() {
-
+		statistics="";
 		for (int i = 0; i < buildings.size(); i++) {
-			statistics += buildings.get(i).getOwned() + "\n Total Harddrives : "
-					+ buildings.get(0).getOwned() + "\n Total RAM : "
-					+ buildings.get(1).getOwned() + "\n Total PowerSupplies : "
-					+ buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : "
-					+ buildings.get(3).getOwned() + "\n Total Graphics Cards : "
-					+ buildings.get(4).getOwned() + "\n Total Processors : "
-					+ buildings.get(5).getOwned() + "\n Total Motherboards : "
-					+ buildings.get(6).getOwned();
+			statistics += buildings.get(i).getOwned() + "\n Total Harddrives : ";
 		}
+		statistics +="\n Total Harddrives : ";
+		statistics += buildings.get(0).getOwned() + "\n Total RAM : ";
+		statistics += buildings.get(1).getOwned() + "\n Total PowerSupplies : ";
+		statistics += buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : ";
+		statistics += buildings.get(3).getOwned() + "\n Total Graphics Cards : ";
+		statistics += buildings.get(4).getOwned() + "\n Total Processors : ";
+		statistics += buildings.get(5).getOwned() + "\n Total Motherboards : ";
+		statistics += buildings.get(6).getOwned();
+		
 		gui.updateStatistics(statistics);
 	}
 
