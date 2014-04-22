@@ -151,7 +151,7 @@ public class Controller {
 		  for (int i = 0; i < buildings.size(); i++) {
 		   statistics += buildings.get(i).getOwned();
 		  }
-		  statistics+= buildings.get(0).getOwned() + "\n Total RAM : ";
+		  statistics+= "\n Total Harddrives : " + buildings.get(0).getOwned() + "\n Total RAM : ";
 		  statistics+= buildings.get(1).getOwned() + "\n Total PowerSupplies : ";
 		  statistics+= buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : ";
 		  statistics+= buildings.get(3).getOwned() + "\n Total Graphics Cards : ";
