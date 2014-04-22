@@ -7,11 +7,11 @@ package ghzclicker;
  */
 public class Building {
 	private String name; // name of building
-	private int baseCost; // base cost that will later be calculated with controller
+	private long baseCost; // base cost that will later be calculated with controller
 	private double baseHPS = 0; // base "hertz" per second later will be calculated with modifier
 	private String imageLocation; // building's image location for button.
 	private int owned = 0; // Amount of this build that is owned.
-	private int price; // The price of a bulding
+	private long price; // The price of a bulding
 
 	/**
 	 * Construct a building
@@ -21,7 +21,7 @@ public class Building {
 	 * @param baseHPS base "Hertz" per Second
 	 * @param image location for building's button
 	 */
-	public Building(String name, int baseCost, double baseHPS, String imageLocation) {
+	public Building(String name, long baseCost, double baseHPS, String imageLocation) {
 		this.name = name;
 		this.baseCost = baseCost;
 		this.baseHPS = baseHPS;
@@ -42,7 +42,7 @@ public class Building {
 	 * 
 	 * @return base cost of building
 	 */
-	public int getBaseCost() {
+	public long getBaseCost() {
 		return baseCost;
 	}
 
@@ -87,7 +87,7 @@ public class Building {
 	 * 
 	 * @param price The price of the building.
 	 */
-	public void setPrice(int price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
@@ -96,7 +96,7 @@ public class Building {
 	 * 
 	 * @return the price of the building.
 	 */
-	public int getPrice() {
+	public long getPrice() {
 		return price;
 	}
 }
