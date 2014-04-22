@@ -108,7 +108,6 @@ public class Controller {
 	 */
 	public void hertzClicked() {
 		hertz.set(0, hertz.get(0) + baseValueClick * clickModifier);
-		// hertz += baseValueClick * clickModifier;
 	}
 
 	/**
@@ -130,7 +129,6 @@ public class Controller {
 	 */
 	public void updateEverySecond() {
 		hertz.set(0, hertz.get(0) + hertzPerSecond);
-		// hertz += hertzPerSecond;
 	}
 
 	/**
@@ -208,8 +206,8 @@ public class Controller {
 			
 			// TODO: Not rely on the hertz size (i) for the store array.
 			int hertzSize = hertz.size();
-			for(int i = 0; i < store.length - hertz.size(); i++) {
-				buildings.get(i).setOwned(Integer.parseInt(store[(i+hertzSize)]));
+			for (int i = 0; i < store.length - hertz.size(); i++) {
+				buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
 			}
 
 			// Prints loaded data in console
