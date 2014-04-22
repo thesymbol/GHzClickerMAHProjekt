@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
  * 
  *         A Class that makes up the whole GUI
  */
-public class MenuGUI extends JFrame {
+public class GameGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	// Making buttons with buildings and hertz button and a Label for the hertz
 	private JButton btnHertz = new JButton("hertz");
@@ -37,7 +37,7 @@ public class MenuGUI extends JFrame {
 	 * @param btnBuildings , adding the buildings to the GUI
 	 * @param listener , adding listeners to the buttons.
 	 */
-	public MenuGUI(ArrayList<JButton> btnBuildings, ActionListener listener) {
+	public GameGUI(ArrayList<JButton> btnBuildings, ActionListener listener) {
 		this.btnBuildings = btnBuildings;
 		pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
 
