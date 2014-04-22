@@ -141,7 +141,7 @@ public class MenuGUI extends JFrame {
 	 * @param i , which building.
 	 * @param cost , the price of the builing.
 	 */
-	public void updateJButtonCost(int i, int cost) {
+	public void updateJButtonCost(int i, long cost) {
 		btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
 	}
 

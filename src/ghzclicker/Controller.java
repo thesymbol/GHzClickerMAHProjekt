@@ -55,10 +55,10 @@ public class Controller {
 		hertz.add(new Double(100));
 		hertz.add(new Double(100));
 		hertz.add(new Double(100));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
+		hertz.add(new Double(100));
+		hertz.add(new Double(100));
+		hertz.add(new Double(100));
+		hertz.add(new Double(100));
 
 	}
 
@@ -66,10 +66,10 @@ public class Controller {
 	 * This dose so if hertz=1000, we will get 1Khz and 0 Hertz
 	 */
 	public void merging() {
- 		double diff;
+ 		int diff;
 		for (int i = 0; i < hertz.size(); i++) {
 			if (hertz.get(i) >= 1000) {
-				diff = (hertz.get(i) / 1000);
+				diff = (int) (hertz.get(i) / 1000);
 				hertz.set(i, (hertz.get(i) - diff * 1000));
 				hertz.set(i + 1, (hertz.get(i + 1) + diff));
 			}
@@ -80,10 +80,10 @@ public class Controller {
 	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz
 	 */
 	public void reMerge() {
-		double diff;
+		int diff;
 		for (int i = 0; i < hertz.size() - 1; i++) {
 			if (hertz.get(i) < 0) {
-				diff = Math.abs(hertz.get(i)) / 1000;
+				diff = (int) Math.abs(hertz.get(i)) / 1000;
 				hertz.set(i + 1, (hertz.get(i + 1) - (1 + diff)));
 				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));
 			}
@@ -248,7 +248,7 @@ public class Controller {
 	 */
 	public void calculateBuildingCosts() {
 		for (int i = 0; i < buildings.size(); i++) {
-			int cost = (int) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
+			long cost = (long) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
@@ -262,7 +262,7 @@ public class Controller {
 	 */
 	public void grayiFy() {
 		double currTotalHertz = 0;
-		int n = 1;
+		double n = 1;
 
 		for (int i = 0; i < hertz.size(); i++) {
 			currTotalHertz += hertz.get(i) * n;
@@ -284,7 +284,7 @@ public class Controller {
 	private class Listener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			double currTotalHertz = 0;
-			int n = 1;
+			double n = 1;
 			// Hertz button
 			if (e.getSource() == gui.getBtnHertz()) {
 				hertzClicked();
