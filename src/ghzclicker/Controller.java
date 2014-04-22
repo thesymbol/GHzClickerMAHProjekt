@@ -89,6 +89,16 @@ public class Controller {
 			}
 		}
 	}
+	
+	public void dogemethod(){
+		long BuildingPrice=1010001111; //priset på bygnaden
+		long first;
+		for(int i = 0; i < hertz.size(); i++){		
+			first=BuildingPrice % 1000; //=111
+			BuildingPrice=BuildingPrice/1000;//1010001	
+			hertz.set(i, hertz.get(i)-first);
+		}
+	}
 
 	/**
 	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
