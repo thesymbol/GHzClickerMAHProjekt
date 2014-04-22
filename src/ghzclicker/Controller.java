@@ -188,26 +188,16 @@ public class Controller {
 			reader.close();
 			String[] store = sb.toString().split(":");
 
-			int hddCount = Integer.parseInt(store[7]);
-			int ramCount = Integer.parseInt(store[8]);
-			int pwrCount = Integer.parseInt(store[9]);
-			int ssdCount = Integer.parseInt(store[10]);
-			int graphicsCount = Integer.parseInt(store[11]);
-			int processorCount = Integer.parseInt(store[12]);
-			int motherboardCount = Integer.parseInt(store[13]);
-
 			// TODO: Not rely on the hertz size (i) for the store array.
 			for (int i = 0; i < hertz.size(); i++) {
 				hertz.set(i, Integer.parseInt(store[i]));
 			}
-
-			buildings.get(0).setOwned(hddCount);
-			buildings.get(1).setOwned(ramCount);
-			buildings.get(2).setOwned(pwrCount);
-			buildings.get(3).setOwned(ssdCount);
-			buildings.get(4).setOwned(graphicsCount);
-			buildings.get(5).setOwned(processorCount);
-			buildings.get(6).setOwned(motherboardCount);
+			
+			// TODO: Not rely on the hertz size (i) for the store array.
+			int hertzSize = hertz.size();
+			for(int i = 0; i < store.length - hertz.size(); i++) {
+				buildings.get(i).setOwned(Integer.parseInt(store[(i+hertzSize)]));
+			}
 
 			// Prints loaded data in console
 			for (int i = 0; i < store.length; i++) {
