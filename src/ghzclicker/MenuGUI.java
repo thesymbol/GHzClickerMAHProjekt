@@ -165,7 +165,7 @@ public class MenuGUI extends JFrame {
 	 * @param statistics , shows the text from statistics variable
 	 */
 	public void updateStatistics(String statistics) {
-		taStatistics.setText("Total buildings :" + statistics);
+		taStatistics.append("Total buildings :" + statistics);
 	}
 
 }
