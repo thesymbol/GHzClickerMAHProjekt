@@ -12,11 +12,12 @@ import java.util.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 /**
- *  Taking care of all the logic within the application.
- *  
+ * Taking care of all the logic within the application.
+ * 
  * @author Marcus Orwén , Mattias Holst , Viktor Saltarski , Michael Bergstrand
- *
+ * 
  */
 public class Controller {
 	private MenuGUI gui;
@@ -28,9 +29,9 @@ public class Controller {
 
 	private ArrayList<Building> buildings;
 	private ArrayList<Integer> hertz;
+
 	/**
-	 * Constructor which adds the network and the building buttons
-	 * Adding hertz to an ArrayList.
+	 * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
 	 */
 	public Controller() {
 		network = new NetworkClient("localhost");
@@ -57,7 +58,7 @@ public class Controller {
 		hertz.add(new Integer(0));
 		hertz.add(new Integer(0));
 	}
-	
+
 	/**
 	 * This dose so if hertz=1000, we will get 1Khz and 0 Hertz
 	 */
@@ -71,20 +72,20 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	/**
-	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz 
+	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz
 	 */
 	public void reMerge() {
 		int diff;
 		for (int i = 0; i < hertz.size() - 1; i++) {
 			if (hertz.get(i) < 0) {
-				diff = Math.abs(hertz.get(i)) / 1000;			
-				hertz.set(i+1, (hertz.get(i+1) - (1 + diff)));			
-				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));			
+				diff = Math.abs(hertz.get(i)) / 1000;
+				hertz.set(i + 1, (hertz.get(i + 1) - (1 + diff)));
+				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));
 			}
 		}
-	}	
+	}
 
 	/**
 	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
@@ -139,7 +140,7 @@ public class Controller {
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
 		}
-		gui.updateHertzPerSecond(Long.toString(hertzPerSecond));
+		gui.updateHertzPerSecond(Integer.toString(hertzPerSecond));
 	}
 
 	/**
@@ -180,6 +181,7 @@ public class Controller {
 			iox.printStackTrace();
 		}
 	}
+
 	/**
 	 * Loading the file from the selected location.
 	 */
@@ -194,26 +196,16 @@ public class Controller {
 			reader.close();
 			String[] store = sb.toString().split(":");
 
-			int hddCount = Integer.parseInt(store[7]);
-			int ramCount = Integer.parseInt(store[8]);
-			int pwrCount = Integer.parseInt(store[9]);
-			int ssdCount = Integer.parseInt(store[10]);
-			int graphicsCount = Integer.parseInt(store[11]);
-			int processorCount = Integer.parseInt(store[12]);
-			int motherboardCount = Integer.parseInt(store[13]);
-
 			// TODO: Not rely on the hertz size (i) for the store array.
 			for (int i = 0; i < hertz.size(); i++) {
 				hertz.set(i, Integer.parseInt(store[i]));
 			}
-
-			buildings.get(0).setOwned(hddCount);
-			buildings.get(1).setOwned(ramCount);
-			buildings.get(2).setOwned(pwrCount);
-			buildings.get(3).setOwned(ssdCount);
-			buildings.get(4).setOwned(graphicsCount);
-			buildings.get(5).setOwned(processorCount);
-			buildings.get(6).setOwned(motherboardCount);
+			
+			// TODO: Not rely on the hertz size (i) for the store array.
+			int hertzSize = hertz.size();
+			for(int i = 0; i < store.length - hertz.size(); i++) {
+				buildings.get(i).setOwned(Integer.parseInt(store[(i+hertzSize)]));
+			}
 
 			// Prints loaded data in console
 			for (int i = 0; i < store.length; i++) {
@@ -227,8 +219,10 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * An ArrayList to create the buttons for the buildings.
+	 * 
 	 * @return the building buttons.
 	 */
 	public ArrayList<JButton> createBuildingBtns() {
@@ -258,8 +252,6 @@ public class Controller {
 
 	/**
 	 * Gray out buttons
-	 * 
-	 * TODO: Fix this so grayout works correct for the higher numbers
 	 */
 	public void grayiFy() {
 		int currTotalHertz = 0;
@@ -268,7 +260,6 @@ public class Controller {
 			currTotalHertz += hertz.get(i) * n;
 			n *= 1000;
 		}
-		System.out.println("Total hertz: " + currTotalHertz);
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 			if (currTotalHertz < buildings.get(i).getPrice()) {
 				gui.getBtnBuildings().get(i).setEnabled(false);
@@ -302,20 +293,19 @@ public class Controller {
 
 			// Building purcheses.
 			for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-				
-				if (e.getSource() == gui.getBtnBuildings().get(i)) {					
+
+				if (e.getSource() == gui.getBtnBuildings().get(i)) {
 					Building building = buildings.get(i);
 					for (int j = 0; j < hertz.size(); j++) {
 						currTotalHertz += hertz.get(j) * n;
 						n *= 1000;
 					}
-					if(currTotalHertz >=  buildings.get(i).getPrice()){
+					if (currTotalHertz >= buildings.get(i).getPrice()) {
 						building.setOwned(building.getOwned() + 1);
 						hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
 					}
 				}
 			}
 		}
-	}		
+	}
 }
-

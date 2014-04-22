@@ -81,15 +81,19 @@ public class Building {
 	public int getOwned() {
 		return owned;
 	}
+
 	/**
 	 * Sets the price of the building.
+	 * 
 	 * @param price The price of the building.
 	 */
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
 	/**
 	 * Get the price of the building.
+	 * 
 	 * @return the price of the building.
 	 */
 	public int getPrice() {

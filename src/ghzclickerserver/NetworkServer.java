@@ -8,16 +8,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client. And lastly close the connection's if so needed.
+ * 
+ * @author Marcus Orwén
+ */
 public class NetworkServer {
 	private ServerSocket server;
 	private BufferedReader in;
 	private PrintStream out;
 	private Socket client = null;
 
+	/**
+	 * Constructs the server object with default port 13337
+	 */
 	public NetworkServer() {
 		this(13337);
 	}
 
+	/**
+	 * Constructs the server object with specified port.
+	 * 
+	 * @param port The port to listen for connections on.
+	 */
 	public NetworkServer(int port) {
 		try {
 			server = new ServerSocket(port); // Accept connections on specified port
@@ -26,6 +39,9 @@ public class NetworkServer {
 		}
 	}
 
+	/**
+	 * Accept connection from client.
+	 */
 	public void accept() {
 		try {
 			client = server.accept(); // Get client connected
@@ -36,6 +52,11 @@ public class NetworkServer {
 		}
 	}
 
+	/**
+	 * Get data from client
+	 * 
+	 * @return ArrayList<String> The data that the client sent.
+	 */
 	public ArrayList<String> getData() {
 		ArrayList<String> response = new ArrayList<String>();
 		try {
@@ -49,6 +70,11 @@ public class NetworkServer {
 		return response;
 	}
 
+	/**
+	 * Send data to client
+	 * 
+	 * @param data The data to be sent to the client.
+	 */
 	public void sendData(String data) {
 		try {
 			out.println(data);
@@ -57,6 +83,9 @@ public class NetworkServer {
 		}
 	}
 
+	/**
+	 * Close the connection to the client.
+	 */
 	public void closeClient() {
 		try {
 			in.close();
@@ -67,6 +96,9 @@ public class NetworkServer {
 		}
 	}
 
+	/**
+	 * Close the server, so it stops listening.
+	 */
 	public void closeServer() {
 		try {
 			server.close();
