@@ -148,11 +148,11 @@ public class Controller {
 	 */
 	public void uppdateStatistics() {
 		  statistics="";
-		  int howManyBuildings = 0;
+		  int TotalBuildings = 0;
 		  for (int i = 0; i < buildings.size(); i++) {
-			 howManyBuildings+=buildings.get(i).getOwned();
+			 TotalBuildings+=buildings.get(i).getOwned();
 		  }
-		  statistics += howManyBuildings;
+		  statistics += TotalBuildings;
 		  statistics+= "\n Total Harddrives : " + buildings.get(0).getOwned() + "\n Total RAM : ";
 		  statistics+= buildings.get(1).getOwned() + "\n Total PowerSupplies : ";
 		  statistics+= buildings.get(2).getOwned() + "\n Total Harddrives(SSD) : ";
