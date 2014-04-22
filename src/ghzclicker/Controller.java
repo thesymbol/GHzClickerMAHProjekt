@@ -26,6 +26,7 @@ public class Controller {
 	private int clickModifier = 1;
 	private int hertzPerSecond = 0;
 	private String statistics;
+	private int TotalBuildings;
 
 	private ArrayList<Building> buildings;
 	private ArrayList<Integer> hertz;
@@ -148,7 +149,7 @@ public class Controller {
 	 */
 	public void uppdateStatistics() {
 		  statistics="";
-		  int TotalBuildings = 0;
+		  TotalBuildings = 0;
 		  for (int i = 0; i < buildings.size(); i++) {
 			 TotalBuildings+=buildings.get(i).getOwned();
 		  }
