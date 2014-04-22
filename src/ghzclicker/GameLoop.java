@@ -12,25 +12,29 @@ import java.util.concurrent.TimeUnit;
  */
 public class GameLoop {
 	private Controller controller;
+	private dController dcontroller;
 
 	/**
 	 * 
 	 */
 	public GameLoop() {
 		controller = new Controller();
+		dcontroller= new dController();
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
 		// constant updates (every 10 millisecond).
 		exec.scheduleAtFixedRate(new Runnable() {
 			public void run() {
-				controller.update();
+//				controller.update();
+				dcontroller.update();
 			}
 		}, 0, 10, TimeUnit.MILLISECONDS);
 
 		// constant updates (every 1 second).
 		exec.scheduleAtFixedRate(new Runnable() {
 			public void run() {
-				controller.updateEverySecond();
+//				controller.updateEverySecond();
+				dcontroller.updateEverySecond();
 			}
 		}, 0, 1, TimeUnit.SECONDS);
 	}
