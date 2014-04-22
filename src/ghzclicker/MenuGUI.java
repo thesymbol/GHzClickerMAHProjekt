@@ -48,7 +48,7 @@ public class MenuGUI extends JFrame {
 		setName("GHz Clicker");
 
 		// setting locations and size.
-		lblText.setBounds(50, 50, 200, 50);
+		lblText.setBounds(50, 50, 500, 50);
 		btnHertz.setBounds(50, 125, 200, 50);
 		lblHertzPerSecond.setBounds(50, 75, 200, 50);
 		btnSave.setBounds(50, 700, 100, 50);
