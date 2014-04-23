@@ -22,7 +22,7 @@ import javax.swing.JButton;
  * 
  */
 public class Controller {
-	private MenuGUI gui;
+	private GameGUI gui;
 	private NetworkClient network;
 	private int baseValueClick = 1;
 	private int clickModifier = 1;
@@ -50,7 +50,7 @@ public class Controller {
 		buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
 
 		Listener listener = new Listener();
-		gui = new MenuGUI(createBuildingBtns(), listener);
+		gui = new GameGUI(createBuildingBtns(), listener);
 
 		hertz = new ArrayList<Double>();
 		hertz.add(new Double(999));
