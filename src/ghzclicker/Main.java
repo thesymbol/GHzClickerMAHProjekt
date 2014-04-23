@@ -1,7 +1,7 @@
 package ghzclicker;
 
 /**
- * 
+ * A Class that will run the program.
  * @author Marcus Orwén
  */
 public class Main {

@@ -15,7 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * Taking care of all the logic within the application.
+ * A class that controlls the whole program.
+ * Having all the logics within the application
  * 
  * @author Marcus Orwén , Mattias Holst , Viktor Saltarski , Michael Bergstrand
  * 
@@ -170,6 +171,7 @@ public class Controller {
 
 	/**
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/
+	 * Saving the game into a .save file in the selected location.
 	 */
 	public void saveGame() {
 		try {
