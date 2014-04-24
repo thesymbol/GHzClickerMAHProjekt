@@ -40,6 +40,10 @@ public class Controller {
 	public Controller() {
 		network = new NetworkClient("localhost");
 		network.sendData("Test socket");
+		Iterator<String> itr = network.getData().iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next());
+		}
 		network.close();
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));

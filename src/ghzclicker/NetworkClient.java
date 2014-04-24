@@ -51,10 +51,13 @@ public class NetworkClient {
 		ArrayList<String> response = new ArrayList<String>();
 		try {
 			String responseLine;
-			while ((responseLine = in.readLine()) != null) {
+			if((responseLine = in.readLine()) != null) {
 				response.add(responseLine);
 			}
-		} catch (IOException e) {
+			/*while ((responseLine = in.readLine()) != null) {
+				response.add(responseLine);
+			}*/
+		} catch (Exception e) {
 			System.err.println("ERROR: Could not get data from server");
 		}
 		return response;

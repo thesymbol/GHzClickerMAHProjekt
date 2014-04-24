@@ -16,6 +16,7 @@ public class Controller {
 			while (itr.hasNext()) {
 				System.out.println(itr.next());
 			}
+			network.sendData("respond");
 			network.closeClient();
 		}
 		network.closeServer();
