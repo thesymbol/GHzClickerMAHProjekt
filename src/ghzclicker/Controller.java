@@ -26,6 +26,7 @@ public class Controller {
 	private int baseValueClick = 1;
 	private int clickModifier = 1;
 	private double hertzPerSecond = 0;
+	private int clickCounter = 0;
 
 	private ArrayList<Building> buildings;
 	private ArrayList<Double> hertz;
@@ -163,7 +164,8 @@ public class Controller {
 		statistics += buildings.get(3).getOwned() + "\n Total Graphics Cards : ";
 		statistics += buildings.get(4).getOwned() + "\n Total Processors : ";
 		statistics += buildings.get(5).getOwned() + "\n Total Motherboards : ";
-		statistics += buildings.get(6).getOwned();
+		statistics += buildings.get(6).getOwned() + "\n Total Clicks : ";
+		statistics += clickCounter;
 
 		gui.updateStatistics(statistics);
 	}
@@ -287,6 +289,7 @@ public class Controller {
 			double n = 1;
 			// Hertz button
 			if (e.getSource() == gui.getBtnHertz()) {
+				clickCounter++;
 				hertzClicked();
 			}
 
