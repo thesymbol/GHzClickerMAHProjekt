@@ -14,7 +14,7 @@ public class GameLoop {
 	private Controller controller;
 
 	/**
-	 * 
+	 *  Will update the game every chosen second/millisecond.
 	 */
 	public GameLoop() {
 		controller = new Controller();
