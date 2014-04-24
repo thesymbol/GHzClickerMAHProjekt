@@ -40,7 +40,7 @@ public class Controller {
 		network.sendData("Test socket");
 		network.close();
 		buildings = new ArrayList<Building>();
-		buildings.add(new Building("Hard drive", 50, 0.8, "res/NewHardDrive.png"));
+		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
 		buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
 		buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
@@ -52,7 +52,7 @@ public class Controller {
 		gui = new GameGUI(createBuildingBtns(), listener);
 
 		hertz = new ArrayList<Double>();
-		hertz.add(new Double(999));
+		hertz.add(new Double(0));
 		hertz.add(new Double(0));
 		hertz.add(new Double(0));
 		hertz.add(new Double(0));
@@ -87,16 +87,6 @@ public class Controller {
 				hertz.set(i + 1, (hertz.get(i + 1) - (1 + diff)));
 				hertz.set(i, (hertz.get(i) + diff * 1000 + 1000));
 			}
-		}
-	}
-	
-	public void dogemethod(){
-		long BuildingPrice=1010001111; //priset på bygnaden
-		long first;
-		for(int i = 0; i < hertz.size(); i++){		
-			first=BuildingPrice % 1000; //=111
-			BuildingPrice=BuildingPrice/1000;//1010001	
-			hertz.set(i, hertz.get(i)-first);
 		}
 	}
 
