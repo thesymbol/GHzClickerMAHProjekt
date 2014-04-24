@@ -137,7 +137,7 @@ public class Controller {
 	 */
 	public void updateEverySecond() {
 		hertz.set(0, hertz.get(0) + hertzPerSecond);
-		System.out.println("Hz: " + hertz.get(0));
+		//System.out.println("Hz: " + hertz.get(0));
 	}
 
 	/**
