@@ -59,12 +59,12 @@ public class Controller {
 
 		hertz = new ArrayList<Double>();
 		hertz.add(new Double(999));
-		hertz.add(new Double(999));
-		hertz.add(new Double(999));
-		hertz.add(new Double(999));
-		hertz.add(new Double(999));
-		hertz.add(new Double(999));
-		hertz.add(new Double(999));
+		hertz.add(new Double(000));
+		hertz.add(new Double(000));
+		hertz.add(new Double(000));
+		hertz.add(new Double(000));
+		hertz.add(new Double(000));
+		hertz.add(new Double(000));
 
 	}
 
@@ -138,7 +138,7 @@ public class Controller {
 	 */
 	public void updateEverySecond() {
 		hertzEverySecond();
-		//System.out.println("Hz: " + hertz.get(0));
+		System.out.println("KHz: " + hertz.get(1));
 	}
 	
 	/**
@@ -147,7 +147,7 @@ public class Controller {
 	public void hertzEverySecond(){
 		int dog;
 		dog=(int) hertzPerSecond;
-		for(int i = 0; i < hertz.size(); i++){
+		for(int i = 0; i < hertz.size() || dog < 1; i++){
 			hertz.set( i, (double) hertz.get(i)+(dog % 1000));
 			dog/=1000;	
 			
@@ -161,7 +161,7 @@ public class Controller {
 	 */
 	public void payingBuilding(int i){	
 		long buildingPrice = buildings.get(i).getPrice();			
-		for( i = 0; i < hertz.size(); i++){		
+		for( i = 0; i < hertz.size() || buildingPrice < 1; i++){		
 			hertz.set( i, (double) hertz.get(i)-(buildingPrice % 1000));
 			buildingPrice/=1000;	
 			
