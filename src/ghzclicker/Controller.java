@@ -149,8 +149,7 @@ public class Controller {
 		dog=(int) hertzPerSecond;
 		for(int i = 0; i < hertz.size() || dog < 1; i++){
 			hertz.set( i, (double) hertz.get(i)+(dog % 1000));
-			dog/=1000;	
-			
+			dog/=1000;				
 		}
 	}
 	
@@ -163,8 +162,7 @@ public class Controller {
 		long buildingPrice = buildings.get(i).getPrice();			
 		for( i = 0; i < hertz.size() || buildingPrice < 1; i++){		
 			hertz.set( i, (double) hertz.get(i)-(buildingPrice % 1000));
-			buildingPrice/=1000;	
-			
+			buildingPrice/=1000;				
 		}
 	}
 
