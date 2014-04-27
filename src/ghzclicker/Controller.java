@@ -25,7 +25,7 @@ public class Controller {
 	private GameGUI gui;
 	private NetworkClient network;
 	private int baseValueClick = 1;
-	private int clickModifier = 1;
+	private double clickModifier = 1;
 	private double hertzPerSecond = 0;
 	private int clickCounter = 0;
 
@@ -54,13 +54,13 @@ public class Controller {
 		gui = new GameGUI(createBuildingBtns(), listener);
 
 		hertz = new ArrayList<Double>();
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
-		hertz.add(new Double(0));
+		hertz.add(new Double(999));
+		hertz.add(new Double(999));
+		hertz.add(new Double(999));
+		hertz.add(new Double(999));
+		hertz.add(new Double(999));
+		hertz.add(new Double(999));
+		hertz.add(new Double(999));
 
 	}
 
@@ -111,7 +111,8 @@ public class Controller {
 	 * This is how much hertz we gona get per klick
 	 */
 	public void hertzClicked() {
-		hertz.set(0, hertz.get(0) + baseValueClick * clickModifier);
+		hertz.set(0, hertz.get(0) + baseValueClick + (clickModifier*hertzPerSecond*0.05));
+		
 	}
 
 	/**
@@ -132,8 +133,35 @@ public class Controller {
 	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
-		hertz.set(0, hertz.get(0) + hertzPerSecond);
+		hertzEverySecond();
 		System.out.println("Hz: " + hertz.get(0));
+	}
+	
+	/**
+	 * This dose so if you get 4.040 HPS you get 4 in KH and 40 in hertz. 
+	 */
+	public void hertzEverySecond(){
+		int dog;
+		dog=(int) hertzPerSecond;
+		for(int i = 0; i < hertz.size(); i++){
+			hertz.set( i, (double) hertz.get(i)+(dog % 1000));
+			dog/=1000;	
+			
+		}
+	}
+	
+	/**
+	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 fron hertz
+	 * 
+	 * @param i, keeps record which building that was bought.
+	 */
+	public void payingBuilding(int i){	
+		long buildingPrice = buildings.get(i).getPrice();			
+		for( i = 0; i < hertz.size(); i++){		
+			hertz.set( i, (double) hertz.get(i)-(buildingPrice % 1000));
+			buildingPrice/=1000;	
+			
+		}
 	}
 
 	/**
@@ -146,7 +174,6 @@ public class Controller {
 			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
 		}
 		gui.updateHertzPerSecond(Double.toString(hertzPerSecond));
-
 	}
 
 	/**
@@ -166,7 +193,8 @@ public class Controller {
 		statistics += buildings.get(4).getOwned() + "\n Total Processors : ";
 		statistics += buildings.get(5).getOwned() + "\n Total Motherboards : ";
 		statistics += buildings.get(6).getOwned() + "\n Total Clicks : ";
-		statistics += clickCounter;
+		statistics += clickCounter + "\n Hertz Per click : ";
+		statistics += (hpsFormat.format(baseValueClick + clickModifier*hertzPerSecond*0.05));
 
 		gui.updateStatistics(statistics);
 	}
@@ -316,7 +344,8 @@ public class Controller {
 					}
 					if (currTotalHertz >= buildings.get(i).getPrice()) {
 						building.setOwned(building.getOwned() + 1);
-						hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
+						payingBuilding(i);
+						//hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
 					}
 				}
 			}
