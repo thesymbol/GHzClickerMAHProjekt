@@ -18,10 +18,23 @@ public class NetworkClient {
 	private BufferedReader in;
 	private boolean running = false;
 
+	/**
+	 * Creates a network client with specified ip
+	 * 
+	 * @param ip The ip to connect to
+	 * @throws IOException
+	 */
 	public NetworkClient(String ip) throws IOException {
 		this(ip, 13337);
 	}
 
+	/**
+	 * Creates a network client with specified ip and port
+	 * 
+	 * @param ip The ip to connect to
+	 * @param port The port to connect to
+	 * @throws IOException
+	 */
 	public NetworkClient(String ip, int port) throws IOException {
 		System.out.println("Connecting to server...");
 		try {
@@ -34,35 +47,50 @@ public class NetworkClient {
 		}
 	}
 
+	/**
+	 * Send data to the server
+	 * 
+	 * @param data The data to be sent
+	 */
 	public void sendData(String data) {
 		if (out != null) {
 			out.println(data);
 		}
 	}
 
+	/**
+	 * Open a listening connection to the server.
+	 */
 	public void open() {
 		running = true;
 		new NetworkThread().start();
 	}
 
-	public void close() {
-		try {
-			running = false;
-			if (in != null) {
-				in.close();
-			}
-			if (out != null) {
-				out.close();
-			}
-			if (socket != null) {
-				socket.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+	/**
+	 * Close down the connection to the server.
+	 * 
+	 * @throws IOException
+	 */
+	public void close() throws IOException {
+		running = false;
+		if (in != null) {
+			in.close();
+		}
+		if (out != null) {
+			out.close();
+		}
+		if (socket != null) {
+			socket.close();
 		}
 	}
 
+	/**
+	 * creates a networkThread that listens to server messages
+	 */
 	private class NetworkThread extends Thread {
+		/**
+		 * Always recieve messages from server.
+		 */
 		@Override
 		public void run() {
 			try {

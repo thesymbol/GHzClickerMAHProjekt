@@ -8,21 +8,31 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client. And lastly close the connection's if so needed.
+ * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client.
  * 
  * @author Marcus Orwén
  */
-
 public class ServerController extends Thread {
 	private FileHandler fileHandler;
 	private BufferedReader in;
 	private PrintWriter out;
 	private ServerSocket serverSocket;
 
+	/**
+	 * Constructs a server with default port 13337
+	 * 
+	 * @throws IOException
+	 */
 	public ServerController() throws IOException {
 		this(13337);
 	}
-
+	
+	/**
+	 * Constructs a server with specified port
+	 * 
+	 * @param port The port to listen on
+	 * @throws IOException
+	 */
 	public ServerController(int port) throws IOException {
 		serverSocket = new ServerSocket(port);
 		fileHandler = new FileHandler();
@@ -30,12 +40,20 @@ public class ServerController extends Thread {
 		System.out.println("Server Started...");
 	}
 
+	/**
+	 * Send data to client
+	 * 
+	 * @param data The data to send
+	 */
 	public void sendData(String data) {
 		if (out != null) {
 			out.println(data);
 		}
 	}
 
+	/**
+	 * Network thread to accept client connections
+	 */
 	@Override
 	public void run() {
 		while (true) {
@@ -49,12 +67,23 @@ public class ServerController extends Thread {
 		}
 	}
 
+	/**
+	 * Describes a NetworkThread that accepts client messages.
+	 */
 	private class NetworkThread extends Thread {
+		/**
+		 * Opens a connection to and from specified client/socket.
+		 * 
+		 * @param socket The socket to accept input/output from.
+		 */
 		public NetworkThread(Socket socket) throws IOException {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
 			out = new PrintWriter(socket.getOutputStream(), true); // send data from client
 		}
 
+		/**
+		 * Always recieve messages from client
+		 */
 		@Override
 		public void run() {
 			try {
@@ -63,7 +92,7 @@ public class ServerController extends Thread {
 				while ((message = in.readLine()) != null) {
 					System.out.println(message);
 					if (message.equals("sendsave")) {
-						fileHandler.save(in.readLine());
+						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save");
 					}
 				}
 			} catch (IOException e) {
