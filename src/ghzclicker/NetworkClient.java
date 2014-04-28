@@ -16,7 +16,6 @@ public class NetworkClient {
 	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
-	private boolean running = false;
 
 	/**
 	 * Creates a network client with specified ip
@@ -36,12 +35,12 @@ public class NetworkClient {
 	 * @throws IOException
 	 */
 	public NetworkClient(String ip, int port) throws IOException {
-		System.out.println("Connecting to server...");
+		System.out.println("[Info] Connecting to server...");
 		try {
 			socket = new Socket(ip, port);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
 			out = new PrintWriter(socket.getOutputStream(), true); // send data from client
-			System.out.println("Connected to server");
+			System.out.println("[Info] Connected to server");
 		} catch (ConnectException e) {
 			System.err.println("[Error] Connection refused");
 		}
@@ -57,12 +56,21 @@ public class NetworkClient {
 			out.println(data);
 		}
 	}
+	
+	/**
+	 * get data from server
+	 */
+	public String getData() throws IOException {
+		if(in != null) {
+			return in.readLine();
+		}
+		return "";
+	}
 
 	/**
 	 * Open a listening connection to the server.
 	 */
 	public void open() {
-		running = true;
 		new NetworkThread().start();
 	}
 
@@ -72,7 +80,6 @@ public class NetworkClient {
 	 * @throws IOException
 	 */
 	public void close() throws IOException {
-		running = false;
 		if (in != null) {
 			in.close();
 		}
@@ -82,6 +89,7 @@ public class NetworkClient {
 		if (socket != null) {
 			socket.close();
 		}
+		System.out.println("[Info] Disconnected from server");
 	}
 
 	/**
@@ -95,11 +103,11 @@ public class NetworkClient {
 		public void run() {
 			try {
 				String message = null;
-				while (((message = in.readLine()) != null) && running) {
+				while (((message = in.readLine()) != null)) {
 					System.out.println(message);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("[Info] Disconnected from server");
 			}
 		}
 	}

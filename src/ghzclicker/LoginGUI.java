@@ -1,3 +1,4 @@
+
 package ghzclicker;
 
 import java.awt.Dimension;
