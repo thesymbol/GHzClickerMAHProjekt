@@ -60,7 +60,7 @@ public class ServerController extends Thread {
 				String message = null;
 				while ((message = in.readLine()) != null) {
 					System.out.println(message);
-					if(message.equals("sendsave")) {
+					if (message.equals("sendsave")) {
 						fileHandler.save(in.readLine());
 					}
 				}

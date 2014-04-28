@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * Describes a network client. You can connect to a server on specified ip and port. The client can then send and recieve data to/from the server. And lastly close the connection if so needed.
@@ -24,16 +24,20 @@ public class NetworkClient {
 
 	public NetworkClient(String ip, int port) throws IOException {
 		System.out.println("Connecting to server...");
-		socket = new Socket(ip, port);
-		in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
-		out = new PrintWriter(socket.getOutputStream(), true); // send data from client
-		System.out.println("Connected to server");
+		try {
+			socket = new Socket(ip, port);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
+			out = new PrintWriter(socket.getOutputStream(), true); // send data from client
+			System.out.println("Connected to server");
+		} catch (ConnectException e) {
+			System.err.println("[Error] Connection refused");
+		}
 	}
 
 	public void sendData(String data) {
 		out.println(data);
 	}
-	
+
 	public void open() {
 		running = true;
 		new NetworkThread().start();
