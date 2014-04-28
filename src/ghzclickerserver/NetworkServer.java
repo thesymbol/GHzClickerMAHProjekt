@@ -58,12 +58,11 @@ public class NetworkServer {
 	public ArrayList<String> getData() throws IOException {
 		ArrayList<String> response = new ArrayList<String>();
 		String responseLine;
-		if ((responseLine = in.readLine()) != null) {
-			response.add(responseLine);
+		if(in != null) {
+			while ((responseLine = in.readLine()) != null) {
+				response.add(responseLine);
+			}
 		}
-		/*
-		 * while ((responseLine = in.readLine()) != null) { response.add(responseLine); }
-		 */
 		return response;
 	}
 

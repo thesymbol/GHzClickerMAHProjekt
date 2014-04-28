@@ -213,6 +213,7 @@ public class Controller {
 		try {
 			NetworkClient client = new NetworkClient("127.0.0.1");
 			client.sendData(txt);
+			client.getData();
 			client.close();
 		} catch (Exception e) {
 			e.printStackTrace();

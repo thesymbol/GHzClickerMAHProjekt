@@ -52,12 +52,11 @@ public class NetworkClient {
 	public ArrayList<String> getData() throws IOException {
 		ArrayList<String> response = new ArrayList<String>();
 		String responseLine;
-		if ((responseLine = in.readLine()) != null) {
-			response.add(responseLine);
+		if (in != null) {
+			while ((responseLine = in.readLine()) != null) {
+				response.add(responseLine);
+			}
 		}
-		/*
-		 * while ((responseLine = in.readLine()) != null) { response.add(responseLine); }
-		 */
 		return response;
 	}
 
@@ -78,13 +77,13 @@ public class NetworkClient {
 	 * @throws IOException
 	 */
 	public void close() throws IOException {
-		if(in != null) {
+		if (in != null) {
 			in.close();
 		}
-		if(out != null) {
+		if (out != null) {
 			out.close();
 		}
-		if(client != null) {
+		if (client != null) {
 			client.close();
 		}
 	}
