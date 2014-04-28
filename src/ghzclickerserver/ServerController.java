@@ -1,43 +1,52 @@
-package ghzclicker;
+package ghzclickerserver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 /**
- * Describes a network client. You can connect to a server on specified ip and port. The client can then send and recieve data to/from the server. And lastly close the connection if so needed.
+ * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client. And lastly close the connection's if so needed.
  * 
  * @author Marcus Orwén
  */
-public class NetworkClient {
-	private PrintWriter out;
+
+public class ServerController extends Thread {
 	private BufferedReader in;
+	private PrintWriter out;
+	private ServerSocket serverSocket;
 	private ArrayList<String> recievedData;
 
-	public NetworkClient(String ip) throws IOException {
-		this(ip, 13337);
+	public ServerController() throws IOException {
+		this(13337);
 	}
 
-	public NetworkClient(String ip, int port) throws IOException {
-		System.out.println("Connecting to server...");
-		new NetworkThread(new Socket(ip, port)).start(); // Connect to server with ip and port
+	public ServerController(int port) throws IOException {
+		serverSocket = new ServerSocket(port);
 		recievedData = new ArrayList<String>();
-		System.out.println("Connected to server");
+		this.start();
+		System.out.println("Server Started...");
 	}
-
+	
 	public void sendData(String data) {
 		out.println(data);
 	}
 	
-	public ArrayList<String> getRecievedData() {
-		return recievedData;
-	}
-
-	public void close() {
-		
+	@Override
+	public void run() {
+		while (true) {
+			Socket socket;
+			try {
+				socket = serverSocket.accept();
+				new NetworkThread(socket).start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private class NetworkThread extends Thread {
@@ -49,10 +58,12 @@ public class NetworkClient {
 		@Override
 		public void run() {
 			try {
+				System.out.println("Client connected");
 				String message = null;
 				while ((message = in.readLine()) != null) {
 					System.out.println(message);
 					recievedData.add(message);
+					sendData("got message");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

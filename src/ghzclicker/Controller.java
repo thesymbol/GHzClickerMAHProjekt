@@ -6,10 +6,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,7 +22,6 @@ import javax.swing.JButton;
  */
 public class Controller {
 	private GameGUI gui;
-	private NetworkClient network;
 	private int baseValueClick = 1;
 	private double clickModifier = 1;
 	private double hertzPerSecond = 0;
@@ -212,8 +211,13 @@ public class Controller {
 		}
 		try {
 			NetworkClient client = new NetworkClient("127.0.0.1");
+			client.sendData("sendsave");
 			client.sendData(txt);
-			client.getData();
+			
+			Iterator<String> itr = client.getRecievedData().iterator();
+			while(itr.hasNext()) {
+				System.out.println(itr.next());
+			}
 			client.close();
 		} catch (Exception e) {
 			e.printStackTrace();
