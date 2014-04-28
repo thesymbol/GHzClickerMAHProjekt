@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class NetworkClient {
 	 * 
 	 * @param ip The ip of the server.
 	 */
-	public NetworkClient(String ip) {
+	public NetworkClient(String ip) throws IOException {
 		this(ip, 13337);
 	}
 
@@ -32,13 +33,13 @@ public class NetworkClient {
 	 * @param ip The ip of the server.
 	 * @param port The port of the server.
 	 */
-	public NetworkClient(String ip, int port) {
+	public NetworkClient(String ip, int port) throws IOException {
 		try {
 			client = new Socket(ip, port); // Connect to server with ip and port
 			in = new BufferedReader(new InputStreamReader(client.getInputStream())); // Get data from server
 			out = new PrintStream(client.getOutputStream()); // send data from client
-		} catch (IOException e) {
-			System.err.println("ERROR: Could not connect to server ip: " + ip + " port: " + port);
+		} catch (ConnectException e) {
+			System.err.println("Connection refused");
 		}
 	}
 
@@ -46,20 +47,17 @@ public class NetworkClient {
 	 * Get data from server
 	 * 
 	 * @return ArrayList<String> The data that the server sent.
+	 * @throws IOException
 	 */
-	public ArrayList<String> getData() {
+	public ArrayList<String> getData() throws IOException {
 		ArrayList<String> response = new ArrayList<String>();
-		try {
-			String responseLine;
-			if((responseLine = in.readLine()) != null) {
-				response.add(responseLine);
-			}
-			/*while ((responseLine = in.readLine()) != null) {
-				response.add(responseLine);
-			}*/
-		} catch (Exception e) {
-			System.err.println("ERROR: Could not get data from server");
+		String responseLine;
+		if ((responseLine = in.readLine()) != null) {
+			response.add(responseLine);
 		}
+		/*
+		 * while ((responseLine = in.readLine()) != null) { response.add(responseLine); }
+		 */
 		return response;
 	}
 
@@ -69,23 +67,19 @@ public class NetworkClient {
 	 * @param data The data to be sent to the server.
 	 */
 	public void sendData(String data) {
-		try {
+		if (out != null) {
 			out.println(data);
-		} catch (Exception e) {
-			System.err.println("ERROR: Could not send message");
 		}
 	}
 
 	/**
 	 * Close the connection to the server.
+	 * 
+	 * @throws IOException
 	 */
-	public void close() {
-		try {
-			in.close();
-			out.close();
-			client.close();
-		} catch (Exception e) {
-			System.err.println("ERROR: Could not close socket");
-		}
+	public void close() throws IOException {
+		in.close();
+		out.close();
+		client.close();
 	}
 }

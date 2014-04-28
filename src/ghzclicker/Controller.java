@@ -15,8 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * A class that controlls the whole program.
- * Having all the logics within the application
+ * A class that controlls the whole program. Having all the logics within the application
  * 
  * @author Marcus Orwén , Mattias Holst , Viktor Saltarski , Michael Bergstrand
  * 
@@ -38,13 +37,10 @@ public class Controller {
 	 * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
 	 */
 	public Controller() {
-		network = new NetworkClient("localhost");
-		network.sendData("Test socket");
-		Iterator<String> itr = network.getData().iterator();
-		while (itr.hasNext()) {
-			System.out.println(itr.next());
-		}
-		network.close();
+		/*
+		 * network = new NetworkClient("localhost"); network.sendData("Test socket"); Iterator<String> itr = network.getData().iterator(); while (itr.hasNext()) { System.out.println(itr.next()); }
+		 * network.close();
+		 */
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
@@ -72,7 +68,7 @@ public class Controller {
 	 * This dose so if hertz=1000, we will get 1Khz and 0 Hertz
 	 */
 	public void merging() {
- 		int diff;
+		int diff;
 		for (int i = 0; i < hertz.size(); i++) {
 			if (hertz.get(i) >= 1000) {
 				diff = (int) (hertz.get(i) / 1000);
@@ -115,8 +111,8 @@ public class Controller {
 	 * This is how much hertz we gona get per klick
 	 */
 	public void hertzClicked() {
-		hertz.set(0, hertz.get(0) + baseValueClick + (clickModifier*hertzPerSecond*0.05));
-		
+		hertz.set(0, hertz.get(0) + baseValueClick + (clickModifier * hertzPerSecond * 0.05));
+
 	}
 
 	/**
@@ -138,31 +134,31 @@ public class Controller {
 	 */
 	public void updateEverySecond() {
 		hertzEverySecond();
-//		System.out.println("KHz: " + hertz.get(1));
+		// System.out.println("KHz: " + hertz.get(1));
 	}
-	
+
 	/**
-	 * This dose so if you get 4.040 HPS you get 4 in KH and 40 in hertz. 
+	 * This dose so if you get 4.040 HPS you get 4 in KH and 40 in hertz.
 	 */
-	public void hertzEverySecond(){
+	public void hertzEverySecond() {
 		int dog;
-		dog=(int) hertzPerSecond;
-		for(int i = 0; i < hertz.size() && dog >= 1; i++){
-			hertz.set( i, (double) hertz.get(i)+(dog % 1000));
-			dog/=1000;				
+		dog = (int) hertzPerSecond;
+		for (int i = 0; i < hertz.size() && dog >= 1; i++) {
+			hertz.set(i, (double) hertz.get(i) + (dog % 1000));
+			dog /= 1000;
 		}
 	}
-	
+
 	/**
 	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 fron hertz
 	 * 
 	 * @param i, keeps record which building that was bought.
 	 */
-	public void payingBuilding(int i){	
-		long buildingPrice = buildings.get(i).getPrice();			
-		for( i = 0; i < hertz.size() && buildingPrice >= 1; i++){		
-			hertz.set( i, (double) hertz.get(i)-(buildingPrice % 1000));
-			buildingPrice/=1000;				
+	public void payingBuilding(int i) {
+		long buildingPrice = buildings.get(i).getPrice();
+		for (i = 0; i < hertz.size() && buildingPrice >= 1; i++) {
+			hertz.set(i, (double) hertz.get(i) - (buildingPrice % 1000));
+			buildingPrice /= 1000;
 		}
 	}
 
@@ -196,31 +192,38 @@ public class Controller {
 		statistics += buildings.get(5).getOwned() + "\n Total Motherboards : ";
 		statistics += buildings.get(6).getOwned() + "\n Total Clicks : ";
 		statistics += clickCounter + "\n Hertz Per click : ";
-		statistics += (hpsFormat.format(baseValueClick + clickModifier*hertzPerSecond*0.05));
+		statistics += (hpsFormat.format(baseValueClick + clickModifier * hertzPerSecond * 0.05));
 
 		gui.updateStatistics(statistics);
 	}
 
 	/**
-	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/
-	 * Saving the game into a .save file in the selected location.
+	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
+	 * selected location.
 	 */
 	public void saveGame() {
-		try {
-			String txt = "";
-			for (int i = 0; i < hertz.size(); i++) {
-				txt += hertz.get(i) + ":";
-			}
-			for (int i = 0; i < buildings.size(); i++) {
-				txt += buildings.get(i).getOwned() + ":";
-			}
-			File newTextFile = new File("res/GhzSaveGame.save");
-			FileWriter fw = new FileWriter(newTextFile);
-			fw.write(txt);
-			fw.close();
-		} catch (IOException iox) {
-			iox.printStackTrace();
+		// try {
+		String txt = "";
+		for (int i = 0; i < hertz.size(); i++) {
+			txt += hertz.get(i) + ":";
 		}
+		for (int i = 0; i < buildings.size(); i++) {
+			txt += buildings.get(i).getOwned() + ":";
+		}
+		try {
+			NetworkClient client = new NetworkClient("127.0.0.1");
+			client.sendData(txt);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// File newTextFile = new File("res/GhzSaveGame.save");
+		// FileWriter fw = new FileWriter(newTextFile);
+		// fw.write(txt);
+		// fw.close();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	/**
@@ -347,7 +350,7 @@ public class Controller {
 					if (currTotalHertz >= buildings.get(i).getPrice()) {
 						building.setOwned(building.getOwned() + 1);
 						payingBuilding(i);
-						//hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
+						// hertz.set(0, hertz.get(0) - buildings.get(i).getPrice());
 					}
 				}
 			}

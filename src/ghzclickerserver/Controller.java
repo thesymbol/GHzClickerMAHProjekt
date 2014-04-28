@@ -8,17 +8,21 @@ import java.util.Iterator;
  */
 public class Controller {
 	public Controller() {
-		NetworkServer network = new NetworkServer();
-		boolean running = true;
-		while (running) {
-			network.accept();
-			Iterator<String> itr = network.getData().iterator();
-			while (itr.hasNext()) {
-				System.out.println(itr.next());
+		try {
+			NetworkServer network = new NetworkServer();
+			boolean running = true;
+			while (running) {
+				network.accept();
+				Iterator<String> itr = network.getData().iterator();
+				while (itr.hasNext()) {
+					System.out.println(itr.next());
+				}
+				network.sendData("respond");
+				network.closeClient();
 			}
-			network.sendData("respond");
-			network.closeClient();
+			network.closeServer();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		network.closeServer();
 	}
 }
