@@ -35,7 +35,9 @@ public class NetworkClient {
 	}
 
 	public void sendData(String data) {
-		out.println(data);
+		if(out != null) {
+			out.println(data);
+		}
 	}
 
 	public void open() {
