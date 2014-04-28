@@ -1,6 +1,7 @@
 package ghzclicker;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -21,7 +22,7 @@ public class LoginGUI extends JFrame{
 	private JTextField tfUsername = new JTextField();
 	private JTextField tfPassword = new JTextField();
 	
-	public LoginGUI(){
+	public LoginGUI(ActionListener listener){
 		setPreferredSize(new Dimension(500, 200));
 		setLayout(null);
 		setName("Login");
@@ -47,15 +48,19 @@ public class LoginGUI extends JFrame{
 		setLocationRelativeTo(null);
 		setVisible(true);
 		
+		btnLogin.addActionListener(listener);
+		btnRegister.addActionListener(listener);
+		btnExit.addActionListener(listener);
+		
 	}
-	
-	public JButton btnLogin(){
+
+	public JButton getBtnLogin(){
 		return btnLogin;
 	}
-	public JButton btnRegister(){
+	public JButton getBtnRegister(){
 		return btnRegister;
 	}
-	public JButton btnExit(){
+	public JButton getBtnExit(){
 		return btnExit;
 	}
 	

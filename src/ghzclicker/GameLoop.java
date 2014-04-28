@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class GameLoop {
-	private LoginGUI loginGUI;
+	private LoginController loginController;
 	private Controller controller;
 
 	/**
@@ -19,7 +19,9 @@ public class GameLoop {
 	 */
 	public GameLoop() {		
 		controller = new Controller();
-		loginGUI = new LoginGUI();
+		loginController = new LoginController();
+		
+	
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
 		// constant updates (every 10 millisecond).
