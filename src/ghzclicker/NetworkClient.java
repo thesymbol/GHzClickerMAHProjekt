@@ -31,13 +31,13 @@ public class NetworkClient {
 	public void sendData(String data) {
 		out.println(data);
 	}
-	
+
 	public ArrayList<String> getRecievedData() {
 		return recievedData;
 	}
 
 	public void close() {
-		
+
 	}
 
 	private class NetworkThread extends Thread {

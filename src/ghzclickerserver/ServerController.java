@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 
 /**
@@ -31,11 +30,11 @@ public class ServerController extends Thread {
 		this.start();
 		System.out.println("Server Started...");
 	}
-	
+
 	public void sendData(String data) {
 		out.println(data);
 	}
-	
+
 	@Override
 	public void run() {
 		while (true) {
