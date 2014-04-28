@@ -13,9 +13,10 @@ import java.util.ArrayList;
  * @author Marcus Orwén
  */
 public class NetworkClient {
+	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
-	private ArrayList<String> recievedData;
+	private boolean running = false;
 
 	public NetworkClient(String ip) throws IOException {
 		this(ip, 13337);
@@ -23,36 +24,39 @@ public class NetworkClient {
 
 	public NetworkClient(String ip, int port) throws IOException {
 		System.out.println("Connecting to server...");
-		new NetworkThread(new Socket(ip, port)).start(); // Connect to server with ip and port
-		recievedData = new ArrayList<String>();
+		socket = new Socket(ip, port);
+		in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
+		out = new PrintWriter(socket.getOutputStream(), true); // send data from client
 		System.out.println("Connected to server");
 	}
 
 	public void sendData(String data) {
 		out.println(data);
 	}
-
-	public ArrayList<String> getRecievedData() {
-		return recievedData;
+	
+	public void open() {
+		running = true;
+		new NetworkThread().start();
 	}
 
 	public void close() {
-
+		try {
+			running = false;
+			in.close();
+			out.close();
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private class NetworkThread extends Thread {
-		public NetworkThread(Socket socket) throws IOException {
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
-			out = new PrintWriter(socket.getOutputStream(), true); // send data from client
-		}
-
 		@Override
 		public void run() {
 			try {
 				String message = null;
-				while ((message = in.readLine()) != null) {
+				while (((message = in.readLine()) != null) && running) {
 					System.out.println(message);
-					recievedData.add(message);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

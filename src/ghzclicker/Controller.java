@@ -211,13 +211,8 @@ public class Controller {
 		}
 		try {
 			NetworkClient client = new NetworkClient("127.0.0.1");
-			client.sendData("sendsave");
+			client.sendData("sendsave"); // notify that the next message is a save file.
 			client.sendData(txt);
-			
-			Iterator<String> itr = client.getRecievedData().iterator();
-			while(itr.hasNext()) {
-				System.out.println(itr.next());
-			}
 			client.close();
 		} catch (Exception e) {
 			e.printStackTrace();

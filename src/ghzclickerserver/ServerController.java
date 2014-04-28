@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client. And lastly close the connection's if so needed.
@@ -15,10 +14,10 @@ import java.util.ArrayList;
  */
 
 public class ServerController extends Thread {
+	private FileHandler fileHandler;
 	private BufferedReader in;
 	private PrintWriter out;
 	private ServerSocket serverSocket;
-	private ArrayList<String> recievedData;
 
 	public ServerController() throws IOException {
 		this(13337);
@@ -26,7 +25,7 @@ public class ServerController extends Thread {
 
 	public ServerController(int port) throws IOException {
 		serverSocket = new ServerSocket(port);
-		recievedData = new ArrayList<String>();
+		fileHandler = new FileHandler();
 		this.start();
 		System.out.println("Server Started...");
 	}
@@ -61,8 +60,9 @@ public class ServerController extends Thread {
 				String message = null;
 				while ((message = in.readLine()) != null) {
 					System.out.println(message);
-					recievedData.add(message);
-					sendData("got message");
+					if(message.equals("sendsave")) {
+						fileHandler.save(in.readLine());
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
