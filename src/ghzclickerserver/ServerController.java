@@ -37,7 +37,7 @@ public class ServerController extends Thread {
 		serverSocket = new ServerSocket(port);
 		fileHandler = new FileHandler();
 		this.start();
-		System.out.println("Server Started...");
+		System.out.println("[Info] Server Started...");
 	}
 
 	/**
@@ -87,14 +87,20 @@ public class ServerController extends Thread {
 		@Override
 		public void run() {
 			try {
-				System.out.println("Client connected");
+				System.out.println("[Info] Client connected");
 				String message = null;
 				while ((message = in.readLine()) != null) {
-					System.out.println(message);
+					System.out.println("[Info] Command: " + message);
 					if (message.equals("sendsave")) {
 						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save");
 					}
+					if(message.equals("loadsave")) {
+						String loaded = fileHandler.load("res/", "GHzSaveGame.save");
+						out.println("loadsave");
+						out.println(loaded);
+					}
 				}
+				System.out.println("[Info] Client disconnected");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

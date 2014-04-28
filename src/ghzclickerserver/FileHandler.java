@@ -1,6 +1,9 @@
 package ghzclickerserver;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -19,7 +22,7 @@ public class FileHandler {
 	 * @param filename The filename to save to.
 	 */
 	public void save(String data, String location, String filename) {
-		System.out.println(data);
+		System.out.println("[Info] Save data saved: " + data);
 		try {
 			File newTextFile = new File((location + filename));
 			FileWriter fw = new FileWriter(newTextFile);
@@ -28,5 +31,31 @@ public class FileHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Loads a file with specified location and filename
+	 * 
+	 * @param location Location of file (always end with /)
+	 * @param filename Filename of the file
+	 */
+	public String load(String location, String filename) {
+		String ret = "";
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File((location + filename))));
+			StringBuffer sb = new StringBuffer();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+			reader.close();
+			ret = sb.toString();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("[Info] Save data loaded: " + ret);
+		return ret;
 	}
 }
