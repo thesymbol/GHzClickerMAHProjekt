@@ -84,9 +84,15 @@ public class NetworkServer {
 	 * @throws IOException
 	 */
 	public void closeClient() throws IOException {
-		in.close();
-		out.close();
-		client.close();
+		if(in != null) {
+			in.close();
+		}
+		if(out != null) {
+			out.close();
+		}
+		if(client != null) {
+			client.close();
+		}
 	}
 
 	/**
@@ -95,6 +101,8 @@ public class NetworkServer {
 	 * @throws IOException
 	 */
 	public void closeServer() throws IOException {
-		server.close();
+		if(server != null) {
+			server.close();
+		}
 	}
 }

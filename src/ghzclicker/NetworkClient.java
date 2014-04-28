@@ -78,8 +78,14 @@ public class NetworkClient {
 	 * @throws IOException
 	 */
 	public void close() throws IOException {
-		in.close();
-		out.close();
-		client.close();
+		if(in != null) {
+			in.close();
+		}
+		if(out != null) {
+			out.close();
+		}
+		if(client != null) {
+			client.close();
+		}
 	}
 }
