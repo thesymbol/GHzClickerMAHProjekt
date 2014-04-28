@@ -100,6 +100,7 @@ public class ServerController extends Thread {
 						out.println(loaded);
 					}
 				}
+				System.out.println("[Info] Client disconnected");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

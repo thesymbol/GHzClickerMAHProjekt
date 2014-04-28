@@ -89,6 +89,7 @@ public class NetworkClient {
 		if (socket != null) {
 			socket.close();
 		}
+		System.out.println("[Info] Disconnected from server");
 	}
 
 	/**
