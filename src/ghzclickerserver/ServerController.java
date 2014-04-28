@@ -31,7 +31,7 @@ public class ServerController extends Thread {
 	}
 
 	public void sendData(String data) {
-		if(out != null) {
+		if (out != null) {
 			out.println(data);
 		}
 	}

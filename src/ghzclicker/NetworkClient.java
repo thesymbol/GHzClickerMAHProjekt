@@ -35,7 +35,7 @@ public class NetworkClient {
 	}
 
 	public void sendData(String data) {
-		if(out != null) {
+		if (out != null) {
 			out.println(data);
 		}
 	}
@@ -48,9 +48,15 @@ public class NetworkClient {
 	public void close() {
 		try {
 			running = false;
-			in.close();
-			out.close();
-			socket.close();
+			if (in != null) {
+				in.close();
+			}
+			if (out != null) {
+				out.close();
+			}
+			if (socket != null) {
+				socket.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
