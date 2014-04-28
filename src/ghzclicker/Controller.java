@@ -2,10 +2,6 @@ package ghzclicker;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -200,66 +196,52 @@ public class Controller {
 	 * selected location.
 	 */
 	public void saveGame() {
-		String txt = "";
+		String data = "";
 		for (int i = 0; i < hertz.size(); i++) {
-			txt += hertz.get(i) + ":";
+			data += hertz.get(i) + ":";
 		}
 		for (int i = 0; i < buildings.size(); i++) {
-			txt += buildings.get(i).getOwned() + ":";
+			data += buildings.get(i).getOwned() + ":";
 		}
+		
+		System.out.println("[Info] Save data sent: " + data);
 
 		try {
 			NetworkClient client = new NetworkClient("127.0.0.1");
 			client.sendData("sendsave"); // notify that the next message is a save file.
-			client.sendData(txt);
+			client.sendData(data);
 			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// try {
-		// File newTextFile = new File("res/GhzSaveGame.save");
-		// FileWriter fw = new FileWriter(newTextFile);
-		// fw.write(txt);
-		// fw.close();
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
 	}
 
 	/**
-	 * Loading the file from the selected location.
+	 * Loading the game from server (falls back to local if no server online).
+	 * 
+	 * @param loadString The save file to load (in string format).
 	 */
-	public void loadGame() {
+	public void loadGameServer() {
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File("res/GhzSaveGame.save")));
-			StringBuffer sb = new StringBuffer();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line);
-			}
-			reader.close();
-			String[] store = sb.toString().split(":");
+			NetworkClient client = new NetworkClient("127.0.0.1");
+			client.sendData("loadsave");
+			if(client.getData().equals("loadsave")){
+				String saveData = client.getData();
+				System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
+				String[] store = saveData.split(":");
+				
+				// TODO: Not rely on the hertz size (i) for the store array.
+				for (int i = 0; i < hertz.size(); i++) {
+					hertz.set(i, Double.parseDouble(store[i]));
+				}
 
-			// TODO: Not rely on the hertz size (i) for the store array.
-			for (int i = 0; i < hertz.size(); i++) {
-				hertz.set(i, Double.parseDouble(store[i]));
+				// TODO: Not rely on the hertz size (i) for the store array.
+				int hertzSize = hertz.size();
+				for (int i = 0; i < store.length - hertz.size(); i++) {
+					buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
+				}
 			}
-
-			// TODO: Not rely on the hertz size (i) for the store array.
-			int hertzSize = hertz.size();
-			for (int i = 0; i < store.length - hertz.size(); i++) {
-				buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
-			}
-
-			// Prints loaded data in console
-			for (int i = 0; i < store.length; i++) {
-				System.out.print(store[i] + " ");
-			}
-			System.out.println();
-
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
+			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -336,7 +318,7 @@ public class Controller {
 
 			// Load button
 			if (e.getSource() == gui.getBtnLoad()) {
-				loadGame();
+				loadGameServer();
 			}
 
 			// Building purcheses.
