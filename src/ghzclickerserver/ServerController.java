@@ -26,7 +26,7 @@ public class ServerController extends Thread {
 	public ServerController() throws IOException {
 		this(13337);
 	}
-	
+
 	/**
 	 * Constructs a server with specified port
 	 * 

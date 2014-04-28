@@ -5,11 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
+ * Handles servers file's, you can save a file with specified data, filename and location.
  * 
  * @author Marcus Orwén
  */
 public class FileHandler {
-	
+
 	/**
 	 * saves a file with specified data and location.
 	 * 
