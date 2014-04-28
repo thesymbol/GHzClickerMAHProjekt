@@ -1,24 +1,22 @@
 package ghzclicker;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginController {
-	private LoginGui logGui;
+	private LoginGUI logGui;
 	
 	public LoginController(){
-		LoginGui logGui = new LoginGui();
+		LoginGUI logGui = new LoginGUI();
 	}
 	
-	
-	
-	
-	
 	private class Listener implements ActionListener {
-		private class Listener implements ActionListener {
-			if (e.getSource() == logGui.getBtnReg()) {			
-			
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == logGui.btnRegister()) {			
+				
 			}
-			if (e.getSource() == logGui.getBtnLog()) {			
+			if (e.getSource() == logGui.btnLogin()) {			
 				
 			}
 		}
