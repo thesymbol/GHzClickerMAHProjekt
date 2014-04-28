@@ -201,7 +201,6 @@ public class Controller {
 	 * selected location.
 	 */
 	public void saveGame() {
-		// try {
 		String txt = "";
 		for (int i = 0; i < hertz.size(); i++) {
 			txt += hertz.get(i) + ":";
@@ -209,15 +208,17 @@ public class Controller {
 		for (int i = 0; i < buildings.size(); i++) {
 			txt += buildings.get(i).getOwned() + ":";
 		}
+
 		try {
 			NetworkClient client = new NetworkClient("127.0.0.1");
 			client.sendData("sendsave"); // notify that the next message is a save file.
 			client.sendData(txt);
 			client.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+		// try {
 		// File newTextFile = new File("res/GhzSaveGame.save");
 		// FileWriter fw = new FileWriter(newTextFile);
 		// fw.write(txt);
