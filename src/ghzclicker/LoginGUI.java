@@ -3,12 +3,14 @@ package ghzclicker;
 import java.awt.Dimension;
 
 import javax.swing.*;
-
+/**
+ * Making a GUI for logins using a JFrame.
+ * @author Mattias Holst
+ *
+ */
 public class LoginGUI extends JFrame{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	//Making buttons to the panel.
 	private JButton btnLogin = new JButton("Login");
@@ -20,7 +22,10 @@ public class LoginGUI extends JFrame{
 	
 	private JTextField tfUsername = new JTextField();
 	private JTextField tfPassword = new JTextField();
-	
+	/**
+	 * Constructor which puts sets upp the whole GUI with selected Dimension
+	 * and adding all the variables to the JFrame.
+	 */
 	public LoginGUI(){
 		setPreferredSize(new Dimension(500, 200));
 		setLayout(null);
@@ -48,13 +53,24 @@ public class LoginGUI extends JFrame{
 		setVisible(true);
 		
 	}
-	
+	/**
+	 * getting the Login Button
+	 * @return btnLogin
+	 */
 	public JButton btnLogin(){
 		return btnLogin;
 	}
+	/**
+	 * Getting the Register Button.
+	 * @return btnRegister
+	 */
 	public JButton btnRegister(){
 		return btnRegister;
 	}
+	/**
+	 * Getting the Exit Button.
+	 * @return btnExit
+	 */
 	public JButton btnExit(){
 		return btnExit;
 	}
