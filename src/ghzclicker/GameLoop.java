@@ -11,13 +11,15 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class GameLoop {
+	private LoginGUI loginGUI;
 	private Controller controller;
 
 	/**
 	 *  Will update the game every chosen second/millisecond.
 	 */
-	public GameLoop() {
+	public GameLoop() {		
 		controller = new Controller();
+		loginGUI = new LoginGUI();
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
 		// constant updates (every 10 millisecond).
