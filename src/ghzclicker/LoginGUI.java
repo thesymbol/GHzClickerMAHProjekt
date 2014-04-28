@@ -60,12 +60,12 @@ public class LoginGUI extends JFrame{
 		
 	}
 
-	public JButton getBtnLogin(){
+
 	/**
 	 * getting the Login Button
 	 * @return btnLogin
 	 */
-	public JButton btnLogin(){
+	public JButton getbtnLogin(){
 		return btnLogin;
 	}
 	/**
