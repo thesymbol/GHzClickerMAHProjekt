@@ -22,7 +22,7 @@ public class LoginController {
 			
 			}
 			if(e.getSource() == logGUI.getBtnExit()){
-				
+				System.exit(0);
 			}
 		}
 	}
