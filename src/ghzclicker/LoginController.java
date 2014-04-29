@@ -24,6 +24,7 @@ public class LoginController {
 				network.sendData(username);
 				network.senData(password);
 				if(username && password == true){
+					JOptionPane.showMessageDialog(null, "Successfully logged in");
 					
 				}
 				else{
