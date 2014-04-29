@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 
 public class LoginController {
 	private LoginGUI logGUI;
-	private Listener listener;
+	private LoginListener listener;
 
 	public LoginController() {
-		Listener listener = new Listener();
-		LoginGUI logGUI = new LoginGUI(listener);
+		listener = new LoginListener();
+		logGUI = new LoginGUI(listener);
 	}
 
-	private class Listener implements ActionListener {
+	private class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == logGUI.getBtnRegister()) {
