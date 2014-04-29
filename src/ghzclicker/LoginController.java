@@ -2,6 +2,7 @@ package ghzclicker;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
@@ -25,7 +26,8 @@ public class LoginController {
 				network.senData(password);
 				if(username && password == true){
 					JOptionPane.showMessageDialog(null, "Successfully logged in");
-					
+					logGUI.setVisible(false);
+					logGUI.dispose();
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
