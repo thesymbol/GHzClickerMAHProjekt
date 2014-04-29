@@ -5,16 +5,20 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-
+/**
+ * A class that will make up the RegisterGUI with the help of a Jframe as a window.
+ * @author Mattias Holst
+ *
+ */
 public class RegisterGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
-	//Making buttons to the panel.
+	//Making buttons to the JFrame.
 	private JButton btnRegister = new JButton("Register");
 	private JButton btnExit = new JButton("Exit");
-	
+	//Labels to the textfields.
 	private JLabel lblUsername = new JLabel("Username :");
 	private JLabel lblPassword = new JLabel("Password :");
-	
+	//The textfields
 	private JTextField tfUsername = new JTextField();
 	private JTextField tfPassword = new JTextField();
 	/**
@@ -45,9 +49,17 @@ public class RegisterGUI extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
+	/**
+	 * Getting the Register Button.
+	 * @return btnRegister
+	 */
 	public JButton getBtnRegister(){
 		return btnRegister;
 	}
+	/**
+	 * Getting the Exit button.
+	 * @return btnExit
+	 */
 	public JButton getBtnExit(){
 		return btnExit;
 	}
