@@ -4,24 +4,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginController {
-	private LoginGUI logGui;
+	private LoginGUI logGUI;
 	private Listener listener;
 
 	public LoginController() {
 		Listener listener = new Listener();
-		LoginGUI logGui = new LoginGUI(listener);
+		LoginGUI logGUI = new LoginGUI(listener);
 	}
 
 	private class Listener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == logGui.getBtnRegister()) {
-				
+			if (e.getSource() == logGUI.getBtnRegister()) {
+//				RegisterGUI regGUI = new RegisterGUI(listener);
 			}
-			if (e.getSource() == logGui.getbtnLogin()) {
+			if (e.getSource() == logGUI.getbtnLogin()) {
 			
 			}
-			if(e.getSource() == logGui.getBtnExit()){
+			if(e.getSource() == logGUI.getBtnExit()){
 				
 			}
 		}
