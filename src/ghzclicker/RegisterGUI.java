@@ -45,4 +45,10 @@ public class RegisterGUI extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
+	public JButton getBtnRegister(){
+		return btnRegister;
+	}
+	public JButton getBtnExit(){
+		return btnExit;
+	}
 }
