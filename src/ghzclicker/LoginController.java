@@ -16,12 +16,12 @@ public class LoginController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == logGUI.getBtnRegister()) {
-//				RegisterGUI regGUI = new RegisterGUI(listener);
+				// RegisterGUI regGUI = new RegisterGUI(listener);
 			}
 			if (e.getSource() == logGUI.getbtnLogin()) {
-			
+
 			}
-			if(e.getSource() == logGUI.getBtnExit()){
+			if (e.getSource() == logGUI.getBtnExit()) {
 				System.exit(0);
 			}
 		}
