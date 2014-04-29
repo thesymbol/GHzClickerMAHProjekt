@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class LoginController {
 	private LoginGUI logGui;
+	private Listener listener;
 
 	public LoginController() {
 		Listener listener = new Listener();
@@ -15,10 +16,10 @@ public class LoginController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == logGui.getBtnRegister()) {
-
+				
 			}
 			if (e.getSource() == logGui.getbtnLogin()) {
-
+			
 			}
 			if(e.getSource() == logGui.getBtnExit()){
 				

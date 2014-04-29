@@ -14,12 +14,14 @@ public class GameLoop {
 	private LoginController loginController;
 	private Controller controller;
 
+	
+
 	/**
 	 *  Will update the game every chosen second/millisecond.
 	 */
 	public GameLoop() {		
 		controller = new Controller();
-		loginController = new LoginController();
+		loginController = new LoginController();		
 		
 	
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
