@@ -94,10 +94,14 @@ public class ServerController extends Thread {
 					if (message.equals("sendsave")) {
 						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save");
 					}
-					if(message.equals("loadsave")) {
+					if (message.equals("loadsave")) {
 						String loaded = fileHandler.load("res/", "GHzSaveGame.save");
 						out.println("loadsave");
 						out.println(loaded);
+					}
+					if (message.equals("sendlogininfo")) {
+						out.println(in.readLine());
+						out.println(in.readLine());
 					}
 				}
 				System.out.println("[Info] Client disconnected");

@@ -83,4 +83,11 @@ public class LoginGUI extends JFrame{
 		return btnExit;
 	}
 	
+	public String getUsername() {
+		return tfUsername.getText();
+	}
+	
+	public String getPassword() {
+		return tfPassword.getText();
+	}
 }
