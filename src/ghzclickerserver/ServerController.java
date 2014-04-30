@@ -99,6 +99,10 @@ public class ServerController extends Thread {
 						out.println("loadsave");
 						out.println(loaded);
 					}
+					if (message.equals("sendlogininfo")) {
+						out.println(in.readLine());
+						out.println(in.readLine());
+					}
 				}
 				System.out.println("[Info] Client disconnected");
 			} catch (IOException e) {
