@@ -33,15 +33,13 @@ public class LoginController {
 					network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
 					network.sendData(username);
 					network.sendData(password);
-					System.out.println(network.getData());
-					System.out.println(network.getData());
-					/*if (username && password == true) {
+					if (network.getData().equals("test") && network.getData().equals("test2")) {
 						JOptionPane.showMessageDialog(null, "Successfully logged in");
 						logGUI.setVisible(false);
 						logGUI.dispose();
 					} else {
 						JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
-					}*/
+					}
 					network.close();
 				} catch (IOException ex) {
 					ex.printStackTrace();
