@@ -56,12 +56,12 @@ public class NetworkClient {
 			out.println(data);
 		}
 	}
-	
+
 	/**
 	 * get data from server
 	 */
 	public String getData() throws IOException {
-		if(in != null) {
+		if (in != null) {
 			return in.readLine();
 		}
 		return "";

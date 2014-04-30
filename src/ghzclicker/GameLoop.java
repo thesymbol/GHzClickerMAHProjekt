@@ -13,17 +13,15 @@ import java.util.concurrent.TimeUnit;
 public class GameLoop {
 	private LoginController loginController;
 	private Controller controller;
-
-	
+	private static final String SERVER_IP = "127.0.0.1";
 
 	/**
-	 *  Will update the game every chosen second/millisecond.
+	 * Will update the game every chosen second/millisecond.
 	 */
-	public GameLoop() {		
-		controller = new Controller();
-		loginController = new LoginController();		
-		
-	
+	public GameLoop() {
+		controller = new Controller(SERVER_IP);
+		loginController = new LoginController(SERVER_IP);
+
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
 		// constant updates (every 10 millisecond).

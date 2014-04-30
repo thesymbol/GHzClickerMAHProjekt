@@ -21,6 +21,7 @@ public class Controller {
 	private double clickModifier = 1;
 	private double hertzPerSecond = 0;
 	private int clickCounter = 0;
+	private String serverIp;
 
 	private ArrayList<Building> buildings;
 	private ArrayList<Double> hertz;
@@ -29,12 +30,11 @@ public class Controller {
 
 	/**
 	 * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
+	 * 
+	 * @param ip The servers IP adress
 	 */
-	public Controller() {
-		/*
-		 * network = new NetworkClient("localhost"); network.sendData("Test socket"); Iterator<String> itr = network.getData().iterator(); while (itr.hasNext()) { System.out.println(itr.next()); }
-		 * network.close();
-		 */
+	public Controller(String ip) {
+		this.serverIp = ip;
 		buildings = new ArrayList<Building>();
 		buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
@@ -203,11 +203,11 @@ public class Controller {
 		for (int i = 0; i < buildings.size(); i++) {
 			data += buildings.get(i).getOwned() + ":";
 		}
-		
+
 		System.out.println("[Info] Save data sent: " + data);
 
 		try {
-			NetworkClient client = new NetworkClient("127.0.0.1");
+			NetworkClient client = new NetworkClient(serverIp);
 			client.sendData("sendsave"); // notify that the next message is a save file.
 			client.sendData(data);
 			client.close();
@@ -223,13 +223,13 @@ public class Controller {
 	 */
 	public void loadGameServer() {
 		try {
-			NetworkClient client = new NetworkClient("127.0.0.1");
+			NetworkClient client = new NetworkClient(serverIp);
 			client.sendData("loadsave");
-			if(client.getData().equals("loadsave")){
+			if (client.getData().equals("loadsave")) {
 				String saveData = client.getData();
 				System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
 				String[] store = saveData.split(":");
-				
+
 				// TODO: Not rely on the hertz size (i) for the store array.
 				for (int i = 0; i < hertz.size(); i++) {
 					hertz.set(i, Double.parseDouble(store[i]));
