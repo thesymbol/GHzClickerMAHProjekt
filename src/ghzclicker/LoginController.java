@@ -9,10 +9,12 @@ import javax.swing.JOptionPane;
 public class LoginController {
 	private LoginGUI logGUI;
 	private LoginListener listener;
+	private RegisterGUI regGUI;
 
 	public LoginController() {
 		listener = new LoginListener();
 		logGUI = new LoginGUI(listener);
+		regGUI = new RegisterGUI(listener);
 	}
 
 	private class LoginListener implements ActionListener {
