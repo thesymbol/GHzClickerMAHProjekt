@@ -172,8 +172,7 @@ public class Controller {
 	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 fron
 	 * hertz
 	 * 
-	 * @param i
-	 *            , keeps record which building that was bought.
+	 * @param i, keeps record which building that was bought.
 	 */
 	public void payingBuilding(int i) {
 		long buildingPrice = buildings.get(i).getPrice();
@@ -240,8 +239,7 @@ public class Controller {
 
 		try {
 			NetworkClient client = new NetworkClient(serverIp);
-			client.sendData("sendsave"); // notify that the next message is a
-											// save file.
+			client.sendData("sendsave"); // notify that the next message is a save file.
 			client.sendData(data);
 			client.close();
 		} catch (IOException e) {
@@ -261,11 +259,7 @@ public class Controller {
 			client.sendData("loadsave");
 			if (client.getData().equals("loadsave")) {
 				String saveData = client.getData();
-				System.out.println("[Info] Save data loaded: " + saveData); // Prints
-																			// loaded
-																			// data
-																			// in
-																			// console
+				System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
 				String[] store = saveData.split(":");
 
 				// TODO: Not rely on the hertz size (i) for the store array.
@@ -276,8 +270,7 @@ public class Controller {
 				// TODO: Not rely on the hertz size (i) for the store array.
 				int hertzSize = hertz.size();
 				for (int i = 0; i < store.length - hertz.size(); i++) {
-					buildings.get(i).setOwned(
-							Integer.parseInt(store[(i + hertzSize)]));
+					buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
 				}
 			}
 			client.close();
@@ -294,8 +287,7 @@ public class Controller {
 	public ArrayList<JButton> createBuildingBtns() {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {
-			JButton btn = new JButton(building.getName(), new ImageIcon(
-					building.getImageLocation()));
+			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
 			btn.setName(building.getName()); // set the name of the button
 			btn.setToolTipText(building.getName());
 			btnBuildings.add(btn);
@@ -308,8 +300,7 @@ public class Controller {
 	 */
 	public void calculateBuildingCosts() {
 		for (int i = 0; i < buildings.size(); i++) {
-			long cost = (long) (buildings.get(i).getBaseCost() * (Math.pow(1.1,
-					buildings.get(i).getOwned()))); // cost algorithm
+			long cost = (long) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
