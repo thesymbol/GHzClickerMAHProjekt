@@ -42,7 +42,7 @@ public class GameGUI extends JFrame {
 		pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
 
 		// main panel
-		setPreferredSize(new Dimension(800, 800));
+		setPreferredSize(new Dimension(800, 850));
 		setLayout(null);
 
 		setName("GHz Clicker");
@@ -53,7 +53,7 @@ public class GameGUI extends JFrame {
 		lblHertzPerSecond.setBounds(50, 75, 200, 50);
 		btnSave.setBounds(50, 700, 100, 50);
 		btnLoad.setBounds(200, 700, 100, 50);
-		taStatistics.setBounds(500, 600, 300, 200);
+		taStatistics.setBounds(500, 600, 300, 220);
 
 		pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
