@@ -10,8 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * A class that controlls the whole program. Having all the logics within the
- * application
+ * A class that controlls the whole program. Having all the logics within the application
  * 
  * @author Marcus Orwén , Mattias Holst , Viktor Saltarski , Michael Bergstrand
  * 
@@ -33,8 +32,7 @@ public class Controller {
 	DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
 	/**
-	 * Constructor which adds the network and the building buttons Adding hertz
-	 * to an ArrayList.
+	 * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
 	 * 
 	 * @param ip
 	 *            The servers IP adress
@@ -85,8 +83,7 @@ public class Controller {
 	}
 
 	/**
-	 * This dose so if hertz gets under 0 we will take from KHz and give to
-	 * hertz
+	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz
 	 */
 	public void reMerge() {
 		int diff;
@@ -100,9 +97,7 @@ public class Controller {
 	}
 
 	/**
-	 * TODO: make the letters not into an array and not to rely on the hertz
-	 * arraylist for refference. (aka not using the i in splitted[i] from the
-	 * arraylist).
+	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
 	 */
 	public String stringiFy() {
 		String letters = "Hz;K;M;G;T;P;E";
@@ -147,8 +142,7 @@ public class Controller {
 	}
 
 	/**
-	 * This gets updated by the gameloop every second (used for the timing on
-	 * building generating "Hertz"
+	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
 	 */
 	public void updateEverySecond() {
 		hertzEverySecond();
@@ -169,8 +163,7 @@ public class Controller {
 	}
 
 	/**
-	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 fron
-	 * hertz
+	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 from hertz
 	 * 
 	 * @param i, keeps record which building that was bought.
 	 */
@@ -183,8 +176,7 @@ public class Controller {
 	}
 
 	/**
-	 * This gets updated by the gameloop and calculate what your Hertz Per
-	 * Second.
+	 * This gets updated by the gameloop and calculate what your Hertz Per Second.
 	 */
 	public void uppdateHertzPerSecond() {
 		hertzPerSecond = 0;
@@ -222,8 +214,7 @@ public class Controller {
 	}
 
 	/**
-	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
-	 * på mitt windows8 tillåts inte programmet att skapa och spara en fil på
+	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på
 	 * C:/ Saving the game into a .save file in the selected location.
 	 */
 	public void saveGame() {
@@ -250,8 +241,7 @@ public class Controller {
 	/**
 	 * Loading the game from server (falls back to local if no server online).
 	 * 
-	 * @param loadString
-	 *            The save file to load (in string format).
+	 * @param loadString, The save file to load (in string format).
 	 */
 	public void loadGameServer() {
 		try {
