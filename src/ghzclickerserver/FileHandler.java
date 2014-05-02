@@ -22,14 +22,14 @@ public class FileHandler {
 	 * @param filename The filename to save to.
 	 */
 	public void save(String data, String location, String filename) {
-		System.out.println("[Info] Save data saved: " + data);
+		System.out.println("[Info] " + filename + " saved: " + data);
 		try {
 			File newTextFile = new File((location + filename));
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(data);
 			fw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("[Error] Could not load " + filename);
 		}
 	}
 
@@ -50,12 +50,23 @@ public class FileHandler {
 			}
 			reader.close();
 			ret = sb.toString();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException e) { // if file is not found create it.
+			System.err.println("[Error] " + filename + " not found");
+			System.out.println("[Info] Creating new " + filename + "...");
+			try {
+				File newTextFile = new File((location + filename));
+				FileWriter fw = new FileWriter(newTextFile);
+				fw.write("");
+				fw.close();
+				System.out.println("[Info] Created new " + filename);
+			} catch (IOException e1) {
+				System.err.println("[Error] Could not create " + filename);
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("[Info] Save data loaded: " + ret);
+		System.out.println("[Info] " + filename + " loaded: " + ret);
 		return ret;
 	}
 }
