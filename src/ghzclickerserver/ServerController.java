@@ -100,8 +100,16 @@ public class ServerController extends Thread {
 						out.println(loaded);
 					}
 					if (message.equals("sendlogininfo")) {
-						out.println(in.readLine());
-						out.println(in.readLine());
+						// @TODO: check that the login info is correct with arduino and server txt file.
+						out.println("loginsuccessfull");
+						// out.println(in.readLine());
+						// out.println(in.readLine());
+					}
+					if (message.equals("sendregdata")) {
+						// @TODO: check that the reg info is correct with arduino and server txt file.
+						out.println("regsuccessfull");
+						// out.println(in.readLine());
+						// out.println(in.readLine());
 					}
 				}
 				System.out.println("[Info] Client disconnected");

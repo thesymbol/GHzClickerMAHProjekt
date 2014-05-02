@@ -2,7 +2,6 @@ package ghzclicker;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -18,7 +17,6 @@ public class LoginController {
 	public LoginController(String ip) {
 		listener = new LoginListener();
 		logGUI = new LoginGUI(listener);
-		
 
 		this.serverIp = ip;
 
@@ -28,81 +26,53 @@ public class LoginController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == logGUI.getBtnRegister()) {
-				// RegisterGUI regGUI = new RegisterGUI(listener);
 				regGUI = new RegisterGUI(listener);
 			}
 			if (e.getSource() == logGUI.getbtnLogin()) {
-//
-//				network.sendData(username);
-//				network.senData(password);
-//				if (username && password == true) {
-//					JOptionPane.showMessageDialog(null, "Successfully logged in");
-//					logGUI.setVisible(false);
-//					logGUI.dispose();
-//				} else {
-//					JOptionPane.showMessageDialog(null,
-//							"Wrong username or password, please try again");
-
-					try {
-						String username = logGUI.getUsername();
-						String password = logGUI.getPassword();
-						NetworkClient network = new NetworkClient(serverIp);
-						network.sendData("sendlogininfo");// send this first to
-															// notify that we
-															// will send the
-															// username and
-															// password next
-						network.sendData(username);
-						network.sendData(password);
-						if (network.getData().equals("test")
-								&& network.getData().equals("test2")) {
-							JOptionPane.showMessageDialog(null,
-									"Successfully logged in");
-							logGUI.setVisible(false);
-							logGUI.dispose();
-						} else {
-							JOptionPane
-									.showMessageDialog(null,
-											"Wrong username or password, please try again");
-						}
-						network.close();
-					} catch (IOException ex) {
-						ex.printStackTrace();
+				try {
+					String username = logGUI.getUsername();
+					String password = logGUI.getPassword();
+					NetworkClient network = new NetworkClient(serverIp);
+					network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+					network.sendData(username);
+					network.sendData(password);
+					if (network.getData().equals("loginsuccessfull")) {
+						JOptionPane.showMessageDialog(null, "Successfully logged in");
+						logGUI.setVisible(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
 					}
+					network.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
-				if (e.getSource() == logGUI.getBtnExit()) {
-					System.exit(0);
-				}
-				if(e.getSource() == regGUI.getBtnRegister()){
-					try {
-						String username = regGUI.getUsername();
-						String password = regGUI.getPassword();
-						NetworkClient network = new NetworkClient(serverIp);
-						network.sendData("sendlogininfo");// send this first to
-															// notify that we
-															// will send the
-															// username and
-															// password next
-						network.sendData(username);
-						network.sendData(password);
-						if (network.getData().equals("test")) {
-							JOptionPane.showMessageDialog(null,
-									"This username already exists. Please try another one.");
-						} else {
-							JOptionPane.showMessageDialog(null,"Your account is now created!");
-							regGUI.setVisible(false);
-							regGUI.dispose();
-						}
-						network.close();
-					} catch (IOException ex) {
-						ex.printStackTrace();
+			}
+			if (e.getSource() == logGUI.getBtnExit()) {
+				System.exit(0);
+			}
+			if (e.getSource() == regGUI.getBtnRegister()) {
+				try {
+					String username = regGUI.getUsername();
+					String password = regGUI.getPassword();
+					NetworkClient network = new NetworkClient(serverIp);
+					network.sendData("sendregdata");// send this first to notify that we will send the username and password next
+					network.sendData(username);
+					network.sendData(password);
+					if (network.getData().equals("regsuccessfull")) {
+						JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
+					} else {
+						JOptionPane.showMessageDialog(null, "Your account is now created!");
+						regGUI.setVisible(false);
 					}
+					network.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
-				if(e.getSource() == regGUI.getBtnCancel()){
-					regGUI.setVisible(false);
-					regGUI.dispose();
-				}
+			}
+			if (e.getSource() == regGUI.getBtnCancel()) {
+				regGUI.setVisible(false);
+				regGUI.dispose();
 			}
 		}
 	}
-
+}
