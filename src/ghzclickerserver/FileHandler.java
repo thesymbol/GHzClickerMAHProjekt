@@ -22,14 +22,15 @@ public class FileHandler {
 	 * @param filename The filename to save to.
 	 */
 	public void save(String data, String location, String filename) {
-		System.out.println("[Info] " + filename + " saved: " + data);
+		System.out.println("[Info] Trying to save " + filename);
 		try {
 			File newTextFile = new File((location + filename));
 			FileWriter fw = new FileWriter(newTextFile);
 			fw.write(data);
 			fw.close();
+			System.out.println("[Info] Saved " + filename + " with data: " + data);
 		} catch (IOException e) {
-			System.err.println("[Error] Could not load " + filename);
+			System.err.println("[Error] Could not save " + filename);
 		}
 	}
 
@@ -40,6 +41,7 @@ public class FileHandler {
 	 * @param filename Filename of the file
 	 */
 	public String load(String location, String filename) {
+		System.out.println("[Info] Trying to load " + filename);
 		String ret = "";
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File((location + filename))));
@@ -66,7 +68,7 @@ public class FileHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("[Info] " + filename + " loaded: " + ret);
+		System.out.println("[Info] " + filename + " loaded with data: " + ret);
 		return ret;
 	}
 }
