@@ -94,10 +94,10 @@ public class ServerController extends Thread {
                 while ((message = in.readLine()) != null) {
                     System.out.println("[Info] Command: " + message);
                     if (message.equals("sendsave")) {
-                        fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save", false);
+                        fileHandler.save(in.readLine(), "", "GHzSaveGame.save", false);
                     }
                     if (message.equals("loadsave")) {
-                        out.println(fileHandler.load("res/", "GHzSaveGame.save").get(0));
+                        out.println(fileHandler.load("", "GHzSaveGame.save").get(0));
                     }
                     if (message.equals("sendlogininfo")) {
                         login(in.readLine(), in.readLine());
@@ -121,7 +121,7 @@ public class ServerController extends Thread {
      */
     public void register(String username, String password) {
         System.out.println("[Info] Trying to register new user");
-        ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+        ArrayList<String> loaded = fileHandler.load("", "users.dat");
         boolean alreadyExist = false;
         Iterator<String> itr = loaded.iterator();
         while (itr.hasNext() && !alreadyExist) {
@@ -131,7 +131,7 @@ public class ServerController extends Thread {
             }
         }
         if (!alreadyExist) { // if user don't already exist add it
-            if (fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true)) {
+            if (fileHandler.save(("\n" + username + ";" + password), "", "users.dat", true)) {
                 out.println("regsuccessfull");
                 System.out.println("[Info] Registerd new user");
             }
@@ -149,7 +149,7 @@ public class ServerController extends Thread {
      */
     public void login(String username, String password) {
         System.out.println("[Info] " + username + " trying to login");
-        ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+        ArrayList<String> loaded = fileHandler.load("", "users.dat");
         Iterator<String> itr = loaded.iterator();
         boolean found = false;
         while (itr.hasNext() && !found) {
