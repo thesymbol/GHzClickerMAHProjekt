@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client.
@@ -92,29 +94,39 @@ public class ServerController extends Thread {
 				while ((message = in.readLine()) != null) {
 					System.out.println("[Info] Command: " + message);
 					if (message.equals("sendsave")) {
-						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save");
+						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save", false);
 					}
 					if (message.equals("loadsave")) {
-						String loaded = fileHandler.load("res/", "GHzSaveGame.save");
+						String loaded = fileHandler.load("res/", "GHzSaveGame.save").get(0);
 						out.println("loadsave");
 						out.println(loaded);
 					}
 					if (message.equals("sendlogininfo")) {
 						// @TODO: check that the login info is correct with arduino and server txt file.
-						fileHandler.load("res/", "users.dat");
+						ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
 						String username = in.readLine();
 						String password = in.readLine();
-						
+
 						System.out.println("user: " + username + " pass: " + password);
-						
+
 						out.println("loginsuccessfull");
-						
+
 					}
 					if (message.equals("sendregdata")) {
 						// @TODO: check that the reg info is correct with arduino and server txt file.
-						out.println("regsuccessfull");
-						// out.println(in.readLine());
-						// out.println(in.readLine());
+						ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+						String username = in.readLine();
+						String password = in.readLine();
+						Iterator<String> itr = loaded.iterator();
+						while (itr.hasNext()) {
+							String[] userData = itr.next().split(";");
+							if (!username.equals(userData[0])) { // if there is not username already
+								fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true);
+								out.println("regsuccessfull");
+								break;
+							}
+						}
+						System.out.println("user: " + username + " pass: " + password);
 					}
 				}
 				System.out.println("[Info] Client disconnected");
