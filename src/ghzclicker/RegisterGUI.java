@@ -48,7 +48,7 @@ public class RegisterGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
-		
+
 		btnRegister.addActionListener(listener);
 		btnCancel.addActionListener(listener);
 	}
@@ -70,10 +70,11 @@ public class RegisterGUI extends JFrame {
 	public JButton getBtnCancel() {
 		return btnCancel;
 	}
+
 	public String getUsername() {
 		return tfUsername.getText();
 	}
-	
+
 	public String getPassword() {
 		return tfPassword.getText();
 	}

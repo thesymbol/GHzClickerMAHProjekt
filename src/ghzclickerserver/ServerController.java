@@ -101,9 +101,14 @@ public class ServerController extends Thread {
 					}
 					if (message.equals("sendlogininfo")) {
 						// @TODO: check that the login info is correct with arduino and server txt file.
+						
+						String username = in.readLine();
+						String password = in.readLine();
+						
+						System.out.println("user: " + username + " pass: " + password);
+						
 						out.println("loginsuccessfull");
-						// out.println(in.readLine());
-						// out.println(in.readLine());
+						
 					}
 					if (message.equals("sendregdata")) {
 						// @TODO: check that the reg info is correct with arduino and server txt file.

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class GameLoop {
 	private Controller controller;
-	
+
 	private static final String SERVER_IP = "127.0.0.1";
 
 	/**
