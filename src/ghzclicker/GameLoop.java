@@ -11,9 +11,8 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class GameLoop {
-	private LoginController loginController;
 	private Controller controller;
-	
+
 	private static final String SERVER_IP = "127.0.0.1";
 
 	/**
@@ -21,7 +20,8 @@ public class GameLoop {
 	 */
 	public GameLoop() {
 		controller = new Controller(SERVER_IP);
-		loginController = new LoginController(SERVER_IP);
+		@SuppressWarnings("unused")
+		LoginController loginController = new LoginController(SERVER_IP);
 
 		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 

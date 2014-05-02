@@ -230,6 +230,8 @@ public class Controller {
 	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
 	 * på mitt windows8 tillåts inte programmet att skapa och spara en fil på
 	 * C:/ Saving the game into a .save file in the selected location.
+	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
+	 * selected location.
 	 */
 	public void saveGame() {
 		String data = "";

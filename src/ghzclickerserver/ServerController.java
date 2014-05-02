@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client.
@@ -92,16 +94,48 @@ public class ServerController extends Thread {
 				while ((message = in.readLine()) != null) {
 					System.out.println("[Info] Command: " + message);
 					if (message.equals("sendsave")) {
-						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save");
+						fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save", false);
 					}
 					if (message.equals("loadsave")) {
-						String loaded = fileHandler.load("res/", "GHzSaveGame.save");
+						String loaded = fileHandler.load("res/", "GHzSaveGame.save").get(0);
 						out.println("loadsave");
 						out.println(loaded);
 					}
 					if (message.equals("sendlogininfo")) {
-						out.println(in.readLine());
-						out.println(in.readLine());
+						ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+						String username = in.readLine();
+						String password = in.readLine();
+						Iterator<String> itr = loaded.iterator();
+						while (itr.hasNext()) {
+							String[] userData = itr.next().split(";");
+							if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
+								out.println("loginsuccessfull");
+							}
+						}
+						out.println("error");
+					}
+					if (message.equals("sendregdata")) {
+						System.out.println("[Info] Trying to register new user");
+						ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+						String username = in.readLine();
+						String password = in.readLine();
+						boolean alreadyExist = false;
+						Iterator<String> itr = loaded.iterator();
+						while (itr.hasNext()) {
+							String[] userData = itr.next().split(";");
+							if (username.equals(userData[0])) { // if there is not username already
+								alreadyExist = true;
+							}
+						}
+						if (!alreadyExist) { // if user don't already exist add it
+							if (fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true)) {
+								out.println("regsuccessfull");
+								System.out.println("[Info] Registerd new user");
+							}
+						} else {
+							out.println("error");
+							System.err.println("[Error] User already exist");
+						}
 					}
 				}
 				System.out.println("[Info] Client disconnected");

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Handles servers file's, you can save a file with specified data, filename and location.
@@ -20,17 +21,23 @@ public class FileHandler {
 	 * @param data The data to be saved
 	 * @param location The location to save the file to. (always end with /)
 	 * @param filename The filename to save to.
+	 * @param append Append to existing file.
+	 * 
+	 * @return true if file is saved else false.
 	 */
-	public void save(String data, String location, String filename) {
-		System.out.println("[Info] Save data saved: " + data);
+	public boolean save(String data, String location, String filename, Boolean append) {
+		System.out.println("[Info] Trying to save " + filename);
 		try {
 			File newTextFile = new File((location + filename));
-			FileWriter fw = new FileWriter(newTextFile);
+			FileWriter fw = new FileWriter(newTextFile, append);
 			fw.write(data);
 			fw.close();
+			System.out.println("[Info] Saved " + filename + " with data: " + data);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("[Error] Could not save " + filename);
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -39,23 +46,33 @@ public class FileHandler {
 	 * @param location Location of file (always end with /)
 	 * @param filename Filename of the file
 	 */
-	public String load(String location, String filename) {
-		String ret = "";
+	public ArrayList<String> load(String location, String filename) {
+		System.out.println("[Info] Trying to load " + filename);
+		ArrayList<String> fileInfo = new ArrayList<String>();
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File((location + filename))));
-			StringBuffer sb = new StringBuffer();
 			String line;
 			while ((line = reader.readLine()) != null) {
-				sb.append(line);
+				fileInfo.add(line);
 			}
 			reader.close();
-			ret = sb.toString();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException e) { // if file is not found create it.
+			System.err.println("[Error] " + filename + " not found");
+			System.out.println("[Info] Creating new " + filename + "...");
+			try {
+				File newTextFile = new File((location + filename));
+				FileWriter fw = new FileWriter(newTextFile);
+				fw.write("");
+				fw.close();
+				System.out.println("[Info] Created new " + filename);
+			} catch (IOException e1) {
+				System.err.println("[Error] Could not create " + filename);
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("[Info] Save data loaded: " + ret);
-		return ret;
+		System.out.println("[Info] " + filename + " loaded");
+		return fileInfo;
 	}
 }
