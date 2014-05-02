@@ -70,11 +70,17 @@ public class RegisterGUI extends JFrame {
     public JButton getBtnCancel() {
         return btnCancel;
     }
-
+    /**
+     * Getting the Username.
+     * @return tfUsername, the text in the username text field.
+     */
     public String getUsername() {
         return tfUsername.getText();
     }
-
+    /**
+     * Getting the password.
+     * @return tfPassword , the text in the password text field.
+     */
     public String getPassword() {
         return tfPassword.getText();
     }

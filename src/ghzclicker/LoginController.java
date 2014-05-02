@@ -6,6 +6,14 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+
+/**
+ * 
+ * @author Mattias Holst, Michael Bergstrand , Marcus Orwén
+ * 
+ *  A class which handles all the logics to LoginGUI and RegisterGUI.
+ *
+ */
 public class LoginController {
     private LoginGUI logGUI;
     private Listener listener;
@@ -13,7 +21,10 @@ public class LoginController {
     private RegisterGUI regGUI;
 
     private String serverIp;
-
+    /**
+     * A constructor that makes new instances.
+     * @param ip , insert server ip.
+     */
     public LoginController(String ip) {
         listener = new Listener();
         logGUI = new LoginGUI(listener);
@@ -22,9 +33,19 @@ public class LoginController {
         this.serverIp = ip;
 
     }
-
+    /**
+     * 
+     * @author Mattias Holst, Marcus Orwén , Michael Bergstrand.
+     * 
+     * A inner class which handles all the listeners to the buttons from the LoginGUI and RegisterGUI.
+     *
+     */
     private class Listener implements ActionListener {
         @Override
+        /**
+         * A method used to determine which button is pressed and what will happend next.
+         * @param e , 
+         */
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == logGUI.getBtnRegister()) {
                 regGUI.setVisible(true);
