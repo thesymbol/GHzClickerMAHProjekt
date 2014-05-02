@@ -106,11 +106,14 @@ public class ServerController extends Thread {
 						ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
 						String username = in.readLine();
 						String password = in.readLine();
-
-						System.out.println("user: " + username + " pass: " + password);
-
-						out.println("loginsuccessfull");
-
+						Iterator<String> itr = loaded.iterator();
+						while (itr.hasNext()) {
+							String[] userData = itr.next().split(";");
+							if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
+								out.println("loginsuccessfull");
+							}
+						}
+						out.println("error");
 					}
 					if (message.equals("sendregdata")) {
 						System.out.println("[Info] Trying to register new user");
