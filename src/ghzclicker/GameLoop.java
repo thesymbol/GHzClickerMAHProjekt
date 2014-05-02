@@ -11,32 +11,32 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class GameLoop {
-	private Controller controller;
+    private Controller controller;
 
-	private static final String SERVER_IP = "127.0.0.1";
+    private static final String SERVER_IP = "127.0.0.1";
 
-	/**
-	 * Will update the game every chosen second/millisecond.
-	 */
-	public GameLoop() {
-		controller = new Controller(SERVER_IP);
-		@SuppressWarnings("unused")
-		LoginController loginController = new LoginController(SERVER_IP);
+    /**
+     * Will update the game every chosen second/millisecond.
+     */
+    public GameLoop() {
+        controller = new Controller(SERVER_IP);
+        @SuppressWarnings("unused")
+        LoginController loginController = new LoginController(SERVER_IP);
 
-		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
-		// constant updates (every 10 millisecond).
-		exec.scheduleAtFixedRate(new Runnable() {
-			public void run() {
-				controller.update();
-			}
-		}, 0, 10, TimeUnit.MILLISECONDS);
+        // constant updates (every 10 millisecond).
+        exec.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                controller.update();
+            }
+        }, 0, 10, TimeUnit.MILLISECONDS);
 
-		// constant updates (every 1 second).
-		exec.scheduleAtFixedRate(new Runnable() {
-			public void run() {
-				controller.updateEverySecond();
-			}
-		}, 0, 1, TimeUnit.SECONDS);
-	}
+        // constant updates (every 1 second).
+        exec.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                controller.updateEverySecond();
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+    }
 }

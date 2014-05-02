@@ -47,6 +47,21 @@ public class Controller {
         buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
         buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
+    /**
+     * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
+     * 
+     * @param ip The servers IP adress
+     */
+    public Controller(String ip) {
+        this.serverIp = ip;
+        buildings = new ArrayList<Building>();
+        buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
+        buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
+        buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
+        buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
+        buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
+        buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
+        buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), listener);
@@ -169,6 +184,18 @@ public class Controller {
             buildingPrice /= 1000;
         }
     }
+    /**
+     * This dose so if a building cost 4.040 you will take 4 from KH and 40 from hertz
+     * 
+     * @param i, keeps record which building that was bought.
+     */
+    public void payingBuilding(int i) {
+        long buildingPrice = buildings.get(i).getPrice();
+        for (i = 0; i < hertz.size() && buildingPrice >= 1; i++) {
+            hertz.set(i, (double) hertz.get(i) - (buildingPrice % 1000));
+            buildingPrice /= 1000;
+        }
+    }
 
     /**
      * This gets updated by the gameloop and calculate what your Hertz Per Second.
@@ -210,6 +237,18 @@ public class Controller {
 
     /**
      * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the selected location.
+     */
+    public void saveGame() {
+        String data = "";
+        for (int i = 0; i < hertz.size(); i++) {
+            data += hertz.get(i) + ":";
+        }
+        for (int i = 0; i < buildings.size(); i++) {
+            data += buildings.get(i).getOwned() + ":";
+        }
+    /**
+     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
+     * selected location.
      */
     public void saveGame() {
         String data = "";
@@ -340,6 +379,23 @@ public class Controller {
             // Building purcheses.
             for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
 
+                if (e.getSource() == gui.getBtnBuildings().get(i)) {
+                    Building building = buildings.get(i);
+                    for (int j = 0; j < hertz.size(); j++) {
+                        currTotalHertz += hertz.get(j) * n;
+                        n *= 1000;
+                    }
+                    if (currTotalHertz >= buildings.get(i).getPrice()) {
+                        building.setOwned(building.getOwned() + 1);
+                        payingBuilding(i);
+                        // hertz.set(0, hertz.get(0) -
+                        // buildings.get(i).getPrice());
+                    }
+                }
+            }
+        }
+    }
+}
                 if (e.getSource() == gui.getBtnBuildings().get(i)) {
                     Building building = buildings.get(i);
                     for (int j = 0; j < hertz.size(); j++) {
