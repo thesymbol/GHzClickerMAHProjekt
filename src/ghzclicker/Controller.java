@@ -10,7 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * A class that controlls the whole program. Having all the logics within the application
+ * A class that controlls the whole program. Having all the logics within the
+ * application
  * 
  * @author Marcus Orwén , Mattias Holst , Viktor Saltarski , Michael Bergstrand
  * 
@@ -32,7 +33,8 @@ public class Controller {
 	DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
 	/**
-	 * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
+	 * Constructor which adds the network and the building buttons Adding hertz
+	 * to an ArrayList.
 	 * 
 	 * @param ip
 	 *            The servers IP adress
@@ -43,10 +45,8 @@ public class Controller {
 		buildings
 				.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
 		buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
-		buildings.add(new Building("Power Supply", 1000, 40,
-				"res/NewPowerSupply.png"));
-		buildings.add(new Building("Hard Drive(SSD)", 10000, 200,
-				"res/NewHardDrive(SSD).png"));
+		buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
+		buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
 		buildings.add(new Building("Graphics card", 50000, 1000,
 				"res/NewGraphicsCard.png"));
 		buildings.add(new Building("Processor", 200000, 3000,
@@ -83,7 +83,8 @@ public class Controller {
 	}
 
 	/**
-	 * This dose so if hertz gets under 0 we will take from KHz and give to hertz
+	 * This dose so if hertz gets under 0 we will take from KHz and give to
+	 * hertz
 	 */
 	public void reMerge() {
 		int diff;
@@ -97,7 +98,9 @@ public class Controller {
 	}
 
 	/**
-	 * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
+	 * TODO: make the letters not into an array and not to rely on the hertz
+	 * arraylist for refference. (aka not using the i in splitted[i] from the
+	 * arraylist).
 	 */
 	public String stringiFy() {
 		String letters = "Hz;K;M;G;T;P;E";
@@ -116,14 +119,15 @@ public class Controller {
 	 */
 	public void hertzClicked() {
 		hertz.set(0, hertz.get(0) + hertzPerClick);
-		hertzClicked+=hertzPerClick;
+		hertzClicked += hertzPerClick;
 	}
-	
+
 	/**
 	 * This calculates how much you get per click
 	 */
-	public void updateHertzPerClick(){
-		hertzPerClick=baseValueClick + (clickModifier * hertzPerSecond * 0.05);
+	public void updateHertzPerClick() {
+		hertzPerClick = baseValueClick
+				+ (clickModifier * hertzPerSecond * 0.05);
 	}
 
 	/**
@@ -142,7 +146,8 @@ public class Controller {
 	}
 
 	/**
-	 * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
+	 * This gets updated by the gameloop every second (used for the timing on
+	 * building generating "Hertz"
 	 */
 	public void updateEverySecond() {
 		hertzEverySecond();
@@ -153,7 +158,7 @@ public class Controller {
 	 * This dose so if you get 4.040 HPS you get 4 in KH and 40 in hertz.
 	 */
 	public void hertzEverySecond() {
-		hertzGenerated+=hertzPerSecond;
+		hertzGenerated += hertzPerSecond;
 		int dog;
 		dog = (int) hertzPerSecond;
 		for (int i = 0; i < hertz.size() && dog >= 1; i++) {
@@ -163,9 +168,11 @@ public class Controller {
 	}
 
 	/**
-	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 from hertz
+	 * This dose so if a building cost 4.040 you will take 4 from KH and 40 from
+	 * hertz
 	 * 
-	 * @param i, keeps record which building that was bought.
+	 * @param i
+	 *            , keeps record which building that was bought.
 	 */
 	public void payingBuilding(int i) {
 		long buildingPrice = buildings.get(i).getPrice();
@@ -176,13 +183,15 @@ public class Controller {
 	}
 
 	/**
-	 * This gets updated by the gameloop and calculate what your Hertz Per Second.
+	 * This gets updated by the gameloop and calculate what your Hertz Per
+	 * Second.
 	 */
 	public void uppdateHertzPerSecond() {
 		hertzPerSecond = 0;
 
 		for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-			hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
+			hertzPerSecond += buildings.get(i).getOwned()
+					* buildings.get(i).getBaseHPS();
 		}
 		gui.updateHertzPerSecond(Double.toString(hertzPerSecond));
 	}
@@ -200,21 +209,26 @@ public class Controller {
 		statistics += "\n Total Harddrives : " + buildings.get(0).getOwned();
 		statistics += "\n Total RAM : " + buildings.get(1).getOwned();
 		statistics += "\n Total PowerSupplies : " + buildings.get(2).getOwned();
-		statistics += "\n Total Harddrives(SSD) : " + buildings.get(3).getOwned();
-		statistics += "\n Total Graphics Cards : " + buildings.get(4).getOwned();
+		statistics += "\n Total Harddrives(SSD) : "
+				+ buildings.get(3).getOwned();
+		statistics += "\n Total Graphics Cards : "
+				+ buildings.get(4).getOwned();
 		statistics += "\n Total Processors : " + buildings.get(5).getOwned();
 		statistics += "\n Total Motherboards : " + buildings.get(6).getOwned();
-		statistics += "\n Total Clicks : " + clickCounter;		
+		statistics += "\n Total Clicks : " + clickCounter;
 		statistics += "\n Hertz Per click : " + hpsFormat.format(hertzPerClick);
-		statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
+		statistics += "\n Points By Clicks ; "
+				+ hertzFormat.format(hertzClicked);
 		statistics += "\n Hertz Generated : " + hertzGenerated;
-		statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
+		statistics += "\n Hertz Generated : "
+				+ hertzFormat.format(hertzClicked + hertzGenerated);
 
 		gui.updateStatistics(statistics);
 	}
 
 	/**
-	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på
+	 * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn,
+	 * på mitt windows8 tillåts inte programmet att skapa och spara en fil på
 	 * C:/ Saving the game into a .save file in the selected location.
 	 */
 	public void saveGame() {
@@ -230,7 +244,8 @@ public class Controller {
 
 		try {
 			NetworkClient client = new NetworkClient(serverIp);
-			client.sendData("sendsave"); // notify that the next message is a save file.
+			client.sendData("sendsave"); // notify that the next message is a
+											// save file.
 			client.sendData(data);
 			client.close();
 		} catch (IOException e) {
@@ -241,7 +256,8 @@ public class Controller {
 	/**
 	 * Loading the game from server (falls back to local if no server online).
 	 * 
-	 * @param loadString, The save file to load (in string format).
+	 * @param loadString
+	 *            , The save file to load (in string format).
 	 */
 	public void loadGameServer() {
 		try {
@@ -249,7 +265,11 @@ public class Controller {
 			client.sendData("loadsave");
 			if (client.getData().equals("loadsave")) {
 				String saveData = client.getData();
-				System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
+				System.out.println("[Info] Save data loaded: " + saveData); // Prints
+																			// loaded
+																			// data
+																			// in
+																			// console
 				String[] store = saveData.split(":");
 
 				// TODO: Not rely on the hertz size (i) for the store array.
@@ -260,7 +280,8 @@ public class Controller {
 				// TODO: Not rely on the hertz size (i) for the store array.
 				int hertzSize = hertz.size();
 				for (int i = 0; i < store.length - hertz.size(); i++) {
-					buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
+					buildings.get(i).setOwned(
+							Integer.parseInt(store[(i + hertzSize)]));
 				}
 			}
 			client.close();
@@ -277,7 +298,8 @@ public class Controller {
 	public ArrayList<JButton> createBuildingBtns() {
 		ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
 		for (Building building : buildings) {
-			JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
+			JButton btn = new JButton(building.getName(), new ImageIcon(
+					building.getImageLocation()));
 			btn.setName(building.getName()); // set the name of the button
 			btn.setToolTipText(building.getName());
 			btnBuildings.add(btn);
@@ -290,7 +312,8 @@ public class Controller {
 	 */
 	public void calculateBuildingCosts() {
 		for (int i = 0; i < buildings.size(); i++) {
-			long cost = (long) (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
+			long cost = (long) (buildings.get(i).getBaseCost() * (Math.pow(1.1,
+					buildings.get(i).getOwned()))); // cost algorithm
 			if (buildings.get(i).getOwned() == 0) {
 				cost = buildings.get(i).getBaseCost();
 			}
