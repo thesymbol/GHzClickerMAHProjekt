@@ -97,45 +97,13 @@ public class ServerController extends Thread {
                         fileHandler.save(in.readLine(), "res/", "GHzSaveGame.save", false);
                     }
                     if (message.equals("loadsave")) {
-                        String loaded = fileHandler.load("res/", "GHzSaveGame.save").get(0);
-                        out.println("loadsave");
-                        out.println(loaded);
+                        out.println(fileHandler.load("res/", "GHzSaveGame.save").get(0));
                     }
                     if (message.equals("sendlogininfo")) {
-                        ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
-                        String username = in.readLine();
-                        String password = in.readLine();
-                        Iterator<String> itr = loaded.iterator();
-                        while (itr.hasNext()) {
-                            String[] userData = itr.next().split(";");
-                            if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
-                                out.println("loginsuccessfull");
-                            }
-                        }
-                        out.println("error");
+                        login(in.readLine(), in.readLine());
                     }
                     if (message.equals("sendregdata")) {
-                        System.out.println("[Info] Trying to register new user");
-                        ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
-                        String username = in.readLine();
-                        String password = in.readLine();
-                        boolean alreadyExist = false;
-                        Iterator<String> itr = loaded.iterator();
-                        while (itr.hasNext()) {
-                            String[] userData = itr.next().split(";");
-                            if (username.equals(userData[0])) { // if there is not username already
-                                alreadyExist = true;
-                            }
-                        }
-                        if (!alreadyExist) { // if user don't already exist add it
-                            if (fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true)) {
-                                out.println("regsuccessfull");
-                                System.out.println("[Info] Registerd new user");
-                            }
-                        } else {
-                            out.println("error");
-                            System.err.println("[Error] User already exist");
-                        }
+                        register(in.readLine(), in.readLine());
                     }
                 }
                 System.out.println("[Info] Client disconnected");
@@ -143,5 +111,51 @@ public class ServerController extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+    
+    /**
+     * Register new user to file, if user already exists then do not insert new user.
+     * 
+     * @param username The username
+     * @param password The password
+     */
+    public void register(String username, String password) {
+        System.out.println("[Info] Trying to register new user");
+        ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+        boolean alreadyExist = false;
+        Iterator<String> itr = loaded.iterator();
+        while (itr.hasNext()) {
+            String[] userData = itr.next().split(";");
+            if (username.equals(userData[0])) { // if there is not username already
+                alreadyExist = true;
+            }
+        }
+        if (!alreadyExist) { // if user don't already exist add it
+            if (fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true)) {
+                out.println("regsuccessfull");
+                System.out.println("[Info] Registerd new user");
+            }
+        } else {
+            out.println("error");
+            System.err.println("[Error] User already exist");
+        }
+    }
+    
+    /**
+     * Login a user
+     * 
+     * @param username The username
+     * @param password The password
+     */
+    public void login(String username, String password) {
+        ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
+        Iterator<String> itr = loaded.iterator();
+        while (itr.hasNext()) {
+            String[] userData = itr.next().split(";");
+            if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
+                out.println("loginsuccessfull");
+            }
+        }
+        out.println("error");
     }
 }
