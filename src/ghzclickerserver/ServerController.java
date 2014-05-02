@@ -124,7 +124,7 @@ public class ServerController extends Thread {
         ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
         boolean alreadyExist = false;
         Iterator<String> itr = loaded.iterator();
-        while (itr.hasNext()) {
+        while (itr.hasNext() && !alreadyExist) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0])) { // if there is not username already
                 alreadyExist = true;
@@ -148,14 +148,21 @@ public class ServerController extends Thread {
      * @param password The password
      */
     public void login(String username, String password) {
+        System.out.println("[Info] " + username + " trying to login");
         ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
         Iterator<String> itr = loaded.iterator();
-        while (itr.hasNext()) {
+        boolean found = false;
+        while (itr.hasNext() && !found) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
+                System.out.println("[Info] " + username + " logged in successfully");
                 out.println("loginsuccessfull");
+                found = true;
             }
         }
-        out.println("error");
+        if(!found){
+            System.err.println("[Error] " + username + " tried to login with invalid username or password");
+            out.println("error");
+        }
     }
 }
