@@ -60,10 +60,10 @@ public class LoginController {
 					network.sendData(username);
 					network.sendData(password);
 					if (network.getData().equals("regsuccessfull")) {
-						JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
-					} else {
 						JOptionPane.showMessageDialog(null, "Your account is now created!");
 						regGUI.setVisible(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
 					}
 					network.close();
 				} catch (IOException ex) {

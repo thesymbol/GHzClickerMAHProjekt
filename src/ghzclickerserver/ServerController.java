@@ -113,20 +113,27 @@ public class ServerController extends Thread {
 
 					}
 					if (message.equals("sendregdata")) {
-						// @TODO: check that the reg info is correct with arduino and server txt file.
+						System.out.println("[Info] Trying to register new user");
 						ArrayList<String> loaded = fileHandler.load("res/", "users.dat");
 						String username = in.readLine();
 						String password = in.readLine();
+						boolean alreadyExist = false;
 						Iterator<String> itr = loaded.iterator();
 						while (itr.hasNext()) {
 							String[] userData = itr.next().split(";");
-							if (!username.equals(userData[0])) { // if there is not username already
-								fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true);
-								out.println("regsuccessfull");
-								break;
+							if (username.equals(userData[0])) { // if there is not username already
+								alreadyExist = true;
 							}
 						}
-						System.out.println("user: " + username + " pass: " + password);
+						if (!alreadyExist) { // if user don't already exist add it
+							if (fileHandler.save(("\n" + username + ";" + password), "res/", "users.dat", true)) {
+								out.println("regsuccessfull");
+								System.out.println("[Info] Registerd new user");
+							}
+						} else {
+							out.println("error");
+							System.err.println("[Error] User already exist");
+						}
 					}
 				}
 				System.out.println("[Info] Client disconnected");
