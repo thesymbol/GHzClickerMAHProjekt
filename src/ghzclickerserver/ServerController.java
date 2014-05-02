@@ -131,7 +131,7 @@ public class ServerController extends Thread {
             }
         }
         if (!alreadyExist) { // if user don't already exist add it
-            if (fileHandler.save(("\n" + username + ";" + password), "", "users.dat", true)) {
+            if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
                 out.println("regsuccessfull");
                 System.out.println("[Info] Registerd new user");
             }
