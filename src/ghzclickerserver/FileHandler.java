@@ -14,8 +14,6 @@ import java.util.ArrayList;
  * @author Marcus Orwén
  */
 public class FileHandler {
-	
-	
 
 	/**
 	 * saves a file with specified data and location.
@@ -70,7 +68,7 @@ public class FileHandler {
 			} catch (IOException e1) {
 				System.err.println("[Error] Could not create " + filename);
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
