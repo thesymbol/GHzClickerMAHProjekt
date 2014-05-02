@@ -13,102 +13,102 @@ import java.net.Socket;
  * @author Marcus Orwén
  */
 public class NetworkClient {
-	private Socket socket;
-	private PrintWriter out;
-	private BufferedReader in;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
 
-	/**
-	 * Creates a network client with specified ip
-	 * 
-	 * @param ip The ip to connect to
-	 * @throws IOException
-	 */
-	public NetworkClient(String ip) throws IOException {
-		this(ip, 13337);
-	}
+    /**
+     * Creates a network client with specified ip
+     * 
+     * @param ip The ip to connect to
+     * @throws IOException
+     */
+    public NetworkClient(String ip) throws IOException {
+        this(ip, 13337);
+    }
 
-	/**
-	 * Creates a network client with specified ip and port
-	 * 
-	 * @param ip The ip to connect to
-	 * @param port The port to connect to
-	 * @throws IOException
-	 */
-	public NetworkClient(String ip, int port) throws IOException {
-		System.out.println("[Info] Connecting to server...");
-		try {
-			socket = new Socket(ip, port);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
-			out = new PrintWriter(socket.getOutputStream(), true); // send data from client
-			System.out.println("[Info] Connected to server");
-		} catch (ConnectException e) {
-			System.err.println("[Error] Connection refused");
-		}
-	}
+    /**
+     * Creates a network client with specified ip and port
+     * 
+     * @param ip The ip to connect to
+     * @param port The port to connect to
+     * @throws IOException
+     */
+    public NetworkClient(String ip, int port) throws IOException {
+        System.out.println("[Info] Connecting to server...");
+        try {
+            socket = new Socket(ip, port);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
+            out = new PrintWriter(socket.getOutputStream(), true); // send data from client
+            System.out.println("[Info] Connected to server");
+        } catch (ConnectException e) {
+            System.err.println("[Error] Connection refused");
+        }
+    }
 
-	/**
-	 * Send data to the server
-	 * 
-	 * @param data The data to be sent
-	 */
-	public void sendData(String data) {
-		if (out != null) {
-			out.println(data);
-		}
-	}
+    /**
+     * Send data to the server
+     * 
+     * @param data The data to be sent
+     */
+    public void sendData(String data) {
+        if (out != null) {
+            out.println(data);
+        }
+    }
 
-	/**
-	 * get data from server
-	 */
-	public String getData() throws IOException {
-		if (in != null) {
-			return in.readLine();
-		}
-		return "";
-	}
+    /**
+     * get data from server
+     */
+    public String getData() throws IOException {
+        if (in != null) {
+            return in.readLine();
+        }
+        return "";
+    }
 
-	/**
-	 * Open a listening connection to the server.
-	 */
-	public void open() {
-		new NetworkThread().start();
-	}
+    /**
+     * Open a listening connection to the server.
+     */
+    public void open() {
+        new NetworkThread().start();
+    }
 
-	/**
-	 * Close down the connection to the server.
-	 * 
-	 * @throws IOException
-	 */
-	public void close() throws IOException {
-		if (in != null) {
-			in.close();
-		}
-		if (out != null) {
-			out.close();
-		}
-		if (socket != null) {
-			socket.close();
-		}
-		System.out.println("[Info] Disconnected from server");
-	}
+    /**
+     * Close down the connection to the server.
+     * 
+     * @throws IOException
+     */
+    public void close() throws IOException {
+        if (in != null) {
+            in.close();
+        }
+        if (out != null) {
+            out.close();
+        }
+        if (socket != null) {
+            socket.close();
+        }
+        System.out.println("[Info] Disconnected from server");
+    }
 
-	/**
-	 * creates a networkThread that listens to server messages
-	 */
-	private class NetworkThread extends Thread {
-		/**
-		 * Always recieve messages from server.
-		 */
-		@Override
-		public void run() {
-			try {
-				String message = null;
-				while (((message = in.readLine()) != null)) {
-					System.out.println(message);
-				}
-			} catch (IOException e) {
-				System.out.println("[Info] Disconnected from server");
-			}
-		}
-	}
+    /**
+     * creates a networkThread that listens to server messages
+     */
+    private class NetworkThread extends Thread {
+        /**
+         * Always recieve messages from server.
+         */
+        @Override
+        public void run() {
+            try {
+                String message = null;
+                while (((message = in.readLine()) != null)) {
+                    System.out.println(message);
+                }
+            } catch (IOException e) {
+                System.out.println("[Info] Disconnected from server");
+            }
+        }
+    }
 }
