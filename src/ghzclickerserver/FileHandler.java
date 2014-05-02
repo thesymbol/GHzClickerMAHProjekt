@@ -59,16 +59,11 @@ public class FileHandler {
         } catch (FileNotFoundException e) { // if file is not found create it.
             System.err.println("[Error] " + filename + " not found");
             System.out.println("[Info] Creating new " + filename + "...");
-            try {
-                File newTextFile = new File((location + filename));
-                FileWriter fw = new FileWriter(newTextFile);
-                fw.write("");
-                fw.close();
+            if(save("", location, filename, false)) {
                 System.out.println("[Info] Created new " + filename);
-            } catch (IOException e1) {
+            } else {
                 System.err.println("[Error] Could not create " + filename);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

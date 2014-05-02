@@ -240,21 +240,19 @@ public class Controller {
         try {
             NetworkClient client = new NetworkClient(serverIp);
             client.sendData("loadsave");
-            if (client.getData().equals("loadsave")) {
-                String saveData = client.getData();
-                System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
-                String[] store = saveData.split(":");
+            String saveData = client.getData();
+            System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
+            String[] store = saveData.split(":");
 
-                // TODO: Not rely on the hertz size (i) for the store array.
-                for (int i = 0; i < hertz.size(); i++) {
-                    hertz.set(i, Double.parseDouble(store[i]));
-                }
+            // TODO: Not rely on the hertz size (i) for the store array.
+            for (int i = 0; i < hertz.size(); i++) {
+                hertz.set(i, Double.parseDouble(store[i]));
+            }
 
-                // TODO: Not rely on the hertz size (i) for the store array.
-                int hertzSize = hertz.size();
-                for (int i = 0; i < store.length - hertz.size(); i++) {
-                    buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
-                }
+            // TODO: Not rely on the hertz size (i) for the store array.
+            int hertzSize = hertz.size();
+            for (int i = 0; i < store.length - hertz.size(); i++) {
+                buildings.get(i).setOwned(Integer.parseInt(store[(i + hertzSize)]));
             }
             client.close();
         } catch (IOException e) {
