@@ -47,6 +47,7 @@ public class LoginController {
          * @param e , 
          */
         public void actionPerformed(ActionEvent e) {
+            //LoginGUI listeners.
             if (e.getSource() == logGUI.getBtnRegister()) {
                 regGUI.setVisible(true);
             }
@@ -61,6 +62,7 @@ public class LoginController {
                     if (network.getData().equals("loginsuccessfull")) {
                         JOptionPane.showMessageDialog(null, "Successfully logged in");
                         logGUI.setVisible(false);
+                        logGUI.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
                     }
@@ -72,6 +74,7 @@ public class LoginController {
             if (e.getSource() == logGUI.getBtnExit()) {
                 System.exit(0);
             }
+            //RegisterGUI listeners.
             if (e.getSource() == regGUI.getBtnRegister()) {
                 try {
                     String username = regGUI.getUsername();
@@ -83,6 +86,7 @@ public class LoginController {
                     if (network.getData().equals("regsuccessfull")) {
                         JOptionPane.showMessageDialog(null, "Your account is now created!");
                         regGUI.setVisible(false);
+                        regGUI.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
                     }
@@ -93,6 +97,7 @@ public class LoginController {
             }
             if (e.getSource() == regGUI.getBtnCancel()) {
                 regGUI.setVisible(false);
+                regGUI.dispose();
             }
         }
     }
