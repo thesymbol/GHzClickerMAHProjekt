@@ -8,25 +8,26 @@ import javax.swing.JOptionPane;
 
 public class LoginController {
 	private LoginGUI logGUI;
-	private LoginListener listener;
+	private Listener listener;
 
 	private RegisterGUI regGUI;
 
 	private String serverIp;
 
 	public LoginController(String ip) {
-		listener = new LoginListener();
+		listener = new Listener();
 		logGUI = new LoginGUI(listener);
+		regGUI = new RegisterGUI(listener);
 
 		this.serverIp = ip;
 
 	}
 
-	private class LoginListener implements ActionListener {
+	private class Listener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == logGUI.getBtnRegister()) {
-				regGUI = new RegisterGUI(listener);
+				regGUI.setVisible(true);
 			}
 			if (e.getSource() == logGUI.getbtnLogin()) {
 				try {
@@ -71,7 +72,6 @@ public class LoginController {
 			}
 			if (e.getSource() == regGUI.getBtnCancel()) {
 				regGUI.setVisible(false);
-				regGUI.dispose();
 			}
 		}
 	}
