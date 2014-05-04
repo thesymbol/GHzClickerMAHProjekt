@@ -1,6 +1,7 @@
 package ghzclicker;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -44,7 +45,9 @@ public class LoginGUI extends JFrame {
         add(btnLogin);
         add(btnRegister);
         add(btnExit);
+        lblUsername.setFont(new Font("Arial", Font.BOLD, 12));
         add(lblUsername);
+        lblPassword.setFont(new Font("Arial", Font.BOLD , 12));
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);

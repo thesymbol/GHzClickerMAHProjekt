@@ -75,7 +75,7 @@ public class GameGUI extends JFrame {
             // Set to disabled in begining.
             btn.setEnabled(false);
 
-            btn.setFont(new Font("helvetica", Font.BOLD, 16));
+            btn.setFont(new Font("Arial", Font.BOLD, 16));
             btn.setForeground(Color.black);
 
             pnlBuilding.add(btn);
@@ -83,10 +83,11 @@ public class GameGUI extends JFrame {
         add(pnlBuilding);
         add(btnSave);
         add(btnLoad);
+        taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
         add(taStatistics);
         taStatistics.setEditable(false);
 
-        lblText.setFont(new Font("Serif", Font.BOLD, 16));
+        lblText.setFont(new Font("Arial", Font.BOLD, 16));
         add(lblText);
 
         btnHertz.addActionListener(listener);
