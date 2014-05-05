@@ -1,5 +1,7 @@
 package ghzclicker;
 
+import java.util.ArrayList;
+
 /**
  * Describes a base for a building.
  * 
@@ -7,11 +9,11 @@ package ghzclicker;
  */
 public class Building {
     private String name; // name of building
-    private long baseCost; // base cost that will later be calculated with controller
+    private double baseCost; // base cost that will later be calculated with controller
     private double baseHPS = 0; // base "hertz" per second later will be calculated with modifier
     private String imageLocation; // building's image location for button.
     private int owned = 0; // Amount of this build that is owned.
-    private long price; // The price of a bulding
+    private double price; // The price of a bulding
 
     /**
      * Construct a building
@@ -21,11 +23,12 @@ public class Building {
      * @param baseHPS base "Hertz" per Second
      * @param image location for building's button
      */
-    public Building(String name, long baseCost, double baseHPS, String imageLocation) {
+    public Building(String name, double baseCost, double baseHPS, String imageLocation) {
         this.name = name;
         this.baseCost = baseCost;
         this.baseHPS = baseHPS;
         this.imageLocation = imageLocation;
+        this.price = baseCost;
     }
 
     /**
@@ -42,7 +45,7 @@ public class Building {
      * 
      * @return base cost of building
      */
-    public long getBaseCost() {
+    public double getBaseCost() {
         return baseCost;
     }
 
@@ -87,7 +90,7 @@ public class Building {
      * 
      * @param price The price of the building.
      */
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -96,7 +99,7 @@ public class Building {
      * 
      * @return the price of the building.
      */
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 }
