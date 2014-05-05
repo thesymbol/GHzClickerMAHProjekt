@@ -26,8 +26,7 @@ public class Controller {
     private double hertzGenerated;
 
     private ArrayList<Building> buildings;
-    private ArrayList<Integer> buildingsCost;
-    private double hertz = 999;
+    private double hertz = 0;
     private DecimalFormat hertzFormat = new DecimalFormat("#");
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
@@ -52,9 +51,6 @@ public class Controller {
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), listener);
 
-        hertz = new ArrayList<Double>();
-
-
         this.network = network;
     }
 
@@ -65,14 +61,14 @@ public class Controller {
      * @return prefixed string with M B T or something else at the end.
      */
     public String stringify(double value) {
-        String[] format = { "", " M", " B", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
+        String[] format = { "", " K", " M", " G", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
         double temp = value;
         int order = 0;
         while (temp > 1000.0) {
             temp /= 1000.0;
             order += 1;
         }
-        while (temp < 1.0) {
+        while (temp < 1.0 && hertz>0) {
             temp *= 1000.0;
             order -= 1;
         }
@@ -180,7 +176,7 @@ public class Controller {
         statistics += "\n Total Clicks : " + clickCounter;
         statistics += "\n Hertz Per click : " + hpsFormat.format(hertzPerClick);
         statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
-        statistics += "\n Hertz Generated : " + hertzGenerated;
+        statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
 
         gui.updateStatistics(statistics);
