@@ -1,7 +1,5 @@
 package ghzclicker;
 
-import java.util.ArrayList;
-
 /**
  * Describes a base for a building.
  * 

@@ -1,44 +1,44 @@
 package ghzclicker;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-
 /**
  * 
  * @author Mattias Holst, Michael Bergstrand , Marcus Orwén
  * 
- *  A class which handles all the logics to LoginGUI and RegisterGUI.
- *
+ *         A class which handles all the logics to LoginGUI and RegisterGUI.
+ * 
  */
 public class LoginController {
     private LoginGUI logGUI;
     private Listener listener;
+    private NetworkClient network;
 
     private RegisterGUI regGUI;
 
-    private String serverIp;
     /**
      * A constructor that makes new instances.
+     * 
      * @param ip , insert server ip.
      */
-    public LoginController(String ip) {
+    public LoginController(NetworkClient network) {
         listener = new Listener();
         logGUI = new LoginGUI(listener);
         regGUI = new RegisterGUI(listener);
-
-        this.serverIp = ip;
-
+        this.network = network;
     }
+
     /**
      * 
      * @author Mattias Holst, Marcus Orwén , Michael Bergstrand.
      * 
-     * A inner class which handles all the listeners to the buttons from the LoginGUI and RegisterGUI.
-     *
+     *         A inner class which handles all the listeners to the buttons from the LoginGUI and RegisterGUI.
+     * 
      */
     private class Listener implements ActionListener {
         @Override
@@ -47,18 +47,18 @@ public class LoginController {
          * @param e , 
          */
         public void actionPerformed(ActionEvent e) {
-            //LoginGUI listeners.
+            // LoginGUI listeners.
             if (e.getSource() == logGUI.getBtnRegister()) {
                 regGUI.setVisible(true);
             }
             if (e.getSource() == logGUI.getbtnLogin()) {
+                String username = logGUI.getUsername();
+                String password = logGUI.getPassword();
+
+                network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+                network.sendData(username);
+                network.sendData(password);
                 try {
-                    String username = logGUI.getUsername();
-                    String password = logGUI.getPassword();
-                    NetworkClient network = new NetworkClient(serverIp);
-                    network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
-                    network.sendData(username);
-                    network.sendData(password);
                     if (network.getData().equals("loginsuccessfull")) {
                         JOptionPane.showMessageDialog(null, "Successfully logged in");
                         logGUI.setVisible(false);
@@ -66,23 +66,23 @@ public class LoginController {
                     } else {
                         JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
                     }
-                    network.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                } catch (HeadlessException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
             }
             if (e.getSource() == logGUI.getBtnExit()) {
                 System.exit(0);
             }
-            //RegisterGUI listeners.
+            // RegisterGUI listeners.
             if (e.getSource() == regGUI.getBtnRegister()) {
+                String username = regGUI.getUsername();
+                String password = regGUI.getPassword();
+                network.sendData("sendregdata");// send this first to notify that we will send the username and password next
+                network.sendData(username);
+                network.sendData(password);
                 try {
-                    String username = regGUI.getUsername();
-                    String password = regGUI.getPassword();
-                    NetworkClient network = new NetworkClient(serverIp);
-                    network.sendData("sendregdata");// send this first to notify that we will send the username and password next
-                    network.sendData(username);
-                    network.sendData(password);
                     if (network.getData().equals("regsuccessfull")) {
                         JOptionPane.showMessageDialog(null, "Your account is now created!");
                         regGUI.setVisible(false);
@@ -90,9 +90,10 @@ public class LoginController {
                     } else {
                         JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
                     }
-                    network.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                } catch (HeadlessException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
             }
             if (e.getSource() == regGUI.getBtnCancel()) {

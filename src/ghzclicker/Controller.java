@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,23 +21,23 @@ public class Controller {
     private double clickModifier = 1;
     private double hertzPerSecond = 0;
     private int clickCounter = 0;
-    private String serverIp;
     private double hertzClicked;
     private double hertzPerClick;
     private double hertzGenerated;
 
     private ArrayList<Building> buildings;
     private double hertz = 999;
-    DecimalFormat hertzFormat = new DecimalFormat("#");
-    DecimalFormat hpsFormat = new DecimalFormat("#.#");
+    private DecimalFormat hertzFormat = new DecimalFormat("#");
+    private DecimalFormat hpsFormat = new DecimalFormat("#.#");
+
+    private NetworkClient network;
 
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
      * 
      * @param ip The servers IP adress
      */
-    public Controller(String ip) {
-        this.serverIp = ip;
+    public Controller(NetworkClient network) {
         buildings = new ArrayList<Building>();
         buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
         buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
@@ -51,20 +49,22 @@ public class Controller {
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), listener);
+
+        this.network = network;
     }
 
     /**
      * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
      */
     public String stringify(double value) {
-        String[] format = {"", " M", " B", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc"};
+        String[] format = { "", " M", " B", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
         double temp = value;
         int order = 0;
-        while(temp > 1000.0) {
+        while (temp > 1000.0) {
             temp /= 1000.0;
             order += 1;
         }
-        while(temp < 1.0) {
+        while (temp < 1.0) {
             temp *= 1000.0;
             order -= 1;
         }
@@ -122,11 +122,11 @@ public class Controller {
      */
     public void payingBuilding(int i) {
         double buildingPrice = buildings.get(i).getPrice();
-        if(canBuyBuilding(i)) {
+        if (canBuyBuilding(i)) {
             hertz -= buildingPrice;
         }
     }
-    
+
     /**
      * Check if you cna buy building specified with its id (i)
      * 
@@ -135,7 +135,7 @@ public class Controller {
      */
     public boolean canBuyBuilding(int i) {
         double buildingPrice = buildings.get(i).getPrice();
-        if(hertz >= buildingPrice) {
+        if (hertz >= buildingPrice) {
             return true;
         }
         return false;
@@ -191,14 +191,8 @@ public class Controller {
 
         System.out.println("[Info] Save data sent: " + data);
 
-        try {
-            NetworkClient client = new NetworkClient(serverIp);
-            client.sendData("sendsave"); // notify that the next message is a save file.
-            client.sendData(data);
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        network.sendData("sendsave"); // notify that the next message is a save file.
+        network.sendData(data);
     }
 
     /**
@@ -208,9 +202,8 @@ public class Controller {
      */
     public void loadGameServer() {
         try {
-            NetworkClient client = new NetworkClient(serverIp);
-            client.sendData("loadsave");
-            String saveData = client.getData();
+            network.sendData("loadsave");
+            String saveData = network.getData();
             System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
             String[] store = saveData.split(":");
             hertz = Double.parseDouble(store[0]);
@@ -219,7 +212,6 @@ public class Controller {
                 buildings.get(i).setOwned(Integer.parseInt(store[n]));
                 n++;
             }
-            client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

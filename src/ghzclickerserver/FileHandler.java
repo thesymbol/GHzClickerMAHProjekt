@@ -59,7 +59,7 @@ public class FileHandler {
         } catch (FileNotFoundException e) { // if file is not found create it.
             System.err.println("[Error] " + filename + " not found");
             System.out.println("[Info] Creating new " + filename + "...");
-            if(save("", location, filename, false)) {
+            if (save("", location, filename, false)) {
                 System.out.println("[Info] Created new " + filename);
             } else {
                 System.err.println("[Error] Could not create " + filename);
@@ -70,7 +70,7 @@ public class FileHandler {
         System.out.println("[Info] " + filename + " loaded");
         return fileInfo;
     }
-    
+
     /**
      * create directory
      * 
@@ -80,13 +80,13 @@ public class FileHandler {
     public boolean createDir(String location, String dirname) {
         File folder = new File(location + dirname);
         boolean ret = false;
-        if(folder.exists() && folder.isDirectory()) {
+        if (folder.exists() && folder.isDirectory()) {
             System.out.println("[Info] Save folder found");
             ret = true;
         } else {
             System.err.println("[Error] Save folder not found");
             System.out.println("[Info] Creating save folder");
-            if(folder.mkdirs()) {
+            if (folder.mkdirs()) {
                 System.out.println("[Info] Save folder created");
                 ret = true;
             } else {

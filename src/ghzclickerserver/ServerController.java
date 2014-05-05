@@ -82,6 +82,7 @@ public class ServerController extends Thread {
      * Describes a NetworkThread that accepts client messages.
      */
     private class NetworkThread extends Thread {
+        private String username = "";
         /**
          * Opens a connection to and from specified client/socket.
          * 
@@ -94,6 +95,8 @@ public class ServerController extends Thread {
 
         /**
          * Always recieve messages from client
+         * 
+         * @TODO Need username to load correct save file.
          */
         @Override
         public void run() {
@@ -103,13 +106,16 @@ public class ServerController extends Thread {
                 while ((message = in.readLine()) != null) {
                     System.out.println("[Info] Command: " + message);
                     if (message.equals("sendsave")) {
-                        fileHandler.save(in.readLine(), "", "GHzSaveGame.save", false);
+                        System.out.println("Username: " + username);
+                        fileHandler.save(in.readLine(), "saves/", "GHzSaveGame.save", false);
                     }
                     if (message.equals("loadsave")) {
-                        out.println(fileHandler.load("", "GHzSaveGame.save").get(0));
+                        System.out.println("Username: " + username);
+                        out.println(fileHandler.load("saves/", "GHzSaveGame.save").get(0));
                     }
                     if (message.equals("sendlogininfo")) {
-                        login(in.readLine(), in.readLine());
+                        username = in.readLine();
+                        login(username, in.readLine());
                     }
                     if (message.equals("sendregdata")) {
                         register(in.readLine(), in.readLine());
