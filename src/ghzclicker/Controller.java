@@ -209,12 +209,14 @@ public class Controller {
             network.sendData("loadsave");
             String saveData = network.getData();
             System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
-            String[] store = saveData.split(":");
-            hertz = Double.parseDouble(store[0]);
-            int n = 1;
-            for (int i = 0; i < buildings.size(); i++) {
-                buildings.get(i).setOwned(Integer.parseInt(store[n]));
-                n++;
+            if(saveData.contains(":")) { // if we cannot find splitters then its not savedata.
+                String[] store = saveData.split(":");
+                hertz = Double.parseDouble(store[0]);
+                int n = 1;
+                for (int i = 0; i < buildings.size(); i++) {
+                    buildings.get(i).setOwned(Integer.parseInt(store[n]));
+                    n++;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

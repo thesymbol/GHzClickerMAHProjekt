@@ -96,11 +96,15 @@ public class ServerController extends Thread {
                     System.out.println("[Info] Command: " + message);
                     if (message.equals("sendsave")) {
                         System.out.println("Username: " + username);
-                        fileHandler.save(in.readLine(), "saves/", "GHzSaveGame.save", false);
+                        fileHandler.save(in.readLine(), "saves/", (username + ".save"), false);
                     }
                     if (message.equals("loadsave")) {
                         System.out.println("Username: " + username);
-                        out.println(fileHandler.load("saves/", "GHzSaveGame.save").get(0));
+                        if(!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
+                            out.println(fileHandler.load("saves/", (username + ".save")).get(0));
+                        } else {
+                            out.println("error");
+                        }
                     }
                     if (message.equals("sendlogininfo")) {
                         username = in.readLine();
