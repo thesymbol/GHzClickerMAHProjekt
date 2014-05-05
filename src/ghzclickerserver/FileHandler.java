@@ -70,4 +70,30 @@ public class FileHandler {
         System.out.println("[Info] " + filename + " loaded");
         return fileInfo;
     }
+    
+    /**
+     * create directory
+     * 
+     * @param location Location of the directory (always end with /)
+     * @param dirname Directory name
+     */
+    public boolean createDir(String location, String dirname) {
+        File folder = new File(location + dirname);
+        boolean ret = false;
+        if(folder.exists() && folder.isDirectory()) {
+            System.out.println("[Info] Save folder found");
+            ret = true;
+        } else {
+            System.err.println("[Error] Save folder not found");
+            System.out.println("[Info] Creating save folder");
+            if(folder.mkdirs()) {
+                System.out.println("[Info] Save folder created");
+                ret = true;
+            } else {
+                System.err.println("[Error] Save folder could not be created");
+                ret = false;
+            }
+        }
+        return ret;
+    }
 }

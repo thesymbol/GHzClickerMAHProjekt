@@ -38,6 +38,15 @@ public class ServerController extends Thread {
     public ServerController(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         fileHandler = new FileHandler();
+        if(!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
+            System.err.println("[Error] Folder could not be created exiting (no premissions?)...");
+            try {
+                Thread.sleep(2000);
+                System.exit(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         this.start();
         System.out.println("[Info] Server Started...");
     }
