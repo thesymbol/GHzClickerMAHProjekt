@@ -26,7 +26,7 @@ public class Controller {
     private double hertzGenerated;
 
     private ArrayList<Building> buildings;
-    private double hertz = 999;
+    private double hertz = 0;
     private DecimalFormat hertzFormat = new DecimalFormat("#");
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
@@ -38,6 +38,7 @@ public class Controller {
      * @param ip The servers IP adress
      */
     public Controller(NetworkClient network) {
+        
         buildings = new ArrayList<Building>();
         buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
         buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
@@ -46,7 +47,7 @@ public class Controller {
         buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
         buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
-
+        
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), listener);
 
@@ -60,14 +61,14 @@ public class Controller {
      * @return prefixed string with M B T or something else at the end.
      */
     public String stringify(double value) {
-        String[] format = { "", " M", " B", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
+        String[] format = { "", " K", " M", " G", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
         double temp = value;
         int order = 0;
         while (temp > 1000.0) {
             temp /= 1000.0;
             order += 1;
         }
-        while (temp < 1.0) {
+        while (temp < 1.0 && hertz>0) {
             temp *= 1000.0;
             order -= 1;
         }
@@ -121,7 +122,7 @@ public class Controller {
     /**
      * This dose so if a building cost 4.040 you will take 4 from KH and 40 from hertz
      * 
-     * @param i, keeps record which building that was bought.
+     * @param i , keeps record which building that was bought.
      */
     public void payingBuilding(int i) {
         double buildingPrice = buildings.get(i).getPrice();
@@ -175,15 +176,14 @@ public class Controller {
         statistics += "\n Total Clicks : " + clickCounter;
         statistics += "\n Hertz Per click : " + hpsFormat.format(hertzPerClick);
         statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
-        statistics += "\n Hertz Generated : " + hertzGenerated;
+        statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
 
         gui.updateStatistics(statistics);
     }
 
     /**
-     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
-     * selected location.
+     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the selected location.
      */
     public void saveGame() {
         String data = "";
