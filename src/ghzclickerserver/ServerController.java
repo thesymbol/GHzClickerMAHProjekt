@@ -16,8 +16,6 @@ import java.util.Iterator;
  */
 public class ServerController extends Thread {
     private FileHandler fileHandler;
-    private BufferedReader in;
-    private PrintWriter out;
     private ServerSocket serverSocket;
 
     /**
@@ -52,17 +50,6 @@ public class ServerController extends Thread {
     }
 
     /**
-     * Send data to client
-     * 
-     * @param data The data to send
-     */
-    public void sendData(String data) {
-        if (out != null) {
-            out.println(data);
-        }
-    }
-
-    /**
      * Network thread to accept client connections
      */
     @Override
@@ -83,6 +70,8 @@ public class ServerController extends Thread {
      */
     private class NetworkThread extends Thread {
         private String username = "";
+        private BufferedReader in;
+        private PrintWriter out;
         /**
          * Opens a connection to and from specified client/socket.
          * 
@@ -115,10 +104,19 @@ public class ServerController extends Thread {
                     }
                     if (message.equals("sendlogininfo")) {
                         username = in.readLine();
-                        login(username, in.readLine());
+                        if(login(username, in.readLine())) {
+                            out.println("loginsuccessfull");
+                        } else {
+                            out.println("error");
+                            username = "";
+                        }
                     }
                     if (message.equals("sendregdata")) {
-                        register(in.readLine(), in.readLine());
+                        if(register(in.readLine(), in.readLine())) {
+                            out.println("regsuccessfull");
+                        } else {
+                            out.println("error");
+                        }
                     }
                 }
                 System.out.println("[Info] Client disconnected");
@@ -134,26 +132,21 @@ public class ServerController extends Thread {
      * @param username The username
      * @param password The password
      */
-    public void register(String username, String password) {
+    public boolean register(String username, String password) {
         System.out.println("[Info] Trying to register new user");
         ArrayList<String> loaded = fileHandler.load("", "users.dat");
-        boolean alreadyExist = false;
         Iterator<String> itr = loaded.iterator();
-        while (itr.hasNext() && !alreadyExist) {
+        while (itr.hasNext()) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0])) { // if there is not username already
-                alreadyExist = true;
+                if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
+                    System.out.println("[Info] Registerd new user");
+                    return true;
+                }
             }
         }
-        if (!alreadyExist) { // if user don't already exist add it
-            if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
-                out.println("regsuccessfull");
-                System.out.println("[Info] Registerd new user");
-            }
-        } else {
-            out.println("error");
-            System.err.println("[Error] User already exist");
-        }
+        System.err.println("[Error] User already exist");
+        return false;
     }
     
     /**
@@ -162,22 +155,18 @@ public class ServerController extends Thread {
      * @param username The username
      * @param password The password
      */
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
         System.out.println("[Info] " + username + " trying to login");
         ArrayList<String> loaded = fileHandler.load("", "users.dat");
         Iterator<String> itr = loaded.iterator();
-        boolean found = false;
-        while (itr.hasNext() && !found) {
+        while (itr.hasNext()) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
                 System.out.println("[Info] " + username + " logged in successfully");
-                out.println("loginsuccessfull");
-                found = true;
+                return true;
             }
         }
-        if(!found){
-            System.err.println("[Error] " + username + " tried to login with invalid username or password");
-            out.println("error");
-        }
+        System.err.println("[Error] " + username + " tried to login with invalid username or password");
+        return false;
     }
 }
