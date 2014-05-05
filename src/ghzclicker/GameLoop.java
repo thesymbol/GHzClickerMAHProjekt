@@ -50,6 +50,7 @@ public class GameLoop {
             public void run() {
                 try {
                     network.close();
+                    System.out.println("[Info] Closing game");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -43,7 +43,7 @@ public class RegisterGUI extends JFrame {
         add(btnCancel);
         lblUsername.setFont(new Font("Arial", Font.BOLD, 12));
         add(lblUsername);
-        lblPassword.setFont(new Font("Arial", Font.BOLD , 12));
+        lblPassword.setFont(new Font("Arial", Font.BOLD, 12));
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);
@@ -73,15 +73,19 @@ public class RegisterGUI extends JFrame {
     public JButton getBtnCancel() {
         return btnCancel;
     }
+
     /**
      * Getting the Username.
+     * 
      * @return tfUsername, the text in the username text field.
      */
     public String getUsername() {
         return tfUsername.getText();
     }
+
     /**
      * Getting the password.
+     * 
      * @return tfPassword , the text in the password text field.
      */
     public String getPassword() {

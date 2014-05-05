@@ -47,7 +47,7 @@ public class LoginGUI extends JFrame {
         add(btnExit);
         lblUsername.setFont(new Font("Arial", Font.BOLD, 12));
         add(lblUsername);
-        lblPassword.setFont(new Font("Arial", Font.BOLD , 12));
+        lblPassword.setFont(new Font("Arial", Font.BOLD, 12));
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);
