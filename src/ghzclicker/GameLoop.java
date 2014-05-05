@@ -15,12 +15,12 @@ public class GameLoop {
     private Controller controller;
 
     private static final String SERVER_IP = "127.0.0.1";
+    private NetworkClient network = null;
 
     /**
      * Will update the game every chosen second/millisecond.
      */
     public GameLoop() {
-        NetworkClient network = null;
         try {
             network = new NetworkClient(SERVER_IP);
         } catch (IOException e) {
@@ -45,5 +45,15 @@ public class GameLoop {
                 controller.updateEverySecond();
             }
         }, 0, 1, TimeUnit.SECONDS);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() { // safely close connection to server when game is closing.
+            public void run() {
+                try {
+                    network.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

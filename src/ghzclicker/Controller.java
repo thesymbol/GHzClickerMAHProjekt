@@ -54,7 +54,10 @@ public class Controller {
     }
 
     /**
-     * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
+     * Changes the visual of costs and hertz
+     * 
+     * @param value The value that is going to be used to create a prefix'ed string.
+     * @return prefixed string with M B T or something else at the end.
      */
     public String stringify(double value) {
         String[] format = { "", " M", " B", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
@@ -190,7 +193,7 @@ public class Controller {
         }
 
         System.out.println("[Info] Save data sent: " + data);
-
+        // TODO: Check if we are connected to the server or not.
         network.sendData("sendsave"); // notify that the next message is a save file.
         network.sendData(data);
     }
@@ -202,6 +205,7 @@ public class Controller {
      */
     public void loadGameServer() {
         try {
+            // TODO: Check if we are connected to the server or not.
             network.sendData("loadsave");
             String saveData = network.getData();
             System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
