@@ -251,7 +251,7 @@ public class Controller {
                 cost = buildings.get(i).getBaseCost();
             }
             buildings.get(i).setPrice(cost);
-            gui.updateJButtonCost(i, cost);
+            gui.updateJButtonCost(i, stringify(cost));
         }
     }
 

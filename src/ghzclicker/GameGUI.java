@@ -142,7 +142,7 @@ public class GameGUI extends JFrame {
      * @param i , which building.
      * @param cost , the price of the builing.
      */
-    public void updateJButtonCost(int i, double cost) {
+    public void updateJButtonCost(int i, String cost) {
         btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
     }
 
