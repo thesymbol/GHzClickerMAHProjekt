@@ -54,12 +54,12 @@ public class Controller {
 
         hertz = new ArrayList<Double>();
         hertz.add(new Double(999));
-        hertz.add(new Double(000));
-        hertz.add(new Double(000));
-        hertz.add(new Double(000));
-        hertz.add(new Double(999));
-        hertz.add(new Double(999));
-        hertz.add(new Double(999));
+        hertz.add(new Double(0));
+        hertz.add(new Double(0));
+        hertz.add(new Double(0));
+        hertz.add(new Double(0));
+        hertz.add(new Double(0));
+        hertz.add(new Double(0));
 
     }
 
