@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -28,7 +29,7 @@ public class Controller {
     private double hertzGenerated;
 
     private ArrayList<Building> buildings;
-    private double hertz = 10000000000D;
+    private double hertz = 999;
     DecimalFormat hertzFormat = new DecimalFormat("#");
     DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
@@ -55,17 +56,20 @@ public class Controller {
     /**
      * TODO: make the letters not into an array and not to rely on the hertz arraylist for refference. (aka not using the i in splitted[i] from the arraylist).
      */
-    public String stringiFy() {
-        String letters = "Hz;K;M;G;T;P;E";
-        String[] splitted = letters.split(";");
-        String ret = "";
-        /*for (int i = 0; i < hertz.size(); i++) {
-            if (hertz.get(i) >= 0) {
-                ret += (hertzFormat.format(hertz.get(i))) + splitted[i] + " ";
-            }
-        }*/
-        ret = hertz + "";
-        return ret;
+    public String stringify(double value) {
+        String[] format = {"", " M", " B", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc"};
+        double temp = value;
+        int order = 0;
+        while(temp > 1000.0) {
+            temp /= 1000.0;
+            order += 1;
+        }
+        while(temp < 1.0) {
+            temp *= 1000.0;
+            order -= 1;
+        }
+        DecimalFormat formatter = new DecimalFormat("#.###");
+        return formatter.format(temp) + format[order] + "Hz";
     }
 
     /**
@@ -87,7 +91,7 @@ public class Controller {
      * Game Loop calls this metod to update the game ~30 time a second
      */
     public void update() {
-        String hertz = stringiFy();
+        String hertz = stringify(this.hertz);
         gui.update(hertz);
         calculateBuildingCosts();
         grayiFy();
@@ -210,8 +214,10 @@ public class Controller {
             System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
             String[] store = saveData.split(":");
             hertz = Double.parseDouble(store[0]);
-            for (int i = 1; i < store.length; i++) {
-                buildings.get(i).setOwned(Integer.parseInt(store[i]));
+            int n = 1;
+            for (int i = 0; i < buildings.size(); i++) {
+                buildings.get(i).setOwned(Integer.parseInt(store[n]));
+                n++;
             }
             client.close();
         } catch (IOException e) {
