@@ -8,6 +8,7 @@ import java.io.IOException;
  * @author Marcus Orwén
  */
 public class Server {
+
     /**
      * Starts the server.
      * 
@@ -17,6 +18,7 @@ public class Server {
         try {
             @SuppressWarnings("unused")
             ServerController controller = new ServerController();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

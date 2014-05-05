@@ -17,6 +17,8 @@ import java.util.Iterator;
 public class ServerController extends Thread {
     private FileHandler fileHandler;
     private ServerSocket serverSocket;
+    private ArrayList<NetworkThread> networkThreads;
+    private boolean listening = false;
 
     /**
      * Constructs a server with default port 13337
@@ -36,7 +38,8 @@ public class ServerController extends Thread {
     public ServerController(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         fileHandler = new FileHandler();
-        if(!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
+        networkThreads = new ArrayList<NetworkThread>();
+        if (!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
             System.err.println("[Error] Folder could not be created exiting (no premissions?)...");
             try {
                 Thread.sleep(2000);
@@ -45,8 +48,33 @@ public class ServerController extends Thread {
                 e.printStackTrace();
             }
         }
+        listening = true;
         this.start();
         System.out.println("[Info] Server Started...");
+
+        // safely close connection to server when game is closing.
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("[Info] Preparing to close server...");
+                    listening = false;
+                    System.out.println("[Info] Closing active connections...");
+                    Iterator<NetworkThread> itr = networkThreads.iterator();
+                    while (itr.hasNext()) {
+                        NetworkThread temp = itr.next();
+                        if(!temp.isClosed()) {
+                            itr.next().close();
+                        }
+                    }
+                    System.out.println("[Info] Closing server listener...");
+                    serverSocket.close();
+                    System.out.println("[Info] Server shutdown successfully");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -54,11 +82,13 @@ public class ServerController extends Thread {
      */
     @Override
     public void run() {
-        while (true) {
+        while (listening) {
             Socket socket;
             try {
                 socket = serverSocket.accept();
-                new NetworkThread(socket).start();
+                NetworkThread nt = new NetworkThread(socket);
+                nt.start();
+                networkThreads.add(nt);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -72,14 +102,37 @@ public class ServerController extends Thread {
         private String username = "";
         private BufferedReader in;
         private PrintWriter out;
+        private Socket socket;
+
         /**
          * Opens a connection to and from specified client/socket.
          * 
          * @param socket The socket to accept input/output from.
          */
         public NetworkThread(Socket socket) throws IOException {
+            this.socket = socket;
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
             out = new PrintWriter(socket.getOutputStream(), true); // send data from client
+        }
+        
+        /**
+         * Check if socket connection is open or not
+         * 
+         * @return true if socket connection is closed else false
+         */
+        public boolean isClosed() {
+            return socket.isClosed();
+        }
+
+        /**
+         * Close connection to client
+         * 
+         * @throws IOException
+         */
+        public void close() throws IOException {
+            in.close();
+            out.close();
+            socket.close();
         }
 
         /**
@@ -100,7 +153,7 @@ public class ServerController extends Thread {
                     }
                     if (message.equals("loadsave")) {
                         System.out.println("Username: " + username);
-                        if(!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
+                        if (!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
                             out.println(fileHandler.load("saves/", (username + ".save")).get(0));
                         } else {
                             out.println("error");
@@ -108,7 +161,7 @@ public class ServerController extends Thread {
                     }
                     if (message.equals("sendlogininfo")) {
                         username = in.readLine();
-                        if(login(username, in.readLine())) {
+                        if (login(username, in.readLine())) {
                             out.println("loginsuccessfull");
                         } else {
                             out.println("error");
@@ -116,7 +169,7 @@ public class ServerController extends Thread {
                         }
                     }
                     if (message.equals("sendregdata")) {
-                        if(register(in.readLine(), in.readLine())) {
+                        if (register(in.readLine(), in.readLine())) {
                             out.println("regsuccessfull");
                         } else {
                             out.println("error");
@@ -129,7 +182,7 @@ public class ServerController extends Thread {
             }
         }
     }
-    
+
     /**
      * Register new user to file, if user already exists then do not insert new user.
      * 
@@ -152,7 +205,7 @@ public class ServerController extends Thread {
         System.err.println("[Error] User already exist");
         return false;
     }
-    
+
     /**
      * Login a user
      * 

@@ -90,10 +90,20 @@ public class LoginGUI extends JFrame {
         return btnExit;
     }
 
+    /**
+     * Getting the Username (in String format) from the textfield
+     * 
+     * @return username of the textfield
+     */
     public String getUsername() {
         return tfUsername.getText();
     }
 
+    /**
+     * Getting the Password (in String format) from the textfield
+     * 
+     * @return password of the textfield
+     */
     public String getPassword() {
         return tfPassword.getText();
     }
