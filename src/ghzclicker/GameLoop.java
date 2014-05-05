@@ -1,5 +1,6 @@
 package ghzclicker;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,14 +15,20 @@ public class GameLoop {
     private Controller controller;
 
     private static final String SERVER_IP = "127.0.0.1";
+    private NetworkClient network = null;
 
     /**
      * Will update the game every chosen second/millisecond.
      */
     public GameLoop() {
-        controller = new Controller(SERVER_IP);
+        try {
+            network = new NetworkClient(SERVER_IP);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        controller = new Controller(network);
         @SuppressWarnings("unused")
-        LoginController loginController = new LoginController(SERVER_IP);
+        LoginController loginController = new LoginController(network);
 
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
@@ -38,5 +45,15 @@ public class GameLoop {
                 controller.updateEverySecond();
             }
         }, 0, 1, TimeUnit.SECONDS);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() { // safely close connection to server when game is closing.
+            public void run() {
+                try {
+                    network.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
