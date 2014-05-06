@@ -28,7 +28,7 @@ public class GameLoop {
         }
         controller = new Controller(network);
         @SuppressWarnings("unused")
-        LoginController loginController = new LoginController(network);
+        LoginController loginController = new LoginController(network, controller);
 
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 

@@ -18,6 +18,7 @@ public class LoginController {
     private LoginGUI logGUI;
     private Listener listener;
     private NetworkClient network;
+    private Controller controller;
 
     private RegisterGUI regGUI;
 
@@ -26,11 +27,12 @@ public class LoginController {
      * 
      * @param ip , insert server ip.
      */
-    public LoginController(NetworkClient network) {
+    public LoginController(NetworkClient network, Controller controller) {
         listener = new Listener();
         logGUI = new LoginGUI(listener);
         regGUI = new RegisterGUI(listener);
         this.network = network;
+        this.controller = controller;
     }
 
     /**
@@ -63,6 +65,7 @@ public class LoginController {
                             JOptionPane.showMessageDialog(null, "Successfully logged in");
                             logGUI.setVisible(false);
                             logGUI.dispose();
+                            controller.loadGameServer();
                         } else {
                             JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
                         }
