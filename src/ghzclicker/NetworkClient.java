@@ -41,13 +41,13 @@ public class NetworkClient {
         this.port = port;
         connect();
     }
-    
+
     /**
      * Connect to the server.
      * 
      * @throws IOException
      */
-    public void connect() throws IOException{
+    public void connect() throws IOException {
         System.out.println("[Info] Connecting to server...");
         try {
             socket = new Socket(ip, port);
@@ -86,14 +86,14 @@ public class NetworkClient {
     public void open() {
         new NetworkThread().start();
     }
-    
+
     /**
      * Check if we have connection to the server
      * 
      * @return true if socket is closed else false
      */
     public boolean isClosed() {
-        if(socket != null) {
+        if (socket != null) {
             return socket.isClosed();
         }
         return true;

@@ -67,7 +67,7 @@ public class LoginController {
                             logGUI.setVisible(false);
                             logGUI.dispose();
                             controller.loadGameServer();
-                        } else if(ret.equals("alreadylogged")) {
+                        } else if (ret.equals("alreadylogged")) {
                             JOptionPane.showMessageDialog(null, "User is already logged in to another session");
                         } else {
                             JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");

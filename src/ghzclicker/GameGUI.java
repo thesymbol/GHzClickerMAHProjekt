@@ -173,7 +173,7 @@ public class GameGUI extends JFrame {
     public void updateStatistics(String statistics) {
         taStatistics.setText("Total buildings :" + statistics);
     }
-    
+
     /**
      * Shows error message in a JOptionPane
      * 

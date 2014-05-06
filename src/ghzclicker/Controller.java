@@ -113,7 +113,7 @@ public class Controller {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
     }
-    
+
     /**
      * Automaticly reconnect to the server with timer tasks.
      */

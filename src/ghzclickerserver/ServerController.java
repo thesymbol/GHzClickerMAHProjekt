@@ -168,7 +168,7 @@ public class ServerController extends Thread {
                             out.println("loginsuccessfull");
                             System.out.println("[Info] Sent back: loginsuccessfull");
                             loggedInUsers.add(username);
-                        } else if(status == 2) {
+                        } else if (status == 2) {
                             out.println("alreadylogged");
                             System.out.println("[Info] Sent back: alreadylogged");
                             username = "";
@@ -233,8 +233,8 @@ public class ServerController extends Thread {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
                 Iterator<String> itr2 = loggedInUsers.iterator();
-                while(itr2.hasNext()) {
-                    if(itr2.next().equals(username)) {
+                while (itr2.hasNext()) {
+                    if (itr2.next().equals(username)) {
                         System.out.println("[Error] " + username + " already logged in");
                         return 2;
                     }
