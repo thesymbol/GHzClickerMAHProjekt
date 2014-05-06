@@ -79,7 +79,7 @@ public class Controller {
             temp /= 1000.0;
             order += 1;
         }
-        while (temp < 1.0 && hertz > 0) {
+        while (temp < 1.0 && temp > 0) {
             temp *= 1000.0;
             order -= 1;
         }
