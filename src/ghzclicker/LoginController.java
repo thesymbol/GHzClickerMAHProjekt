@@ -19,6 +19,7 @@ public class LoginController {
     private Listener listener;
     private NetworkClient network;
     private Controller controller;
+    private GameGUI gameGUI;
 
     private RegisterGUI regGUI;
 
@@ -67,6 +68,7 @@ public class LoginController {
                             logGUI.setVisible(false);
                             logGUI.dispose();
                             controller.loadGameServer();
+                            gameGUI.setVisible(true);
                         } else if (ret.equals("alreadylogged")) {
                             JOptionPane.showMessageDialog(null, "User is already logged in to another session");
                         } else {
