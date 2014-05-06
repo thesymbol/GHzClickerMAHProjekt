@@ -63,7 +63,7 @@ public class ServerController extends Thread {
                     Iterator<NetworkThread> itr = networkThreads.iterator();
                     while (itr.hasNext()) {
                         NetworkThread temp = itr.next();
-                        if(!temp.isClosed()) {
+                        if (!temp.isClosed()) {
                             itr.next().close();
                         }
                     }
@@ -114,7 +114,7 @@ public class ServerController extends Thread {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
             out = new PrintWriter(socket.getOutputStream(), true); // send data from client
         }
-        
+
         /**
          * Check if socket connection is open or not
          * 

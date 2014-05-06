@@ -16,6 +16,8 @@ public class NetworkClient {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
+    private String ip;
+    private int port;
 
     /**
      * Creates a network client with specified ip
@@ -35,6 +37,17 @@ public class NetworkClient {
      * @throws IOException
      */
     public NetworkClient(String ip, int port) throws IOException {
+        this.ip = ip;
+        this.port = port;
+        connect();
+    }
+    
+    /**
+     * Connect to the server.
+     * 
+     * @throws IOException
+     */
+    public void connect() throws IOException{
         System.out.println("[Info] Connecting to server...");
         try {
             socket = new Socket(ip, port);

@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,7 +40,6 @@ public class Controller {
      * @param ip The servers IP adress
      */
     public Controller(NetworkClient network) {
-        
         buildings = new ArrayList<Building>();
         buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
         buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
@@ -47,11 +48,12 @@ public class Controller {
         buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
         buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
-        
+
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), listener);
 
         this.network = network;
+        netAutoRecon();
     }
 
     /**
@@ -68,7 +70,7 @@ public class Controller {
             temp /= 1000.0;
             order += 1;
         }
-        while (temp < 1.0 && hertz>0) {
+        while (temp < 1.0 && hertz > 0) {
             temp *= 1000.0;
             order -= 1;
         }
@@ -110,6 +112,25 @@ public class Controller {
     public void updateEverySecond() {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
+    }
+    
+    /**
+     * Automaticly reconnect to the server with timer tasks.
+     */
+    public void netAutoRecon() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (network.isClosed()) {
+                    try {
+                        network.connect();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, 5000, 5000);
     }
 
     /**
@@ -176,16 +197,17 @@ public class Controller {
     }
 
     /**
-     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the selected location.
+     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
+     * selected location.
      */
     public void saveGame() {
-        if(!network.isClosed()) {
+        if (!network.isClosed()) {
             String data = "";
             data += hertz + ":";
             for (int i = 0; i < buildings.size(); i++) {
                 data += buildings.get(i).getOwned() + ":";
             }
-    
+
             System.out.println("[Info] Save data sent: " + data);
             network.sendData("sendsave"); // notify that the next message is a save file.
             network.sendData(data);
@@ -200,7 +222,7 @@ public class Controller {
      * @param loadString, The save file to load (in string format).
      */
     public void loadGameServer() {
-        if(!network.isClosed()) {
+        if (!network.isClosed()) {
             try {
                 network.sendData("loadsave");
                 String saveData = network.getData();

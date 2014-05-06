@@ -52,7 +52,7 @@ public class LoginController {
                 regGUI.setVisible(true);
             }
             if (e.getSource() == logGUI.getbtnLogin()) {
-                if(!network.isClosed()) {
+                if (!network.isClosed()) {
                     String username = logGUI.getUsername();
                     String password = logGUI.getPassword();
                     network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
@@ -80,7 +80,7 @@ public class LoginController {
             }
             // RegisterGUI listeners.
             if (e.getSource() == regGUI.getBtnRegister()) {
-                if(!network.isClosed()) {
+                if (!network.isClosed()) {
                     String username = regGUI.getUsername();
                     String password = regGUI.getPassword();
                     network.sendData("sendregdata");// send this first to notify that we will send the username and password next
