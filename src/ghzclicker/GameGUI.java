@@ -183,5 +183,4 @@ public class GameGUI extends JFrame {
         System.err.println("[Error] " + message);
         JOptionPane.showMessageDialog(null, "[Error] " + message);
     }
-
 }

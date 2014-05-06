@@ -55,6 +55,15 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
+    
+    /**
+     * Show GUI
+     * 
+     * @param status True to show GUI and false to hide it.
+     */
+    public void guiSetVisibel(boolean status) {
+        gui.setVisible(status);
+    }
 
     /**
      * Changes the visual of costs and hertz
