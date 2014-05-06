@@ -22,7 +22,7 @@ public class RegisterGUI extends JFrame {
     private JLabel lblPassword = new JLabel("Password :");
     // The textfields
     private JTextField tfUsername = new JTextField();
-    private JTextField tfPassword = new JTextField();
+    private JPasswordField tfPassword = new JPasswordField();
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
@@ -89,6 +89,11 @@ public class RegisterGUI extends JFrame {
      * @return tfPassword , the text in the password text field.
      */
     public String getPassword() {
-        return tfPassword.getText();
+        char[] pass = tfPassword.getPassword();
+        String strPass = "";
+        for(char value : pass) {
+            strPass += value;
+        }
+        return strPass;
     }
 }

@@ -105,7 +105,12 @@ public class LoginGUI extends JFrame {
      * @return password of the textfield
      */
     public String getPassword() {
-        return tfPassword.getText();
+        char[] pass = tfPassword.getPassword();
+        String strPass = "";
+        for(char value : pass) {
+            strPass += value;
+        }
+        return strPass;
     }
 
     /**
