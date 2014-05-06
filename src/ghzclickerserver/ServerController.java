@@ -186,11 +186,11 @@ public class ServerController extends Thread {
                         }
                     }
                 }
-                loggedInUsers.remove(username);
                 System.out.println("[Info] Client disconnected");
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            loggedInUsers.remove(username);
         }
     }
 
