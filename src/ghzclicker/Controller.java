@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.collections.SetChangeListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -315,6 +317,16 @@ public class Controller {
             // Load button
             if (e.getSource() == gui.getBtnLoad()) {
                 loadGameServer();
+            }
+            
+            //High Score button
+            if(e.getSource() == gui.getBtnHighScore()){
+            	gui.setCard("2");
+            }
+            
+            //High Score button back
+            if(e.getSource() == gui.getBtnBackHighScore()){
+            	gui.setCard("1");
             }
 
             // Building purcheses.

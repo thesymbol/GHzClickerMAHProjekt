@@ -1,5 +1,6 @@
 package ghzclicker;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -7,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,18 +22,32 @@ import javax.swing.JTextArea;
  * 
  *         A Class that makes up the whole GUI
  */
-public class GameGUI extends JFrame {
+public class GameGUI{
     private static final long serialVersionUID = 1L;
     // Making buttons with buildings and hertz button and a Label for the hertz
-    private JButton btnHertz = new JButton("hertz");
+    private JFrame frame = new JFrame("Ghz Clicker");
+    private JButton btnHertz = new JButton("");
     private JLabel lblText = new JLabel("");
     private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
-    private JButton btnSave = new JButton("Save");
-    private JButton btnLoad = new JButton("Load");
+    private JButton btnSave = new JButton("");
+    private JButton btnLoad = new JButton("");
+    private JButton btnHighScore = new JButton("");
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private ArrayList<JButton> btnBuildings;
-
+    private CardLayout cl = new CardLayout();
+    private JPanel pnlGame = new JPanel();
+    private JPanel pnlCont = new JPanel();
+    private JPanel pnlHS;
+    private HighScoreGUI pnlHighScore;
+    private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
+    private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
+    private ImageIcon iconSave = new ImageIcon("res/btnSave.png");
+    private ImageIcon iconSavePressed = new ImageIcon("res/btnSavePressed.png");
+    private ImageIcon iconLoad = new ImageIcon("res/btnLoad.png");
+    private ImageIcon iconLoadPressed = new ImageIcon("res/btnLoadPressed.png");
+    private ImageIcon iconHighScore = new ImageIcon("res/btnHighScore.png");
+    private ImageIcon iconHighScorePressed = new ImageIcon("res/btnHighScorePressed.png");
     /**
      * A Constructor that is putting all the buttons into the GUI and sets the size of the labels, buttons etc.
      * 
@@ -41,26 +57,60 @@ public class GameGUI extends JFrame {
     public GameGUI(ArrayList<JButton> btnBuildings, ActionListener listener) {
         this.btnBuildings = btnBuildings;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
-
+        pnlHighScore = new HighScoreGUI(listener);
+        pnlHS = pnlHighScore;
         // main panel
-        setPreferredSize(new Dimension(800, 850));
-        setLayout(null);
-
-        setName("GHz Clicker");
-
+        frame.setPreferredSize(new Dimension(800, 850));
+        pnlCont.setLayout(cl);
+        frame.add(pnlCont);
+        pnlCont.add(pnlGame, "1");
+        pnlCont.add(pnlHS, "2");
+        cl.show(pnlCont, "1");
+        
         // setting locations and size.
         lblText.setBounds(50, 50, 500, 50);
-        btnHertz.setBounds(50, 125, 200, 50);
+        btnHertz.setBounds(150, 300, 150, 50);
         lblHertzPerSecond.setBounds(50, 75, 200, 50);
-        btnSave.setBounds(50, 700, 100, 50);
-        btnLoad.setBounds(200, 700, 100, 50);
+        btnSave.setBounds(95, 750, 100, 50);
+        btnLoad.setBounds(260, 750, 100, 50);
+        btnHighScore.setBounds(105, 675, 230, 50);
         taStatistics.setBounds(500, 600, 300, 220);
 
         pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
+        
+        //Button Icons
+        btnHertz.setIcon(iconHertz);
+        btnHertz.setPressedIcon(iconHertzPressed);
+        btnHertz.setOpaque(false);
+        btnHertz.setContentAreaFilled(false);
+        btnHertz.setBorderPainted(false);
+        btnHertz.setFocusPainted(false);
+        
+        btnSave.setIcon(iconSave);
+        btnSave.setPressedIcon(iconSavePressed);
+        btnSave.setOpaque(false);
+        btnSave.setContentAreaFilled(false);
+        btnSave.setBorderPainted(false);
+        btnSave.setFocusPainted(false);
+        
+        btnLoad.setIcon(iconLoad);
+        btnLoad.setPressedIcon(iconLoadPressed);
+        btnLoad.setOpaque(false);
+        btnLoad.setContentAreaFilled(false);
+        btnLoad.setBorderPainted(false);
+        btnLoad.setFocusPainted(false);
+        
+        btnHighScore.setIcon(iconHighScore);
+        btnHighScore.setPressedIcon(iconHighScorePressed);
+        btnHighScore.setOpaque(false);
+        btnHighScore.setContentAreaFilled(false);
+        btnHighScore.setBorderPainted(false);
+        btnHighScore.setFocusPainted(false);
 
         // adding the button and label to the frame.
-        add(btnHertz);
-        add(lblHertzPerSecond);
+        pnlGame.add(btnHertz);
+        pnlGame.add(lblHertzPerSecond);
+        pnlGame.setLayout(null);
         for (JButton btn : btnBuildings) {
 
             // Set listener for button
@@ -81,25 +131,27 @@ public class GameGUI extends JFrame {
 
             pnlBuilding.add(btn);
         }
-        add(pnlBuilding);
-        add(btnSave);
-        add(btnLoad);
+        pnlGame.add(pnlBuilding);
+        pnlGame.add(btnSave);
+        pnlGame.add(btnLoad);
+        pnlGame.add(btnHighScore);
         taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
-        add(taStatistics);
+        pnlGame.add(taStatistics);
         taStatistics.setEditable(false);
 
         lblText.setFont(new Font("Arial", Font.BOLD, 16));
-        add(lblText);
+        pnlGame.add(lblText);
 
         btnHertz.addActionListener(listener);
         btnSave.addActionListener(listener);
         btnLoad.addActionListener(listener);
+        btnHighScore.addActionListener(listener);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(false);
-        dispose();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(false);
+        frame.dispose();
     }
 
     /**
@@ -137,6 +189,17 @@ public class GameGUI extends JFrame {
     public ArrayList<JButton> getBtnBuildings() {
         return btnBuildings;
     }
+    /**
+     * Returns the high score button
+     * @return the high score button
+     */
+    public JButton getBtnHighScore(){
+    	return btnHighScore;
+    }
+    
+    public JButton getBtnBackHighScore(){
+    	return pnlHighScore.getBtnBack();
+    }
 
     /**
      * Update the cost of the buildings.
@@ -173,6 +236,18 @@ public class GameGUI extends JFrame {
      */
     public void updateStatistics(String statistics) {
         taStatistics.setText("Total buildings :" + statistics);
+    }
+    
+    public void setCard(String number){
+    	cl.show(pnlCont, number);
+    }
+    
+    /**
+     * Sets the frame's(window) visibility  
+     * @param status , true or false
+     */
+    public void setVisible(boolean status){
+    	frame.setVisible(status);
     }
 
     /**

@@ -42,7 +42,6 @@ public class LoginController {
      * 
      */
     private class Listener implements ActionListener {
-        @Override
         /**
          * A method used to determine which button is pressed and what will happend next.
          * @param e , 
