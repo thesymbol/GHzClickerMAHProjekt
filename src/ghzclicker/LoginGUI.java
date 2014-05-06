@@ -24,7 +24,7 @@ public class LoginGUI extends JFrame {
     private JLabel lblPassword = new JLabel("Password :");
 
     private JTextField tfUsername = new JTextField();
-    private JTextField tfPassword = new JTextField();
+    private JPasswordField tfPassword = new JPasswordField();
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
