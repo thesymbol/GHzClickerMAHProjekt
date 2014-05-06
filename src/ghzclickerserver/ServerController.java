@@ -19,6 +19,7 @@ public class ServerController extends Thread {
     private ServerSocket serverSocket;
     private ArrayList<NetworkThread> networkThreads;
     private boolean listening = false;
+    private ArrayList<String> loggedInUsers;
 
     /**
      * Constructs a server with default port 13337
@@ -39,6 +40,7 @@ public class ServerController extends Thread {
         serverSocket = new ServerSocket(port);
         fileHandler = new FileHandler();
         networkThreads = new ArrayList<NetworkThread>();
+        loggedInUsers = new ArrayList<String>();
         if (!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
             System.err.println("[Error] Folder could not be created exiting (no premissions?)...");
             try {
@@ -161,10 +163,18 @@ public class ServerController extends Thread {
                     }
                     if (message.equals("sendlogininfo")) {
                         username = in.readLine();
-                        if (login(username, in.readLine())) {
+                        int status = login(username, in.readLine());
+                        if (status == 1) {
                             out.println("loginsuccessfull");
+                            System.out.println("[Info] Sent back: loginsuccessfull");
+                            loggedInUsers.add(username);
+                        } else if(status == 2) {
+                            out.println("alreadylogged");
+                            System.out.println("[Info] Sent back: alreadylogged");
+                            username = "";
                         } else {
                             out.println("error");
+                            System.out.println("[Info] Sent back: error");
                             username = "";
                         }
                     }
@@ -176,6 +186,7 @@ public class ServerController extends Thread {
                         }
                     }
                 }
+                loggedInUsers.remove(username);
                 System.out.println("[Info] Client disconnected");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -211,19 +222,28 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
+     * 
+     * @return -1 if username/password is invalid, 1 if everything was successfull and 2 if user is already logged in.
      */
-    public boolean login(String username, String password) {
+    public int login(String username, String password) {
         System.out.println("[Info] " + username + " trying to login");
         ArrayList<String> loaded = fileHandler.load("", "users.dat");
         Iterator<String> itr = loaded.iterator();
         while (itr.hasNext()) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
+                Iterator<String> itr2 = loggedInUsers.iterator();
+                while(itr2.hasNext()) {
+                    if(itr2.next().equals(username)) {
+                        System.out.println("[Error] " + username + " already logged in");
+                        return 2;
+                    }
+                }
                 System.out.println("[Info] " + username + " logged in successfully");
-                return true;
+                return 1;
             }
         }
         System.err.println("[Error] " + username + " tried to login with invalid username or password");
-        return false;
+        return -1;
     }
 }

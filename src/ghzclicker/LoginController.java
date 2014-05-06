@@ -61,11 +61,14 @@ public class LoginController {
                     network.sendData(username);
                     network.sendData(password);
                     try {
-                        if (network.getData().equals("loginsuccessfull")) {
+                        String ret = network.getData();
+                        if (ret.equals("loginsuccessfull")) {
                             JOptionPane.showMessageDialog(null, "Successfully logged in");
                             logGUI.setVisible(false);
                             logGUI.dispose();
                             controller.loadGameServer();
+                        } else if(ret.equals("alreadylogged")) {
+                            JOptionPane.showMessageDialog(null, "User is already logged in to another session");
                         } else {
                             JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
                         }
