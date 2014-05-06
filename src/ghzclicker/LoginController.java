@@ -55,7 +55,6 @@ public class LoginController {
                 if(!network.isClosed()) {
                     String username = logGUI.getUsername();
                     String password = logGUI.getPassword();
-                    // TODO: Check if we are connected to the server or not.
                     network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
                     network.sendData(username);
                     network.sendData(password);
@@ -84,7 +83,6 @@ public class LoginController {
                 if(!network.isClosed()) {
                     String username = regGUI.getUsername();
                     String password = regGUI.getPassword();
-                    // TODO: Check if we are connected to the server or not.
                     network.sendData("sendregdata");// send this first to notify that we will send the username and password next
                     network.sendData(username);
                     network.sendData(password);
