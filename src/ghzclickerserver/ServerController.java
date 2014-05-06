@@ -204,13 +204,17 @@ public class ServerController extends Thread {
         System.out.println("[Info] Trying to register new user");
         ArrayList<String> loaded = fileHandler.load("", "users.dat");
         Iterator<String> itr = loaded.iterator();
+        boolean alreadyExist = false;
         while (itr.hasNext()) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0])) { // if there is not username already
-                if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
-                    System.out.println("[Info] Registerd new user");
-                    return true;
-                }
+                alreadyExist = true;
+            }
+        }
+        if(!alreadyExist) {
+            if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
+                System.out.println("[Info] Registerd new user");
+                return true;
             }
         }
         System.err.println("[Error] User already exist");
