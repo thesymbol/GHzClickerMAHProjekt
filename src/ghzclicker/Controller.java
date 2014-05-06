@@ -108,13 +108,6 @@ public class Controller {
      * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
      */
     public void updateEverySecond() {
-        hertzEverySecond();
-    }
-
-    /**
-     * This dose so if you get 4.040 HPS you get 4 in KH and 40 in hertz.
-     */
-    public void hertzEverySecond() {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
     }
@@ -186,16 +179,19 @@ public class Controller {
      * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the selected location.
      */
     public void saveGame() {
-        String data = "";
-        data += hertz + ":";
-        for (int i = 0; i < buildings.size(); i++) {
-            data += buildings.get(i).getOwned() + ":";
+        if(!network.isClosed()) {
+            String data = "";
+            data += hertz + ":";
+            for (int i = 0; i < buildings.size(); i++) {
+                data += buildings.get(i).getOwned() + ":";
+            }
+    
+            System.out.println("[Info] Save data sent: " + data);
+            network.sendData("sendsave"); // notify that the next message is a save file.
+            network.sendData(data);
+        } else {
+            gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
-
-        System.out.println("[Info] Save data sent: " + data);
-        // TODO: Check if we are connected to the server or not.
-        network.sendData("sendsave"); // notify that the next message is a save file.
-        network.sendData(data);
     }
 
     /**
@@ -204,22 +200,25 @@ public class Controller {
      * @param loadString, The save file to load (in string format).
      */
     public void loadGameServer() {
-        try {
-            // TODO: Check if we are connected to the server or not.
-            network.sendData("loadsave");
-            String saveData = network.getData();
-            System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
-            if (saveData.contains(":")) { // if we cannot find splitters then its not savedata.
-                String[] store = saveData.split(":");
-                hertz = Double.parseDouble(store[0]);
-                int n = 1;
-                for (int i = 0; i < buildings.size(); i++) {
-                    buildings.get(i).setOwned(Integer.parseInt(store[n]));
-                    n++;
+        if(!network.isClosed()) {
+            try {
+                network.sendData("loadsave");
+                String saveData = network.getData();
+                System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
+                if (saveData.contains(":")) { // if we cannot find splitters then its not savedata.
+                    String[] store = saveData.split(":");
+                    hertz = Double.parseDouble(store[0]);
+                    int n = 1;
+                    for (int i = 0; i < buildings.size(); i++) {
+                        buildings.get(i).setOwned(Integer.parseInt(store[n]));
+                        n++;
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
     }
 

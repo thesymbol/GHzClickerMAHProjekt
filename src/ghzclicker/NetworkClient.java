@@ -73,6 +73,18 @@ public class NetworkClient {
     public void open() {
         new NetworkThread().start();
     }
+    
+    /**
+     * Check if we have connection to the server
+     * 
+     * @return true if socket is closed else false
+     */
+    public boolean isClosed() {
+        if(socket != null) {
+            return socket.isClosed();
+        }
+        return true;
+    }
 
     /**
      * Close down the connection to the server.

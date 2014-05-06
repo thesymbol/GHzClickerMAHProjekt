@@ -107,4 +107,14 @@ public class LoginGUI extends JFrame {
     public String getPassword() {
         return tfPassword.getText();
     }
+
+    /**
+     * Shows error message in a JOptionPane
+     * 
+     * @param message The message to be displayed.
+     */
+    public void showErrorMessage(String message) {
+        System.err.println("[Error] " + message);
+        JOptionPane.showMessageDialog(null, "[Error] " + message);
+    }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -171,6 +172,16 @@ public class GameGUI extends JFrame {
      */
     public void updateStatistics(String statistics) {
         taStatistics.setText("Total buildings :" + statistics);
+    }
+    
+    /**
+     * Shows error message in a JOptionPane
+     * 
+     * @param message The message to be displayed.
+     */
+    public void showErrorMessage(String message) {
+        System.err.println("[Error] " + message);
+        JOptionPane.showMessageDialog(null, "[Error] " + message);
     }
 
 }

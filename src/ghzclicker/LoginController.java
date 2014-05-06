@@ -52,24 +52,28 @@ public class LoginController {
                 regGUI.setVisible(true);
             }
             if (e.getSource() == logGUI.getbtnLogin()) {
-                String username = logGUI.getUsername();
-                String password = logGUI.getPassword();
-                // TODO: Check if we are connected to the server or not.
-                network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
-                network.sendData(username);
-                network.sendData(password);
-                try {
-                    if (network.getData().equals("loginsuccessfull")) {
-                        JOptionPane.showMessageDialog(null, "Successfully logged in");
-                        logGUI.setVisible(false);
-                        logGUI.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
+                if(!network.isClosed()) {
+                    String username = logGUI.getUsername();
+                    String password = logGUI.getPassword();
+                    // TODO: Check if we are connected to the server or not.
+                    network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+                    network.sendData(username);
+                    network.sendData(password);
+                    try {
+                        if (network.getData().equals("loginsuccessfull")) {
+                            JOptionPane.showMessageDialog(null, "Successfully logged in");
+                            logGUI.setVisible(false);
+                            logGUI.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
+                        }
+                    } catch (HeadlessException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
-                } catch (HeadlessException e1) {
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                } else {
+                    logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
                 }
             }
             if (e.getSource() == logGUI.getBtnExit()) {
@@ -77,24 +81,28 @@ public class LoginController {
             }
             // RegisterGUI listeners.
             if (e.getSource() == regGUI.getBtnRegister()) {
-                String username = regGUI.getUsername();
-                String password = regGUI.getPassword();
-                // TODO: Check if we are connected to the server or not.
-                network.sendData("sendregdata");// send this first to notify that we will send the username and password next
-                network.sendData(username);
-                network.sendData(password);
-                try {
-                    if (network.getData().equals("regsuccessfull")) {
-                        JOptionPane.showMessageDialog(null, "Your account is now created!");
-                        regGUI.setVisible(false);
-                        regGUI.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
+                if(!network.isClosed()) {
+                    String username = regGUI.getUsername();
+                    String password = regGUI.getPassword();
+                    // TODO: Check if we are connected to the server or not.
+                    network.sendData("sendregdata");// send this first to notify that we will send the username and password next
+                    network.sendData(username);
+                    network.sendData(password);
+                    try {
+                        if (network.getData().equals("regsuccessfull")) {
+                            JOptionPane.showMessageDialog(null, "Your account is now created!");
+                            regGUI.setVisible(false);
+                            regGUI.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
+                        }
+                    } catch (HeadlessException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
-                } catch (HeadlessException e1) {
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                } else {
+                    logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
                 }
             }
             if (e.getSource() == regGUI.getBtnCancel()) {
