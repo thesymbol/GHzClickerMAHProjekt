@@ -176,7 +176,7 @@ public class Controller {
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
             hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
         }
-        gui.updateHertzPerSecond(Double.toString(hertzPerSecond));
+        gui.updateHertzPerSecond(stringify(hertzPerSecond));
     }
 
     /**
