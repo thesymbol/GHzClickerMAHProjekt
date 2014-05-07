@@ -7,10 +7,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class HighScoreGUI extends JPanel {
-	private JPanel pnlHighScoreWindow = new JPanel();
+    private static final long serialVersionUID = 1L;
+    private JPanel pnlHighScoreWindow = new JPanel();
 	private JPanel pnlHighScoreText = new JPanel();
 	private JScrollPane scrollPane = new JScrollPane(pnlHighScoreText);
 	private JButton btnBack = new JButton("");

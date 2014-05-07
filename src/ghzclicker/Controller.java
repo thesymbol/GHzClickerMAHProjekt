@@ -7,9 +7,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javafx.collections.SetChangeListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 

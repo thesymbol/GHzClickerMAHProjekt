@@ -23,7 +23,6 @@ import javax.swing.JTextArea;
  *         A Class that makes up the whole GUI
  */
 public class GameGUI{
-    private static final long serialVersionUID = 1L;
     // Making buttons with buildings and hertz button and a Label for the hertz
     private JFrame frame = new JFrame("Ghz Clicker");
     private JButton btnHertz = new JButton("");
