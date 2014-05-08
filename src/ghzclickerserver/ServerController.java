@@ -20,6 +20,7 @@ public class ServerController extends Thread {
     private ArrayList<NetworkThread> networkThreads;
     private boolean listening = false;
     private ArrayList<String> loggedInUsers;
+    private ServerGUI serverGUI;
 
     /**
      * Constructs a server with default port 13337
@@ -27,6 +28,7 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController() throws IOException {
+        
         this(13337);
     }
 
@@ -37,6 +39,7 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController(int port) throws IOException {
+        serverGUI = new ServerGUI();
         serverSocket = new ServerSocket(port);
         fileHandler = new FileHandler();
         networkThreads = new ArrayList<NetworkThread>();
