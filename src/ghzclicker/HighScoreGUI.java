@@ -7,12 +7,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+/**
+ * A class that builds the GUI used for the High Score
+ * 
+ * @author Viktor Saltarski
+ *
+ */
 public class HighScoreGUI extends JPanel {
     private static final long serialVersionUID = 1L;
     private JPanel pnlHighScoreWindow = new JPanel();
-	private JPanel pnlHighScoreText = new JPanel();
-	private JScrollPane scrollPane = new JScrollPane(pnlHighScoreText);
+	private JTextArea txtHighScore = new JTextArea();
+	private JScrollPane scrollPane = new JScrollPane(txtHighScore);
 	private JButton btnBack = new JButton("");
 	private JLabel lblHighScore = new JLabel("HIGH SCORE");
 	private ImageIcon iconBack = new ImageIcon("res/btnBack.png");
@@ -36,26 +43,41 @@ public class HighScoreGUI extends JPanel {
 		btnBack.setPressedIcon(iconBackPressed);
 		btnBack.addActionListener(listener);
 		
+		//Highscore icon
 		lblHighScore.setBounds(240, 10, 320, 60);
 		lblHighScore.setIcon(iconHighScore);
+		//mainPanel
 		pnlHighScoreWindow.add(lblHighScore);
 		pnlHighScoreWindow.add(btnBack);
 		pnlHighScoreWindow.add(scrollPane);
+		
+		//Txt
 		scrollPane.setBounds(10, 90, 770, 700);
-		pnlHighScoreText.setBackground(Color.DARK_GRAY);
-		pnlHighScoreText.setBounds(0,0,660,800);
-		pnlHighScoreText.setLayout(new GridLayout(50, 1));
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBorder(null);
+		scrollPane.setViewportBorder(null);
+
+		txtHighScore.setEditable(false);
+		txtHighScore.setBackground(Color.darkGray);
+		txtHighScore.setFont(new Font("Arial", Font.BOLD, 30));
+		txtHighScore.setForeground(Color.WHITE);
+		String test = "";
 		
-		//for testing
 		for (int i = 1; i <= 50; i++) {
-			pnlHighScoreText.add(createLabel("Test " + i, 20, Color.WHITE));
+			if(i<50){
+			test+= "PLAYER " + i + "\n";
+			}else{
+				test+= "PLAYER " + i;
+			}
 		}
 		
+		txtHighScore.setText(test);
 		setVisible(true);
 	}
-	/*
+	/**
 	 * Returns a Label with specified information
 	 * @return the created label
 	 */
@@ -68,11 +90,18 @@ public class HighScoreGUI extends JPanel {
 		return label;
 	}
 	
+	/**
+	 * Returns the back button
+	 * @return the back button
+	 */
 	public JButton getBtnBack(){
 		return btnBack;
 	}
 	
-	public void setHighScore(){
+	/**
+	 * Used to set the high score(update high score)
+	 */
+	public void setHighScore(ArrayList<String> highScore){
 		
 	}
 	
