@@ -215,6 +215,7 @@ public class Controller {
             for (int i = 0; i < buildings.size(); i++) {
                 data += buildings.get(i).getOwned() + ":";
             }
+            data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
             System.out.println("[Info] Save data sent: " + data);
             network.sendData("sendsave"); // notify that the next message is a save file.
@@ -243,6 +244,12 @@ public class Controller {
                         buildings.get(i).setOwned(Integer.parseInt(store[n]));
                         n++;
                     }
+                    clickCounter+=Integer.parseInt(store[n]);
+                    n++;
+                    hertzClicked=Double.parseDouble(store[n]);
+                    n++;
+                    hertzGenerated=Double.parseDouble(store[n]);
+                    n++;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
