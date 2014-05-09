@@ -63,30 +63,8 @@ public class HighScoreGUI extends JPanel {
 		txtHighScore.setBackground(Color.darkGray);
 		txtHighScore.setFont(new Font("Arial", Font.BOLD, 30));
 		txtHighScore.setForeground(Color.WHITE);
-		String test = "";
 		
-		for (int i = 1; i <= 50; i++) {
-			if(i<50){
-			test+= "PLAYER " + i + "\n";
-			}else{
-				test+= "PLAYER " + i;
-			}
-		}
-		
-		txtHighScore.setText(test);
 		setVisible(true);
-	}
-	/**
-	 * Returns a Label with specified information
-	 * @return the created label
-	 */
-	private JLabel createLabel(String text, int size, Color color){
-		JLabel label = new JLabel(text);
-		Font font = new Font("Arial", Font.BOLD, size);
-		label.setFont(font);
-		label.setForeground(color);
-		
-		return label;
 	}
 	
 	/**
@@ -101,7 +79,11 @@ public class HighScoreGUI extends JPanel {
 	 * Used to set the high score(update high score)
 	 */
 	public void setHighScore(ArrayList<String> highScore){
-		
+		String txt = "";
+		for (int i = 0; i < highScore.size(); i++) {
+			txt+=highScore.get(i);
+		}
+		txtHighScore.setText(txt);
 	}
 	
 }

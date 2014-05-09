@@ -264,6 +264,13 @@ public class Controller {
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
     }
+    
+    /**
+     * Updates the highscore
+     */
+    public void updateHighScore(){
+    	
+    }
 
     /**
      * An ArrayList to create the buttons for the buildings.
