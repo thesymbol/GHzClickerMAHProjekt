@@ -26,7 +26,14 @@ public class ServerLogger {
      * Initiate logger with standard server.log file.
      */
     public static void init() {
-        init("server", "server.log");
+        init(false);
+    }
+    
+    /**
+     * Initiate logger with specified if we should append to last log or not.
+     */
+    public static void init(boolean append) {
+        init(append, "server", "server.log");
     }
 
     /**
@@ -35,13 +42,13 @@ public class ServerLogger {
      * @param name The name of the logger to identify it.
      * @param filename The file to save to.
      */
-    public static void init(String name, String filename) {
+    public static void init(boolean append, String name, String filename) {
         if(fileHandler != null) {
             fileHandler.close();
         }
         LoggerFormatter formatter = new LoggerFormatter();
         try {
-            fileHandler = new FileHandler(filename, false); // File to save to
+            fileHandler = new FileHandler(filename, append); // File to save to
         } catch (SecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {

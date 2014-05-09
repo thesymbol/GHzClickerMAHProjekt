@@ -64,7 +64,7 @@ public class ServerController extends Thread {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                ServerLogger.init(); // since java's built in logger shutsdown before we can log our shutdown start a new logger here to workaround the problem
+                ServerLogger.init(true); // since java's built in logger shutsdown before we can log our shutdown start a new logger here to workaround the problem
                 Logger logger = ServerLogger.getLogger();
                 try {
                     logger.info("Preparing to close server...");
