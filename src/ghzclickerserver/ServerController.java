@@ -8,13 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-
-import com.sun.net.ssl.internal.www.protocol.https.Handler;
 
 /**
  * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client.
@@ -47,11 +42,7 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController(int port) throws IOException {
-        FileHandler handler = new FileHandler("server.log", false);
-        handler.setFormatter(new SimpleFormatter());
-        logger.setLevel(Level.INFO);
-        logger.addHandler(handler);
-        logger.log(Level.INFO, "Message to log");
+        logger.log(Level.INFO, "test");
         
         serverGUI = new ServerGUI();
         serverSocket = new ServerSocket(port);
@@ -101,13 +92,16 @@ public class ServerController extends Thread {
      */
     @Override
     public void run() {
+        Socket socket;
         while (listening) {
-            Socket socket;
             try {
-                socket = serverSocket.accept();
-                NetworkThread nt = new NetworkThread(socket);
-                nt.start();
-                networkThreads.add(nt);
+                System.out.println(serverSocket.isClosed());
+                if(!serverSocket.isClosed()) {
+                    socket = serverSocket.accept();
+                    NetworkThread nt = new NetworkThread(socket);
+                    nt.start();
+                    networkThreads.add(nt);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
