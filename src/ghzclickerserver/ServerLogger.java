@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
@@ -13,27 +14,24 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * Logging system for server
- * this is to see whats happening on the server in a log file.
+ * Logging system for server this is to see whats happening on the server in a log file.
  * 
  * @author Marcus Orwén
  */
 public class ServerLogger {
-    private static ServerGUI gui;
     private static Logger logger;
     private static FileHandler fileHandler;
-    
-    
+    private static ArrayList<String> consoleLogOutput = new ArrayList<String>();
+
     /**
      * Initiate logger with appending to false
      */
     public static void init() {
         init(false);
     }
-    
+
     /**
-     * Initiate logger with specified if we should append to last log or not.
-     * and default logger name as server and file as server.log
+     * Initiate logger with specified if we should append to last log or not. and default logger name as server and file as server.log
      * 
      * @param append Should we append on last log file or not?
      */
@@ -48,7 +46,7 @@ public class ServerLogger {
      * @param filename The file to save to.
      */
     public static void init(boolean append, String name, String filename) {
-        if(fileHandler != null) {
+        if (fileHandler != null) {
             fileHandler.close();
         }
         LoggerFormatter formatter = new LoggerFormatter();
@@ -59,20 +57,20 @@ public class ServerLogger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(fileHandler != null) { // eliminate crash if FileHandler cannot create a file
+        if (fileHandler != null) { // eliminate crash if FileHandler cannot create a file
             logger = Logger.getLogger(name);
             logger.setUseParentHandlers(false);
             Handler[] handlers = logger.getHandlers();
-            for(Handler handler : handlers) {
+            for (Handler handler : handlers) {
                 logger.removeHandler(handler);
             }
             fileHandler.setFormatter(formatter);
             logger.addHandler(fileHandler);
             logger.setLevel(Level.INFO);
-            
+
         }
     }
-    
+
     /**
      * Log stacktrace.
      * 
@@ -84,14 +82,21 @@ public class ServerLogger {
         e.printStackTrace(pw);
         logger.severe(sw.toString());
     }
-    
+
     /**
      * Get the logger we have created.
      */
     public static Logger getLogger() {
         return logger;
     }
-    
+
+    /**
+     * Get all logs in a ArrayList<String> Format.
+     */
+    public static ArrayList<String> getConsoleLogOutput() {
+        return consoleLogOutput;
+    }
+
     /**
      * Custom formatter to format log output corretly
      * 
@@ -109,15 +114,17 @@ public class ServerLogger {
             buf.append(" [" + rec.getLevel() + "] ");
             buf.append(formatMessage(rec));
             buf.append("\n");
-            
-            if(rec.getLevel() == Level.SEVERE) {
-               System.err.print(buf.toString());             
+
+            if (rec.getLevel() == Level.SEVERE) {
+                System.err.print(buf.toString());
             } else {
                 System.out.print(buf.toString());
             }
-            gui.setTaLog(buf.toString());
+            
+            ServerGUI.appendTaLog(buf.toString());
+
             return buf.toString();
         }
-        
+
     }
 }

@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 public class ServerGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private JButton btnExit = new JButton("Exit");
-    private JTextArea taLog = new JTextArea();
+    private static JTextArea taLog = new JTextArea();
     private JScrollPane sp = new JScrollPane(taLog);
     
     /**
@@ -31,7 +31,7 @@ public class ServerGUI extends JFrame {
         add(btnExit);
         taLog.setFont(new Font("Arail" , Font.BOLD , 12));
         add(taLog);
-        taLog.setEditable(false);
+        taLog.setEditable(true);
         add(sp);
         
         
@@ -47,9 +47,7 @@ public class ServerGUI extends JFrame {
     public JButton getBtnExit(){
         return btnExit;
     }
-    public void setTaLog(String print) {
-        taLog.append(print + "\n");
-        
+    public static void appendTaLog(String print) {
+        taLog.append(print);
     }
-
 }

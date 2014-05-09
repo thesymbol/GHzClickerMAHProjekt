@@ -57,6 +57,7 @@ public class ServerController extends Thread {
         }
         listening = true;
         this.start();
+        
         logger.info("Server Started...");
 
         // safely close connection to server when game is closing.
