@@ -149,8 +149,6 @@ public class ServerController extends Thread {
 
         /**
          * Always recieve messages from client
-         * 
-         * @TODO Need username to load correct save file.
          */
         @Override
         public void run() {

@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class ServerLogger {
     private static Logger logger;
+    private static FileHandler fileHandler;
     
     /**
      * Initiate logger with standard server.log file.
@@ -35,7 +36,9 @@ public class ServerLogger {
      * @param filename The file to save to.
      */
     public static void init(String name, String filename) {
-        FileHandler fileHandler = null;
+        if(fileHandler != null) {
+            fileHandler.close();
+        }
         LoggerFormatter formatter = new LoggerFormatter();
         try {
             fileHandler = new FileHandler(filename, false); // File to save to
@@ -70,6 +73,9 @@ public class ServerLogger {
         logger.severe(sw.toString());
     }
     
+    /**
+     * Get the logger we have created.
+     */
     public static Logger getLogger() {
         return logger;
     }
