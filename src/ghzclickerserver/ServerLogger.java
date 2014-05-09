@@ -19,8 +19,10 @@ import java.util.logging.Logger;
  * @author Marcus Orwén
  */
 public class ServerLogger {
+    private static ServerGUI gui;
     private static Logger logger;
     private static FileHandler fileHandler;
+    
     
     /**
      * Initiate logger with appending to false
@@ -109,12 +111,13 @@ public class ServerLogger {
             buf.append("\n");
             
             if(rec.getLevel() == Level.SEVERE) {
-                System.err.print(buf.toString());
+               System.err.print(buf.toString());             
             } else {
                 System.out.print(buf.toString());
             }
-            
+            gui.setTaLog(buf.toString());
             return buf.toString();
         }
+        
     }
 }
