@@ -24,7 +24,8 @@ public class ServerController extends Thread {
     private ArrayList<String> loggedInUsers;
     @SuppressWarnings("unused")
     private ServerGUI serverGUI;
-    private final static Logger logger = Logger.getLogger(ServerController.class.getName());
+    //private final static Logger logger = Logger.getLogger(ServerLogger.class.getName());
+    private final static Logger logger = ServerLogger.getLogger();
 
     /**
      * Constructs a server with default port 13337
