@@ -47,4 +47,9 @@ public class ServerGUI extends JFrame {
     public JButton getBtnExit(){
         return btnExit;
     }
+    public void setTaLog(String print) {
+        taLog.append(print + "\n");
+        
+    }
+
 }
