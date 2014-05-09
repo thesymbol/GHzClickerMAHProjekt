@@ -120,7 +120,7 @@ public class ServerLogger {
             } else {
                 System.out.print(buf.toString());
             }
-            
+
             ServerGUI.appendTaLog(buf.toString());
 
             return buf.toString();

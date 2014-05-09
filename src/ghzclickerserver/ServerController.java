@@ -1,5 +1,9 @@
 package ghzclickerserver;
 
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,6 +25,7 @@ public class ServerController extends Thread {
     private ArrayList<NetworkThread> networkThreads;
     private boolean listening = false;
     private ArrayList<String> loggedInUsers;
+    private Listener listener;
     @SuppressWarnings("unused")
     private ServerGUI serverGUI;
     private final static Logger logger = ServerLogger.getLogger();
@@ -41,7 +46,8 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController(int port) throws IOException {
-        serverGUI = new ServerGUI();
+        listener = new Listener();
+        serverGUI = new ServerGUI(listener);
         serverSocket = new ServerSocket(port);
         fileHandler = new SaveFileHandler();
         networkThreads = new ArrayList<NetworkThread>();
@@ -57,7 +63,7 @@ public class ServerController extends Thread {
         }
         listening = true;
         this.start();
-        
+
         logger.info("Server Started...");
 
         // safely close connection to server when game is closing.
@@ -95,7 +101,7 @@ public class ServerController extends Thread {
         Socket socket;
         while (listening) {
             try {
-                if(!serverSocket.isClosed()) {
+                if (!serverSocket.isClosed()) {
                     socket = serverSocket.accept();
                     NetworkThread nt = new NetworkThread(socket);
                     nt.start();
@@ -219,7 +225,7 @@ public class ServerController extends Thread {
                 alreadyExist = true;
             }
         }
-        if(!alreadyExist) {
+        if (!alreadyExist) {
             if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
                 logger.info("Registerd new user");
                 return true;
@@ -257,5 +263,17 @@ public class ServerController extends Thread {
         }
         logger.severe(username + " tried to login with invalid username or password");
         return -1;
+    }
+    private class Listener implements ActionListener {
+        /**
+         * A method used to determine which button is pressed and what will happend next.
+         * 
+         * @param e ,
+         */
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == serverGUI.getBtnExit()){
+                System.exit(0);
+            }
+        }
     }
 }

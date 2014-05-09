@@ -47,7 +47,8 @@ public class LoginController {
     private class Listener implements ActionListener {
         /**
          * A method used to determine which button is pressed and what will happend next.
-         * @param e , 
+         * 
+         * @param e ,
          */
         public void actionPerformed(ActionEvent e) {
             // LoginGUI listeners.
