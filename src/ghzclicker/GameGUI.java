@@ -199,10 +199,22 @@ public class GameGUI{
     	return btnHighScore;
     }
     
+    /**
+     * Returns the high score gui's back button
+     * @return the high score back button 
+     */
     public JButton getBtnBackHighScore(){
     	return pnlHighScore.getBtnBack();
     }
-
+    
+    /**
+     * Used to set the high score in the high score gui
+     * @param highScore the arraylist holding the scores
+     */
+    public void setHighScore(ArrayList<String> highScore){
+    	pnlHighScore.setHighScore(highScore);
+    }
+    
     /**
      * Update the cost of the buildings.
      * 
