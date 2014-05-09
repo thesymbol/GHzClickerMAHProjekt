@@ -23,7 +23,7 @@ public class ServerLogger {
     private static FileHandler fileHandler;
     
     /**
-     * Initiate logger with standard server.log file.
+     * Initiate logger with appending to false
      */
     public static void init() {
         init(false);
@@ -31,6 +31,9 @@ public class ServerLogger {
     
     /**
      * Initiate logger with specified if we should append to last log or not.
+     * and default logger name as server and file as server.log
+     * 
+     * @param append Should we append on last log file or not?
      */
     public static void init(boolean append) {
         init(append, "server", "server.log");
