@@ -1,6 +1,13 @@
 package ghzclicker;
 
-public class Score {
+import java.io.Serializable;
+
+/**
+ * Class used to hold names and scores for the highscore
+ * @author Viktor Saltarski
+ *
+ */
+public class Score implements Serializable {
 	private int score;
 	private String name;
 	
