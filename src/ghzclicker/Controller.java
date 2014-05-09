@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -32,6 +34,8 @@ public class Controller {
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
     private NetworkClient network;
+    
+    private final static Logger logger = ClientLogger.getLogger();
 
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
@@ -217,10 +221,11 @@ public class Controller {
             }
             data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
-            System.out.println("[Info] Save data sent: " + data);
+            logger.info("Save data sent: " + data);
             network.sendData("sendsave"); // notify that the next message is a save file.
             network.sendData(data);
         } else {
+            logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
     }
@@ -235,7 +240,7 @@ public class Controller {
             try {
                 network.sendData("loadsave");
                 String saveData = network.getData();
-                System.out.println("[Info] Save data loaded: " + saveData); // Prints loaded data in console
+                logger.info("Save data loaded: " + saveData); // Prints loaded data in console
                 if (saveData.contains(":")) { // if we cannot find splitters then its not savedata.
                     String[] store = saveData.split(":");
                     hertz = Double.parseDouble(store[0]);
@@ -255,6 +260,7 @@ public class Controller {
                 e.printStackTrace();
             }
         } else {
+            logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
     }

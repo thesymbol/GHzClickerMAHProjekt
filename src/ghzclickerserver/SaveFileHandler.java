@@ -7,13 +7,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Handles servers file's, you can save a file with specified data, filename and location.
  * 
  * @author Marcus Orwén
  */
-public class FileHandler {
+public class SaveFileHandler {
+    private final static Logger logger = ServerLogger.getLogger();
 
     /**
      * saves a file with specified data and location.
@@ -26,15 +28,15 @@ public class FileHandler {
      * @return true if file is saved else false.
      */
     public boolean save(String data, String location, String filename, Boolean append) {
-        System.out.println("[Info] Trying to save " + filename);
+        logger.info("Trying to save " + filename);
         try {
             File newTextFile = new File((location + filename));
             FileWriter fw = new FileWriter(newTextFile, append);
             fw.write(data);
             fw.close();
-            System.out.println("[Info] Saved " + filename + " with data: " + data);
+            logger.info("Saved " + filename + " with data: " + data);
         } catch (IOException e) {
-            System.err.println("[Error] Could not save " + filename);
+            logger.severe("Could not save " + filename);
             return false;
         }
         return true;
@@ -47,7 +49,7 @@ public class FileHandler {
      * @param filename Filename of the file
      */
     public ArrayList<String> load(String location, String filename) {
-        System.out.println("[Info] Trying to load " + filename);
+        logger.info("Trying to load " + filename);
         ArrayList<String> fileInfo = new ArrayList<String>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File((location + filename))));
@@ -57,17 +59,17 @@ public class FileHandler {
             }
             reader.close();
         } catch (FileNotFoundException e) { // if file is not found create it.
-            System.err.println("[Error] " + filename + " not found");
-            System.out.println("[Info] Creating new " + filename + "...");
+            logger.severe(filename + " not found");
+            logger.info("Creating new " + filename + "...");
             if (save("", location, filename, false)) {
-                System.out.println("[Info] Created new " + filename);
+                logger.info("Created new " + filename);
             } else {
-                System.err.println("[Error] Could not create " + filename);
+                logger.severe("Could not create " + filename);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            ServerLogger.stacktrace(e);
         }
-        System.out.println("[Info] " + filename + " loaded");
+        logger.info(filename + " loaded");
         return fileInfo;
     }
 
@@ -81,16 +83,16 @@ public class FileHandler {
         File folder = new File(location + dirname);
         boolean ret = false;
         if (folder.exists() && folder.isDirectory()) {
-            System.out.println("[Info] Save folder found");
+            logger.info("Save folder found");
             ret = true;
         } else {
-            System.err.println("[Error] Save folder not found");
-            System.out.println("[Info] Creating save folder");
+            logger.severe("Save folder not found");
+            logger.info("Creating save folder");
             if (folder.mkdirs()) {
-                System.out.println("[Info] Save folder created");
+                logger.info("Save folder created");
                 ret = true;
             } else {
-                System.err.println("[Error] Save folder could not be created");
+                logger.severe("Save folder could not be created");
                 ret = false;
             }
         }

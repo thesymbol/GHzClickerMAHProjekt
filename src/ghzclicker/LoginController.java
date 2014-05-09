@@ -4,6 +4,8 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,7 @@ public class LoginController {
     private Controller controller;
 
     private RegisterGUI regGUI;
+    private final static Logger logger = ClientLogger.getLogger();
 
     /**
      * A constructor that makes new instances.
@@ -77,6 +80,7 @@ public class LoginController {
                         e1.printStackTrace();
                     }
                 } else {
+                    logger.severe("Server is not online or you are not connected to the internet");
                     logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
                 }
             }
