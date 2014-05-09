@@ -130,6 +130,7 @@ public class GameGUI{
 
             pnlBuilding.add(btn);
         }
+        // Continues adding the button and label to the frame.
         pnlGame.add(pnlBuilding);
         pnlGame.add(btnSave);
         pnlGame.add(btnLoad);
@@ -140,12 +141,14 @@ public class GameGUI{
 
         lblText.setFont(new Font("Arial", Font.BOLD, 16));
         pnlGame.add(lblText);
-
+        
+        //Adding listeners
         btnHertz.addActionListener(listener);
         btnSave.addActionListener(listener);
         btnLoad.addActionListener(listener);
         btnHighScore.addActionListener(listener);
 
+        //Setting instructions for the frame.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
