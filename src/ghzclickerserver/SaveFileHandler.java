@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * 
  * @author Marcus Orwén
  */
-public class FileHandler {
+public class SaveFileHandler {
 
     /**
      * saves a file with specified data and location.

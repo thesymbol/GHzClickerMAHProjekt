@@ -8,6 +8,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import com.sun.net.ssl.internal.www.protocol.https.Handler;
 
 /**
  * Describes a network server. The server listens on a port for clients to accept. The server can then send and recieve data to/from the client.
@@ -15,13 +22,14 @@ import java.util.Iterator;
  * @author Marcus Orwén
  */
 public class ServerController extends Thread {
-    private FileHandler fileHandler;
+    private SaveFileHandler fileHandler;
     private ServerSocket serverSocket;
     private ArrayList<NetworkThread> networkThreads;
     private boolean listening = false;
     private ArrayList<String> loggedInUsers;
     @SuppressWarnings("unused")
     private ServerGUI serverGUI;
+    private final static Logger logger = Logger.getLogger(ServerController.class.getName());
 
     /**
      * Constructs a server with default port 13337
@@ -29,7 +37,6 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController() throws IOException {
-        
         this(13337);
     }
 
@@ -40,9 +47,15 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController(int port) throws IOException {
+        FileHandler handler = new FileHandler("server.log", false);
+        handler.setFormatter(new SimpleFormatter());
+        logger.setLevel(Level.INFO);
+        logger.addHandler(handler);
+        logger.log(Level.INFO, "Message to log");
+        
         serverGUI = new ServerGUI();
         serverSocket = new ServerSocket(port);
-        fileHandler = new FileHandler();
+        fileHandler = new SaveFileHandler();
         networkThreads = new ArrayList<NetworkThread>();
         loggedInUsers = new ArrayList<String>();
         if (!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
