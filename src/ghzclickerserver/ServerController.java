@@ -20,6 +20,7 @@ public class ServerController extends Thread {
     private ArrayList<NetworkThread> networkThreads;
     private boolean listening = false;
     private ArrayList<String> loggedInUsers;
+    @SuppressWarnings("unused")
     private ServerGUI serverGUI;
 
     /**

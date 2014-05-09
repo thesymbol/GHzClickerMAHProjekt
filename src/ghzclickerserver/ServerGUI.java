@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 public class ServerGUI extends JFrame {
+    private static final long serialVersionUID = 1L;
     private JButton btnExit = new JButton("Exit");
     private JTextArea taLog = new JTextArea();
     
