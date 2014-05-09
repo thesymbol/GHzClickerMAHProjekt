@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 /**
  * A loop which will let the application to run for forever and keep updating the game.
@@ -16,6 +17,7 @@ public class GameLoop {
 
     private static final String SERVER_IP = "127.0.0.1";
     private NetworkClient network = null;
+    private final static Logger logger = ClientLogger.getLogger();
 
     /**
      * Will update the game every chosen second/millisecond.
@@ -50,7 +52,7 @@ public class GameLoop {
             public void run() {
                 try {
                     network.close();
-                    System.out.println("[Info] Closing game");
+                    logger.info("Closing game");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

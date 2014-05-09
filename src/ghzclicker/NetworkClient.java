@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  * Describes a network client. You can connect to a server on specified ip and port. The client can then send and recieve data to/from the server. And lastly close the connection if so needed.
@@ -18,6 +19,7 @@ public class NetworkClient {
     private BufferedReader in;
     private String ip;
     private int port;
+    private final static Logger logger = ClientLogger.getLogger();
 
     /**
      * Creates a network client with specified ip
@@ -48,14 +50,14 @@ public class NetworkClient {
      * @throws IOException
      */
     public void connect() throws IOException {
-        System.out.println("[Info] Connecting to server...");
+        logger.info("Connecting to server...");
         try {
             socket = new Socket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
             out = new PrintWriter(socket.getOutputStream(), true); // send data from client
-            System.out.println("[Info] Connected to server");
+            logger.info("Connected to server");
         } catch (ConnectException e) {
-            System.err.println("[Error] Connection refused");
+            logger.severe("Connection refused");
         }
     }
 
@@ -114,7 +116,7 @@ public class NetworkClient {
         if (socket != null) {
             socket.close();
         }
-        System.out.println("[Info] Disconnected from server");
+        logger.info("Disconnected from server");
     }
 
     /**
@@ -129,10 +131,10 @@ public class NetworkClient {
             try {
                 String message = null;
                 while (((message = in.readLine()) != null)) {
-                    System.out.println(message);
+                    logger.info(message);
                 }
             } catch (IOException e) {
-                System.out.println("[Info] Disconnected from server");
+                logger.info("Disconnected from server");
             }
         }
     }

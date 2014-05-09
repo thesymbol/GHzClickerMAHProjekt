@@ -119,7 +119,6 @@ public class LoginGUI extends JFrame {
      * @param message The message to be displayed.
      */
     public void showErrorMessage(String message) {
-        System.err.println("[Error] " + message);
         JOptionPane.showMessageDialog(null, "[Error] " + message);
     }
 }
