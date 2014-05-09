@@ -8,7 +8,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -24,7 +23,7 @@ public class ServerController extends Thread {
     private ArrayList<String> loggedInUsers;
     @SuppressWarnings("unused")
     private ServerGUI serverGUI;
-    private final static Logger logger = Logger.getLogger(ServerController.class.getName());
+    private final static Logger logger = ServerLogger.getLogger();
 
     /**
      * Constructs a server with default port 13337
@@ -42,34 +41,34 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController(int port) throws IOException {
-        logger.log(Level.INFO, "test");
-        
         serverGUI = new ServerGUI();
         serverSocket = new ServerSocket(port);
         fileHandler = new SaveFileHandler();
         networkThreads = new ArrayList<NetworkThread>();
         loggedInUsers = new ArrayList<String>();
         if (!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
-            System.err.println("[Error] Folder could not be created exiting (no premissions?)...");
+            logger.severe("Folder could not be created exiting (no premissions?)...");
             try {
                 Thread.sleep(2000);
                 System.exit(0);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ServerLogger.stacktrace(e);
             }
         }
         listening = true;
         this.start();
-        System.out.println("[Info] Server Started...");
+        logger.info("Server Started...");
 
         // safely close connection to server when game is closing.
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
+                ServerLogger.init(true); // since java's built in logger shutsdown before we can log our shutdown start a new logger here to workaround the problem
+                Logger logger = ServerLogger.getLogger();
                 try {
-                    System.out.println("[Info] Preparing to close server...");
+                    logger.info("Preparing to close server...");
                     listening = false;
-                    System.out.println("[Info] Closing active connections...");
+                    logger.info("Closing active connections...");
                     Iterator<NetworkThread> itr = networkThreads.iterator();
                     while (itr.hasNext()) {
                         NetworkThread temp = itr.next();
@@ -77,11 +76,11 @@ public class ServerController extends Thread {
                             itr.next().close();
                         }
                     }
-                    System.out.println("[Info] Closing server listener...");
+                    logger.info("Closing server listener...");
                     serverSocket.close();
-                    System.out.println("[Info] Server shutdown successfully");
+                    logger.info("Server shutdown successfully");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    ServerLogger.stacktrace(e);
                 }
             }
         });
@@ -95,7 +94,6 @@ public class ServerController extends Thread {
         Socket socket;
         while (listening) {
             try {
-                System.out.println(serverSocket.isClosed());
                 if(!serverSocket.isClosed()) {
                     socket = serverSocket.accept();
                     NetworkThread nt = new NetworkThread(socket);
@@ -103,7 +101,7 @@ public class ServerController extends Thread {
                     networkThreads.add(nt);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                ServerLogger.stacktrace(e);
             }
         }
     }
@@ -150,22 +148,20 @@ public class ServerController extends Thread {
 
         /**
          * Always recieve messages from client
-         * 
-         * @TODO Need username to load correct save file.
          */
         @Override
         public void run() {
             try {
-                System.out.println("[Info] Client connected");
+                logger.info("Client connected");
                 String message = null;
                 while ((message = in.readLine()) != null) {
-                    System.out.println("[Info] Command: " + message);
+                    logger.info("Command: " + message);
                     if (message.equals("sendsave")) {
-                        System.out.println("Username: " + username);
+                        logger.info("Username: " + username);
                         fileHandler.save(in.readLine(), "saves/", (username + ".save"), false);
                     }
                     if (message.equals("loadsave")) {
-                        System.out.println("Username: " + username);
+                        logger.info("Username: " + username);
                         if (!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
                             out.println(fileHandler.load("saves/", (username + ".save")).get(0));
                         } else {
@@ -177,15 +173,15 @@ public class ServerController extends Thread {
                         int status = login(username, in.readLine());
                         if (status == 1) {
                             out.println("loginsuccessfull");
-                            System.out.println("[Info] Sent back: loginsuccessfull");
+                            logger.info("Sent back: loginsuccessfull");
                             loggedInUsers.add(username);
                         } else if (status == 2) {
                             out.println("alreadylogged");
-                            System.out.println("[Info] Sent back: alreadylogged");
+                            logger.info("Sent back: alreadylogged");
                             username = "";
                         } else {
                             out.println("error");
-                            System.out.println("[Info] Sent back: error");
+                            logger.info("Sent back: error");
                             username = "";
                         }
                     }
@@ -197,9 +193,9 @@ public class ServerController extends Thread {
                         }
                     }
                 }
-                System.out.println("[Info] Client disconnected");
+                logger.info("Client disconnected");
             } catch (IOException e) {
-                e.printStackTrace();
+                ServerLogger.stacktrace(e);
             }
             loggedInUsers.remove(username);
         }
@@ -212,7 +208,7 @@ public class ServerController extends Thread {
      * @param password The password
      */
     public boolean register(String username, String password) {
-        System.out.println("[Info] Trying to register new user");
+        logger.info("Trying to register new user");
         ArrayList<String> loaded = fileHandler.load("", "users.dat");
         Iterator<String> itr = loaded.iterator();
         boolean alreadyExist = false;
@@ -224,11 +220,11 @@ public class ServerController extends Thread {
         }
         if(!alreadyExist) {
             if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
-                System.out.println("[Info] Registerd new user");
+                logger.info("Registerd new user");
                 return true;
             }
         }
-        System.err.println("[Error] User already exist");
+        logger.severe("User already exist");
         return false;
     }
 
@@ -241,7 +237,7 @@ public class ServerController extends Thread {
      * @return -1 if username/password is invalid, 1 if everything was successfull and 2 if user is already logged in.
      */
     public int login(String username, String password) {
-        System.out.println("[Info] " + username + " trying to login");
+        logger.info(username + " trying to login");
         ArrayList<String> loaded = fileHandler.load("", "users.dat");
         Iterator<String> itr = loaded.iterator();
         while (itr.hasNext()) {
@@ -250,15 +246,15 @@ public class ServerController extends Thread {
                 Iterator<String> itr2 = loggedInUsers.iterator();
                 while (itr2.hasNext()) {
                     if (itr2.next().equals(username)) {
-                        System.out.println("[Error] " + username + " already logged in");
+                        logger.severe(username + " already logged in");
                         return 2;
                     }
                 }
-                System.out.println("[Info] " + username + " logged in successfully");
+                logger.info(username + " logged in successfully");
                 return 1;
             }
         }
-        System.err.println("[Error] " + username + " tried to login with invalid username or password");
+        logger.severe(username + " tried to login with invalid username or password");
         return -1;
     }
 }
