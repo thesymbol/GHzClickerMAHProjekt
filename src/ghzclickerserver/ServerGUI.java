@@ -2,6 +2,7 @@ package ghzclickerserver;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +24,7 @@ public class ServerGUI extends JFrame {
     /**
      * Constructor which builds up the whole GUI with sizes etc.
      */
-    public ServerGUI() {
+    public ServerGUI(ActionListener listener) {
         setPreferredSize(new Dimension(800, 850));
         setName("ServerGUI");
         setLayout(null);
@@ -34,6 +35,7 @@ public class ServerGUI extends JFrame {
         add(taLog);
         taLog.setEditable(true);
         add(sp);
+        btnExit.addActionListener(listener);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
