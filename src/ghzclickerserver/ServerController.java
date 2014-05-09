@@ -57,7 +57,7 @@ public class ServerController extends Thread {
         }
         listening = true;
         this.start();
-        
+
         logger.info("Server Started...");
 
         // safely close connection to server when game is closing.
@@ -95,7 +95,7 @@ public class ServerController extends Thread {
         Socket socket;
         while (listening) {
             try {
-                if(!serverSocket.isClosed()) {
+                if (!serverSocket.isClosed()) {
                     socket = serverSocket.accept();
                     NetworkThread nt = new NetworkThread(socket);
                     nt.start();
@@ -219,7 +219,7 @@ public class ServerController extends Thread {
                 alreadyExist = true;
             }
         }
-        if(!alreadyExist) {
+        if (!alreadyExist) {
             if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
                 logger.info("Registerd new user");
                 return true;

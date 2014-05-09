@@ -34,7 +34,7 @@ public class Controller {
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
     private NetworkClient network;
-    
+
     private final static Logger logger = ClientLogger.getLogger();
 
     /**
@@ -58,7 +58,7 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
-    
+
     /**
      * Show GUI
      * 
@@ -249,11 +249,11 @@ public class Controller {
                         buildings.get(i).setOwned(Integer.parseInt(store[n]));
                         n++;
                     }
-                    clickCounter+=Integer.parseInt(store[n]);
+                    clickCounter += Integer.parseInt(store[n]);
                     n++;
-                    hertzClicked=Double.parseDouble(store[n]);
+                    hertzClicked = Double.parseDouble(store[n]);
                     n++;
-                    hertzGenerated=Double.parseDouble(store[n]);
+                    hertzGenerated = Double.parseDouble(store[n]);
                     n++;
                 }
             } catch (IOException e) {
@@ -264,12 +264,12 @@ public class Controller {
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
     }
-    
+
     /**
      * Updates the highscore
      */
-    public void updateHighScore(){
-    	
+    public void updateHighScore() {
+
     }
 
     /**
@@ -335,15 +335,15 @@ public class Controller {
             if (e.getSource() == gui.getBtnLoad()) {
                 loadGameServer();
             }
-            
-            //High Score button
-            if(e.getSource() == gui.getBtnHighScore()){
-            	gui.setCard("2");
+
+            // High Score button
+            if (e.getSource() == gui.getBtnHighScore()) {
+                gui.setCard("2");
             }
-            
-            //High Score button back
-            if(e.getSource() == gui.getBtnBackHighScore()){
-            	gui.setCard("1");
+
+            // High Score button back
+            if (e.getSource() == gui.getBtnBackHighScore()) {
+                gui.setCard("1");
             }
 
             // Building purcheses.
