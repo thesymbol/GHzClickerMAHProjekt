@@ -1,6 +1,8 @@
 package ghzclickerserver;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.FileHandler;
@@ -56,6 +58,18 @@ public class ServerLogger {
         }
     }
     
+    /**
+     * Log stacktrace.
+     * 
+     * @param e Exception to log
+     */
+    public static void stacktrace(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        logger.severe(sw.toString());
+    }
+    
     public static Logger getLogger() {
         return logger;
     }
@@ -76,11 +90,12 @@ public class ServerLogger {
             buf.append(dateFormat.format(new Date(rec.getMillis())));
             buf.append(" [" + rec.getLevel() + "] ");
             buf.append(formatMessage(rec));
+            buf.append("\n");
             
             if(rec.getLevel() == Level.SEVERE) {
-                System.err.println(buf.toString());
+                System.err.print(buf.toString());
             } else {
-                System.out.println(buf.toString());
+                System.out.print(buf.toString());
             }
             
             return buf.toString();
