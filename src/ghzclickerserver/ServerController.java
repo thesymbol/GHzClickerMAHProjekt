@@ -73,7 +73,7 @@ public class ServerController extends Thread {
                     while (itr.hasNext()) {
                         NetworkThread temp = itr.next();
                         if (!temp.isClosed()) {
-                            itr.next().close();
+                            temp.close();
                         }
                     }
                     logger.info("Closing server listener...");
