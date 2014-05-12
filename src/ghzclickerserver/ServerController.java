@@ -101,7 +101,7 @@ public class ServerController extends Thread {
                 nt.start();
                 networkThreads.add(nt);
             } catch (IOException e) {
-                ServerLogger.stacktrace(e);
+                //ServerLogger.stacktrace(e);
             }
         }
     }
@@ -190,12 +190,15 @@ public class ServerController extends Thread {
                             if (message.equals("sendusername")) {
                                 out.println(username);
                             }
+                            if (message.equals("ping")) {
+                                out.println("pong");
+                            }
                         }
                     }
                 }
                 logger.info("Client disconnected");
             } catch (IOException e) {
-                ServerLogger.stacktrace(e);
+                //ServerLogger.stacktrace(e);
             }
             loggedInUsers.remove(username);
         }

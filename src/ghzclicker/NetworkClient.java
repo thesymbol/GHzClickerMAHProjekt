@@ -95,11 +95,16 @@ public class NetworkClient {
      * @return true if socket is closed else false
      */
     public boolean isClosed() {
-        if (socket != null) {
-            System.out.println("isConnected: " + socket.isConnected() +
-                    " isBound: "    + socket.isBound() +
-                    " isClosed: "   + socket.isClosed());
-            return socket.isClosed();
+        try {
+            out.println("ping");
+            if(in.readLine().equals("pong")) {
+                return false;
+            }
+        } catch (Exception e) {
+        }
+        try {
+            this.close();
+        } catch (IOException e) {
         }
         return true;
     }
@@ -112,14 +117,17 @@ public class NetworkClient {
     public void close() throws IOException {
         if (in != null) {
             in.close();
+            in = null;
         }
         if (out != null) {
             out.close();
+            out = null;
         }
         if (socket != null) {
             socket.close();
+            socket = null;
+            logger.info("Disconnected from server");
         }
-        logger.info("Disconnected from server");
     }
 
     /**

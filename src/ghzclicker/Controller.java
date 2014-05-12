@@ -27,6 +27,9 @@ public class Controller {
     private double hertzClicked;
     private double hertzPerClick;
     private double hertzGenerated;
+    
+    private String username = "";
+    private String password = "";
 
     private ArrayList<Building> buildings;
     private double hertz = 0;
@@ -66,6 +69,14 @@ public class Controller {
      */
     public void guiSetVisibel(boolean status) {
         gui.setVisible(status);
+    }
+    
+    /**
+     * sets username and password
+     */
+    public void setUsernamePassword(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -134,10 +145,18 @@ public class Controller {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println(network.isClosed());
                 if (network.isClosed()) {
                     try {
                         network.connect();
+                        System.out.println("here");
+                        if(username != "" && password != "") {
+                            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+                            network.sendData(username);
+                            network.sendData(password);
+                            if(network.getData().equals("loginsuccessfull")) {
+                                logger.info("relogged");
+                            }
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
