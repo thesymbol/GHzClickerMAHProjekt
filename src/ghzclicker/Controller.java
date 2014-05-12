@@ -43,7 +43,7 @@ public class Controller {
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
      * 
-     * @param ip The servers IP adress
+     * @param netowrk The servers IP adress
      */
     public Controller(NetworkClient network) {
         buildings = new ArrayList<Building>();
@@ -73,6 +73,9 @@ public class Controller {
     
     /**
      * sets username and password
+     * 
+     * @param username Inserted username
+     * @param password Inserted password
      */
     public void setUsernamePassword(String username, String password) {
         this.username = username;
@@ -254,7 +257,7 @@ public class Controller {
     /**
      * Loading the game from server (falls back to local if no server online).
      * 
-     * @param loadString, The save file to load (in string format).
+     *
      */
     public void loadGameServer() {
         if (!network.isClosed()) {
@@ -348,6 +351,11 @@ public class Controller {
      * Action listener for button presses
      */
     private class Listener implements ActionListener {
+        /**
+         * getting the listeners with actionPerformed
+         * 
+         * @param e ActionEvent
+         */
         public void actionPerformed(ActionEvent e) {
             // Hertz button
             if (e.getSource() == gui.getBtnHertz()) {

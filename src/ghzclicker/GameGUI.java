@@ -254,7 +254,10 @@ public class GameGUI {
     public void updateStatistics(String statistics) {
         taStatistics.setText("Total buildings :" + statistics);
     }
-
+    /**
+     * Decide which GUI to show using cardlayout.
+     * @param number Determine which window to show.
+     */
     public void setCard(String number) {
         cl.show(pnlCont, number);
     }

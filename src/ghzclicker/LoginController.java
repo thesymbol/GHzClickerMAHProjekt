@@ -27,7 +27,8 @@ public class LoginController {
     /**
      * A constructor that makes new instances.
      * 
-     * @param ip , insert server ip.
+     * @param network , insert server ip.
+     * @param controller working together with the Controller.
      */
     public LoginController(NetworkClient network, Controller controller) {
         listener = new Listener();
@@ -84,7 +85,7 @@ public class LoginController {
         /**
          * A method used to determine which button is pressed and what will happend next.
          * 
-         * @param e ,
+         * @param e ActionEvent
          */
         public void actionPerformed(ActionEvent e) {
             // LoginGUI listeners.
