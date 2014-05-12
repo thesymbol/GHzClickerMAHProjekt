@@ -137,6 +137,7 @@ public class ServerController extends Thread {
             out.close();
             socket.close();
             connected = false;
+            this.interrupt();
         }
 
         /**
