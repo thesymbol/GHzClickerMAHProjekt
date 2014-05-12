@@ -26,7 +26,6 @@ public class ServerController extends Thread {
     private boolean listening = false;
     private ArrayList<String> loggedInUsers;
     private Listener listener;
-    @SuppressWarnings("unused")
     private ServerGUI serverGUI;
     private final static Logger logger = ServerLogger.getLogger();
 
