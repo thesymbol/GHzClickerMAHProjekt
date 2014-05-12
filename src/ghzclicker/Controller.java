@@ -148,7 +148,6 @@ public class Controller {
                 if (network.isClosed()) {
                     try {
                         network.connect();
-                        System.out.println("here");
                         if(username != "" && password != "") {
                             network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
                             network.sendData(username);
