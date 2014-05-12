@@ -134,6 +134,7 @@ public class Controller {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                System.out.println(network.isClosed());
                 if (network.isClosed()) {
                     try {
                         network.connect();

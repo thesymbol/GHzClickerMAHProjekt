@@ -72,16 +72,14 @@ public class ServerController extends Thread {
                 try {
                     logger.info("Preparing to close server...");
                     listening = false;
+                    logger.info("Closing server listener...");
+                    serverSocket.close();
                     logger.info("Closing active connections...");
                     Iterator<NetworkThread> itr = networkThreads.iterator();
                     while (itr.hasNext()) {
                         NetworkThread temp = itr.next();
-                        if (!temp.isClosed()) {
-                            temp.close();
-                        }
+                        temp.close();
                     }
-                    logger.info("Closing server listener...");
-                    serverSocket.close();
                     logger.info("Server shutdown successfully");
                 } catch (IOException e) {
                     ServerLogger.stacktrace(e);
@@ -98,12 +96,10 @@ public class ServerController extends Thread {
         Socket socket;
         while (listening) {
             try {
-                if (!serverSocket.isClosed()) {
-                    socket = serverSocket.accept();
-                    NetworkThread nt = new NetworkThread(socket);
-                    nt.start();
-                    networkThreads.add(nt);
-                }
+                socket = serverSocket.accept();
+                NetworkThread nt = new NetworkThread(socket);
+                nt.start();
+                networkThreads.add(nt);
             } catch (IOException e) {
                 ServerLogger.stacktrace(e);
             }
@@ -118,6 +114,7 @@ public class ServerController extends Thread {
         private BufferedReader in;
         private PrintWriter out;
         private Socket socket;
+        private boolean connected = true;
 
         /**
          * Opens a connection to and from specified client/socket.
@@ -131,15 +128,6 @@ public class ServerController extends Thread {
         }
 
         /**
-         * Check if socket connection is open or not
-         * 
-         * @return true if socket connection is closed else false
-         */
-        public boolean isClosed() {
-            return socket.isClosed();
-        }
-
-        /**
          * Close connection to client
          * 
          * @throws IOException
@@ -148,6 +136,7 @@ public class ServerController extends Thread {
             in.close();
             out.close();
             socket.close();
+            connected = false;
         }
 
         /**
@@ -158,46 +147,50 @@ public class ServerController extends Thread {
             try {
                 logger.info("Client connected");
                 String message = null;
-                while ((message = in.readLine()) != null) {
-                    logger.info("Command: " + message);
-                    if (message.equals("sendsave")) {
-                        logger.info("Username: " + username);
-                        fileHandler.save(in.readLine(), "saves/", (username + ".save"), false);
-                    }
-                    if (message.equals("loadsave")) {
-                        logger.info("Username: " + username);
-                        if (!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
-                            out.println(fileHandler.load("saves/", (username + ".save")).get(0));
-                        } else {
-                            out.println("error");
+                while (connected) {
+                    if (in.ready()) {
+                        if ((message = in.readLine()) != null) {
+                            logger.info("Command: " + message);
+                            if (message.equals("sendsave")) {
+                                logger.info("Username: " + username);
+                                fileHandler.save(in.readLine(), "saves/", (username + ".save"), false);
+                            }
+                            if (message.equals("loadsave")) {
+                                logger.info("Username: " + username);
+                                if (!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
+                                    out.println(fileHandler.load("saves/", (username + ".save")).get(0));
+                                } else {
+                                    out.println("error");
+                                }
+                            }
+                            if (message.equals("sendlogininfo")) {
+                                username = in.readLine();
+                                int status = login(username, in.readLine());
+                                if (status == 1) {
+                                    out.println("loginsuccessfull");
+                                    logger.info("Sent back: loginsuccessfull");
+                                    loggedInUsers.add(username);
+                                } else if (status == 2) {
+                                    out.println("alreadylogged");
+                                    logger.info("Sent back: alreadylogged");
+                                    username = "";
+                                } else {
+                                    out.println("error");
+                                    logger.info("Sent back: error");
+                                    username = "";
+                                }
+                            }
+                            if (message.equals("sendregdata")) {
+                                if (register(in.readLine(), in.readLine())) {
+                                    out.println("regsuccessfull");
+                                } else {
+                                    out.println("error");
+                                }
+                            }
+                            if (message.equals("sendusername")) {
+                                out.println(username);
+                            }
                         }
-                    }
-                    if (message.equals("sendlogininfo")) {
-                        username = in.readLine();
-                        int status = login(username, in.readLine());
-                        if (status == 1) {
-                            out.println("loginsuccessfull");
-                            logger.info("Sent back: loginsuccessfull");
-                            loggedInUsers.add(username);
-                        } else if (status == 2) {
-                            out.println("alreadylogged");
-                            logger.info("Sent back: alreadylogged");
-                            username = "";
-                        } else {
-                            out.println("error");
-                            logger.info("Sent back: error");
-                            username = "";
-                        }
-                    }
-                    if (message.equals("sendregdata")) {
-                        if (register(in.readLine(), in.readLine())) {
-                            out.println("regsuccessfull");
-                        } else {
-                            out.println("error");
-                        }
-                    }
-                    if(message.equals("sendusername")) {
-                        out.println(username);
                     }
                 }
                 logger.info("Client disconnected");

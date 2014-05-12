@@ -96,6 +96,9 @@ public class NetworkClient {
      */
     public boolean isClosed() {
         if (socket != null) {
+            System.out.println("isConnected: " + socket.isConnected() +
+                    " isBound: "    + socket.isBound() +
+                    " isClosed: "   + socket.isClosed());
             return socket.isClosed();
         }
         return true;
