@@ -270,7 +270,7 @@ public class Controller {
                         buildings.get(i).setOwned(Integer.parseInt(store[n]));
                         n++;
                     }
-                    clickCounter += Integer.parseInt(store[n]);
+                    clickCounter = Integer.parseInt(store[n]);
                     n++;
                     hertzClicked = Double.parseDouble(store[n]);
                     n++;
