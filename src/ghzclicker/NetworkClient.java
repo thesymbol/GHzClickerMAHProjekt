@@ -74,6 +74,8 @@ public class NetworkClient {
 
     /**
      * get data from server
+     * @throws IOException
+     * @return in.readLine if true else "".
      */
     public String getData() throws IOException {
         if (in != null) {

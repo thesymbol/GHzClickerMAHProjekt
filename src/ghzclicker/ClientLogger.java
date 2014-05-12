@@ -83,6 +83,8 @@ public class ClientLogger {
 
     /**
      * Get the logger we have created.
+     * 
+     * @return logger
      */
     public static Logger getLogger() {
         return logger;
@@ -96,6 +98,8 @@ public class ClientLogger {
     private static class LoggerFormatter extends Formatter {
         /**
          * Called whenever i do a log entry.
+         * 
+         * @param rec to "record" the log.
          */
         @Override
         public String format(LogRecord rec) {
