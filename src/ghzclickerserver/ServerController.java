@@ -1,7 +1,5 @@
 package ghzclickerserver;
 
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -198,6 +196,9 @@ public class ServerController extends Thread {
                             out.println("error");
                         }
                     }
+                    if(message.equals("sendusername")) {
+                        out.println(username);
+                    }
                 }
                 logger.info("Client disconnected");
             } catch (IOException e) {
@@ -263,6 +264,7 @@ public class ServerController extends Thread {
         logger.severe(username + " tried to login with invalid username or password");
         return -1;
     }
+
     private class Listener implements ActionListener {
         /**
          * A method used to determine which button is pressed and what will happend next.
@@ -270,7 +272,7 @@ public class ServerController extends Thread {
          * @param e ,
          */
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == serverGUI.getBtnExit()){
+            if (e.getSource() == serverGUI.getBtnExit()) {
                 System.exit(0);
             }
         }
