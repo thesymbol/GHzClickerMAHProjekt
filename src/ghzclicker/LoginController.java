@@ -27,7 +27,8 @@ public class LoginController {
     /**
      * A constructor that makes new instances.
      * 
-     * @param ip , insert server ip.
+     * @param network , insert server ip.
+     * @param controller working together with the Controller.
      */
     public LoginController(NetworkClient network, Controller controller) {
         listener = new Listener();
@@ -35,6 +36,42 @@ public class LoginController {
         regGUI = new RegisterGUI(listener);
         this.network = network;
         this.controller = controller;
+    }
+
+    /**
+     * Logs user in to game with specified username and password.
+     * 
+     * @param username The username
+     * @param password The password
+     */
+    private void login(String username, String password) {
+        if (!network.isClosed()) {
+            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+            network.sendData(username);
+            network.sendData(password);
+            try {
+                String ret = network.getData();
+                if (ret.equals("loginsuccessfull")) {
+                    JOptionPane.showMessageDialog(null, "Successfully logged in");
+                    logGUI.setVisible(false);
+                    logGUI.dispose();
+                    controller.loadGameServer();
+                    controller.guiSetVisibel(true);
+                    controller.setUsernamePassword(username, password);
+                } else if (ret.equals("alreadylogged")) {
+                    JOptionPane.showMessageDialog(null, "User is already logged in to another session");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
+                }
+            } catch (HeadlessException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            logger.severe("Server is not online or you are not connected to the internet");
+            logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
+        }
     }
 
     /**
@@ -48,7 +85,7 @@ public class LoginController {
         /**
          * A method used to determine which button is pressed and what will happend next.
          * 
-         * @param e ,
+         * @param e ActionEvent
          */
         public void actionPerformed(ActionEvent e) {
             // LoginGUI listeners.
@@ -56,34 +93,7 @@ public class LoginController {
                 regGUI.setVisible(true);
             }
             if (e.getSource() == logGUI.getbtnLogin()) {
-                if (!network.isClosed()) {
-                    String username = logGUI.getUsername();
-                    String password = logGUI.getPassword();
-                    network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
-                    network.sendData(username);
-                    network.sendData(password);
-                    try {
-                        String ret = network.getData();
-                        if (ret.equals("loginsuccessfull")) {
-                            JOptionPane.showMessageDialog(null, "Successfully logged in");
-                            logGUI.setVisible(false);
-                            logGUI.dispose();
-                            controller.loadGameServer();
-                            controller.guiSetVisibel(true);
-                        } else if (ret.equals("alreadylogged")) {
-                            JOptionPane.showMessageDialog(null, "User is already logged in to another session");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Wrong username or password, please try again");
-                        }
-                    } catch (HeadlessException e1) {
-                        e1.printStackTrace();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                } else {
-                    logger.severe("Server is not online or you are not connected to the internet");
-                    logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
-                }
+                login(logGUI.getUsername(), logGUI.getPassword());
             }
             if (e.getSource() == logGUI.getBtnExit()) {
                 System.exit(0);

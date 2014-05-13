@@ -28,6 +28,8 @@ public class LoginGUI extends JFrame {
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
+     * 
+     * @param listener ActionListener for the buttons.
      */
     public LoginGUI(ActionListener listener) {
         setPreferredSize(new Dimension(500, 200));
