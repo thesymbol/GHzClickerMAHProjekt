@@ -1,5 +1,6 @@
 package ghzclicker;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -53,9 +54,30 @@ public class HighScoreManager {
 		}
 		
 		for (int i = 0; i < size; i++) {
-			highScoreString += (i + 1) + ".   " + scores.get(i).getName() + "\t" + scores.get(i).getScore() + "\n";
+			highScoreString += (i + 1) + ".   " + scores.get(i).getName() + "\t    " + stringify(scores.get(i).getScore()) + "\n";
 		}
 		
 		return highScoreString;
 	}
+	/**
+     * Changes the visual of costs and hertz
+     * 
+     * @param value The value that is going to be used to create a prefix'ed string.
+     * @return prefixed string with M B T or something else at the end.
+     */
+    public String stringify(double value) {
+        String[] format = { "", " K", " M", " G", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
+        double temp = value;
+        int order = 0;
+        while (temp > 1000.0) {
+            temp /= 1000.0;
+            order += 1;
+        }
+        while (temp < 1.0 && temp > 0) {
+            temp *= 1000.0;
+            order -= 1;
+        }
+        DecimalFormat formatter = new DecimalFormat("#.###");
+        return formatter.format(temp) + format[order] + "Hz";
+    }
 }

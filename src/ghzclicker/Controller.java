@@ -226,7 +226,7 @@ public class Controller {
         statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
-        updateHighScore();
+        
         gui.updateStatistics(statistics);
     }
 
@@ -250,6 +250,7 @@ public class Controller {
             logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
+        
     }
 
     /**
@@ -291,6 +292,17 @@ public class Controller {
      * Updates the highscore
      */
     public void updateHighScore(){
+    	if(!(hsManager.getScores().isEmpty())){
+    		for (int i = 0; i < hsManager.getScores().size(); i++) {
+				if(hsManager.getScores().get(i).getName().toLowerCase()==username.toLowerCase()){
+					hsManager.getScores().get(i).setScore(hertzClicked + hertzGenerated);
+				}else{
+					hsManager.addScore(username, hertzClicked + hertzGenerated);
+				}
+			}
+    	}else{
+    		hsManager.addScore(username, hertzClicked + hertzGenerated);
+    	}
     	String txt = hsManager.getHighScoreString();
     	gui.setHighScore(txt);
     }
@@ -367,6 +379,7 @@ public class Controller {
             // High Score button
             if (e.getSource() == gui.getBtnHighScore()) {
                 gui.setCard("2");
+                updateHighScore();
             }
 
             // High Score button back
