@@ -18,7 +18,9 @@ EthernetClient client;
 */
 const int chipSelect = 4;
 
-String readString;
+String replyString;
+String readString = String(100);
+
 
 void setup() {
   Serial.begin(9600);
@@ -32,15 +34,20 @@ void setup() {
   }
   Serial.println("initilization done.");
   
-  writeToFile("users.dat", "test:test");
   readFromFile("users.dat");
   
   Ethernet.begin(mac,arduino);
   Serial.println("Connecting...");
-  if (client.connect(server, 13337)){
-    Serial.println("Connected to Server");
+  connectToServer();
+}
+
+void connectToServer() {
+  if (client.connect(server, 13338)) {
+    Serial.println("Connected to server.");
   } else {
-    Serial.println("Connecting failed");
+    Serial.println("Failed to connect, retrying...");
+    delay(1000); // make the arduino wait 1 seconds untill reconnect.
+    connectToServer();
   }
 }
 
@@ -48,7 +55,7 @@ void writeToFile(char* file, String data) {
   userFile = SD.open(file, FILE_WRITE);
   if (userFile) {
     Serial.print("Writing to file...");
-    userFile.println(data);
+    userFile.print(data);
     userFile.close();
     Serial.println("Wrote.");
   } else {
@@ -58,45 +65,84 @@ void writeToFile(char* file, String data) {
 
 void readFromFile(char* file) {
   userFile = SD.open(file);
+  String str = "";
   if(userFile) {
     Serial.println("file:");
-    
+    String data;
     while (userFile.available()) {
-      Serial.write(userFile.read());
+      char c = userFile.read();
+      str += c;
+      if(c == '\n') {
+        Serial.print(str);
+        client.print(str);
+        str = "";
+      }
     }
-    
     userFile.close();
   } else {
     Serial.println("error opening file");
   }
 }
 
-void clientRead() { 
+int fileLength(char* file) {
+  int usersFileLength = 0;
+  userFile = SD.open(file);
+  if(userFile) {
+    while (userFile.available()) {
+      char c = userFile.read();
+      if(c == '\n') {
+        usersFileLength++;
+      }
+    }
+    userFile.close();
+  } else {
+    Serial.println("error opening file");
+  }
+  return usersFileLength;
+}
+
+String clientRead() {
+  readString = "";
   if (client) {
-    readString = "";
     while (client.connected()) {
-      if (client.available()) {
+      if (client.available() > 0) {
         char c = client.read();
         readString += c;
         if (c == '\n') {
-          Serial.print("Message: " + readString);
+          return readString;
           break;
         }
       }
     }
   }
+  return readString;
 }
 
 void loop(){
-  while(client.connected()) {
-    client.println("ping");
-    clientRead();
-    delay(1000);
-  }
-  if (!client.connected()){
-    Serial.println("Server disconnected!");
-    client.stop();
-    client.flush();
-    while(true);
+  while(true) {
+    while(client.connected()) {
+      Serial.println("reading from client");
+      replyString = clientRead();
+      Serial.print(replyString);
+      if (replyString.indexOf("sendusersdata") >= 0) {
+        Serial.println("request for saving to users.dat");
+        writeToFile("users.dat", clientRead());
+        client.println("usersdataok");
+      }
+      if (replyString.indexOf("arduinodata") >= 0) {
+        Serial.println("request for loading from users.dat");
+        client.println("arduinodata");
+        Serial.println(fileLength("users.dat"));
+        client.println(fileLength("users.dat"));
+        readFromFile("users.dat");
+      }
+      delay(1000);
+    }
+    if (!client.connected()){
+      Serial.println("Server disconnected, retrying to connect...");
+      client.stop();
+      client.flush();
+      connectToServer();
+    }
   }
 }

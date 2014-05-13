@@ -20,9 +20,13 @@ import java.util.logging.Logger;
 public class ServerController extends Thread {
     private SaveFileHandler fileHandler;
     private ServerSocket serverSocket;
+    private ServerSocket serverArduinoSocket;
+    private BufferedReader arduinoIn = null;
+    private PrintWriter arduinoOut = null;
     private ArrayList<NetworkThread> networkThreads;
     private boolean listening = false;
     private ArrayList<String> loggedInUsers;
+    private ArrayList<String> usersdata = new ArrayList<String>();
     private Listener listener;
     private ServerGUI serverGUI;
     private final static Logger logger = ServerLogger.getLogger();
@@ -33,16 +37,17 @@ public class ServerController extends Thread {
      * @throws IOException
      */
     public ServerController() throws IOException {
-        this(13337);
+        this(13337, 13338);
     }
 
     /**
      * Constructs a server with specified port
      * 
      * @param port The port to listen on
+     * @param port2 The arduino port to listen to
      * @throws IOException
      */
-    public ServerController(int port) throws IOException {
+    public ServerController(int port, final int port2) throws IOException {
         listener = new Listener();
         serverGUI = new ServerGUI(listener);
         serverSocket = new ServerSocket(port);
@@ -74,6 +79,9 @@ public class ServerController extends Thread {
                     listening = false;
                     logger.info("Closing server listener...");
                     serverSocket.close();
+                    arduinoIn.close();
+                    arduinoOut.close();
+                    serverArduinoSocket.close();
                     logger.info("Closing active connections...");
                     Iterator<NetworkThread> itr = networkThreads.iterator();
                     while (itr.hasNext()) {
@@ -86,6 +94,25 @@ public class ServerController extends Thread {
                 }
             }
         });
+        
+        // To connect to arduino on a new Thread to not get the server stuck during bootup
+        new Thread() {
+            @Override
+            public void run() {
+                Socket arduinoSocket;
+                while (listening) {
+                    //arduino connection
+                    try {
+                        serverArduinoSocket = new ServerSocket(port2);
+                        arduinoSocket = serverArduinoSocket.accept();
+                        arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
+                        arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
+                    } catch (IOException e) {
+                        // ServerLogger.stacktrace(e);
+                    }
+                }
+            }
+        }.start();
     }
 
     /**
@@ -101,7 +128,7 @@ public class ServerController extends Thread {
                 nt.start();
                 networkThreads.add(nt);
             } catch (IOException e) {
-                //ServerLogger.stacktrace(e);
+                // ServerLogger.stacktrace(e);
             }
         }
     }
@@ -151,15 +178,18 @@ public class ServerController extends Thread {
                 while (connected) {
                     if (in.ready()) {
                         if ((message = in.readLine()) != null) {
-                            logger.info("Command: " + message);
+                            if(!message.equals("ping")) {
+                                logger.info("Command: " + message);
+                            }
                             if (message.equals("sendsave")) {
                                 logger.info("Username: " + username);
                                 fileHandler.save(in.readLine(), "saves/", (username + ".save"), false);
                             }
                             if (message.equals("loadsave")) {
                                 logger.info("Username: " + username);
-                                if (!fileHandler.load("saves/", (username + ".save")).isEmpty()) {
-                                    out.println(fileHandler.load("saves/", (username + ".save")).get(0));
+                                ArrayList<String> tempFile = fileHandler.load("saves/", (username + ".save"));
+                                if (!tempFile.isEmpty()) {
+                                    out.println(tempFile.get(0));
                                 } else {
                                     out.println("error");
                                 }
@@ -199,10 +229,33 @@ public class ServerController extends Thread {
                 }
                 logger.info("Client disconnected");
             } catch (IOException e) {
-                //ServerLogger.stacktrace(e);
+                // ServerLogger.stacktrace(e);
             }
             loggedInUsers.remove(username);
         }
+    }
+    
+    /**
+     * gets the userdata from the arduino
+     * @return if the arduino cannot send or is not avaiable it will return null, but if it is available it will return the ArrayList data of users.dat on the arduino.
+     */
+    public ArrayList<String> updateUsersData() throws NumberFormatException, IOException {
+        ArrayList<String> ret = new ArrayList<String>();
+        if(arduinoOut != null || arduinoIn != null) {
+            arduinoOut.println("arduinodata");
+            if (arduinoIn.readLine().equals("arduinodata")) {
+                int length = Integer.parseInt(arduinoIn.readLine());
+                for (int i = 0; i < length; i++) {
+                    ret.add(arduinoIn.readLine());
+                }
+                Iterator<String> itr = ret.iterator();
+                while(itr.hasNext()) {
+                    logger.info(itr.next());
+                }
+                return ret;
+            }
+        }
+        return null;
     }
 
     /**
@@ -210,11 +263,19 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
+     * @param out The PrintWriter from client session
+     * @param in The BufferedReader from client session
+     * 
+     * @throws IOException 
      */
-    public boolean register(String username, String password) {
+    public boolean register(String username, String password) throws IOException {
         logger.info("Trying to register new user");
-        ArrayList<String> loaded = fileHandler.load("", "users.dat");
-        Iterator<String> itr = loaded.iterator();
+        usersdata = updateUsersData();
+        if(usersdata == null) {
+            logger.severe("Arduino users.dat not avaiable");
+            usersdata = fileHandler.load("", "users.dat");
+        }
+        Iterator<String> itr = usersdata.iterator();
         boolean alreadyExist = false;
         while (itr.hasNext()) {
             String[] userData = itr.next().split(";");
@@ -223,9 +284,18 @@ public class ServerController extends Thread {
             }
         }
         if (!alreadyExist) {
-            if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
-                logger.info("Registerd new user");
-                return true;
+            if(arduinoOut != null || arduinoIn != null) {
+                arduinoOut.println("sendusersdata");
+                arduinoOut.println(username + ";" + password + "\n");
+                if (arduinoIn.readLine().equals("usersdataok")) {
+                    logger.info("Registerd new user");
+                    return true;
+                }
+            } else {
+                if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
+                    logger.info("Registerd new user");
+                    return true;
+                }
             }
         }
         logger.severe("User already exist");
@@ -239,11 +309,17 @@ public class ServerController extends Thread {
      * @param password The password
      * 
      * @return -1 if username/password is invalid, 1 if everything was successfull and 2 if user is already logged in.
+     * @throws IOException 
+     * @throws NumberFormatException 
      */
-    public int login(String username, String password) {
+    public int login(String username, String password) throws NumberFormatException, IOException {
         logger.info(username + " trying to login");
-        ArrayList<String> loaded = fileHandler.load("", "users.dat");
-        Iterator<String> itr = loaded.iterator();
+        usersdata = updateUsersData();
+        if(usersdata == null) {
+            logger.severe("Arduino users.dat not avaiable");
+            usersdata = fileHandler.load("", "users.dat");
+        }
+        Iterator<String> itr = usersdata.iterator();
         while (itr.hasNext()) {
             String[] userData = itr.next().split(";");
             if (username.equals(userData[0]) && password.equals(userData[1])) { // if there is not username already
