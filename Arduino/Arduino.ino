@@ -12,10 +12,10 @@ IPAddress server(192,168,0,100);
 EthernetClient client;
 
 /**
-* Arduino Ethernet shield: pin 4
-* Adafruit SD shields and modules: pin 10
-* Sparkfun SD shield: pin 8
-*/
+ * Arduino Ethernet shield: pin 4
+ * Adafruit SD shields and modules: pin 10
+ * Sparkfun SD shield: pin 8
+ */
 const int chipSelect = 4;
 
 String replyString;
@@ -24,18 +24,18 @@ String readString = String(100);
 
 void setup() {
   Serial.begin(9600);
-  
+
   Serial.println("Initilizing SD card...");
   pinMode(10, OUTPUT);
-  
+
   if (!SD.begin(chipSelect)) {
     Serial.println("initilization failed!");
     return;
   }
   Serial.println("initilization done.");
-  
+
   readFromFile("users.dat");
-  
+
   Ethernet.begin(mac,arduino);
   Serial.println("Connecting...");
   connectToServer();
@@ -44,7 +44,8 @@ void setup() {
 void connectToServer() {
   if (client.connect(server, 13338)) {
     Serial.println("Connected to server.");
-  } else {
+  } 
+  else {
     Serial.println("Failed to connect, retrying...");
     delay(1000); // make the arduino wait 1 seconds untill reconnect.
     connectToServer();
@@ -58,7 +59,8 @@ void writeToFile(char* file, String data) {
     userFile.print(data);
     userFile.close();
     Serial.println("Wrote.");
-  } else {
+  } 
+  else {
     Serial.println("error opening file");
   }
 }
@@ -79,7 +81,8 @@ void readFromFile(char* file) {
       }
     }
     userFile.close();
-  } else {
+  } 
+  else {
     Serial.println("error opening file");
   }
 }
@@ -95,7 +98,8 @@ int fileLength(char* file) {
       }
     }
     userFile.close();
-  } else {
+  } 
+  else {
     Serial.println("error opening file");
   }
   return usersFileLength;
@@ -136,6 +140,9 @@ void loop(){
         client.println(fileLength("users.dat"));
         readFromFile("users.dat");
       }
+      /*if (replyString.indexOf("ping") >= 0) {
+        client.println("pong");
+      }*/
       delay(1000);
     }
     if (!client.connected()){
@@ -146,3 +153,4 @@ void loop(){
     }
   }
 }
+
