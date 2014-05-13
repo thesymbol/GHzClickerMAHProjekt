@@ -79,8 +79,12 @@ public class ServerController extends Thread {
                     listening = false;
                     logger.info("Closing server listener...");
                     serverSocket.close();
-                    arduinoIn.close();
-                    arduinoOut.close();
+                    if(arduinoIn != null) {
+                        arduinoIn.close();
+                    }
+                    if(arduinoOut != null) {
+                        arduinoOut.close();
+                    }
                     serverArduinoSocket.close();
                     logger.info("Closing active connections...");
                     Iterator<NetworkThread> itr = networkThreads.iterator();
@@ -184,7 +188,6 @@ public class ServerController extends Thread {
             out.close();
             socket.close();
             connected = false;
-            this.interrupt();
         }
 
         /**
@@ -243,6 +246,9 @@ public class ServerController extends Thread {
                             }
                             if (message.equals("ping")) {
                                 out.println("pong");
+                            }
+                            if(message.equals("closeconnection")) {
+                                this.close();
                             }
                         }
                     }
