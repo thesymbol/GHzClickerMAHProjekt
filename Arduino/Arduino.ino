@@ -46,7 +46,7 @@ void connectToServer() {
     Serial.println("Connected to server.");
   } else {
     Serial.println("Failed to connect, retrying...");
-    delay(1000); // make the arduino wait 5 seconds untill reconnect.
+    delay(1000); // make the arduino wait 1 seconds untill reconnect.
     connectToServer();
   }
 }
