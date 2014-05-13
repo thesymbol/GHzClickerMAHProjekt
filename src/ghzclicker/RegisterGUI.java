@@ -26,6 +26,7 @@ public class RegisterGUI extends JFrame {
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
+     * 
      * @param listener ActionListener to all the buttons.
      */
     public RegisterGUI(ActionListener listener) {

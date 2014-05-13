@@ -74,6 +74,7 @@ public class NetworkClient {
 
     /**
      * get data from server
+     * 
      * @throws IOException
      * @return in.readLine if true else "".
      */
@@ -99,7 +100,7 @@ public class NetworkClient {
     public boolean isClosed() {
         try {
             out.println("ping");
-            if(in.readLine().equals("pong")) {
+            if (in.readLine().equals("pong")) {
                 return false;
             }
         } catch (Exception e) {

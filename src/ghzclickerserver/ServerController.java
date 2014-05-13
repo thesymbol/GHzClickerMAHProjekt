@@ -107,13 +107,13 @@ public class ServerController extends Thread {
                         try {
                             arduinoOut.println("ping");
                             connected = true;
-                            //logger.info("Arduino still connected.");
+                            // logger.info("Arduino still connected.");
                         } catch (Exception e) {
                             connected = false;
                             logger.info("Arduino not connected anymore.");
                         }
                     }
-                    if(!connected) {
+                    if (!connected) {
                         try {
                             logger.info("Listening for arduino connection");
                             serverArduinoSocket = new ServerSocket(port2);
@@ -259,6 +259,8 @@ public class ServerController extends Thread {
      * gets the userdata from the arduino
      * 
      * @return if the arduino cannot send or is not avaiable it will return null, but if it is available it will return the ArrayList data of users.dat on the arduino.
+     * @throws NumberFormatException
+     * @throws IOException
      */
     public ArrayList<String> updateUsersData() throws NumberFormatException, IOException {
         ArrayList<String> ret = new ArrayList<String>();

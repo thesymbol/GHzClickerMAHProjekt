@@ -37,7 +37,7 @@ public class LoginController {
         this.network = network;
         this.controller = controller;
     }
-    
+
     /**
      * Logs user in to game with specified username and password.
      * 

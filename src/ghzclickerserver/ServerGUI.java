@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
-
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -36,7 +34,7 @@ public class ServerGUI extends JFrame {
         sp.setBounds(0, 0, 785, 750);
         add(btnExit);
         taLog.setFont(new Font("Arail", Font.BOLD, 12));
-        DefaultCaret caret = (DefaultCaret)taLog.getCaret();
+        DefaultCaret caret = (DefaultCaret) taLog.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         taLog.setEditable(false);

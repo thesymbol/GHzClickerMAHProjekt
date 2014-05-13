@@ -201,23 +201,25 @@ public class GameGUI {
     public JButton getBtnHighScore() {
         return btnHighScore;
     }
-    
+
     /**
      * Returns the high score gui's back button
-     * @return the high score back button 
+     * 
+     * @return the high score back button
      */
-    public JButton getBtnBackHighScore(){
-    	return pnlHighScore.getBtnBack();
+    public JButton getBtnBackHighScore() {
+        return pnlHighScore.getBtnBack();
     }
-    
+
     /**
      * Used to set the high score in the high score gui
+     * 
      * @param highScore the arraylist holding the scores
      */
-    public void setHighScore(ArrayList<String> highScore){
-    	pnlHighScore.setHighScore(highScore);
+    public void setHighScore(ArrayList<String> highScore) {
+        pnlHighScore.setHighScore(highScore);
     }
-    
+
     /**
      * Update the cost of the buildings.
      * 
@@ -254,8 +256,10 @@ public class GameGUI {
     public void updateStatistics(String statistics) {
         taStatistics.setText("Total buildings :" + statistics);
     }
+
     /**
      * Decide which GUI to show using cardlayout.
+     * 
      * @param number Determine which window to show.
      */
     public void setCard(String number) {

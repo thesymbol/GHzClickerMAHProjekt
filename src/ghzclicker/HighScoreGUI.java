@@ -24,8 +24,10 @@ public class HighScoreGUI extends JPanel {
     private ImageIcon iconBack = new ImageIcon("res/btnBack.png");
     private ImageIcon iconBackPressed = new ImageIcon("res/btnBackPressed.png");
     private ImageIcon iconHighScore = new ImageIcon("res/highscore.png");
+
     /**
      * Constructor which will build the GUI using buttons,panels etc.
+     * 
      * @param listener Adding ActionListeners to the buttons.
      */
     public HighScoreGUI(ActionListener listener) {
@@ -82,6 +84,7 @@ public class HighScoreGUI extends JPanel {
 
     /**
      * Used to set the high score(update high score)
+     * 
      * @param highScore Inserted highScore Arraylist.
      */
     public void setHighScore(ArrayList<String> highScore) {

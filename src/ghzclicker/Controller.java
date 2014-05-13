@@ -27,7 +27,7 @@ public class Controller {
     private double hertzClicked;
     private double hertzPerClick;
     private double hertzGenerated;
-    
+
     private String username = "";
     private String password = "";
 
@@ -37,7 +37,7 @@ public class Controller {
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
     private NetworkClient network;
-    
+
     private final static Logger logger = ClientLogger.getLogger();
 
     /**
@@ -61,7 +61,7 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
-    
+
     /**
      * Show GUI
      * 
@@ -70,7 +70,7 @@ public class Controller {
     public void guiSetVisibel(boolean status) {
         gui.setVisible(status);
     }
-    
+
     /**
      * sets username and password
      * 
@@ -151,11 +151,11 @@ public class Controller {
                 if (network.isClosed()) {
                     try {
                         network.connect();
-                        if(username != "" && password != "") {
+                        if (username != "" && password != "") {
                             network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
                             network.sendData(username);
                             network.sendData(password);
-                            if(network.getData().equals("loginsuccessfull")) {
+                            if (network.getData().equals("loginsuccessfull")) {
                                 logger.info("relogged");
                             }
                         }
@@ -226,7 +226,7 @@ public class Controller {
         statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
-        
+
         updateHighScore();
         gui.updateStatistics(statistics);
     }
@@ -256,7 +256,7 @@ public class Controller {
     /**
      * Loading the game from server (falls back to local if no server online).
      * 
-     *
+     * 
      */
     public void loadGameServer() {
         if (!network.isClosed()) {
@@ -291,16 +291,16 @@ public class Controller {
     /**
      * Updates the highscore
      */
-    public void updateHighScore(){
-    	ArrayList<String> test = new ArrayList<String>();
-    	for (int i = 1; i <= 50; i++) {
-    		if(i<50){
-    			test.add("PLAYER" + i + "   Random Score\n");
-    		}else{
-    			test.add("PLAYER" + i + "   Random Score");
-    		}
-		}
-    	gui.setHighScore(test);
+    public void updateHighScore() {
+        ArrayList<String> test = new ArrayList<String>();
+        for (int i = 1; i <= 50; i++) {
+            if (i < 50) {
+                test.add("PLAYER" + i + "   Random Score\n");
+            } else {
+                test.add("PLAYER" + i + "   Random Score");
+            }
+        }
+        gui.setHighScore(test);
     }
 
     /**
