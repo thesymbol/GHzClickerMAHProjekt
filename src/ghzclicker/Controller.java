@@ -34,6 +34,7 @@ public class Controller {
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
     private NetworkClient network;
+    private HighScoreManager hsManager = new HighScoreManager();
     
     private final static Logger logger = ClientLogger.getLogger();
 
@@ -204,7 +205,6 @@ public class Controller {
         statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
-        
         updateHighScore();
         gui.updateStatistics(statistics);
     }
@@ -270,15 +270,16 @@ public class Controller {
      * Updates the highscore
      */
     public void updateHighScore(){
-    	ArrayList<String> test = new ArrayList<String>();
-    	for (int i = 1; i <= 50; i++) {
-    		if(i<50){
-    			test.add("PLAYER" + i + "   Random Score\n");
-    		}else{
-    			test.add("PLAYER" + i + "   Random Score");
-    		}
-		}
-    	gui.setHighScore(test);
+//    	ArrayList<String> test = new ArrayList<String>();
+//    	for (int i = 1; i <= 50; i++) {
+//    		if(i<50){
+//    			test.add("PLAYER" + i + "   Random Score\n");
+//    		}else{
+//    			test.add("PLAYER" + i + "   Random Score");
+//    		}
+//		}
+    	String txt = hsManager.getHighScoreString();
+    	gui.setHighScore(txt);
     }
 
     /**

@@ -214,7 +214,7 @@ public class GameGUI {
      * Used to set the high score in the high score gui
      * @param highScore the arraylist holding the scores
      */
-    public void setHighScore(ArrayList<String> highScore){
+    public void setHighScore(String highScore){
     	pnlHighScore.setHighScore(highScore);
     }
     
