@@ -216,8 +216,8 @@ public class GameGUI {
      * 
      * @param highScore the arraylist holding the scores
      */
-    public void setHighScore(ArrayList<String> highScore) {
-        pnlHighScore.setHighScore(highScore);
+    public void setHighScore(String highScore){
+    	pnlHighScore.setHighScore(highScore);
     }
 
     /**

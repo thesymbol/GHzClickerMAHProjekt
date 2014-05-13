@@ -87,12 +87,8 @@ public class HighScoreGUI extends JPanel {
      * 
      * @param highScore Inserted highScore Arraylist.
      */
-    public void setHighScore(ArrayList<String> highScore) {
-        String txt = "";
-        for (int i = 0; i < highScore.size(); i++) {
-            txt += highScore.get(i);
-        }
-        txtHighScore.setText(txt);
+    public void setHighScore(String highScore) {
+        txtHighScore.setText(highScore);
     }
 
 }
