@@ -51,8 +51,6 @@ public class ServerController extends Thread {
         listener = new Listener();
         serverGUI = new ServerGUI(listener);
         serverSocket = new ServerSocket(port);
-        
-        
         fileHandler = new SaveFileHandler();
         networkThreads = new ArrayList<NetworkThread>();
         loggedInUsers = new ArrayList<String>();
@@ -81,6 +79,8 @@ public class ServerController extends Thread {
                     listening = false;
                     logger.info("Closing server listener...");
                     serverSocket.close();
+                    arduinoIn.close();
+                    arduinoOut.close();
                     serverArduinoSocket.close();
                     logger.info("Closing active connections...");
                     Iterator<NetworkThread> itr = networkThreads.iterator();

@@ -38,10 +38,16 @@ void setup() {
   
   Ethernet.begin(mac,arduino);
   Serial.println("Connecting...");
-  if (client.connect(server, 13338)){
-    Serial.println("Connected to Server");
+  connectToServer();
+}
+
+void connectToServer() {
+  if (client.connect(server, 13338)) {
+    Serial.println("Connected to server.");
   } else {
-    Serial.println("Connecting failed");
+    Serial.println("Failed to connect, retrying...");
+    delay(1000); // make the arduino wait 5 seconds untill reconnect.
+    connectToServer();
   }
 }
 
@@ -99,7 +105,7 @@ String clientRead() {
   readString = "";
   if (client) {
     while (client.connected()) {
-      if (client.available()) {
+      if (client.available() > 0) {
         char c = client.read();
         readString += c;
         if (c == '\n') {
@@ -113,28 +119,30 @@ String clientRead() {
 }
 
 void loop(){
-  while(client.connected()) {
-    Serial.println("reading from client");
-    replyString = clientRead();
-    Serial.print(replyString);
-    if (replyString.indexOf("sendusersdata") >= 0) {
-      Serial.println("request for saving to users.dat");
-      writeToFile("users.dat", clientRead());
-      client.println("usersdataok");
+  while(true) {
+    while(client.connected()) {
+      Serial.println("reading from client");
+      replyString = clientRead();
+      Serial.print(replyString);
+      if (replyString.indexOf("sendusersdata") >= 0) {
+        Serial.println("request for saving to users.dat");
+        writeToFile("users.dat", clientRead());
+        client.println("usersdataok");
+      }
+      if (replyString.indexOf("arduinodata") >= 0) {
+        Serial.println("request for loading from users.dat");
+        client.println("arduinodata");
+        Serial.println(fileLength("users.dat"));
+        client.println(fileLength("users.dat"));
+        readFromFile("users.dat");
+      }
+      delay(1000);
     }
-    if (replyString.indexOf("arduinodata") >= 0) {
-      Serial.println("request for loading from users.dat");
-      client.println("arduinodata");
-      Serial.println(fileLength("users.dat"));
-      client.println(fileLength("users.dat"));
-      readFromFile("users.dat");
+    if (!client.connected()){
+      Serial.println("Server disconnected, retrying to connect...");
+      client.stop();
+      client.flush();
+      connectToServer();
     }
-    delay(1000);
-  }
-  if (!client.connected()){
-    Serial.println("Server disconnected!");
-    client.stop();
-    client.flush();
-    while(true);
   }
 }
