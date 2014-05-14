@@ -195,12 +195,14 @@ public class ServerController extends Thread {
          */
         @Override
         public void run() {
-            try {
-                logger.info("Client connected");
-                String message = null;
-                while (connected) {
-                    if (in.ready()) {
-                        if ((message = in.readLine()) != null) {
+            synchronized(this) {
+                try {
+                    logger.info("Client connected");
+                    String message = null;
+                    while (connected) {
+                        message = in.readLine();
+                        if(message != null) {
+                            //notify(); // Notify that the thread should run again.
                             if (!message.equals("ping")) {
                                 logger.info("Command: " + message);
                             }
@@ -252,10 +254,10 @@ public class ServerController extends Thread {
                             }
                         }
                     }
+                    logger.info("Client disconnected");
+                } catch (IOException e) {
+                    // ServerLogger.stacktrace(e);
                 }
-                logger.info("Client disconnected");
-            } catch (IOException e) {
-                // ServerLogger.stacktrace(e);
             }
             loggedInUsers.remove(username);
         }
