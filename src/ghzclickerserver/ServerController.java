@@ -59,7 +59,7 @@ public class ServerController extends Thread {
         this.start();
         logger.info("Server Started...");
 
-        // safely close connection to server when game is closing.
+        // Safely close connection to server when game is closing.
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
