@@ -257,10 +257,10 @@ public class ServerController extends Thread {
                                 this.close();
                             }
                             if(message.equals("savehighscore")){
-                            	fileHandler.saveHighScore(in.readLine());
+                            	fileHandler.save(in.readLine(), "", "highscore.dat", false);
                             }
                             if(message.equals("loadhighscore")){
-                            	ArrayList<String> tempFile = fileHandler.loadHighScore();
+                            	ArrayList<String> tempFile = fileHandler.load("", "highscore.dat");
                             	if (!tempFile.isEmpty()) {
                                     out.println(tempFile.get(0));
                                 } else {

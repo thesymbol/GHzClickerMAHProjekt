@@ -98,38 +98,4 @@ public class SaveFileHandler {
         }
         return ret;
     }
-    
-    public void saveHighScore(String data){
-    	String filename = "highscore.dat";
-    	logger.info("Trying to save " + filename);
-        try {
-            File newTextFile = new File(filename);
-            FileWriter fw = new FileWriter(newTextFile, false);
-            fw.write(data);
-            fw.close();
-            logger.info("Saved " + filename + " with data: " + data);
-        } catch (IOException e) {
-            logger.severe("Could not save " + filename);
-        }
-    }
-    
-    public ArrayList<String> loadHighScore(){
-    	String filename = "highscore.dat";
-    	logger.info("Trying to load " + filename);
-        ArrayList<String> fileInfo = new ArrayList<String>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                fileInfo.add(line);
-            }
-            reader.close();
-        } catch (FileNotFoundException e) { 
-            logger.severe(filename + " not found");
-        } catch (IOException e) {
-            ServerLogger.stacktrace(e);
-        }
-        logger.info(filename + " loaded");
-        return fileInfo;
-    }
 }
