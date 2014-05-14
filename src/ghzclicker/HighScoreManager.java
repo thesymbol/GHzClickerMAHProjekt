@@ -28,8 +28,6 @@ public class HighScoreManager {
 					if(score>scores.get(i).getScore()){
 						scores.get(i).setScore(score);
 					}
-				}else{
-					scores.add(new Score(name, score));
 				}
 			}
     	}else{
