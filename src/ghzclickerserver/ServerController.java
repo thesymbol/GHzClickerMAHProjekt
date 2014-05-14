@@ -250,6 +250,17 @@ public class ServerController extends Thread {
                             if(message.equals("closeconnection")) {
                                 this.close();
                             }
+                            if(message.equals("savehighscore")){
+                            	fileHandler.saveHighScore(in.readLine());
+                            }
+                            if(message.equals("loadhighscore")){
+                            	ArrayList<String> tempFile = fileHandler.loadHighScore();
+                            	if (!tempFile.isEmpty()) {
+                                    out.println(tempFile.get(0));
+                                } else {
+                                    out.println("error");
+                                }
+                            }
                         }
                     }
                 }

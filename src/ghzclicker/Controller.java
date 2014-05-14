@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -287,24 +288,43 @@ public class Controller {
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
     }
+    
+    public void saveHighScore(){
+    	if(!network.isClosed()){
+    		hsManager.addScore(username, hertzGenerated+hertzClicked);
+    		String data = hsManager.getHighScoresToSave();
+    		network.sendData("savehighscore");
+    		network.sendData(data);
+    	}else{
+    		logger.severe("Server is not online or you are not connected to the internet");
+            gui.showErrorMessage("Server is not online or you are not connected to the internet");
+    	}
+    }
 
     /**
      * Updates the highscore
      */
     public void updateHighScore(){
-    	if(!(hsManager.getScores().isEmpty())){
-    		for (int i = 0; i < hsManager.getScores().size(); i++) {
-				if(hsManager.getScores().get(i).getName().toLowerCase()==username.toLowerCase()){
-					hsManager.getScores().get(i).setScore(hertzClicked + hertzGenerated);
-				}else{
-					hsManager.addScore(username, hertzClicked + hertzGenerated);
+    	if(!(network.isClosed())){
+    		try{
+    			String highscoreData;
+    			network.sendData("loadhighscore");
+    			highscoreData = network.getData();
+    			
+    			ArrayList<String> tempList = new ArrayList<String>(Arrays.asList(highscoreData.split(";")));
+    			for (int i = 0; i < tempList.size(); i++) {
+					String[] nameAndScore = tempList.get(i).split(":");
+					hsManager.addScore(nameAndScore[0], Double.parseDouble(nameAndScore[1]));
 				}
-			}
-    	}else{
-    		hsManager.addScore(username, hertzClicked + hertzGenerated);
-    	}
-    	String txt = hsManager.getHighScoreString();
-    	gui.setHighScore(txt);
+		    	String txt = hsManager.getHighScoreString();
+		    	gui.setHighScore(txt);
+    		}catch(IOException e){
+    			
+    		}
+    	}else {
+            logger.severe("Server is not online or you are not connected to the internet");
+            gui.showErrorMessage("Server is not online or you are not connected to the internet");
+        }
     }
 
     /**
@@ -379,6 +399,7 @@ public class Controller {
             // High Score button
             if (e.getSource() == gui.getBtnHighScore()) {
                 gui.setCard("2");
+                saveHighScore();
                 updateHighScore();
             }
 

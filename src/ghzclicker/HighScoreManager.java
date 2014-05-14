@@ -22,8 +22,19 @@ public class HighScoreManager {
 	 * @param score the score
 	 */
 	public void addScore(String name, double score){
-		scores.add(new Score(name,score));
-		
+		if(!(scores.isEmpty())){
+    		for (int i = 0; i < scores.size(); i++) {
+				if(scores.get(i).getName().toLowerCase()==name.toLowerCase()){
+					if(score>scores.get(i).getScore()){
+						scores.get(i).setScore(score);
+					}
+				}else{
+					scores.add(new Score(name, score));
+				}
+			}
+    	}else{
+    		scores.add(new Score(name, score));
+    	}
 	}
 	/**
 	 * Sorts the highscore
@@ -48,17 +59,33 @@ public class HighScoreManager {
 		String highScoreString = "";
 		int max = 50;
 		ArrayList<Score> res = getScores();
-		int size = scores.size();
+		int size = res.size();
 		if(size>max){
 			size = max;
 		}
 		
 		for (int i = 0; i < size; i++) {
-			highScoreString += (i + 1) + ".   " + scores.get(i).getName() + "\t    " + stringify(scores.get(i).getScore()) + "\n";
+			highScoreString += (i + 1) + ".   " + res.get(i).getName() + "\t    " + stringify(res.get(i).getScore()) + "\n";
 		}
 		
 		return highScoreString;
 	}
+	public String getHighScoresToSave(){
+		String highscoresToSave = "";
+		int max = 50;
+		ArrayList<Score> res = getScores();
+		int size = res.size();
+		if(size>max){
+			size = max;
+		}
+		
+		for (int i = 0; i < size; i++) {
+			highscoresToSave += res.get(i).getName() + ":" + res.get(i).getScore() + ";";
+		}
+		
+		return highscoresToSave;
+	}
+	
 	/**
      * Changes the visual of costs and hertz
      * 
