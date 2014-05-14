@@ -202,7 +202,6 @@ public class ServerController extends Thread {
                     while (connected) {
                         message = in.readLine();
                         if(message != null) {
-                            //notify(); // Notify that the thread should run again.
                             if (!message.equals("ping")) {
                                 logger.info("Command: " + message);
                             }
@@ -253,9 +252,10 @@ public class ServerController extends Thread {
                                 this.close();
                             }
                         }
+                        wait(10);
                     }
                     logger.info("Client disconnected");
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     // ServerLogger.stacktrace(e);
                 }
             }
