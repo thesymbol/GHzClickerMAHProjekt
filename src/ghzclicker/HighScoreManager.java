@@ -16,37 +16,38 @@ public class HighScoreManager {
 	public HighScoreManager(){
 		scores = new ArrayList<Score>();
 	}
+	
+	public void clear() {
+	    scores.clear();
+	}
+	
+	private boolean updateScore(String name, double score) {
+	    for(int i = 0; i < scores.size(); i++) {
+            if(scores.get(i).getName().equals(name)) {
+                scores.get(i).setScore(score);
+                return true;
+            }
+        }
+	    return false;
+	}
+	
 	/**
 	 * Adds a new Score to the highscore
 	 * @param name the name of scoreholder
 	 * @param score the score
 	 */
-	public void addScore(String name, double score){
-		if(!(scores.isEmpty())){
-    		for (int i = 0; i < scores.size(); i++) {
-				if(scores.get(i).getName().toLowerCase()==name.toLowerCase()){
-					if(score>scores.get(i).getScore()){
-						scores.get(i).setScore(score);
-					}
-				}
-			}
-    	}else{
-    		scores.add(new Score(name, score));
-    	}
-	}
-	/**
-	 * Sorts the highscore
-	 */
-	public void sort(){
-		ScoreComparator comp = new ScoreComparator();
-		Collections.sort(scores, comp);
+	public void addScore(String name, double score) {
+	    if(!updateScore(name, score)) {
+	        scores.add(new Score(name, score));
+	    }
 	}
 	/**
 	 * Returns the highscores sorted
 	 * @return the highscores
 	 */
 	public ArrayList<Score> getScores(){
-		sort();
+	    ScoreComparator comp = new ScoreComparator();
+        Collections.sort(scores, comp);
 		return scores;
 	}
 	/**
