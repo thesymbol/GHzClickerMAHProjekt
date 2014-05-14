@@ -2,46 +2,61 @@ package ghzclickerserver;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
+
 /**
  * A GUI for the server to show the "logger", using a JFrame to build the GUI.
  * 
  * @author Mattias Holst
- *
+ * 
  */
 public class ServerGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private JButton btnExit = new JButton("Exit");
-    private JTextArea taLog = new JTextArea();
-    
+    private static JTextArea taLog = new JTextArea();
+    private JScrollPane sp = new JScrollPane(taLog, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
     /**
      * Constructor which builds up the whole GUI with sizes etc.
      */
-    public ServerGUI(){
+    public ServerGUI(ActionListener listener) {
         setPreferredSize(new Dimension(800, 850));
         setName("ServerGUI");
         setLayout(null);
-        btnExit.setBounds(0 , 750 , 800  , 62);
-        taLog.setBounds(0, 0, 800 , 750);
+        btnExit.setBounds(0, 750, 800, 62);
+        add(sp);
+        sp.setBounds(0, 0, 785, 750);
         add(btnExit);
-        taLog.setFont(new Font("Arail" , Font.BOLD , 12));
-        add(taLog);
+        taLog.setFont(new Font("Arail", Font.BOLD, 12));
+        DefaultCaret caret = (DefaultCaret) taLog.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
         taLog.setEditable(false);
-        
-        
+
+        btnExit.addActionListener(listener);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
     /**
      * Getting the exit button.
+     * 
      * @return btnExit
      */
-    public JButton getBtnExit(){
+    public JButton getBtnExit() {
         return btnExit;
+    }
+
+    public static void appendTaLog(String print) {
+        taLog.append(print);
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * A class that builds the GUI used for the High Score
  * 
  * @author Viktor Saltarski
- *
+ * 
  */
 public class HighScoreGUI extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -58,50 +58,78 @@ public class HighScoreGUI extends JPanel {
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setBorder(null);
 		scrollPane.setViewportBorder(null);
+    private JTextArea txtHighScore = new JTextArea();
+    private JScrollPane scrollPane = new JScrollPane(txtHighScore);
+    private JButton btnBack = new JButton("");
+    private JLabel lblHighScore = new JLabel("HIGH SCORE");
+    private ImageIcon iconBack = new ImageIcon("res/btnBack.png");
+    private ImageIcon iconBackPressed = new ImageIcon("res/btnBackPressed.png");
+    private ImageIcon iconHighScore = new ImageIcon("res/highscore.png");
 
-		txtHighScore.setEditable(false);
-		txtHighScore.setBackground(Color.darkGray);
-		txtHighScore.setFont(new Font("Arial", Font.BOLD, 30));
-		txtHighScore.setForeground(Color.WHITE);
-		String test = "";
-		
-		for (int i = 1; i <= 50; i++) {
-			if(i<50){
-			test+= "PLAYER " + i + "\n";
-			}else{
-				test+= "PLAYER " + i;
-			}
-		}
-		
-		txtHighScore.setText(test);
-		setVisible(true);
-	}
-	/**
-	 * Returns a Label with specified information
-	 * @return the created label
-	 */
-	private JLabel createLabel(String text, int size, Color color){
-		JLabel label = new JLabel(text);
-		Font font = new Font("Arial", Font.BOLD, size);
-		label.setFont(font);
-		label.setForeground(color);
-		
-		return label;
-	}
-	
-	/**
-	 * Returns the back button
-	 * @return the back button
-	 */
-	public JButton getBtnBack(){
-		return btnBack;
-	}
-	
-	/**
-	 * Used to set the high score(update high score)
-	 */
-	public void setHighScore(ArrayList<String> highScore){
-		
-	}
-	
+    /**
+     * Constructor which will build the GUI using buttons,panels etc.
+     * 
+     * @param listener Adding ActionListeners to the buttons.
+     */
+    public HighScoreGUI(ActionListener listener) {
+        setBackground(Color.lightGray);
+        pnlHighScoreWindow.setPreferredSize(new Dimension(800, 850));
+        add(pnlHighScoreWindow);
+        // the panel
+        pnlHighScoreWindow.setBackground(Color.lightGray);
+        pnlHighScoreWindow.setLayout(null);
+
+        // Back button
+        btnBack.setBounds(675, 10, 108, 60);
+        btnBack.setIcon(iconBack);
+        btnBack.setOpaque(false);
+        btnBack.setContentAreaFilled(false);
+        btnBack.setBorderPainted(false);
+        btnBack.setFocusPainted(false);
+        btnBack.setPressedIcon(iconBackPressed);
+        btnBack.addActionListener(listener);
+
+        // Highscore icon
+        lblHighScore.setBounds(240, 10, 320, 60);
+        lblHighScore.setIcon(iconHighScore);
+        // mainPanel
+        pnlHighScoreWindow.add(lblHighScore);
+        pnlHighScoreWindow.add(btnBack);
+        pnlHighScoreWindow.add(scrollPane);
+
+        // Txt
+        scrollPane.setBounds(10, 90, 770, 700);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(null);
+        scrollPane.setViewportBorder(null);
+
+        txtHighScore.setEditable(false);
+        txtHighScore.setBackground(Color.darkGray);
+        txtHighScore.setFont(new Font("Arial", Font.BOLD, 30));
+        txtHighScore.setForeground(Color.WHITE);
+
+        setVisible(true);
+    }
+
+    /**
+     * Returns the back button
+     * 
+     * @return the back button
+     */
+    public JButton getBtnBack() {
+        return btnBack;
+    }
+
+    /**
+     * Used to set the high score(update high score)
+     * 
+     * @param highScore Inserted highScore Arraylist.
+     */
+    public void setHighScore(String highScore) {
+        txtHighScore.setText(highScore);
+    }
+
 }

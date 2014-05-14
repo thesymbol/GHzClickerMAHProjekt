@@ -13,25 +13,23 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * Logging system for client
- * this is to see whats happening on the client in a log file.
+ * Logging system for client this is to see whats happening on the client in a log file.
  * 
  * @author Marcus Orwén
  */
 public class ClientLogger {
     private static Logger logger;
     private static FileHandler fileHandler;
-    
+
     /**
      * Initiate logger with appending to false
      */
     public static void init() {
         init(false);
     }
-    
+
     /**
-     * Initiate logger with specified if we should append to last log or not.
-     * and default logger name as client and file as client.log
+     * Initiate logger with specified if we should append to last log or not. and default logger name as client and file as client.log
      * 
      * @param append Should we append on last log file or not?
      */
@@ -46,7 +44,7 @@ public class ClientLogger {
      * @param filename The file to save to.
      */
     public static void init(boolean append, String name, String filename) {
-        if(fileHandler != null) {
+        if (fileHandler != null) {
             fileHandler.close();
         }
         LoggerFormatter formatter = new LoggerFormatter();
@@ -57,20 +55,20 @@ public class ClientLogger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(fileHandler != null) { // eliminate crash if FileHandler cannot create a file
+        if (fileHandler != null) { // eliminate crash if FileHandler cannot create a file
             logger = Logger.getLogger(name);
             logger.setUseParentHandlers(false);
             Handler[] handlers = logger.getHandlers();
-            for(Handler handler : handlers) {
+            for (Handler handler : handlers) {
                 logger.removeHandler(handler);
             }
             fileHandler.setFormatter(formatter);
             logger.addHandler(fileHandler);
             logger.setLevel(Level.INFO);
-            
+
         }
     }
-    
+
     /**
      * Log stacktrace.
      * 
@@ -82,14 +80,16 @@ public class ClientLogger {
         e.printStackTrace(pw);
         logger.severe(sw.toString());
     }
-    
+
     /**
      * Get the logger we have created.
+     * 
+     * @return logger
      */
     public static Logger getLogger() {
         return logger;
     }
-    
+
     /**
      * Custom formatter to format log output corretly
      * 
@@ -98,6 +98,8 @@ public class ClientLogger {
     private static class LoggerFormatter extends Formatter {
         /**
          * Called whenever i do a log entry.
+         * 
+         * @param rec to "record" the log.
          */
         @Override
         public String format(LogRecord rec) {
@@ -107,13 +109,13 @@ public class ClientLogger {
             buf.append(" [" + rec.getLevel() + "] ");
             buf.append(formatMessage(rec));
             buf.append("\n");
-            
-            if(rec.getLevel() == Level.SEVERE) {
+
+            if (rec.getLevel() == Level.SEVERE) {
                 System.err.print(buf.toString());
             } else {
                 System.out.print(buf.toString());
             }
-            
+
             return buf.toString();
         }
     }

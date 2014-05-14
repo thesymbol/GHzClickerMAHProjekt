@@ -28,19 +28,22 @@ public class Controller {
     private double hertzPerClick;
     private double hertzGenerated;
 
+    private String username = "";
+    private String password = "";
+
     private ArrayList<Building> buildings;
     private double hertz = 0;
     private DecimalFormat hertzFormat = new DecimalFormat("#");
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
 
     private NetworkClient network;
-    
+    private HighScoreManager hsManager = new HighScoreManager();
     private final static Logger logger = ClientLogger.getLogger();
 
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
      * 
-     * @param ip The servers IP adress
+     * @param netowrk The servers IP adress
      */
     public Controller(NetworkClient network) {
         buildings = new ArrayList<Building>();
@@ -58,7 +61,7 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
-    
+
     /**
      * Show GUI
      * 
@@ -66,6 +69,17 @@ public class Controller {
      */
     public void guiSetVisibel(boolean status) {
         gui.setVisible(status);
+    }
+
+    /**
+     * sets username and password
+     * 
+     * @param username Inserted username
+     * @param password Inserted password
+     */
+    public void setUsernamePassword(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -137,6 +151,14 @@ public class Controller {
                 if (network.isClosed()) {
                     try {
                         network.connect();
+                        if (username != "" && password != "") {
+                            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+                            network.sendData(username);
+                            network.sendData(password);
+                            if (network.getData().equals("loginsuccessfull")) {
+                                logger.info("relogged");
+                            }
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -204,7 +226,7 @@ public class Controller {
         statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
-
+        
         gui.updateStatistics(statistics);
     }
 
@@ -228,12 +250,13 @@ public class Controller {
             logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
+        
     }
 
     /**
      * Loading the game from server (falls back to local if no server online).
      * 
-     * @param loadString, The save file to load (in string format).
+     * 
      */
     public void loadGameServer() {
         if (!network.isClosed()) {
@@ -249,11 +272,11 @@ public class Controller {
                         buildings.get(i).setOwned(Integer.parseInt(store[n]));
                         n++;
                     }
-                    clickCounter+=Integer.parseInt(store[n]);
+                    clickCounter = Integer.parseInt(store[n]);
                     n++;
-                    hertzClicked=Double.parseDouble(store[n]);
+                    hertzClicked = Double.parseDouble(store[n]);
                     n++;
-                    hertzGenerated=Double.parseDouble(store[n]);
+                    hertzGenerated = Double.parseDouble(store[n]);
                     n++;
                 }
             } catch (IOException e) {
@@ -263,6 +286,25 @@ public class Controller {
             logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
+    }
+
+    /**
+     * Updates the highscore
+     */
+    public void updateHighScore(){
+    	if(!(hsManager.getScores().isEmpty())){
+    		for (int i = 0; i < hsManager.getScores().size(); i++) {
+				if(hsManager.getScores().get(i).getName().toLowerCase()==username.toLowerCase()){
+					hsManager.getScores().get(i).setScore(hertzClicked + hertzGenerated);
+				}else{
+					hsManager.addScore(username, hertzClicked + hertzGenerated);
+				}
+			}
+    	}else{
+    		hsManager.addScore(username, hertzClicked + hertzGenerated);
+    	}
+    	String txt = hsManager.getHighScoreString();
+    	gui.setHighScore(txt);
     }
 
     /**
@@ -312,6 +354,11 @@ public class Controller {
      * Action listener for button presses
      */
     private class Listener implements ActionListener {
+        /**
+         * getting the listeners with actionPerformed
+         * 
+         * @param e ActionEvent
+         */
         public void actionPerformed(ActionEvent e) {
             // Hertz button
             if (e.getSource() == gui.getBtnHertz()) {
@@ -328,15 +375,16 @@ public class Controller {
             if (e.getSource() == gui.getBtnLoad()) {
                 loadGameServer();
             }
-            
-            //High Score button
-            if(e.getSource() == gui.getBtnHighScore()){
-            	gui.setCard("2");
+
+            // High Score button
+            if (e.getSource() == gui.getBtnHighScore()) {
+                gui.setCard("2");
+                updateHighScore();
             }
-            
-            //High Score button back
-            if(e.getSource() == gui.getBtnBackHighScore()){
-            	gui.setCard("1");
+
+            // High Score button back
+            if (e.getSource() == gui.getBtnBackHighScore()) {
+                gui.setCard("1");
             }
 
             // Building purcheses.
