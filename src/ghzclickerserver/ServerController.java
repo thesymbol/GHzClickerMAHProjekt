@@ -105,34 +105,36 @@ public class ServerController extends Thread {
             public void run() {
                 Socket arduinoSocket;
                 boolean connected = false;
-                while (listening) {
-                    // arduino connection
-                    if (arduinoOut != null) {
-                        try {
-                            arduinoOut.println("ping");
-                            connected = true;
-                            // logger.info("Arduino still connected.");
-                        } catch (Exception e) {
-                            connected = false;
-                            logger.info("Arduino not connected anymore.");
-                        }
-                    }
-                    if (!connected) {
-                        try {
-                            logger.info("Listening for arduino connection");
-                            serverArduinoSocket = new ServerSocket(port2);
-                            arduinoSocket = serverArduinoSocket.accept();
-                            logger.info("Got arduino connection");
-                            arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
-                            arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
-                        } catch (IOException e) {
-                            // ServerLogger.stacktrace(e);
-                        }
-                    }
+                synchronized(this) {
                     try {
-                        Thread.sleep(5000);
+                        while (listening) {
+                            // arduino connection
+                            if (arduinoOut != null) {
+                                try {
+                                    arduinoOut.println("ping");
+                                    connected = true;
+                                    // logger.info("Arduino still connected.");
+                                } catch (Exception e) {
+                                    connected = false;
+                                    logger.info("Arduino not connected anymore.");
+                                }
+                            }
+                            if (!connected) {
+                                try {
+                                    logger.info("Listening for arduino connection");
+                                    serverArduinoSocket = new ServerSocket(port2);
+                                    arduinoSocket = serverArduinoSocket.accept();
+                                    logger.info("Got arduino connection");
+                                    arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
+                                    arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
+                                } catch (IOException e) {
+                                    // ServerLogger.stacktrace(e);
+                                }
+                            }
+                            wait(5000); // wait 5 seconds before reconnecting.
+                        }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        // ServerLogger.stacktrace(e);
                     }
                 }
             }
