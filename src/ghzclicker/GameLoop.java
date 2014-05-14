@@ -34,14 +34,14 @@ public class GameLoop {
 
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
 
-        // constant updates (every 10 millisecond).
+        // Constant updates (every 10 millisecond).
         exec.scheduleAtFixedRate(new Runnable() {
             public void run() {
                 controller.update();
             }
         }, 0, 10, TimeUnit.MILLISECONDS);
 
-        // constant updates (every 1 second).
+        // Constant updates (every 1 second).
         exec.scheduleAtFixedRate(new Runnable() {
             public void run() {
                 controller.updateEverySecond();

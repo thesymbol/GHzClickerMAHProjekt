@@ -158,7 +158,7 @@ public class GameGUI {
     }
 
     /**
-     * get hertz button
+     * Get hertz button
      * 
      * @return the Hertz button.
      */
@@ -167,7 +167,7 @@ public class GameGUI {
     }
 
     /**
-     * get save btn
+     * Get save btn
      * 
      * @return the save button.
      */
@@ -176,7 +176,7 @@ public class GameGUI {
     }
 
     /**
-     * get load btn
+     * Get load btn
      * 
      * @return the load button.
      */
@@ -185,7 +185,7 @@ public class GameGUI {
     }
 
     /**
-     * get arraylist with buildings buttons
+     * Get arraylist with buildings buttons
      * 
      * @return the buildings arraylist button.
      */

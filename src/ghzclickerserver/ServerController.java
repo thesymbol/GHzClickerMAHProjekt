@@ -68,7 +68,7 @@ public class ServerController extends Thread {
 
         logger.info("Server Started...");
 
-        // safely close connection to server when game is closing.
+        // Safely close connection to server when game is closing.
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
@@ -105,34 +105,36 @@ public class ServerController extends Thread {
             public void run() {
                 Socket arduinoSocket;
                 boolean connected = false;
-                while (listening) {
-                    // arduino connection
-                    if (arduinoOut != null) {
-                        try {
-                            arduinoOut.println("ping");
-                            connected = true;
-                            // logger.info("Arduino still connected.");
-                        } catch (Exception e) {
-                            connected = false;
-                            logger.info("Arduino not connected anymore.");
-                        }
-                    }
-                    if (!connected) {
-                        try {
-                            logger.info("Listening for arduino connection");
-                            serverArduinoSocket = new ServerSocket(port2);
-                            arduinoSocket = serverArduinoSocket.accept();
-                            logger.info("Got arduino connection");
-                            arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
-                            arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
-                        } catch (IOException e) {
-                            // ServerLogger.stacktrace(e);
-                        }
-                    }
+                synchronized(this) {
                     try {
-                        Thread.sleep(5000);
+                        while (listening) {
+                            // arduino connection
+                            if (arduinoOut != null) {
+                                try {
+                                    arduinoOut.println("ping");
+                                    connected = true;
+                                    // logger.info("Arduino still connected.");
+                                } catch (Exception e) {
+                                    connected = false;
+                                    logger.info("Arduino not connected anymore.");
+                                }
+                            }
+                            if (!connected) {
+                                try {
+                                    logger.info("Listening for arduino connection");
+                                    serverArduinoSocket = new ServerSocket(port2);
+                                    arduinoSocket = serverArduinoSocket.accept();
+                                    logger.info("Got arduino connection");
+                                    arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
+                                    arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
+                                } catch (IOException e) {
+                                    // ServerLogger.stacktrace(e);
+                                }
+                            }
+                            wait(5000); // wait 5 seconds before reconnecting.
+                        }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        // ServerLogger.stacktrace(e);
                     }
                 }
             }
@@ -145,13 +147,16 @@ public class ServerController extends Thread {
     @Override
     public void run() {
         Socket socket;
-        while (listening) {
+        synchronized(this) {
             try {
-                socket = serverSocket.accept();
-                NetworkThread nt = new NetworkThread(socket);
-                nt.start();
-                networkThreads.add(nt);
-            } catch (IOException e) {
+                while (listening) {
+                    socket = serverSocket.accept();
+                    NetworkThread nt = new NetworkThread(socket);
+                    nt.start();
+                    networkThreads.add(nt);
+                    wait(10);
+                }
+            } catch (IOException | InterruptedException e) {
                 // ServerLogger.stacktrace(e);
             }
         }
@@ -195,12 +200,13 @@ public class ServerController extends Thread {
          */
         @Override
         public void run() {
-            try {
-                logger.info("Client connected");
-                String message = null;
-                while (connected) {
-                    if (in.ready()) {
-                        if ((message = in.readLine()) != null) {
+            synchronized(this) {
+                try {
+                    logger.info("Client connected");
+                    String message = null;
+                    while (connected) {
+                        message = in.readLine();
+                        if(message != null) {
                             if (!message.equals("ping")) {
                                 logger.info("Command: " + message);
                             }
@@ -262,11 +268,12 @@ public class ServerController extends Thread {
                                 }
                             }
                         }
+                        wait(10);
                     }
+                    logger.info("Client disconnected");
+                } catch (IOException | InterruptedException e) {
+                    // ServerLogger.stacktrace(e);
                 }
-                logger.info("Client disconnected");
-            } catch (IOException e) {
-                // ServerLogger.stacktrace(e);
             }
             loggedInUsers.remove(username);
         }

@@ -18,7 +18,7 @@ public class SaveFileHandler {
     private final static Logger logger = ServerLogger.getLogger();
 
     /**
-     * saves a file with specified data and location.
+     * Daves a file with specified data and location.
      * 
      * @param data The data to be saved
      * @param location The location to save the file to. (always end with /)
@@ -74,7 +74,7 @@ public class SaveFileHandler {
     }
 
     /**
-     * create directory
+     * Create directory
      * 
      * @param location Location of the directory (always end with /)
      * @param dirname Directory name

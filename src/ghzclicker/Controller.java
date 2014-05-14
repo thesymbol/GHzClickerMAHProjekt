@@ -206,7 +206,7 @@ public class Controller {
     }
 
     /**
-     * this will update the statistics all the time.
+     * This will update the statistics all the time.
      */
     public void uppdateStatistics() {
         String statistics = "";
@@ -245,7 +245,7 @@ public class Controller {
             data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
             logger.info("Save data sent: " + data);
-            network.sendData("sendsave"); // notify that the next message is a save file.
+            network.sendData("sendsave"); // Notify that the next message is a save file.
             network.sendData(data);
         } else {
             logger.severe("Server is not online or you are not connected to the internet");
@@ -265,7 +265,7 @@ public class Controller {
                 network.sendData("loadsave");
                 String saveData = network.getData();
                 logger.info("Save data loaded: " + saveData); // Prints loaded data in console
-                if (saveData.contains(":")) { // if we cannot find splitters then its not savedata.
+                if (saveData.contains(":")) { // If we cannot find splitters then its not savedata.
                     String[] store = saveData.split(":");
                     hertz = Double.parseDouble(store[0]);
                     int n = 1;
@@ -336,7 +336,7 @@ public class Controller {
         ArrayList<JButton> btnBuildings = new ArrayList<JButton>();
         for (Building building : buildings) {
             JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
-            btn.setName(building.getName()); // set the name of the button
+            btn.setName(building.getName()); // Set the name of the button
             btn.setToolTipText(building.getName());
             btnBuildings.add(btn);
         }
