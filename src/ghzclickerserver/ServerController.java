@@ -145,13 +145,16 @@ public class ServerController extends Thread {
     @Override
     public void run() {
         Socket socket;
-        while (listening) {
+        synchronized(this) {
             try {
-                socket = serverSocket.accept();
-                NetworkThread nt = new NetworkThread(socket);
-                nt.start();
-                networkThreads.add(nt);
-            } catch (IOException e) {
+                while (listening) {
+                    socket = serverSocket.accept();
+                    NetworkThread nt = new NetworkThread(socket);
+                    nt.start();
+                    networkThreads.add(nt);
+                    wait(10);
+                }
+            } catch (IOException | InterruptedException e) {
                 // ServerLogger.stacktrace(e);
             }
         }
