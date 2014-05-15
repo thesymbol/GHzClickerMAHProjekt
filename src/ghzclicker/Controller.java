@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -298,10 +299,13 @@ public class Controller {
                 network.sendData("loadhighscore");
                 highscoreData = network.getData();
                 hsManager.clear();
-                String[] tempList = highscoreData.split(";");
-                for (String tempValue : tempList) {
-                    String[] nameAndScore = tempValue.split(":");
-                    hsManager.addScore(nameAndScore[0], Double.parseDouble(nameAndScore[1]));
+                logger.info(highscoreData);
+                if(!highscoreData.equals("error")) {
+                    String[] tempList = highscoreData.split(";");
+                    for (String tempValue : tempList) {
+                        String[] nameAndScore = tempValue.split(":");
+                        hsManager.addScore(nameAndScore[0], Double.parseDouble(nameAndScore[1]));
+                    }
                 }
                 
                 //TODO: save the new highscore here.

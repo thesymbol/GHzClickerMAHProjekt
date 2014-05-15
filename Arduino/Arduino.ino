@@ -7,7 +7,8 @@ File userFile;
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0D, 0x01, 0xD8 };
 
 IPAddress arduino(192,168,0,50);
-IPAddress server(192,168,0,100);
+//IPAddress arduino(192,168,0,100);
+IPAddress server(195,178,234,229);
 
 EthernetClient client;
 
