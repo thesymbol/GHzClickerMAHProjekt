@@ -139,6 +139,7 @@ public class GameGUI {
         taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
         pnlGame.add(taStatistics);
         taStatistics.setEditable(false);
+        taStatistics.setHighlighter(null); // disable highlight
 
         lblText.setFont(new Font("Arial", Font.BOLD, 16));
         pnlGame.add(lblText);
