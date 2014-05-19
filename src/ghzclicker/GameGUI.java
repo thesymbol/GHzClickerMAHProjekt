@@ -264,6 +264,11 @@ public class GameGUI {
     public void updateJButtonCost(int i, String cost) {
         btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
     }
+    /**
+     *  "Update" the cost of the upgrades (its the same all the time)
+     * @param i , which upgrade.
+     * @param cost , the price of the upgrade.
+     */
     public void updateUpgradeCost(int i, String cost) {
         btnUpgrades.get(i).setText(btnUpgrades.get(i).getName() + " " + cost);
     }

@@ -190,7 +190,10 @@ public class Controller {
             hertz -= buildingPrice;
         }
     }
-    
+    /**
+     * Checks if you can buy the upgrade, if you can you will lose that amount of hertz.
+     * @param i , which upgrade that was bought.
+     */
     public void payingUpgrade(int i){
         double upgradePrice = upgrades.get(i).getPrice();
         if(canBuyUpgrade(i)){
@@ -211,7 +214,12 @@ public class Controller {
         }
         return false;
     }
-    
+    /**
+     * Check if you can buy upgrade specified with its id (i)
+     * 
+     * @param i ID of the upgrade.
+     * @return true if you can buy upgrade, else false.
+     */
     public boolean canBuyUpgrade(int i){
         double upgradePrice = upgrades.get(i).getPrice();
         if(hertz >= upgradePrice){
@@ -366,7 +374,11 @@ public class Controller {
         }
         return btnBuildings;
     }
-    
+    /**
+     * An ArrayList to create the buttons for the upgrades.
+     * 
+     * @return the upgrade buttons.
+     */
     public ArrayList<JButton> createUpgradeBtns(){
         ArrayList<JButton> btnUpgrades = new ArrayList<JButton>();
         for(Upgrade upgrade : upgrades){
@@ -391,7 +403,9 @@ public class Controller {
             gui.updateJButtonCost(i, stringify(cost));
         }
     }
-    
+    /**
+     * Calculate the cost for each upgrades.
+     */
     public void calculateUpgradeCosts(){
         for(int i = 0; i<upgrades.size(); i++){
             double cost = upgrades.get(i).getCost();
@@ -412,7 +426,9 @@ public class Controller {
             }
         }
     }
-    
+    /**
+     * Gray out the buttons when a player doesnt have enough money to buy upgrades.
+     */
     public void upgradeGrayiFy(){
         for(int i = 0; i<gui.getBtnUpgrades().size(); i++){
             if(canBuyUpgrade(i)){
