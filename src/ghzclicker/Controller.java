@@ -57,13 +57,13 @@ public class Controller {
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
         
         upgrades = new ArrayList<Upgrade>();
-        upgrades.add(new Upgrade("Hard drive upgrade 1" , 50 , 200));
-        upgrades.add(new Upgrade("RAM upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Power Supply upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Graphics card upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Processor upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("MotherBoard upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("Hard drive upgrade 1" , 1000 , buildings.get(0).getBaseHPS()*2));
+        upgrades.add(new Upgrade("RAM upgrade 1" , 6000 , buildings.get(1).getBaseHPS()*2));
+        upgrades.add(new Upgrade("Power Supply upgrade 1" , 20000 , buildings.get(2).getBaseHPS()*2));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1" , 200000 , buildings.get(3).getBaseHPS()*2));
+        upgrades.add(new Upgrade("Graphics card upgrade 1" , 1000000 , buildings.get(4).getBaseHPS()*2));
+        upgrades.add(new Upgrade("Processor upgrade 1" , 4000000 , buildings.get(5).getBaseHPS()*2));
+        upgrades.add(new Upgrade("MotherBoard upgrade 1" , 30000000 , buildings.get(6).getBaseHPS()*2));
         
 
         Listener listener = new Listener();
@@ -137,6 +137,7 @@ public class Controller {
         String hertz = stringify(this.hertz);
         gui.update(hertz);
         calculateBuildingCosts();
+        calculateUpgradeCosts();
         grayiFy();
         upgradeGrayiFy();
         updateHertzPerClick();
@@ -234,7 +235,7 @@ public class Controller {
     public void uppdateHertzPerSecond() {
         hertzPerSecond = 0;
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-            hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
+            hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS() + upgrades.get(i).getBaseHPS();
         }
         gui.updateHertzPerSecond(stringify(hertzPerSecond));
     }
@@ -408,7 +409,7 @@ public class Controller {
      */
     public void calculateUpgradeCosts(){
         for(int i = 0; i<upgrades.size(); i++){
-            double cost = upgrades.get(i).getCost();
+            double cost = upgrades.get(i).getCost() ;
             upgrades.get(i).setPrice(cost);
             gui.updateUpgradeCost(i, stringify(cost));
         }
