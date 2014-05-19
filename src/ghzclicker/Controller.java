@@ -33,6 +33,7 @@ public class Controller {
     private String password = "";
 
     private ArrayList<Building> buildings;
+    private ArrayList<Upgrade> upgrades;
     private double hertz = 0;
     private DecimalFormat hertzFormat = new DecimalFormat("#");
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
@@ -55,9 +56,19 @@ public class Controller {
         buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
         buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
+        
+        upgrades = new ArrayList<Upgrade>();
+        upgrades.add(new Upgrade("Hard drive upgrade 1" , 50 , 200));
+        upgrades.add(new Upgrade("RAM upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("Power Supply upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("Graphics card upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("Processor upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("MotherBoard upgrade 1" , 200 , 400));
+        
 
         Listener listener = new Listener();
-        gui = new GameGUI(createBuildingBtns(), listener);
+        gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
 
         this.network = network;
         netAutoRecon();
@@ -339,6 +350,17 @@ public class Controller {
             btnBuildings.add(btn);
         }
         return btnBuildings;
+    }
+    
+    public ArrayList<JButton> createUpgradeBtns(){
+        ArrayList<JButton> btnUpgrades = new ArrayList<JButton>();
+        for(Upgrade upgrade : upgrades){
+            JButton btn = new JButton(upgrade.getName());
+            btn.setName(upgrade.getName());
+            btn.setToolTipText(upgrade.getName());
+            btnUpgrades.add(btn);
+        }
+        return btnUpgrades;
     }
 
     /**
