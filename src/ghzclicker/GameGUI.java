@@ -153,9 +153,10 @@ public class GameGUI {
             btnUpg.setForeground(Color.black);
         }
         // Continues adding the button and label to the frame.
-        pnlGame.add(tabbedPane);
         tabbedPane.add(pnlBuilding);
         tabbedPane.add(pnlUpgrade);
+        pnlGame.add(tabbedPane);
+
 //        pnlGame.add(pnlBuilding);
 //        pnlGame.add(pnlUpgrade);
         pnlGame.add(btnSave);
