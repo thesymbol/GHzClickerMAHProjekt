@@ -57,13 +57,13 @@ public class Controller {
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
         
         upgrades = new ArrayList<Upgrade>();
-        upgrades.add(new Upgrade("Hard drive upgrade 1" , 50 , 200));
-        upgrades.add(new Upgrade("RAM upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Power Supply upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Graphics card upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("Processor upgrade 1" , 200 , 400));
-        upgrades.add(new Upgrade("MotherBoard upgrade 1" , 200 , 400));
+        upgrades.add(new Upgrade("Hard drive upgrade 1" , 1000 , 200));
+        upgrades.add(new Upgrade("RAM upgrade 1" , 6000 , 400));
+        upgrades.add(new Upgrade("Power Supply upgrade 1" , 20000 , 400));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1" , 200000 , 400));
+        upgrades.add(new Upgrade("Graphics card upgrade 1" , 1000000 , 400));
+        upgrades.add(new Upgrade("Processor upgrade 1" , 4000000 , 400));
+        upgrades.add(new Upgrade("MotherBoard upgrade 1" , 30000000 , 400));
         
 
         Listener listener = new Listener();
@@ -137,6 +137,7 @@ public class Controller {
         String hertz = stringify(this.hertz);
         gui.update(hertz);
         calculateBuildingCosts();
+        calculateUpgradeCosts();
         grayiFy();
         upgradeGrayiFy();
         updateHertzPerClick();
@@ -408,7 +409,7 @@ public class Controller {
      */
     public void calculateUpgradeCosts(){
         for(int i = 0; i<upgrades.size(); i++){
-            double cost = upgrades.get(i).getCost();
+            double cost = upgrades.get(i).getCost() ;
             upgrades.get(i).setPrice(cost);
             gui.updateUpgradeCost(i, stringify(cost));
         }
