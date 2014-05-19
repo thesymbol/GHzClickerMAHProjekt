@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -130,7 +131,7 @@ public class ServerController extends Thread {
                                 // ServerLogger.stacktrace(e);
                             }
                         }
-                        wait(5000); // wait 5 seconds before reconnecting.
+                        Thread.sleep(5000); // wait 5 seconds before reconnecting.
                     }
                 } catch (InterruptedException e) {
                     // ServerLogger.stacktrace(e);
@@ -149,6 +150,7 @@ public class ServerController extends Thread {
             try {
                 while (listening) {
                     socket = serverSocket.accept();
+                    socket.setSoTimeout(10000);
                     NetworkThread nt = new NetworkThread(socket);
                     nt.start();
                     networkThreads.add(nt);
@@ -169,6 +171,8 @@ public class ServerController extends Thread {
         private PrintWriter out;
         private Socket socket;
         private boolean connected = true;
+        private volatile long lastReadTime;
+        private int maxTimeout = 25000;
 
         /**
          * Opens a connection to and from specified client/socket.
@@ -193,6 +197,10 @@ public class ServerController extends Thread {
             socket.close();
             connected = false;
         }
+        
+        public boolean isConnectionAlive() {
+            return System.currentTimeMillis() - lastReadTime < maxTimeout;
+        }
 
         /**
          * Always recieve messages from client
@@ -205,6 +213,7 @@ public class ServerController extends Thread {
                 while (connected) {
                     try {
                         message = in.readLine();
+                        lastReadTime = System.currentTimeMillis();
                         if (message != null) {
                             if (!message.equals("ping")) {
                                 logger.info("Command: " + message);
@@ -268,6 +277,12 @@ public class ServerController extends Thread {
                             }
                         }
                         wait(10);
+                    } catch (SocketTimeoutException e) {
+                        if(!isConnectionAlive()) {
+                            logger.severe("Connection lost");
+                        } else {
+                            logger.info("Connection still active");
+                        }
                     } catch (IOException | InterruptedException e) {
                         // ServerLogger.stacktrace(e);
                     }
