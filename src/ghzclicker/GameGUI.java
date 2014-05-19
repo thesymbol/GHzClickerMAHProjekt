@@ -43,6 +43,7 @@ public class GameGUI {
     private JPanel pnlCont = new JPanel();
     private JPanel pnlHS;
     private HighScoreGUI pnlHighScore;
+    //Button icons
     private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
     private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
     private ImageIcon iconSave = new ImageIcon("res/btnSave.png");
