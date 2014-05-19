@@ -7,7 +7,7 @@ package ghzclicker;
  */
 public class Upgrade {
     private String name;
-    private double baseCost;
+    private double Cost;
     private double baseHPS;
     private double price;
     /**
@@ -17,9 +17,9 @@ public class Upgrade {
      * @param baseCost The base cost of the upgrade.
      * @param baseHPS the baseHPS of the upgrade.
      */
-    public Upgrade(String name, double baseCost, double baseHPS){
+    public Upgrade(String name, double Cost, double baseHPS){
         this.name = name;
-        this.baseCost = baseCost;
+        this.Cost = Cost;
         this.baseHPS = baseHPS;
     }
     /**
@@ -34,7 +34,7 @@ public class Upgrade {
      * @return baseCost The basecost of the upgrade.
      */
     public double getBaseCost(){
-        return baseCost;
+        return Cost;
     }
     /**
      * setting the price.
