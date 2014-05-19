@@ -34,7 +34,7 @@ public class GameGUI {
     private JButton btnHighScore = new JButton("");
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
-    private JPanel pnlUpgrade;
+    private JPanel pnlUpgrade = new JPanel();
     private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
