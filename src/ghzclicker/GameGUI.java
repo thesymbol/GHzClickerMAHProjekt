@@ -62,6 +62,7 @@ public class GameGUI {
         this.btnBuildings = btnBuildings;
         this.btnUpgrades = btnUpgrades;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
+        pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size() , 1));
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
@@ -151,10 +152,12 @@ public class GameGUI {
             
             btnUpg.setFont(new Font("Araial", Font.BOLD, 16));
             btnUpg.setForeground(Color.black);
+            
+            pnlUpgrade.add(btnUpg);
         }
         // Continues adding the button and label to the frame.
-        pnlGame.add(pnlBuilding);
-        pnlGame.add(pnlUpgrade);
+//        pnlGame.add(pnlBuilding);
+//        pnlGame.add(pnlUpgrade);
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
         pnlGame.add(tabbedPane);

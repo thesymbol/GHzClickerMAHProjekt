@@ -138,6 +138,7 @@ public class Controller {
         gui.update(hertz);
         calculateBuildingCosts();
         grayiFy();
+        upgradeGrayiFy();
         updateHertzPerClick();
         uppdateHertzPerSecond();
         uppdateStatistics();
@@ -189,6 +190,13 @@ public class Controller {
             hertz -= buildingPrice;
         }
     }
+    
+    public void payingUpgrade(int i){
+        double upgradePrice = upgrades.get(i).getPrice();
+        if(canBuyUpgrade(i)){
+            hertz -= upgradePrice;
+        }
+    }
 
     /**
      * Check if you cna buy building specified with its id (i)
@@ -199,6 +207,14 @@ public class Controller {
     public boolean canBuyBuilding(int i) {
         double buildingPrice = buildings.get(i).getPrice();
         if (hertz >= buildingPrice) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean canBuyUpgrade(int i){
+        double upgradePrice = upgrades.get(i).getPrice();
+        if(hertz >= upgradePrice){
             return true;
         }
         return false;
@@ -388,6 +404,16 @@ public class Controller {
             }
         }
     }
+    
+    public void upgradeGrayiFy(){
+        for(int i = 0; i<gui.getBtnUpgrades().size(); i++){
+            if(canBuyUpgrade(i)){
+                gui.getBtnUpgrades().get(i).setEnabled(true);
+            } else {
+                gui.getBtnUpgrades().get(i).setEnabled(false);
+            }
+        }
+    }
 
     /**
      * Action listener for button presses
@@ -433,6 +459,15 @@ public class Controller {
                     if (hertz >= building.getPrice()) {
                         building.setOwned(building.getOwned() + 1);
                         payingBuilding(i);
+                    }
+                }
+            }
+            //Upgrade purchases.
+            for(int i = 0; i < gui.getBtnUpgrades().size(); i++){
+                if(e.getSource() == gui.getBtnUpgrades().get(i)){
+                    Upgrade upgrade = upgrades.get(i);
+                    if(hertz >= upgrade.getPrice()){
+                        payingUpgrade(i);
                     }
                 }
             }
