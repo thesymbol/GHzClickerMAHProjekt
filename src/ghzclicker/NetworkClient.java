@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +20,7 @@ public class NetworkClient {
     private BufferedReader in;
     private String ip;
     private int port;
+    private boolean connected = false;
     private final static Logger logger = ClientLogger.getLogger();
 
     /**
@@ -55,6 +57,9 @@ public class NetworkClient {
             socket = new Socket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Get data from server
             out = new PrintWriter(socket.getOutputStream(), true); // send data from client
+            socket.setSoTimeout(5000);
+            connected = true;
+            //open();
             logger.info("Connected to server");
         } catch (ConnectException e) {
             logger.severe("Connection refused");
@@ -143,9 +148,26 @@ public class NetworkClient {
         @Override
         public void run() {
             try {
-                String message = null;
-                while (((message = in.readLine()) != null)) {
-                    logger.info(message);
+                String message = "";
+                long myNextInputTime = System.currentTimeMillis() + 30000;
+                while(connected) {
+                    try {
+                        logger.info("Reading from server");
+                        message = getData();
+                        if(message != null && message != "") {
+                            logger.info("Got message");
+                            if (message.equals("ping") && (System.currentTimeMillis() - myNextInputTime > 0)) {
+                                logger.info("Got ping sending back pong and reading again in 2 seconds");
+                                out.println("pong");
+                                myNextInputTime += 2000;
+                            }
+                        } else {
+                            logger.info("Disconnected from server");
+                            connected = false;
+                        }
+                    } catch (SocketTimeoutException e) {
+                        System.out.println("Timed out trying to read from socket");
+                    }
                 }
             } catch (IOException e) {
                 logger.info("Disconnected from server");

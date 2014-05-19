@@ -79,10 +79,10 @@ public class ServerController extends Thread {
                     listening = false;
                     logger.info("Closing server listener...");
                     serverSocket.close();
-                    if(arduinoIn != null) {
+                    if (arduinoIn != null) {
                         arduinoIn.close();
                     }
-                    if(arduinoOut != null) {
+                    if (arduinoOut != null) {
                         arduinoOut.close();
                     }
                     serverArduinoSocket.close();
@@ -105,37 +105,35 @@ public class ServerController extends Thread {
             public void run() {
                 Socket arduinoSocket;
                 boolean connected = false;
-                synchronized(this) {
-                    try {
-                        while (listening) {
-                            // arduino connection
-                            if (arduinoOut != null) {
-                                try {
-                                    arduinoOut.println("ping");
-                                    connected = true;
-                                    // logger.info("Arduino still connected.");
-                                } catch (Exception e) {
-                                    connected = false;
-                                    logger.info("Arduino not connected anymore.");
-                                }
+                try {
+                    while (listening) {
+                        // arduino connection
+                        if (arduinoOut != null) {
+                            try {
+                                arduinoOut.println("ping");
+                                connected = true;
+                                // logger.info("Arduino still connected.");
+                            } catch (Exception e) {
+                                connected = false;
+                                logger.info("Arduino not connected anymore.");
                             }
-                            if (!connected) {
-                                try {
-                                    logger.info("Listening for arduino connection");
-                                    serverArduinoSocket = new ServerSocket(port2);
-                                    arduinoSocket = serverArduinoSocket.accept();
-                                    logger.info("Got arduino connection");
-                                    arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
-                                    arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
-                                } catch (IOException e) {
-                                    // ServerLogger.stacktrace(e);
-                                }
-                            }
-                            wait(5000); // wait 5 seconds before reconnecting.
                         }
-                    } catch (InterruptedException e) {
-                        // ServerLogger.stacktrace(e);
+                        if (!connected) {
+                            try {
+                                logger.info("Listening for arduino connection");
+                                serverArduinoSocket = new ServerSocket(port2);
+                                arduinoSocket = serverArduinoSocket.accept();
+                                logger.info("Got arduino connection");
+                                arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
+                                arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
+                            } catch (IOException e) {
+                                // ServerLogger.stacktrace(e);
+                            }
+                        }
+                        wait(5000); // wait 5 seconds before reconnecting.
                     }
+                } catch (InterruptedException e) {
+                    // ServerLogger.stacktrace(e);
                 }
             }
         }.start();
@@ -147,7 +145,7 @@ public class ServerController extends Thread {
     @Override
     public void run() {
         Socket socket;
-        synchronized(this) {
+        synchronized (this) {
             try {
                 while (listening) {
                     socket = serverSocket.accept();
@@ -189,6 +187,7 @@ public class ServerController extends Thread {
          * @throws IOException
          */
         public void close() throws IOException {
+            logger.info("Attempting to close client connection");
             in.close();
             out.close();
             socket.close();
@@ -200,13 +199,13 @@ public class ServerController extends Thread {
          */
         @Override
         public void run() {
-            synchronized(this) {
-                try {
-                    logger.info("Client connected");
-                    String message = null;
-                    while (connected) {
+            synchronized (this) {
+                logger.info("Client connected");
+                String message = null;
+                while (connected) {
+                    try {
                         message = in.readLine();
-                        if(message != null) {
+                        if (message != null) {
                             if (!message.equals("ping")) {
                                 logger.info("Command: " + message);
                             }
@@ -253,15 +252,15 @@ public class ServerController extends Thread {
                             if (message.equals("ping")) {
                                 out.println("pong");
                             }
-                            if(message.equals("closeconnection")) {
-                                this.close();
+                            if (message.equals("closeconnection")) {
+                                close();
                             }
-                            if(message.equals("savehighscore")){
-                            	fileHandler.save(in.readLine(), "", "highscore.dat", false);
+                            if (message.equals("savehighscore")) {
+                                fileHandler.save(in.readLine(), "", "highscore.dat", false);
                             }
-                            if(message.equals("loadhighscore")){
-                            	ArrayList<String> tempFile = fileHandler.load("", "highscore.dat");
-                            	if (!tempFile.isEmpty()) {
+                            if (message.equals("loadhighscore")) {
+                                ArrayList<String> tempFile = fileHandler.load("", "highscore.dat");
+                                if (!tempFile.isEmpty()) {
                                     out.println(tempFile.get(0));
                                 } else {
                                     out.println("error");
@@ -269,11 +268,11 @@ public class ServerController extends Thread {
                             }
                         }
                         wait(10);
+                    } catch (IOException | InterruptedException e) {
+                        // ServerLogger.stacktrace(e);
                     }
-                    logger.info("Client disconnected");
-                } catch (IOException | InterruptedException e) {
-                    // ServerLogger.stacktrace(e);
                 }
+                logger.info("Client disconnected");
             }
             loggedInUsers.remove(username);
         }
