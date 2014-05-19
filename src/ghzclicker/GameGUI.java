@@ -264,6 +264,9 @@ public class GameGUI {
     public void updateJButtonCost(int i, String cost) {
         btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
     }
+    public void updateUpgradeCost(int i, String cost) {
+        btnUpgrades.get(i).setText(btnUpgrades.get(i).getName() + " " + cost);
+    }
 
     /**
      * Update and sets your new hertz value all the time

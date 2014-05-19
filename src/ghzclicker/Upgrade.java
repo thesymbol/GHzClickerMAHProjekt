@@ -33,7 +33,7 @@ public class Upgrade {
      * get the BaseCost
      * @return baseCost The basecost of the upgrade.
      */
-    public double getBaseCost(){
+    public double getCost(){
         return Cost;
     }
     /**

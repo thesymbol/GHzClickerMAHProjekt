@@ -391,6 +391,14 @@ public class Controller {
             gui.updateJButtonCost(i, stringify(cost));
         }
     }
+    
+    public void calculateUpgradeCosts(){
+        for(int i = 0; i<upgrades.size(); i++){
+            double cost = upgrades.get(i).getCost();
+            upgrades.get(i).setPrice(cost);
+            gui.updateUpgradeCost(i, stringify(cost));
+        }
+    }
 
     /**
      * Gray out buttons when player dont have enough money
