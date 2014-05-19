@@ -413,8 +413,8 @@ public class Controller {
      */
     public void calculateUpgradeCosts() {
         for (int i = 0; i < upgrades.size(); i++) {
-            double cost = upgrades.get(i).getCost() * (Math.pow(2, upgrades.get(i).getOwned()));
-            if(upgrades.get(i).getOwned() == 0){
+            double cost = upgrades.get(i).getCost() * (Math.pow(10, upgrades.get(i).getOwned()));
+            if (upgrades.get(i).getOwned() == 0) {
                 cost = upgrades.get(i).getCost();
             }
             upgrades.get(i).setPrice(cost);
@@ -443,23 +443,21 @@ public class Controller {
         for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
             int step = upgrades.get(i).getOwned();
             int owned = buildings.get(i).getOwned();
-            if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
+            if (canBuyUpgrade(i) && step == 0 && owned >= 10) {                
+                gui.getBtnUpgrades().get(i).setEnabled(true);    
+                
+            } else if (canBuyUpgrade(i) && step == 1 && owned >= 100) {                
+                gui.getBtnUpgrades().get(i).setEnabled(true);        
+                
+            } else if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-                step++;
-            }
-            if (canBuyUpgrade(i) && step == 1 && owned >= 100) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-                step++;
-            }
-            if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-                step++;
+                
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
-
         }
     }
+    
 
     /**
      * Action listener for button presses
