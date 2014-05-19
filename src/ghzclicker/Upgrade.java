@@ -37,6 +37,14 @@ public class Upgrade {
         return Cost;
     }
     /**
+     * get the baseHPS
+     * @return baseHPS The base hertz per second of the upgrade
+     */
+    public double getBaseHPS() {
+        return baseHPS;
+    }
+    
+    /**
      * setting the price.
      * @param price Inserted price
      */
