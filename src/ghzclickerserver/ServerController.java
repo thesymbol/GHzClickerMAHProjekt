@@ -213,7 +213,6 @@ public class ServerController extends Thread {
                 while (connected) {
                     try {
                         message = in.readLine();
-                        lastReadTime = System.currentTimeMillis();
                         if (message != null) {
                             if (!message.equals("ping")) {
                                 logger.info("Command: " + message);
@@ -260,6 +259,7 @@ public class ServerController extends Thread {
                             }
                             if (message.equals("ping")) {
                                 out.println("pong");
+                                lastReadTime = System.currentTimeMillis();
                             }
                             if (message.equals("closeconnection")) {
                                 close();
@@ -278,13 +278,19 @@ public class ServerController extends Thread {
                         }
                         wait(10);
                     } catch (SocketTimeoutException e) {
-                        if(!isConnectionAlive()) {
-                            logger.severe("Connection lost");
-                        } else {
-                            logger.info("Connection still active");
-                        }
+                        // ServerLogger.stacktrace(e);
                     } catch (IOException | InterruptedException e) {
                         // ServerLogger.stacktrace(e);
+                    }
+
+                    //check if connection is still alive.
+                    if(!isConnectionAlive()) {
+                        logger.severe("Connection lost");
+                        try {
+                            close();
+                        } catch (IOException e) {
+                            // ServerLogger.stacktrace(e);
+                        }
                     }
                 }
                 logger.info("Client disconnected");
