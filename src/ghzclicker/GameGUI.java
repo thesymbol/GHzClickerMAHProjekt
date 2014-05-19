@@ -155,8 +155,8 @@ public class GameGUI {
         // Continues adding the button and label to the frame.
         pnlGame.add(pnlBuilding);
         pnlGame.add(pnlUpgrade);
-        tabbedPane.add(pnlBuilding);
-        tabbedPane.add(pnlUpgrade);
+        tabbedPane.add(pnlBuilding, "Buildings");
+        tabbedPane.add(pnlUpgrade, "Upgrades");
         pnlGame.add(tabbedPane);
 
 
