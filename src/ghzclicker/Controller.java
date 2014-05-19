@@ -431,7 +431,7 @@ public class Controller {
      */
     public void upgradeGrayiFy(){
         for(int i = 0; i<gui.getBtnUpgrades().size(); i++){
-            if(canBuyUpgrade(i)){
+            if(canBuyUpgrade(i) && buildings.get(i).getOwned() >= 10){
                 gui.getBtnUpgrades().get(i).setEnabled(true);
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
