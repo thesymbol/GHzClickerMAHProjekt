@@ -10,6 +10,7 @@ public class Upgrade {
     private double Cost;
     private double baseHPS;
     private double price;
+    private int owned;
     /**
      * Construct an upgrade.
      * 
@@ -57,5 +58,13 @@ public class Upgrade {
      */
     public double getPrice(){
         return price;
+    }
+    
+    public void setOwned(int owned) {
+        this.owned = owned;
+    }
+    
+    public int getOwned(){
+        return owned;
     }
 }

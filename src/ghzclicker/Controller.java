@@ -413,7 +413,10 @@ public class Controller {
      */
     public void calculateUpgradeCosts() {
         for (int i = 0; i < upgrades.size(); i++) {
-            double cost = upgrades.get(i).getCost();
+            double cost = upgrades.get(i).getCost() * (Math.pow(2, upgrades.get(i).getOwned()));
+            if(upgrades.get(i).getOwned() == 0){
+                cost = upgrades.get(i).getCost();
+            }
             upgrades.get(i).setPrice(cost);
             gui.updateUpgradeCost(i, stringify(cost));
         }
@@ -438,7 +441,7 @@ public class Controller {
     public void upgradeGrayiFy() {
 
         for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
-            int step = 0;
+            int step = upgrades.get(i).getOwned();
             int owned = buildings.get(i).getOwned();
             if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
@@ -510,6 +513,7 @@ public class Controller {
                 if (e.getSource() == gui.getBtnUpgrades().get(i)) {
                     Upgrade upgrade = upgrades.get(i);
                     if (hertz >= upgrade.getPrice()) {
+                        upgrade.setOwned(upgrade.getOwned() + 1);
                         payingUpgrade(i);
                     }
                 }
