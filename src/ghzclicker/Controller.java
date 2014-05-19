@@ -55,16 +55,15 @@ public class Controller {
         buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
         buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
-        
+
         upgrades = new ArrayList<Upgrade>();
-        upgrades.add(new Upgrade("Hard drive upgrade 1" , 1000 , 200));
-        upgrades.add(new Upgrade("RAM upgrade 1" , 6000 , 200));
-        upgrades.add(new Upgrade("Power Supply upgrade 1" , 20000 , 200));
-        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1" , 200000 , 200));
-        upgrades.add(new Upgrade("Graphics card upgrade 1" , 1000000 , 200));
-        upgrades.add(new Upgrade("Processor upgrade 1" , 4000000 , 200));
-        upgrades.add(new Upgrade("MotherBoard upgrade 1" , 30000000 , 200));
-        
+        upgrades.add(new Upgrade("Hard drive upgrade 1", 1000, 200));
+        upgrades.add(new Upgrade("RAM upgrade 1", 6000, 200));
+        upgrades.add(new Upgrade("Power Supply upgrade 1", 20000, 200));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1", 200000, 200));
+        upgrades.add(new Upgrade("Graphics card upgrade 1", 1000000, 200));
+        upgrades.add(new Upgrade("Processor upgrade 1", 4000000, 200));
+        upgrades.add(new Upgrade("MotherBoard upgrade 1", 30000000, 200));
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
@@ -191,13 +190,15 @@ public class Controller {
             hertz -= buildingPrice;
         }
     }
+
     /**
      * Checks if you can buy the upgrade, if you can you will lose that amount of hertz.
+     * 
      * @param i , which upgrade that was bought.
      */
-    public void payingUpgrade(int i){
+    public void payingUpgrade(int i) {
         double upgradePrice = upgrades.get(i).getPrice();
-        if(canBuyUpgrade(i)){
+        if (canBuyUpgrade(i)) {
             hertz -= upgradePrice;
         }
     }
@@ -215,15 +216,16 @@ public class Controller {
         }
         return false;
     }
+
     /**
      * Check if you can buy upgrade specified with its id (i)
      * 
      * @param i ID of the upgrade.
      * @return true if you can buy upgrade, else false.
      */
-    public boolean canBuyUpgrade(int i){
+    public boolean canBuyUpgrade(int i) {
         double upgradePrice = upgrades.get(i).getPrice();
-        if(hertz >= upgradePrice){
+        if (hertz >= upgradePrice) {
             return true;
         }
         return false;
@@ -335,21 +337,21 @@ public class Controller {
                 highscoreData = network.getData();
                 hsManager.clear();
                 logger.info(highscoreData);
-                if(!highscoreData.equals("error")) {
+                if (!highscoreData.equals("error")) {
                     String[] tempList = highscoreData.split(";");
                     for (String tempValue : tempList) {
                         String[] nameAndScore = tempValue.split(":");
                         hsManager.addScore(nameAndScore[0], Double.parseDouble(nameAndScore[1]));
                     }
                 }
-                
-                //TODO: save the new highscore here.
+
+                // TODO: save the new highscore here.
                 hsManager.addScore(username, hertzGenerated + hertzClicked);
                 String saveToBeSent = hsManager.getHighScoresToSave();
                 System.out.println(saveToBeSent);
                 network.sendData("savehighscore");
                 network.sendData(saveToBeSent);
-                
+
                 String txt = hsManager.getHighScoreString();
                 gui.setHighScore(txt);
             } catch (IOException e) {
@@ -375,14 +377,15 @@ public class Controller {
         }
         return btnBuildings;
     }
+
     /**
      * An ArrayList to create the buttons for the upgrades.
      * 
      * @return the upgrade buttons.
      */
-    public ArrayList<JButton> createUpgradeBtns(){
+    public ArrayList<JButton> createUpgradeBtns() {
         ArrayList<JButton> btnUpgrades = new ArrayList<JButton>();
-        for(Upgrade upgrade : upgrades){
+        for (Upgrade upgrade : upgrades) {
             JButton btn = new JButton(upgrade.getName());
             btn.setName(upgrade.getName());
             btn.setToolTipText(upgrade.getName());
@@ -404,12 +407,13 @@ public class Controller {
             gui.updateJButtonCost(i, stringify(cost));
         }
     }
+
     /**
      * Calculate the cost for each upgrades.
      */
-    public void calculateUpgradeCosts(){
-        for(int i = 0; i<upgrades.size(); i++){
-            double cost = upgrades.get(i).getCost() ;
+    public void calculateUpgradeCosts() {
+        for (int i = 0; i < upgrades.size(); i++) {
+            double cost = upgrades.get(i).getCost();
             upgrades.get(i).setPrice(cost);
             gui.updateUpgradeCost(i, stringify(cost));
         }
@@ -427,16 +431,30 @@ public class Controller {
             }
         }
     }
+
     /**
      * Gray out the buttons when a player doesnt have enough money to buy upgrades.
      */
-    public void upgradeGrayiFy(){
-        for(int i = 0; i<gui.getBtnUpgrades().size(); i++){
-            if(canBuyUpgrade(i) && buildings.get(i).getOwned() >= 10){
+    public void upgradeGrayiFy() {
+
+        for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
+            int step = 0;
+            int owned = buildings.get(i).getOwned();
+            if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
+                step++;
+            }
+            if (canBuyUpgrade(i) && step == 1 && owned >= 100) {
+                gui.getBtnUpgrades().get(i).setEnabled(true);
+                step++;
+            }
+            if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
+                gui.getBtnUpgrades().get(i).setEnabled(true);
+                step++;
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
+
         }
     }
 
@@ -487,11 +505,11 @@ public class Controller {
                     }
                 }
             }
-            //Upgrade purchases.
-            for(int i = 0; i < gui.getBtnUpgrades().size(); i++){
-                if(e.getSource() == gui.getBtnUpgrades().get(i)){
+            // Upgrade purchases.
+            for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
+                if (e.getSource() == gui.getBtnUpgrades().get(i)) {
                     Upgrade upgrade = upgrades.get(i);
-                    if(hertz >= upgrade.getPrice()){
+                    if (hertz >= upgrade.getPrice()) {
                         payingUpgrade(i);
                     }
                 }
