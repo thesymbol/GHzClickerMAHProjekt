@@ -40,6 +40,7 @@ public class ClientLogger {
     /**
      * Initiate logger with specified filename
      * 
+     * @param append Should we append to the last log file or not (true or false).
      * @param name The name of the logger to identify it.
      * @param filename The file to save to.
      */
@@ -84,7 +85,7 @@ public class ClientLogger {
     /**
      * Get the logger we have created.
      * 
-     * @return logger
+     * @return The logger
      */
     public static Logger getLogger() {
         return logger;
@@ -99,7 +100,8 @@ public class ClientLogger {
         /**
          * Called whenever i do a log entry.
          * 
-         * @param rec to "record" the log.
+         * @param rec The default logger information to be formated.
+         * @return The format for the logger
          */
         @Override
         public String format(LogRecord rec) {

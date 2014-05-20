@@ -73,7 +73,34 @@ public class Controller {
     }
 
     /**
-     * Show GUI
+     * Automaticly reconnect to the server with timer tasks.
+     */
+    public void netAutoRecon() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (network.isClosed()) {
+                    try {
+                        network.connect();
+                        if (username != "" && password != "") {
+                            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+                            network.sendData(username);
+                            network.sendData(password);
+                            if (network.getData().equals("loginsuccessfull")) {
+                                logger.info("relogged");
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, 5000, 5000);
+    }
+
+    /**
+     * Set if the GUI should be visible or not
      * 
      * @param status True to show GUI and false to hide it.
      */
@@ -115,26 +142,29 @@ public class Controller {
     }
 
     /**
-     * This is how much hertz we gona get per klick
-     */
-    public void hertzClicked() {
-        hertz += hertzPerClick;
-        hertzClicked += hertzPerClick;
-    }
-
-    /**
      * Game Loop calls this metod to update the game ~30 time a second
      */
     public void update() {
         String hertz = stringify(this.hertz);
         gui.update(hertz);
+
         calculateBuildingCosts();
         calculateUpgradeCosts();
-        grayiFy();
+
+        buildingGrayiFy();
         upgradeGrayiFy();
+
         updateHertzPerClick();
         uppdateHertzPerSecond();
         uppdateStatistics();
+    }
+
+    /**
+     * This is how much hertz we gona get per click
+     */
+    public void hertzClicked() {
+        hertz += hertzPerClick;
+        hertzClicked += hertzPerClick;
     }
 
     /**
@@ -143,33 +173,6 @@ public class Controller {
     public void updateEverySecond() {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
-    }
-
-    /**
-     * Automaticly reconnect to the server with timer tasks.
-     */
-    public void netAutoRecon() {
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (network.isClosed()) {
-                    try {
-                        network.connect();
-                        if (username != "" && password != "") {
-                            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
-                            network.sendData(username);
-                            network.sendData(password);
-                            if (network.getData().equals("loginsuccessfull")) {
-                                logger.info("relogged");
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, 5000, 5000);
     }
 
     /**
@@ -272,8 +275,7 @@ public class Controller {
     }
 
     /**
-     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
-     * selected location.
+     * Send the save to the server to be saved, no local saves.
      */
     public void saveGame() {
         if (!network.isClosed()) {
@@ -298,9 +300,7 @@ public class Controller {
     }
 
     /**
-     * Loading the game from server (falls back to local if no server online).
-     * 
-     * 
+     * Loading the game from server.
      */
     public void loadGameServer() {
         if (!network.isClosed()) {
@@ -337,7 +337,7 @@ public class Controller {
     }
 
     /**
-     * Updates the highscore
+     * Updates the highscore on the server and the visible part on the client
      */
     public void updateHighScore() {
         if (!(network.isClosed())) {
@@ -435,7 +435,7 @@ public class Controller {
     /**
      * Gray out buttons when player dont have enough money
      */
-    public void grayiFy() {
+    public void buildingGrayiFy() {
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
             if (canBuyBuilding(i)) {
                 gui.getBtnBuildings().get(i).setEnabled(true);

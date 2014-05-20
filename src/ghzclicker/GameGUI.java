@@ -18,10 +18,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 /**
+ * A Class that makes up the whole GUI
  * 
- * @author Matte
- * 
- *         A Class that makes up the whole GUI
+ * @author Mattias Holst
  */
 public class GameGUI {
     // Making buttons with buildings and hertz button and a Label for the hertz
@@ -43,7 +42,7 @@ public class GameGUI {
     private JPanel pnlCont = new JPanel();
     private JPanel pnlHS;
     private HighScoreGUI pnlHighScore;
-    //Button icons
+    // Button icons
     private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
     private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
     private ImageIcon iconSave = new ImageIcon("res/btnSave.png");
@@ -59,11 +58,11 @@ public class GameGUI {
      * @param btnBuildings , adding the buildings to the GUI
      * @param listener , adding listeners to the buttons.
      */
-    public GameGUI(ArrayList<JButton> btnBuildings,ArrayList<JButton> btnUpgrades,  ActionListener listener) {
+    public GameGUI(ArrayList<JButton> btnBuildings, ArrayList<JButton> btnUpgrades, ActionListener listener) {
         this.btnBuildings = btnBuildings;
         this.btnUpgrades = btnUpgrades;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
-        pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size() , 1));
+        pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
@@ -83,9 +82,9 @@ public class GameGUI {
         btnHighScore.setBounds(105, 675, 230, 50);
         taStatistics.setBounds(500, 600, 300, 220);
 
-//        pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
-//        pnlUpgrade.setBounds(500,0,300,btnUpgrades.size() * 75);
-        
+        // pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
+        // pnlUpgrade.setBounds(500,0,300,btnUpgrades.size() * 75);
+
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
         // Button Icons
@@ -141,28 +140,27 @@ public class GameGUI {
 
             pnlBuilding.add(btn);
         }
-        for(JButton btnUpg : btnUpgrades){
+        for (JButton btnUpg : btnUpgrades) {
             btnUpg.addActionListener(listener);
-            
+
             btnUpg.setSize(new Dimension(200, 75));
-            
+
             btnUpg.setVerticalTextPosition(JButton.CENTER);
             btnUpg.setHorizontalTextPosition(JButton.CENTER);
-            
+
             btnUpg.setEnabled(false);
-            
+
             btnUpg.setFont(new Font("Araial", Font.BOLD, 16));
             btnUpg.setForeground(Color.black);
-            
+
             pnlUpgrade.add(btnUpg);
         }
         // Continues adding the button and label to the frame.
-//        pnlGame.add(pnlBuilding);
-//        pnlGame.add(pnlUpgrade);
+        // pnlGame.add(pnlBuilding);
+        // pnlGame.add(pnlUpgrade);
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
         pnlGame.add(tabbedPane);
-
 
         pnlGame.add(btnSave);
         pnlGame.add(btnLoad);
@@ -224,8 +222,8 @@ public class GameGUI {
     public ArrayList<JButton> getBtnBuildings() {
         return btnBuildings;
     }
-    
-    public ArrayList<JButton> getBtnUpgrades(){
+
+    public ArrayList<JButton> getBtnUpgrades() {
         return btnUpgrades;
     }
 
@@ -252,8 +250,8 @@ public class GameGUI {
      * 
      * @param highScore the arraylist holding the scores
      */
-    public void setHighScore(String highScore){
-    	pnlHighScore.setHighScore(highScore);
+    public void setHighScore(String highScore) {
+        pnlHighScore.setHighScore(highScore);
     }
 
     /**
@@ -265,8 +263,10 @@ public class GameGUI {
     public void updateJButtonCost(int i, String cost) {
         btnBuildings.get(i).setText(btnBuildings.get(i).getName() + " " + cost);
     }
+
     /**
-     *  "Update" the cost of the upgrades (its the same all the time)
+     * "Update" the cost of the upgrades (its the same all the time)
+     * 
      * @param i , which upgrade.
      * @param cost , the price of the upgrade.
      */
