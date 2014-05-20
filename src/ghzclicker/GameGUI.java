@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 /**
  * A Class that makes up the whole GUI
@@ -78,8 +79,6 @@ public class GameGUI {
         tabbedPane.setOpaque(false);
         UIManager.put("TabbedPane.contentBorderInsets", oldInsets);
         pnlStatistics.setOpaque(false);
-        pnlStatistics.setBorder(null);
-        
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
