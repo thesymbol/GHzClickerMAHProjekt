@@ -282,6 +282,9 @@ public class Controller {
             for (int i = 0; i < buildings.size(); i++) {
                 data += buildings.get(i).getOwned() + ":";
             }
+            for (int i = 0; i < upgrades.size(); i++) {
+                data += upgrades.get(i).getOwned() + ":";
+            }
             data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
             logger.info("Save data sent: " + data);
@@ -311,6 +314,10 @@ public class Controller {
                     int n = 1;
                     for (int i = 0; i < buildings.size(); i++) {
                         buildings.get(i).setOwned(Integer.parseInt(store[n]));
+                        n++;
+                    }
+                    for (int i = 0; i < upgrades.size(); i++) {
+                        upgrades.get(i).setOwned(Integer.parseInt(store[n]));
                         n++;
                     }
                     clickCounter = Integer.parseInt(store[n]);
