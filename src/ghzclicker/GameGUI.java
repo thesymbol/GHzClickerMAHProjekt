@@ -37,7 +37,6 @@ public class GameGUI {
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new BGPanel("res/wallpaper.png");
-    Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
 //    private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
