@@ -178,6 +178,7 @@ public class GameGUI {
         taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
         taStatistics.setEditable(false);
         taStatistics.setHighlighter(null);
+//        taStatistics.setOpaque(false);
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
         tabbedPane.add(pnlStatistics, "Statistics");
