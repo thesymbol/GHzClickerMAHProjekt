@@ -30,6 +30,7 @@ public class LoginGUI extends JFrame {
     private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
     private ImageIcon iconExit = new ImageIcon("res/btnExit.png");
     private ImageIcon iconExitPressed = new ImageIcon("res/btnExitPressed.png");
+    private JPanel pnlLogin = new BGPanel("res/loginRegister.png");
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
@@ -37,10 +38,11 @@ public class LoginGUI extends JFrame {
      * @param listener ActionListener for the buttons.
      */
     public LoginGUI(ActionListener listener) {
-        setPreferredSize(new Dimension(500, 200));
-        setLayout(null);
         setName("Login");
         setResizable(false);
+        
+        pnlLogin.setLayout(null);
+        pnlLogin.setPreferredSize(new Dimension(500,200));
 
         btnLogin.setBounds(50, 100, 100, 50);
         btnRegister.setBounds(180, 100, 150, 50);
@@ -50,15 +52,15 @@ public class LoginGUI extends JFrame {
         tfUsername.setBounds(125, 30, 120, 25);
         tfPassword.setBounds(325, 30, 120, 25);
 
-        add(btnLogin);
-        add(btnRegister);
-        add(btnExit);
+        pnlLogin.add(btnLogin);
+        pnlLogin.add(btnRegister);
+        pnlLogin.add(btnExit);
         lblUsername.setFont(new Font("Arial", Font.BOLD, 12));
-        add(lblUsername);
+        pnlLogin.add(lblUsername);
         lblPassword.setFont(new Font("Arial", Font.BOLD, 12));
-        add(lblPassword);
-        add(tfUsername);
-        add(tfPassword);
+        pnlLogin.add(lblPassword);
+        pnlLogin.add(tfUsername);
+        pnlLogin.add(tfPassword);
 
         // For icons
         btnLogin.setIcon(iconLogin);
@@ -81,6 +83,8 @@ public class LoginGUI extends JFrame {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorderPainted(false);
         btnExit.setFocusPainted(false);
+        
+        add(pnlLogin);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
