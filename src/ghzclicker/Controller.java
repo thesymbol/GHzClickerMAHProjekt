@@ -73,15 +73,6 @@ public class Controller {
     }
 
     /**
-     * Show GUI
-     * 
-     * @param status True to show GUI and false to hide it.
-     */
-    public void guiSetVisibel(boolean status) {
-        gui.setVisible(status);
-    }
-
-    /**
      * sets username and password
      * 
      * @param username Inserted username
@@ -90,6 +81,15 @@ public class Controller {
     public void setUsernamePassword(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    /**
+     * Show GUI
+     * 
+     * @param status True to show GUI and false to hide it.
+     */
+    public void guiSetVisibel(boolean status) {
+        gui.setVisible(status);
     }
 
     /**
@@ -456,7 +456,10 @@ public class Controller {
             if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
 
-            } else if (canBuyUpgrade(i) && step == 1 && owned >= 100) {
+            } else if (canBuyUpgrade(i) && step == 1 && owned >= 50) {
+                gui.getBtnUpgrades().get(i).setEnabled(true);
+
+            } else if (canBuyUpgrade(i) && step == 2 && owned >= 100) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
 
             } else if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
