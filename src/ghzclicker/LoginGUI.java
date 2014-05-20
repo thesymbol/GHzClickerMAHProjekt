@@ -40,6 +40,7 @@ public class LoginGUI extends JFrame {
         setPreferredSize(new Dimension(500, 200));
         setLayout(null);
         setName("Login");
+        setResizable(false);
 
         btnLogin.setBounds(50, 100, 100, 50);
         btnRegister.setBounds(180, 100, 150, 50);

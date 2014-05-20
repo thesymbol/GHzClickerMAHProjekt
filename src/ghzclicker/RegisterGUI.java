@@ -37,6 +37,7 @@ public class RegisterGUI extends JFrame {
         setPreferredSize(new Dimension(500, 200));
         setLayout(null);
         setName("Register");
+        setResizable(false);
 
         btnRegister.setBounds(75, 100, 150, 50);
         btnCancel.setBounds(300, 100, 120, 50);
