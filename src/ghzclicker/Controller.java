@@ -73,7 +73,6 @@ public class Controller {
     }
 
     /**
-
      * Automaticly reconnect to the server with timer tasks.
      */
     public void netAutoRecon() {
@@ -118,15 +117,6 @@ public class Controller {
     public void setUsernamePassword(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    /**
-     * Show GUI
-     * 
-     * @param status True to show GUI and false to hide it.
-     */
-    public void guiSetVisibel(boolean status) {
-        gui.setVisible(status);
     }
 
     /**
@@ -422,18 +412,6 @@ public class Controller {
      */
     public void upgradeGrayiFy() {
         for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
-            int step = upgrades.get(i).getOwned();
-            int owned = buildings.get(i).getOwned();
-            if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-
-            } else if (canBuyUpgrade(i) && step == 1 && owned >= 50) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-
-            } else if (canBuyUpgrade(i) && step == 2 && owned >= 100) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-
-            } else if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
             int upgOwned = upgrades.get(i).getOwned();
             int max = upgrades.get(i).getMaxOwned();
             int buildOwned = buildings.get(i).getOwned();
