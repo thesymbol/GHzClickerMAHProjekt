@@ -39,7 +39,7 @@ public class GameGUI {
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
     private CardLayout cl = new CardLayout();
-    private JPanel pnlGame = new JPanel();
+    private JPanel pnlGame = new BGPanel("res/wallpaper.png");
     private JPanel pnlCont = new JPanel();
     private JPanel pnlHS;
     private HighScoreGUI pnlHighScore;
