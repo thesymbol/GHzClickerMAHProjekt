@@ -267,7 +267,7 @@ public class Controller {
         statistics += "\nTotal Motherboards : " + buildings.get(6).getOwned();
         statistics += "\nTotal Clicks : " + clickCounter;
         statistics += "\nHertz Per click : " + hpsFormat.format(hertzPerClick);
-        statistics += "\nPoints By Clicks ; " + hertzFormat.format(hertzClicked);
+        statistics += "\nPoints By Clicks : " + hertzFormat.format(hertzClicked);
         statistics += "\nHertz Generated : " + hertzFormat.format(hertzGenerated);
         statistics += "\nHertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
 
