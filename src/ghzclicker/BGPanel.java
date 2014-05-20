@@ -16,7 +16,10 @@ public class BGPanel extends JPanel {
         this.image = new ImageIcon(filename).getImage();
         
     }
-
+    /**
+     * Overrides the original method, allowing for setting a picture as background
+     * @param g 
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

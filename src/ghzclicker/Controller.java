@@ -223,11 +223,11 @@ public class Controller {
      */
     public void uppdateStatistics() {
         String statistics = "";
-        int TotalBuildings = 0;
+        int totalBuildings = 0;
         for (int i = 0; i < buildings.size(); i++) {
-            TotalBuildings += buildings.get(i).getOwned();
+            totalBuildings += buildings.get(i).getOwned();
         }
-        statistics += TotalBuildings;
+        statistics += "Total Buildings : " + totalBuildings;
         statistics += "\nTotal Harddrives : " + buildings.get(0).getOwned();
         statistics += "\nTotal RAM : " + buildings.get(1).getOwned();
         statistics += "\nTotal PowerSupplies : " + buildings.get(2).getOwned();
@@ -237,9 +237,9 @@ public class Controller {
         statistics += "\nTotal Motherboards : " + buildings.get(6).getOwned();
         statistics += "\nTotal Clicks : " + clickCounter;
         statistics += "\nHertz Per click : " + hpsFormat.format(hertzPerClick);
-        statistics += "\nPoints By Clicks ; " + hertzFormat.format(hertzClicked);
+        statistics += "\nPoints By Clicks : " + hertzFormat.format(hertzClicked);
         statistics += "\nHertz Generated : " + hertzFormat.format(hertzGenerated);
-        statistics += "\nHertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
+        statistics += "\nTotal Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
 
         gui.updateStatistics(statistics);
     }
