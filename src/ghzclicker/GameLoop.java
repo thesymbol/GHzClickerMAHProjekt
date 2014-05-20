@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 public class GameLoop {
     private Controller controller;
 
-    private static final String SERVER_IP = "127.0.0.1";          // local test
-    //private static final String SERVER_IP = "195.178.234.229";    // outside school
-    //private static final String SERVER_IP = "10.228.0.209";         // inside school
+    private static final String SERVER_IP = "127.0.0.1"; // local test
+    // private static final String SERVER_IP = "195.178.234.229"; // outside school
+    // private static final String SERVER_IP = "10.228.0.209"; // inside school
     private NetworkClient network = null;
     private final static Logger logger = ClientLogger.getLogger();
 

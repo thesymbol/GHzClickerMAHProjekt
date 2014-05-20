@@ -22,10 +22,10 @@ public class RegisterGUI extends JFrame {
     // The textfields
     private JTextField tfUsername = new JTextField();
     private JPasswordField tfPassword = new JPasswordField();
-    //Button icons
+    // Button icons
     private ImageIcon iconRegister = new ImageIcon("res/btnRegister.png");
     private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
-    private ImageIcon iconCancel= new ImageIcon("res/btnCancel.png");
+    private ImageIcon iconCancel = new ImageIcon("res/btnCancel.png");
     private ImageIcon iconCancelPressed = new ImageIcon("res/btnCancelPressed.png");
 
     /**
@@ -53,15 +53,15 @@ public class RegisterGUI extends JFrame {
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);
-        
-        //For icons
+
+        // For icons
         btnRegister.setIcon(iconRegister);
         btnRegister.setPressedIcon(iconRegisterPressed);
         btnRegister.setOpaque(false);
         btnRegister.setContentAreaFilled(false);
         btnRegister.setBorderPainted(false);
         btnRegister.setFocusPainted(false);
-        
+
         btnCancel.setIcon(iconCancel);
         btnCancel.setPressedIcon(iconCancelPressed);
         btnCancel.setOpaque(false);
