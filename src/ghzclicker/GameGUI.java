@@ -120,7 +120,7 @@ public class GameGUI {
         pnlGame.add(btnHertz);
         pnlGame.add(lblHertzPerSecond);
         pnlGame.setLayout(null);
-        
+
         // adding btnUpgrades to btnUpg.
         for (JButton btn : btnUpgrades) {
             // Set listener for button

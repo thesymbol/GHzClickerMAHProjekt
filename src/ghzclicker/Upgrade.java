@@ -58,7 +58,7 @@ public class Upgrade {
     public double getBaseHPS() {
         return baseHPS;
     }
-    
+
     /**
      * Get maxemum upgrades to be owned
      * 
@@ -67,7 +67,7 @@ public class Upgrade {
     public int getMaxOwned() {
         return maxOwned;
     }
-    
+
     /**
      * Get base requred buildings owned
      * 
@@ -76,7 +76,7 @@ public class Upgrade {
     public int getRequirement() {
         return requirement;
     }
-    
+
     /**
      * set the required buildings owned
      * 
@@ -121,17 +121,17 @@ public class Upgrade {
     public int getOwned() {
         return owned;
     }
-    
+
     /**
      * Calculate the cost for each upgrades.
      */
     public double calculateCosts() {
-        if(owned != 0) {
+        if (owned != 0) {
             price = (baseCost * (Math.pow(10, owned)));
         }
         return price;
     }
-    
+
     /**
      * Check if you can buy upgrade specified with its id (i)
      * 
