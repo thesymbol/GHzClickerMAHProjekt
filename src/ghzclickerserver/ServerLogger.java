@@ -33,7 +33,7 @@ public class ServerLogger {
     /**
      * Initiate logger with specified if we should append to last log or not. and default logger name as server and file as server.log
      * 
-     * @param append Should we append on last log file or not?
+     * @param append Should we append on last log file or not (true or false)
      */
     public static void init(boolean append) {
         init(append, "server", "server.log");
@@ -42,6 +42,7 @@ public class ServerLogger {
     /**
      * Initiate logger with specified filename
      * 
+     * @param append Should we append to the last log file or not (true or false).
      * @param name The name of the logger to identify it.
      * @param filename The file to save to.
      */
@@ -85,6 +86,8 @@ public class ServerLogger {
 
     /**
      * Get the logger we have created.
+     * 
+     * @return The logger
      */
     public static Logger getLogger() {
         return logger;
@@ -92,6 +95,8 @@ public class ServerLogger {
 
     /**
      * Get all logs in a ArrayList<String> Format.
+     * 
+     * @return ArrayList<String> with the console output.
      */
     public static ArrayList<String> getConsoleLogOutput() {
         return consoleLogOutput;
@@ -105,6 +110,9 @@ public class ServerLogger {
     private static class LoggerFormatter extends Formatter {
         /**
          * Called whenever i do a log entry.
+         * 
+         * @param rec The default logger information to be formated.
+         * @return The format for the logger
          */
         @Override
         public String format(LogRecord rec) {
