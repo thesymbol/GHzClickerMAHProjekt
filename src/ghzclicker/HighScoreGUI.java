@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  */
 public class HighScoreGUI extends JPanel {
     private static final long serialVersionUID = 1L;
-    private JPanel pnlHighScoreWindow = new JPanel();
+    private JPanel pnlHighScoreWindow = new BGPanel("res/wallpaper.png");
     private JTextArea txtHighScore = new JTextArea();
     private JScrollPane scrollPane = new JScrollPane(txtHighScore);
     private JButton btnBack = new JButton("");
@@ -30,7 +30,7 @@ public class HighScoreGUI extends JPanel {
      */
     public HighScoreGUI(ActionListener listener) {
         setBackground(Color.lightGray);
-        pnlHighScoreWindow.setPreferredSize(new Dimension(800, 850));
+        pnlHighScoreWindow.setPreferredSize(new Dimension(800, 553));
         add(pnlHighScoreWindow);
         // the panel
         pnlHighScoreWindow.setBackground(Color.lightGray);
@@ -64,9 +64,9 @@ public class HighScoreGUI extends JPanel {
         scrollPane.setViewportBorder(null);
 
         txtHighScore.setEditable(false);
-        txtHighScore.setBackground(Color.darkGray);
+        txtHighScore.setOpaque(false);
         txtHighScore.setFont(new Font("Arial", Font.BOLD, 30));
-        txtHighScore.setForeground(Color.WHITE);
+        txtHighScore.setForeground(Color.BLACK);
 
         setVisible(true);
     }

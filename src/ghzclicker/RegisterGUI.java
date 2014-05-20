@@ -27,6 +27,8 @@ public class RegisterGUI extends JFrame {
     private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
     private ImageIcon iconCancel = new ImageIcon("res/btnCancel.png");
     private ImageIcon iconCancelPressed = new ImageIcon("res/btnCancelPressed.png");
+    
+    private JPanel pnlRegister = new BGPanel("res/loginRegister.png");
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
@@ -34,8 +36,8 @@ public class RegisterGUI extends JFrame {
      * @param listener ActionListener to all the buttons.
      */
     public RegisterGUI(ActionListener listener) {
-        setPreferredSize(new Dimension(500, 200));
-        setLayout(null);
+        pnlRegister.setPreferredSize(new Dimension(500, 200));
+        pnlRegister.setLayout(null);
         setName("Register");
         setResizable(false);
 
@@ -46,14 +48,14 @@ public class RegisterGUI extends JFrame {
         tfUsername.setBounds(125, 30, 120, 25);
         tfPassword.setBounds(325, 30, 120, 25);
 
-        add(btnRegister);
-        add(btnCancel);
+        pnlRegister.add(btnRegister);
+        pnlRegister.add(btnCancel);
         lblUsername.setFont(new Font("Arial", Font.BOLD, 12));
-        add(lblUsername);
+        pnlRegister.add(lblUsername);
         lblPassword.setFont(new Font("Arial", Font.BOLD, 12));
-        add(lblPassword);
-        add(tfUsername);
-        add(tfPassword);
+        pnlRegister.add(lblPassword);
+        pnlRegister.add(tfUsername);
+        pnlRegister.add(tfPassword);
 
         // For icons
         btnRegister.setIcon(iconRegister);
@@ -69,6 +71,8 @@ public class RegisterGUI extends JFrame {
         btnCancel.setContentAreaFilled(false);
         btnCancel.setBorderPainted(false);
         btnCancel.setFocusPainted(false);
+        
+        add(pnlRegister);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         pack();

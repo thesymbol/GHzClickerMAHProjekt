@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 /**
  * A Class that makes up the whole GUI
@@ -36,7 +37,8 @@ public class GameGUI {
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
-    private JPanel pnlStatistics = new BGPanel("res/wallpaper.png");
+    private JPanel pnlStatistics = new JPanel();
+    Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
 //    private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
@@ -70,10 +72,13 @@ public class GameGUI {
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
         Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets"); 
-        // bottom insets is 1 because the tabs are bottom aligned 
+        // bottom insets is 1 because the tabs are bottom aligned       
         UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 1, 0)); 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP); 
+        UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setOpaque(false);
         UIManager.put("TabbedPane.contentBorderInsets", oldInsets);
+        pnlStatistics.setOpaque(false);
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
@@ -87,11 +92,11 @@ public class GameGUI {
 
         // setting locations and size.
         lblText.setBounds(50, 50, 500, 50);
-        btnHertz.setBounds(50, 200, 150, 50);
+        btnHertz.setBounds(175, 200, 150, 50);
         lblHertzPerSecond.setBounds(50, 75, 200, 50);
-        btnSave.setBounds(95, 455, 100, 50);
-        btnLoad.setBounds(260, 455, 100, 50);
-        btnHighScore.setBounds(105, 380, 230, 50);
+        btnSave.setBounds(125, 455, 100, 50);
+        btnLoad.setBounds(280, 455, 100, 50);
+        btnHighScore.setBounds(135, 380, 230, 50);
         pnlStatistics.setBounds(250, 0, 400, 220);
 
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
