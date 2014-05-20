@@ -18,10 +18,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 /**
+ * A Class that makes up the whole GUI
  * 
- * @author Matte
- * 
- *         A Class that makes up the whole GUI
+ * @author Mattias Holst
  */
 public class GameGUI {
     // Making buttons with buildings and hertz button and a Label for the hertz
@@ -121,7 +120,8 @@ public class GameGUI {
         pnlGame.add(btnHertz);
         pnlGame.add(lblHertzPerSecond);
         pnlGame.setLayout(null);
-        //adding btnBuildings to btn.
+
+        // adding btnBuildings to btn.
         for (JButton btn : btnBuildings) {
 
             // Set listener for button
@@ -142,7 +142,8 @@ public class GameGUI {
 
             pnlBuilding.add(btn);
         }
-        //adding btnUpgrades to btnUpg.
+
+        // adding btnUpgrades to btnUpg.
         for (JButton btnUpg : btnUpgrades) {
             btnUpg.addActionListener(listener);
 
@@ -225,8 +226,10 @@ public class GameGUI {
     public ArrayList<JButton> getBtnBuildings() {
         return btnBuildings;
     }
+
     /**
      * Get the arraylist with the upgrades buttons.
+     * 
      * @return the upgrades arraylist button.
      */
     public ArrayList<JButton> getBtnUpgrades() {

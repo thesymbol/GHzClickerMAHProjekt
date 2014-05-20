@@ -9,11 +9,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * A class which handles all the logics to LoginGUI and RegisterGUI.
  * 
  * @author Mattias Holst, Michael Bergstrand , Marcus Orwén
- * 
- *         A class which handles all the logics to LoginGUI and RegisterGUI.
- * 
  */
 public class LoginController {
     private LoginGUI logGUI;
@@ -27,8 +25,8 @@ public class LoginController {
     /**
      * A constructor that makes new instances.
      * 
-     * @param network , insert server ip.
-     * @param controller working together with the Controller.
+     * @param network The network client instance
+     * @param controller Working together with the Controller.
      */
     public LoginController(NetworkClient network, Controller controller) {
         listener = new Listener();
@@ -75,30 +73,30 @@ public class LoginController {
     }
 
     /**
+     * A inner class which handles all the listeners to the buttons from the LoginGUI and RegisterGUI.
      * 
      * @author Mattias Holst, Marcus Orwén , Michael Bergstrand.
-     * 
-     *         A inner class which handles all the listeners to the buttons from the LoginGUI and RegisterGUI.
-     * 
      */
     private class Listener implements ActionListener {
         /**
          * A method used to determine which button is pressed and what will happend next.
          * 
-         * @param e ActionEvent
+         * @param e The event
          */
         public void actionPerformed(ActionEvent e) {
-            // LoginGUI listeners.
+            // Register button on login screen
             if (e.getSource() == logGUI.getBtnRegister()) {
                 regGUI.setVisible(true);
             }
+            // Login button
             if (e.getSource() == logGUI.getbtnLogin()) {
                 login(logGUI.getUsername(), logGUI.getPassword());
             }
+            // Exit button
             if (e.getSource() == logGUI.getBtnExit()) {
                 System.exit(0);
             }
-            // RegisterGUI listeners.
+            // Register button on register screen
             if (e.getSource() == regGUI.getBtnRegister()) {
                 if (!network.isClosed()) {
                     String username = regGUI.getUsername();
@@ -123,6 +121,7 @@ public class LoginController {
                     logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
                 }
             }
+            // Cancel button
             if (e.getSource() == regGUI.getBtnCancel()) {
                 regGUI.setVisible(false);
                 regGUI.dispose();

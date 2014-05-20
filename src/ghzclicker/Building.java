@@ -17,9 +17,9 @@ public class Building {
      * Construct a building
      * 
      * @param name Name of building
-     * @param cost Base cost of building
+     * @param baseCost Base cost of building
      * @param baseHPS base "Hertz" per Second
-     * @param image location for building's button
+     * @param imageLocation Location for building's button image
      */
     public Building(String name, double baseCost, double baseHPS, String imageLocation) {
         this.name = name;
