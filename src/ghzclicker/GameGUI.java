@@ -170,6 +170,7 @@ public class GameGUI {
         pnlGame.add(btnLoad);
         pnlGame.add(btnHighScore);
         taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
+        taStatistics.setOpaque(false);
         pnlGame.add(taStatistics);
         taStatistics.setEditable(false);
         taStatistics.setHighlighter(null); // disable highlight
@@ -307,7 +308,7 @@ public class GameGUI {
      * @param statistics , shows the text from statistics variable
      */
     public void updateStatistics(String statistics) {
-        taStatistics.setText("Total buildings :" + statistics);
+        taStatistics.setText(statistics);
     }
 
     /**

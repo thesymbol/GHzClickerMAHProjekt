@@ -253,23 +253,23 @@ public class Controller {
      */
     public void uppdateStatistics() {
         String statistics = "";
-        int TotalBuildings = 0;
+        int totalBuildings = 0;
         for (int i = 0; i < buildings.size(); i++) {
-            TotalBuildings += buildings.get(i).getOwned();
+            totalBuildings += buildings.get(i).getOwned();
         }
-        statistics += TotalBuildings;
-        statistics += "\n Total Harddrives : " + buildings.get(0).getOwned();
-        statistics += "\n Total RAM : " + buildings.get(1).getOwned();
-        statistics += "\n Total PowerSupplies : " + buildings.get(2).getOwned();
-        statistics += "\n Total Harddrives(SSD) : " + buildings.get(3).getOwned();
-        statistics += "\n Total Graphics Cards : " + buildings.get(4).getOwned();
-        statistics += "\n Total Processors : " + buildings.get(5).getOwned();
-        statistics += "\n Total Motherboards : " + buildings.get(6).getOwned();
-        statistics += "\n Total Clicks : " + clickCounter;
-        statistics += "\n Hertz Per click : " + hpsFormat.format(hertzPerClick);
-        statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
-        statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
-        statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
+        statistics += "Total Buildings : " + totalBuildings;
+        statistics += "\nTotal Harddrives : " + buildings.get(0).getOwned();
+        statistics += "\nTotal RAM : " + buildings.get(1).getOwned();
+        statistics += "\nTotal PowerSupplies : " + buildings.get(2).getOwned();
+        statistics += "\nTotal Harddrives(SSD) : " + buildings.get(3).getOwned();
+        statistics += "\nTotal Graphics Cards : " + buildings.get(4).getOwned();
+        statistics += "\nTotal Processors : " + buildings.get(5).getOwned();
+        statistics += "\nTotal Motherboards : " + buildings.get(6).getOwned();
+        statistics += "\nTotal Clicks : " + clickCounter;
+        statistics += "\nHertz Per click : " + hpsFormat.format(hertzPerClick);
+        statistics += "\nPoints By Clicks : " + hertzFormat.format(hertzClicked);
+        statistics += "\nHertz Generated : " + hertzFormat.format(hertzGenerated);
+        statistics += "\nTotal Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
 
         gui.updateStatistics(statistics);
     }
