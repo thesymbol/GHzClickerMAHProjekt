@@ -1,5 +1,6 @@
 package ghzclicker;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,6 +35,7 @@ public class GameGUI {
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade = new JPanel();
+    private JPanel pnlStatistics = new JPanel();
     private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
@@ -63,6 +65,8 @@ public class GameGUI {
         this.btnUpgrades = btnUpgrades;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
         pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
+        taStatistics.setPreferredSize(new Dimension(280, 250));
+        taStatistics.setOpaque(false);
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
@@ -80,10 +84,10 @@ public class GameGUI {
         btnSave.setBounds(95, 455, 100, 50);
         btnLoad.setBounds(260, 455, 100, 50);
         btnHighScore.setBounds(105, 380, 230, 50);
-        taStatistics.setBounds(250, 0, 250, 220);
+        pnlStatistics.setBounds(250, 0, 400, 220);
 
-        // pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
-        // pnlUpgrade.setBounds(500,0,300,btnUpgrades.size() * 75);
+//         pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
+//         pnlUpgrade.setBounds(500,0,300,btnUpgrades.size() * 75);
 
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
@@ -162,17 +166,22 @@ public class GameGUI {
         // Continues adding the button and label to the frame.
         // pnlGame.add(pnlBuilding);
         // pnlGame.add(pnlUpgrade);
+        pnlStatistics.add(taStatistics);
+        taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
+        taStatistics.setEditable(false);
+        taStatistics.setHighlighter(null);
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
+        tabbedPane.add(pnlStatistics, "Statistics");
         pnlGame.add(tabbedPane);
 
         pnlGame.add(btnSave);
         pnlGame.add(btnLoad);
         pnlGame.add(btnHighScore);
-        taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
-        pnlGame.add(taStatistics);
-        taStatistics.setEditable(false);
-        taStatistics.setHighlighter(null); // disable highlight
+//        taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
+//        pnlGame.add(taStatistics);
+//        taStatistics.setEditable(false);
+//        taStatistics.setHighlighter(null); // disable highlight
 
         lblText.setFont(new Font("Arial", Font.BOLD, 16));
         pnlGame.add(lblText);
