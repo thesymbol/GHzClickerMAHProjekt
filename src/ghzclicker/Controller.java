@@ -57,13 +57,13 @@ public class Controller {
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
 
         upgrades = new ArrayList<Upgrade>();
-        upgrades.add(new Upgrade("Hard drive upgrade 1", 1000, 200));
-        upgrades.add(new Upgrade("RAM upgrade 1", 6000, 200));
-        upgrades.add(new Upgrade("Power Supply upgrade 1", 20000, 200));
-        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1", 200000, 200));
-        upgrades.add(new Upgrade("Graphics card upgrade 1", 1000000, 200));
-        upgrades.add(new Upgrade("Processor upgrade 1", 4000000, 200));
-        upgrades.add(new Upgrade("MotherBoard upgrade 1", 30000000, 200));
+        upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200));
+        upgrades.add(new Upgrade("RAM upgrade", 6000, 200));
+        upgrades.add(new Upgrade("Power Supply upgrade", 20000, 200));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade", 200000, 200));
+        upgrades.add(new Upgrade("Graphics card upgrade", 1000000, 200));
+        upgrades.add(new Upgrade("Processor upgrade", 4000000, 200));
+        upgrades.add(new Upgrade("MotherBoard upgrade", 30000000, 200));
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
@@ -398,7 +398,7 @@ public class Controller {
         for (Upgrade upgrade : upgrades) {
             JButton btn = new JButton(upgrade.getName());
             btn.setName(upgrade.getName());
-            btn.setToolTipText(upgrade.getName());
+            btn.setToolTipText(upgrade.getName() + "\n This will make your " + upgrade.getName() + " 2 times better.");
             btnUpgrades.add(btn);
         }
         return btnUpgrades;

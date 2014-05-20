@@ -67,7 +67,7 @@ public class GameGUI {
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
-        frame.setPreferredSize(new Dimension(800, 850));
+        frame.setPreferredSize(new Dimension(800, 775));
         pnlCont.setLayout(cl);
         frame.add(pnlCont);
         pnlCont.add(pnlGame, "1");
@@ -78,10 +78,10 @@ public class GameGUI {
         lblText.setBounds(50, 50, 500, 50);
         btnHertz.setBounds(150, 300, 150, 50);
         lblHertzPerSecond.setBounds(50, 75, 200, 50);
-        btnSave.setBounds(95, 750, 100, 50);
-        btnLoad.setBounds(260, 750, 100, 50);
-        btnHighScore.setBounds(105, 675, 230, 50);
-        taStatistics.setBounds(500, 600, 300, 220);
+        btnSave.setBounds(95, 675, 100, 50);
+        btnLoad.setBounds(260, 675, 100, 50);
+        btnHighScore.setBounds(105, 600, 230, 50);
+        taStatistics.setBounds(500, 525, 300, 220);
 
         // pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
         // pnlUpgrade.setBounds(500,0,300,btnUpgrades.size() * 75);
