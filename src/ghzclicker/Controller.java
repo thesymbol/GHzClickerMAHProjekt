@@ -57,19 +57,56 @@ public class Controller {
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
 
         upgrades = new ArrayList<Upgrade>();
-        upgrades.add(new Upgrade("Hard drive upgrade 1", 1000, 200));
-        upgrades.add(new Upgrade("RAM upgrade 1", 6000, 200));
-        upgrades.add(new Upgrade("Power Supply upgrade 1", 20000, 200));
-        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade 1", 200000, 200));
-        upgrades.add(new Upgrade("Graphics card upgrade 1", 1000000, 200));
-        upgrades.add(new Upgrade("Processor upgrade 1", 4000000, 200));
-        upgrades.add(new Upgrade("MotherBoard upgrade 1", 30000000, 200));
+        upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200, 10, 3));
+        upgrades.add(new Upgrade("RAM upgrade", 6000, 200, 10, 3));
+        upgrades.add(new Upgrade("Power Supply upgrade", 20000, 200, 10, 3));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade", 200000, 200, 10, 3));
+        upgrades.add(new Upgrade("Graphics card upgrade", 1000000, 200, 10, 3));
+        upgrades.add(new Upgrade("Processor upgrade", 4000000, 200, 10, 3));
+        upgrades.add(new Upgrade("MotherBoard upgrade", 30000000, 200, 10, 3));
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
 
         this.network = network;
         netAutoRecon();
+    }
+
+    /**
+
+     * Automaticly reconnect to the server with timer tasks.
+     */
+    public void netAutoRecon() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (network.isClosed()) {
+                    try {
+                        network.connect();
+                        if (username != "" && password != "") {
+                            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
+                            network.sendData(username);
+                            network.sendData(password);
+                            if (network.getData().equals("loginsuccessfull")) {
+                                logger.info("relogged");
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, 5000, 5000);
+    }
+
+    /**
+     * Set if the GUI should be visible or not
+     * 
+     * @param status True to show GUI and false to hide it.
+     */
+    public void guiSetVisibel(boolean status) {
+        gui.setVisible(status);
     }
 
     /**
@@ -115,26 +152,29 @@ public class Controller {
     }
 
     /**
-     * This is how much hertz we gona get per klick
-     */
-    public void hertzClicked() {
-        hertz += hertzPerClick;
-        hertzClicked += hertzPerClick;
-    }
-
-    /**
      * Game Loop calls this metod to update the game ~30 time a second
      */
     public void update() {
         String hertz = stringify(this.hertz);
         gui.update(hertz);
+
         calculateBuildingCosts();
         calculateUpgradeCosts();
-        grayiFy();
+
+        buildingGrayiFy();
         upgradeGrayiFy();
+
         updateHertzPerClick();
         uppdateHertzPerSecond();
         uppdateStatistics();
+    }
+
+    /**
+     * This is how much hertz we gona get per click
+     */
+    public void hertzClicked() {
+        hertz += hertzPerClick;
+        hertzClicked += hertzPerClick;
     }
 
     /**
@@ -146,41 +186,13 @@ public class Controller {
     }
 
     /**
-     * Automaticly reconnect to the server with timer tasks.
-     */
-    public void netAutoRecon() {
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (network.isClosed()) {
-                    try {
-                        network.connect();
-                        if (username != "" && password != "") {
-                            network.sendData("sendlogininfo");// send this first to notify that we will send the username and password next
-                            network.sendData(username);
-                            network.sendData(password);
-                            if (network.getData().equals("loginsuccessfull")) {
-                                logger.info("relogged");
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, 5000, 5000);
-    }
-
-    /**
      * This dose so if a building cost 4.040 you will take 4 from KH and 40 from hertz
      * 
      * @param i , keeps record which building that was bought.
      */
     public void payingBuilding(int i) {
-        double buildingPrice = buildings.get(i).getPrice();
-        if (canBuyBuilding(i)) {
-            hertz -= buildingPrice;
+        if (buildings.get(i).canBuyBuilding(hertz)) {
+            hertz -= buildings.get(i).getPrice();
         }
     }
 
@@ -190,38 +202,9 @@ public class Controller {
      * @param i , which upgrade that was bought.
      */
     public void payingUpgrade(int i) {
-        double upgradePrice = upgrades.get(i).getPrice();
-        if (canBuyUpgrade(i)) {
-            hertz -= upgradePrice;
+        if (upgrades.get(i).canBuyUpgrade(hertz)) {
+            hertz -= upgrades.get(i).getPrice();
         }
-    }
-
-    /**
-     * Check if you cna buy building specified with its id (i)
-     * 
-     * @param i Id of building
-     * @return true if you can buy building else false.
-     */
-    public boolean canBuyBuilding(int i) {
-        double buildingPrice = buildings.get(i).getPrice();
-        if (hertz >= buildingPrice) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check if you can buy upgrade specified with its id (i)
-     * 
-     * @param i ID of the upgrade.
-     * @return true if you can buy upgrade, else false.
-     */
-    public boolean canBuyUpgrade(int i) {
-        double upgradePrice = upgrades.get(i).getPrice();
-        if (hertz >= upgradePrice) {
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -255,25 +238,24 @@ public class Controller {
             TotalBuildings += buildings.get(i).getOwned();
         }
         statistics += TotalBuildings;
-        statistics += "\n Total Harddrives : " + buildings.get(0).getOwned();
-        statistics += "\n Total RAM : " + buildings.get(1).getOwned();
-        statistics += "\n Total PowerSupplies : " + buildings.get(2).getOwned();
-        statistics += "\n Total Harddrives(SSD) : " + buildings.get(3).getOwned();
-        statistics += "\n Total Graphics Cards : " + buildings.get(4).getOwned();
-        statistics += "\n Total Processors : " + buildings.get(5).getOwned();
-        statistics += "\n Total Motherboards : " + buildings.get(6).getOwned();
-        statistics += "\n Total Clicks : " + clickCounter;
-        statistics += "\n Hertz Per click : " + hpsFormat.format(hertzPerClick);
-        statistics += "\n Points By Clicks ; " + hertzFormat.format(hertzClicked);
-        statistics += "\n Hertz Generated : " + hertzFormat.format(hertzGenerated);
-        statistics += "\n Hertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
+        statistics += "\nTotal Harddrives : " + buildings.get(0).getOwned();
+        statistics += "\nTotal RAM : " + buildings.get(1).getOwned();
+        statistics += "\nTotal PowerSupplies : " + buildings.get(2).getOwned();
+        statistics += "\nTotal Harddrives(SSD) : " + buildings.get(3).getOwned();
+        statistics += "\nTotal Graphics Cards : " + buildings.get(4).getOwned();
+        statistics += "\nTotal Processors : " + buildings.get(5).getOwned();
+        statistics += "\nTotal Motherboards : " + buildings.get(6).getOwned();
+        statistics += "\nTotal Clicks : " + clickCounter;
+        statistics += "\nHertz Per click : " + hpsFormat.format(hertzPerClick);
+        statistics += "\nPoints By Clicks : " + hertzFormat.format(hertzClicked);
+        statistics += "\nHertz Generated : " + hertzFormat.format(hertzGenerated);
+        statistics += "\nHertz Generated : " + hertzFormat.format(hertzClicked + hertzGenerated);
 
         gui.updateStatistics(statistics);
     }
 
     /**
-     * Viktor testar Ser om jag kan spara spelet Ändra till rätt HDD på datorn, på mitt windows8 tillåts inte programmet att skapa och spara en fil på C:/ Saving the game into a .save file in the
-     * selected location.
+     * Send the save to the server to be saved, no local saves.
      */
     public void saveGame() {
         if (!network.isClosed()) {
@@ -298,9 +280,7 @@ public class Controller {
     }
 
     /**
-     * Loading the game from server (falls back to local if no server online).
-     * 
-     * 
+     * Loading the game from server.
      */
     public void loadGameServer() {
         if (!network.isClosed()) {
@@ -337,7 +317,7 @@ public class Controller {
     }
 
     /**
-     * Updates the highscore
+     * Updates the highscore on the server and the visible part on the client
      */
     public void updateHighScore() {
         if (!(network.isClosed())) {
@@ -398,7 +378,7 @@ public class Controller {
         for (Upgrade upgrade : upgrades) {
             JButton btn = new JButton(upgrade.getName());
             btn.setName(upgrade.getName());
-            btn.setToolTipText(upgrade.getName());
+            btn.setToolTipText(upgrade.getName() + "\n This will make your " + upgrade.getName() + " 2 times better.");
             btnUpgrades.add(btn);
         }
         return btnUpgrades;
@@ -409,12 +389,8 @@ public class Controller {
      */
     public void calculateBuildingCosts() {
         for (int i = 0; i < buildings.size(); i++) {
-            double cost = (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
-            if (buildings.get(i).getOwned() == 0) {
-                cost = buildings.get(i).getBaseCost();
-            }
-            buildings.get(i).setPrice(cost);
-            gui.updateJButtonCost(i, stringify(cost));
+            buildings.get(i).calculateCosts();
+            gui.updateJButtonCost(i, stringify(buildings.get(i).getPrice()));
         }
     }
 
@@ -423,21 +399,17 @@ public class Controller {
      */
     public void calculateUpgradeCosts() {
         for (int i = 0; i < upgrades.size(); i++) {
-            double cost = upgrades.get(i).getCost() * (Math.pow(10, upgrades.get(i).getOwned()));
-            if (upgrades.get(i).getOwned() == 0) {
-                cost = upgrades.get(i).getCost();
-            }
-            upgrades.get(i).setPrice(cost);
-            gui.updateUpgradeCost(i, stringify(cost));
+            upgrades.get(i).calculateCosts();
+            gui.updateUpgradeCost(i, stringify(upgrades.get(i).getPrice()));
         }
     }
 
     /**
      * Gray out buttons when player dont have enough money
      */
-    public void grayiFy() {
+    public void buildingGrayiFy() {
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-            if (canBuyBuilding(i)) {
+            if (buildings.get(i).canBuyBuilding(hertz)) {
                 gui.getBtnBuildings().get(i).setEnabled(true);
             } else {
                 gui.getBtnBuildings().get(i).setEnabled(false);
@@ -449,7 +421,6 @@ public class Controller {
      * Gray out the buttons when a player doesnt have enough money to buy upgrades.
      */
     public void upgradeGrayiFy() {
-
         for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
             int step = upgrades.get(i).getOwned();
             int owned = buildings.get(i).getOwned();
@@ -463,8 +434,12 @@ public class Controller {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
 
             } else if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
+            int upgOwned = upgrades.get(i).getOwned();
+            int max = upgrades.get(i).getMaxOwned();
+            int buildOwned = buildings.get(i).getOwned();
+            
+            if(upgrades.get(i).canBuyUpgrade(hertz) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
@@ -524,6 +499,7 @@ public class Controller {
                     Upgrade upgrade = upgrades.get(i);
                     if (hertz >= upgrade.getPrice()) {
                         upgrade.setOwned(upgrade.getOwned() + 1);
+                        upgrade.setRequirement(upgrade.getRequirement() * 10);
                         payingUpgrade(i);
                     }
                 }

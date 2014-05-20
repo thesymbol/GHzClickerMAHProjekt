@@ -7,8 +7,10 @@ File userFile;
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0D, 0x01, 0xD8 };
 
 IPAddress arduino(192,168,0,50);
-//IPAddress arduino(192,168,0,100);
-IPAddress server(195,178,234,229);
+IPAddress server(192,168,0,100);
+//IPAddress server(195,178,234,229);
+
+int port = 13338;
 
 EthernetClient client;
 
@@ -43,13 +45,16 @@ void setup() {
 }
 
 void connectToServer() {
-  if (client.connect(server, 13338)) {
-    Serial.println("Connected to server.");
-  } 
-  else {
-    Serial.println("Failed to connect, retrying...");
-    delay(1000); // make the arduino wait 1 seconds untill reconnect.
-    connectToServer();
+  boolean connecting = true;
+  while(connecting) {
+    if (client.connect(server, port)) {
+      Serial.println("Connected to server.");
+      connecting = false;
+    } else {
+      Serial.println("Failed to connect, retrying...");
+      delay(1000); // make the arduino wait 1 seconds untill reconnect.
+      connecting = true;
+    }
   }
 }
 
@@ -141,9 +146,9 @@ void loop(){
         client.println(fileLength("users.dat"));
         readFromFile("users.dat");
       }
-      /*if (replyString.indexOf("ping") >= 0) {
+      if (replyString.indexOf("ping") >= 0) {
         client.println("pong");
-      }*/
+      }
       delay(1000);
     }
     if (!client.connected()){

@@ -104,38 +104,44 @@ public class ServerController extends Thread {
         new Thread() {
             @Override
             public void run() {
-                Socket arduinoSocket;
-                boolean connected = false;
-                try {
-                    while (listening) {
-                        // arduino connection
-                        if (arduinoOut != null) {
-                            try {
-                                arduinoOut.println("ping");
-                                connected = true;
-                                // logger.info("Arduino still connected.");
-                            } catch (Exception e) {
-                                connected = false;
-                                logger.info("Arduino not connected anymore.");
+                synchronized (this) {
+                    Socket arduinoSocket;
+                    try {
+                        serverArduinoSocket = new ServerSocket(port2);
+                        while (listening) {
+                            if (isClosed()) {
+                                try {
+                                    logger.info("Listening for arduino connection");
+                                    arduinoSocket = serverArduinoSocket.accept();
+                                    logger.info("Got arduino connection");
+                                    arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
+                                    arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
+                                } catch (IOException e) {
+                                    // ServerLogger.stacktrace(e);
+                                }
                             }
+                            sleep(5000); // wait 5 seconds before reconnecting.
                         }
-                        if (!connected) {
-                            try {
-                                logger.info("Listening for arduino connection");
-                                serverArduinoSocket = new ServerSocket(port2);
-                                arduinoSocket = serverArduinoSocket.accept();
-                                logger.info("Got arduino connection");
-                                arduinoIn = new BufferedReader(new InputStreamReader(arduinoSocket.getInputStream())); // Get data from server
-                                arduinoOut = new PrintWriter(arduinoSocket.getOutputStream(), true); // send data from client
-                            } catch (IOException e) {
-                                // ServerLogger.stacktrace(e);
-                            }
-                        }
-                        Thread.sleep(5000); // wait 5 seconds before reconnecting.
+                    } catch (InterruptedException | IOException e) {
+                        // ServerLogger.stacktrace(e);
                     }
-                } catch (InterruptedException e) {
-                    // ServerLogger.stacktrace(e);
                 }
+            }
+
+            /**
+             * Check if we have connection to the arduino
+             * 
+             * @return true if socket is closed else false
+             */
+            public boolean isClosed() {
+                try {
+                    arduinoOut.println("ping");
+                    if (arduinoIn.readLine().equals("pong")) {
+                        return false;
+                    }
+                } catch (Exception e) {
+                }
+                return true;
             }
         }.start();
     }
@@ -197,7 +203,12 @@ public class ServerController extends Thread {
             socket.close();
             connected = false;
         }
-        
+
+        /**
+         * check if the timeout has been reached
+         * 
+         * @return true if timeout has not been reached, else it will return false
+         */
         public boolean isConnectionAlive() {
             return System.currentTimeMillis() - lastReadTime < maxTimeout;
         }
@@ -278,13 +289,11 @@ public class ServerController extends Thread {
                         }
                         wait(10);
                     } catch (SocketTimeoutException e) {
-                        // ServerLogger.stacktrace(e);
                     } catch (IOException | InterruptedException e) {
-                        // ServerLogger.stacktrace(e);
                     }
 
-                    //check if connection is still alive.
-                    if(!isConnectionAlive()) {
+                    // check if connection is still alive.
+                    if (!isConnectionAlive()) {
                         logger.severe("Connection lost");
                         try {
                             close();
@@ -315,10 +324,6 @@ public class ServerController extends Thread {
                 for (int i = 0; i < length; i++) {
                     ret.add(arduinoIn.readLine());
                 }
-                Iterator<String> itr = ret.iterator();
-                while (itr.hasNext()) {
-                    logger.info(itr.next());
-                }
                 return ret;
             }
         }
@@ -330,9 +335,7 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
-     * @param out The PrintWriter from client session
-     * @param in The BufferedReader from client session
-     * 
+     * @return true if the registration is successfull otherwise it will return false.
      * @throws IOException
      */
     public boolean register(String username, String password) throws IOException {
@@ -374,7 +377,6 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
-     * 
      * @return -1 if username/password is invalid, 1 if everything was successfull and 2 if user is already logged in.
      * @throws IOException
      * @throws NumberFormatException
@@ -405,11 +407,16 @@ public class ServerController extends Thread {
         return -1;
     }
 
+    /**
+     * Server GUI listener
+     * 
+     * @author Mattias Holst
+     */
     private class Listener implements ActionListener {
         /**
          * A method used to determine which button is pressed and what will happend next.
          * 
-         * @param e ,
+         * @param e The event triggered
          */
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == serverGUI.getBtnExit()) {

@@ -14,7 +14,6 @@ import javax.swing.text.DefaultCaret;
  * A GUI for the server to show the "logger", using a JFrame to build the GUI.
  * 
  * @author Mattias Holst
- * 
  */
 public class ServerGUI extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -24,6 +23,8 @@ public class ServerGUI extends JFrame {
 
     /**
      * Constructor which builds up the whole GUI with sizes etc.
+     * 
+     * @param listener The ActionListener for the GUI
      */
     public ServerGUI(ActionListener listener) {
         setPreferredSize(new Dimension(800, 850));
@@ -50,12 +51,17 @@ public class ServerGUI extends JFrame {
     /**
      * Getting the exit button.
      * 
-     * @return btnExit
+     * @return The exit button
      */
     public JButton getBtnExit() {
         return btnExit;
     }
 
+    /**
+     * Append to the Textarea that is representing the console output.
+     * 
+     * @param print The text to add to the console textarea.
+     */
     public static void appendTaLog(String print) {
         taLog.append(print);
     }

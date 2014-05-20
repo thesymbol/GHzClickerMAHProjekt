@@ -10,10 +10,8 @@ import javax.swing.*;
  * Making a GUI for logins using a JFrame.
  * 
  * @author Mattias Holst
- * 
  */
 public class LoginGUI extends JFrame {
-
     private static final long serialVersionUID = 1L;
     // Making buttons to the panel.
     private JButton btnLogin = new JButton("");
@@ -25,7 +23,7 @@ public class LoginGUI extends JFrame {
 
     private JTextField tfUsername = new JTextField();
     private JPasswordField tfPassword = new JPasswordField();
-    //Button icons
+    // Button icons
     private ImageIcon iconLogin = new ImageIcon("res/btnLogin.png");
     private ImageIcon iconLoginPressed = new ImageIcon("res/btnLoginPressed.png");
     private ImageIcon iconRegister = new ImageIcon("res/btnRegister.png");
@@ -60,22 +58,22 @@ public class LoginGUI extends JFrame {
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);
-        
-        //For icons
+
+        // For icons
         btnLogin.setIcon(iconLogin);
         btnLogin.setPressedIcon(iconLoginPressed);
         btnLogin.setOpaque(false);
         btnLogin.setContentAreaFilled(false);
         btnLogin.setBorderPainted(false);
         btnLogin.setFocusPainted(false);
-        
+
         btnRegister.setIcon(iconRegister);
         btnRegister.setPressedIcon(iconRegisterPressed);
         btnRegister.setOpaque(false);
         btnRegister.setContentAreaFilled(false);
         btnRegister.setBorderPainted(false);
         btnRegister.setFocusPainted(false);
-        
+
         btnExit.setIcon(iconExit);
         btnExit.setPressedIcon(iconExitPressed);
         btnExit.setOpaque(false);

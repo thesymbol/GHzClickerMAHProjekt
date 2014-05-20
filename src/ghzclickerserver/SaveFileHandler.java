@@ -24,7 +24,6 @@ public class SaveFileHandler {
      * @param location The location to save the file to. (always end with /)
      * @param filename The filename to save to.
      * @param append Append to existing file.
-     * 
      * @return true if file is saved else false.
      */
     public boolean save(String data, String location, String filename, Boolean append) {
@@ -47,6 +46,7 @@ public class SaveFileHandler {
      * 
      * @param location Location of file (always end with /)
      * @param filename Filename of the file
+     * @return The arraylist with the loaded files information, if no data was found this ArrayList will be empty
      */
     public ArrayList<String> load(String location, String filename) {
         logger.info("Trying to load " + filename);
@@ -78,6 +78,7 @@ public class SaveFileHandler {
      * 
      * @param location Location of the directory (always end with /)
      * @param dirname Directory name
+     * @return true if the directory was created successfully, otherwise it will return false.
      */
     public boolean createDir(String location, String dirname) {
         File folder = new File(location + dirname);

@@ -5,87 +5,108 @@ import java.util.*;
 
 /**
  * Class that handles the logic behind the HighScore
+ * 
  * @author Viktor Saltarski
- *
  */
 public class HighScoreManager {
-	private ArrayList<Score> scores;
-	/**
-	 * Creates a new HighScoreManager
-	 */
-	public HighScoreManager(){
-		scores = new ArrayList<Score>();
-	}
-	
-	public void clear() {
-	    scores.clear();
-	}
-	
-	private boolean updateScore(String name, double score) {
-	    for(int i = 0; i < scores.size(); i++) {
-            if(scores.get(i).getName().equals(name)) {
+    private ArrayList<Score> scores;
+
+    /**
+     * Creates a new HighScoreManager
+     */
+    public HighScoreManager() {
+        scores = new ArrayList<Score>();
+    }
+
+    /**
+     * Empty the highscore list for the client.
+     */
+    public void clear() {
+        scores.clear();
+    }
+
+    /**
+     * Updated the scoreboard with the name and score
+     * 
+     * @param name The name of the user
+     * @param score The score of the user
+     */
+    private boolean updateScore(String name, double score) {
+        for (int i = 0; i < scores.size(); i++) {
+            if (scores.get(i).getName().equals(name)) {
                 scores.get(i).setScore(score);
                 return true;
             }
         }
-	    return false;
-	}
-	
-	/**
-	 * Adds a new Score to the highscore
-	 * @param name the name of scoreholder
-	 * @param score the score
-	 */
-	public void addScore(String name, double score) {
-	    if(!updateScore(name, score)) {
-	        scores.add(new Score(name, score));
-	    }
-	}
-	/**
-	 * Returns the highscores sorted
-	 * @return the highscores
-	 */
-	public ArrayList<Score> getScores(){
-	    ScoreComparator comp = new ScoreComparator();
+        return false;
+    }
+
+    /**
+     * Adds a new Score to the highscore
+     * 
+     * @param name The name of scoreholder
+     * @param score The score
+     */
+    public void addScore(String name, double score) {
+        if (!updateScore(name, score)) {
+            scores.add(new Score(name, score));
+        }
+    }
+
+    /**
+     * Returns the highscores sorted
+     * 
+     * @return The highscores in an ArrayList
+     */
+    public ArrayList<Score> getScores() {
+        ScoreComparator comp = new ScoreComparator();
         Collections.sort(scores, comp);
-		return scores;
-	}
-	/**
-	 * Returns a string holding the highscores
-	 * @return the highscore string
-	 */
-	public String getHighScoreString(){
-		String highScoreString = "";
-		int max = 50;
-		ArrayList<Score> res = getScores();
-		int size = res.size();
-		if(size>max){
-			size = max;
-		}
-		
-		for (int i = 0; i < size; i++) {
-			highScoreString += (i + 1) + ".   " + res.get(i).getName() + "\t    " + stringify(res.get(i).getScore()) + "\n";
-		}
-		
-		return highScoreString;
-	}
-	public String getHighScoresToSave(){
-		String highscoresToSave = "";
-		int max = 50;
-		ArrayList<Score> res = getScores();
-		int size = res.size();
-		if(size>max){
-			size = max;
-		}
-		
-		for (int i = 0; i < size; i++) {
-			highscoresToSave += res.get(i).getName() + ":" + res.get(i).getScore() + ";";
-		}
-		
-		return highscoresToSave;
-	}
-	
-	/**
+        return scores;
+    }
+
+    /**
+     * Returns a string holding the highscores
+     * 
+     * @return the highscore string
+     */
+    public String getHighScoreString() {
+        String highScoreString = "";
+        int max = 50;
+        ArrayList<Score> res = getScores();
+        int size = res.size();
+        if (size > max) {
+            size = max;
+        }
+
+        for (int i = 0; i < size; i++) {
+            highScoreString += (i + 1) + ".   " + res.get(i).getName() + "\t    " + stringify(res.get(i).getScore()) + "\n";
+        }
+
+        return highScoreString;
+    }
+
+    /**
+     * Returns the highsocres to be able to save on the server.
+     * 
+     * @retunr the highscores to be saved to the server.
+     */
+    public String getHighScoresToSave() {
+        String highscoresToSave = "";
+        int max = 50;
+        ArrayList<Score> res = getScores();
+        int size = res.size();
+        if (size > max) {
+            size = max;
+        }
+
+        for (int i = 0; i < size; i++) {
+            highscoresToSave += res.get(i).getName() + ":" + res.get(i).getScore() + ";";
+        }
+
+        return highscoresToSave;
+    }
+
+    /**
      * Changes the visual of costs and hertz
      * 
      * @param value The value that is going to be used to create a prefix'ed string.

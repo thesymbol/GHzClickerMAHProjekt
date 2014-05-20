@@ -13,6 +13,12 @@ public class Score implements Serializable {
     private double score;
     private String name;
 
+    /**
+     * Construct a Score with name and score
+     * 
+     * @param name The name of the user
+     * @param socre The score of the user
+     */
     public Score(String name, double score) {
         this.score = score;
         this.name = name;

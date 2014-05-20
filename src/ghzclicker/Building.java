@@ -17,9 +17,9 @@ public class Building {
      * Construct a building
      * 
      * @param name Name of building
-     * @param cost Base cost of building
+     * @param baseCost Base cost of building
      * @param baseHPS base "Hertz" per Second
-     * @param image location for building's button
+     * @param imageLocation Location for building's button image
      */
     public Building(String name, double baseCost, double baseHPS, String imageLocation) {
         this.name = name;
@@ -99,5 +99,28 @@ public class Building {
      */
     public double getPrice() {
         return price;
+    }
+    
+    /**
+     * Calculate cost for each building
+     */
+    public double calculateCosts() {
+        if(owned != 0) {
+            price = (baseCost * (Math.pow(1.1, owned)));
+        }
+        return price;
+    }
+    
+    /**
+     * Check if you can buy building specified with its id (i)
+     * 
+     * @param hertz The owned Hertz
+     * @return true if you can buy building else false.
+     */
+    public boolean canBuyBuilding(double hertz) {
+        if (hertz >= price) {
+            return true;
+        }
+        return false;
     }
 }
