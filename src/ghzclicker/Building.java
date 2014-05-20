@@ -100,17 +100,17 @@ public class Building {
     public double getPrice() {
         return price;
     }
-    
+
     /**
      * Calculate cost for each building
      */
     public double calculateCosts() {
-        if(owned != 0) {
+        if (owned != 0) {
             price = (baseCost * (Math.pow(1.1, owned)));
         }
         return price;
     }
-    
+
     /**
      * Check if you can buy building specified with its id (i)
      * 

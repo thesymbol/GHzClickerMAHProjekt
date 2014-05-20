@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 /**
  * A Class that makes up the whole GUI
@@ -33,9 +35,9 @@ public class GameGUI {
     private JButton btnHighScore = new JButton("");
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
-    private JPanel pnlUpgrade = new JPanel();
+    private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new BGPanel("res/wallpaper.png");
-    private JTabbedPane tabbedPane = new JTabbedPane();
+//    private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
     private CardLayout cl = new CardLayout();
@@ -52,6 +54,7 @@ public class GameGUI {
     private ImageIcon iconLoadPressed = new ImageIcon("res/btnLoadPressed.png");
     private ImageIcon iconHighScore = new ImageIcon("res/btnHighScore.png");
     private ImageIcon iconHighScorePressed = new ImageIcon("res/btnHighScorePressed.png");
+     
 
     /**
      * A Constructor that is putting all the buttons into the GUI and sets the size of the labels, buttons etc.
@@ -66,10 +69,16 @@ public class GameGUI {
         pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
+        Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets"); 
+        // bottom insets is 1 because the tabs are bottom aligned 
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 1, 0)); 
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP); 
+        UIManager.put("TabbedPane.contentBorderInsets", oldInsets);
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
-        frame.setPreferredSize(new Dimension(800, 563));
+        frame.setPreferredSize(new Dimension(800, 553));
+        frame.setResizable(false);
         pnlCont.setLayout(cl);
         frame.add(pnlCont);
         pnlCont.add(pnlGame, "1");
@@ -84,9 +93,6 @@ public class GameGUI {
         btnLoad.setBounds(260, 455, 100, 50);
         btnHighScore.setBounds(105, 380, 230, 50);
         pnlStatistics.setBounds(250, 0, 400, 220);
-
-//         pnlBuilding.setBounds(500, 0, 300, btnBuildings.size() * 75);
-//         pnlUpgrade.setBounds(500,0,300,btnUpgrades.size() * 75);
 
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
@@ -124,6 +130,27 @@ public class GameGUI {
         pnlGame.add(lblHertzPerSecond);
         pnlGame.setLayout(null);
 
+        // adding btnUpgrades to btnUpg.
+        for (JButton btn : btnUpgrades) {
+            // Set listener for button
+            btn.addActionListener(listener);
+
+            // set size of button
+            btn.setSize(new Dimension(200, 75));
+
+            // Position text over image
+            btn.setVerticalTextPosition(JButton.CENTER);
+            btn.setHorizontalTextPosition(JButton.CENTER);
+
+            // Set to disabled in begining.
+            btn.setEnabled(false);
+
+            btn.setFont(new Font("Arial", Font.BOLD, 16));
+            btn.setForeground(Color.black);
+
+            pnlUpgrade.add(btn);
+        }
+
         // adding btnBuildings to btn.
         for (JButton btn : btnBuildings) {
 
@@ -146,25 +173,7 @@ public class GameGUI {
             pnlBuilding.add(btn);
         }
 
-        // adding btnUpgrades to btnUpg.
-        for (JButton btnUpg : btnUpgrades) {
-            btnUpg.addActionListener(listener);
-
-            btnUpg.setSize(new Dimension(200, 75));
-
-            btnUpg.setVerticalTextPosition(JButton.CENTER);
-            btnUpg.setHorizontalTextPosition(JButton.CENTER);
-
-            btnUpg.setEnabled(false);
-
-            btnUpg.setFont(new Font("Araial", Font.BOLD, 16));
-            btnUpg.setForeground(Color.black);
-
-            pnlUpgrade.add(btnUpg);
-        }
         // Continues adding the button and label to the frame.
-        // pnlGame.add(pnlBuilding);
-        // pnlGame.add(pnlUpgrade);
         pnlStatistics.add(taStatistics);
         taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
         taStatistics.setEditable(false);
@@ -177,10 +186,6 @@ public class GameGUI {
         pnlGame.add(btnSave);
         pnlGame.add(btnLoad);
         pnlGame.add(btnHighScore);
-//        taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
-//        pnlGame.add(taStatistics);
-//        taStatistics.setEditable(false);
-//        taStatistics.setHighlighter(null); // disable highlight
 
         lblText.setFont(new Font("Arial", Font.BOLD, 16));
         pnlGame.add(lblText);
@@ -315,7 +320,7 @@ public class GameGUI {
      * @param statistics , shows the text from statistics variable
      */
     public void updateStatistics(String statistics) {
-        taStatistics.setText("Total buildings :" + statistics);
+        taStatistics.setText(statistics);
     }
 
     /**
