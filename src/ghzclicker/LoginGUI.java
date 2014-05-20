@@ -10,10 +10,8 @@ import javax.swing.*;
  * Making a GUI for logins using a JFrame.
  * 
  * @author Mattias Holst
- * 
  */
 public class LoginGUI extends JFrame {
-
     private static final long serialVersionUID = 1L;
     // Making buttons to the panel.
     private JButton btnLogin = new JButton("");

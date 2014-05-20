@@ -10,7 +10,6 @@ import javax.swing.*;
  * A class that will make up the RegisterGUI with the help of a Jframe as a window.
  * 
  * @author Mattias Holst
- * 
  */
 public class RegisterGUI extends JFrame {
     private static final long serialVersionUID = 1L;
