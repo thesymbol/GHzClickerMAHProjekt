@@ -36,12 +36,8 @@ public class GameGUI {
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
-<<<<<<< HEAD
     private JPanel pnlStatistics = new JPanel();
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-=======
-    private JPanel pnlStatistics = new BGPanel("res/wallpaper.png");
->>>>>>> branch 'master' of ssh://git@github.com/thesymbol/GHzClickerMAHProjekt.git
 //    private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
@@ -75,8 +71,7 @@ public class GameGUI {
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
         Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets"); 
-        // bottom insets is 1 because the tabs are bottom aligned 
-        
+        // bottom insets is 1 because the tabs are bottom aligned       
         UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 1, 0)); 
         UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
