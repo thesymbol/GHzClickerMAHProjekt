@@ -10,7 +10,6 @@ import java.util.logging.Logger;
  * A loop which will let the application to run for forever and keep updating the game.
  * 
  * @author Marcus Orwén
- * 
  */
 public class GameLoop {
     private Controller controller;
