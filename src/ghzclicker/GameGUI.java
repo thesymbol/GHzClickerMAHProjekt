@@ -35,7 +35,7 @@ public class GameGUI {
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade = new JPanel();
-    private JPanel pnlStatistics = new JPanel();
+    private JPanel pnlStatistics = new BGPanel("res/wallpaper.png");
     private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
