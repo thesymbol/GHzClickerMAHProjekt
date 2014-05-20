@@ -69,7 +69,8 @@ public class GameGUI {
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
         // main panel
-        frame.setPreferredSize(new Dimension(800, 563));
+        frame.setPreferredSize(new Dimension(800, 553));
+        frame.setResizable(false);
         pnlCont.setLayout(cl);
         frame.add(pnlCont);
         pnlCont.add(pnlGame, "1");
