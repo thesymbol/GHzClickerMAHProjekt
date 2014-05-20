@@ -415,8 +415,8 @@ public class Controller {
             int upgOwned = upgrades.get(i).getOwned();
             int max = upgrades.get(i).getMaxOwned();
             int buildOwned = buildings.get(i).getOwned();
-            
-            if(upgrades.get(i).canBuyUpgrade(hertz) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
+
+            if (upgrades.get(i).canBuyUpgrade(hertz) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
