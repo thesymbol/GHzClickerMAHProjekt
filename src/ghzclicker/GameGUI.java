@@ -36,8 +36,12 @@ public class GameGUI {
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
+<<<<<<< HEAD
     private JPanel pnlStatistics = new JPanel();
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
+=======
+    private JPanel pnlStatistics = new BGPanel("res/wallpaper.png");
+>>>>>>> branch 'master' of ssh://git@github.com/thesymbol/GHzClickerMAHProjekt.git
 //    private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
