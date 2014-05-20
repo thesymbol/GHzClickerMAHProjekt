@@ -200,7 +200,7 @@ public class Controller {
     }
 
     /**
-     * Check if you cna buy building specified with its id (i)
+     * Check if you can buy building specified with its id (i)
      * 
      * @param i Id of building
      * @return true if you can buy building else false.

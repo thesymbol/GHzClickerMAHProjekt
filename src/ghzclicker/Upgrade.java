@@ -59,11 +59,17 @@ public class Upgrade {
     public double getPrice(){
         return price;
     }
-    
+    /**
+     * Set the amount upgrades owned
+     * @param owned The amount owned
+     */
     public void setOwned(int owned) {
         this.owned = owned;
     }
-    
+    /**
+     * Getting the owned upgrades.
+     * @return The amount owned upgrades.
+     */
     public int getOwned(){
         return owned;
     }

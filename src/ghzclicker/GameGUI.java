@@ -120,6 +120,8 @@ public class GameGUI {
         pnlGame.add(btnHertz);
         pnlGame.add(lblHertzPerSecond);
         pnlGame.setLayout(null);
+
+        //adding btnBuildings to btn.
         for (JButton btn : btnBuildings) {
 
             // Set listener for button
@@ -140,6 +142,8 @@ public class GameGUI {
 
             pnlBuilding.add(btn);
         }
+
+        //adding btnUpgrades to btnUpg.
         for (JButton btnUpg : btnUpgrades) {
             btnUpg.addActionListener(listener);
 
@@ -223,6 +227,10 @@ public class GameGUI {
         return btnBuildings;
     }
 
+    /**
+     * Get the arraylist with the upgrades buttons.
+     * @return the upgrades arraylist button.
+     */
     public ArrayList<JButton> getBtnUpgrades() {
         return btnUpgrades;
     }
