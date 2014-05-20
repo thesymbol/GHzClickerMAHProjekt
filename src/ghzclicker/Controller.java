@@ -123,13 +123,6 @@ public class Controller {
     }
 
     /**
-     * This calculates how much you get per click
-     */
-    public void updateHertzPerClick() {
-        hertzPerClick = baseValueClick + (clickModifier * hertzPerSecond * 0.05);
-    }
-
-    /**
      * Game Loop calls this metod to update the game ~30 time a second
      */
     public void update() {
@@ -232,12 +225,22 @@ public class Controller {
     }
 
     /**
+     * This calculates how much you get per click
+     */
+    public void updateHertzPerClick() {
+        hertzPerClick = baseValueClick + (clickModifier * hertzPerSecond * 0.05);
+    }
+
+    /**
      * This gets updated by the gameloop and calculate what your Hertz Per Second.
      */
     public void uppdateHertzPerSecond() {
         hertzPerSecond = 0;
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-            hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
+            hertzPerSecond += (buildings.get(i).getOwned() * buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned() * 1.5);
+            if (upgrades.get(i).getOwned() == 0) {
+                hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
+            }
         }
         gui.updateHertzPerSecond(stringify(hertzPerSecond));
     }
@@ -279,6 +282,9 @@ public class Controller {
             for (int i = 0; i < buildings.size(); i++) {
                 data += buildings.get(i).getOwned() + ":";
             }
+            for (int i = 0; i < upgrades.size(); i++) {
+                data += upgrades.get(i).getOwned() + ":";
+            }
             data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
             logger.info("Save data sent: " + data);
@@ -308,6 +314,10 @@ public class Controller {
                     int n = 1;
                     for (int i = 0; i < buildings.size(); i++) {
                         buildings.get(i).setOwned(Integer.parseInt(store[n]));
+                        n++;
+                    }
+                    for (int i = 0; i < upgrades.size(); i++) {
+                        upgrades.get(i).setOwned(Integer.parseInt(store[n]));
                         n++;
                     }
                     clickCounter = Integer.parseInt(store[n]);
@@ -413,8 +423,8 @@ public class Controller {
      */
     public void calculateUpgradeCosts() {
         for (int i = 0; i < upgrades.size(); i++) {
-            double cost = upgrades.get(i).getCost() * (Math.pow(2, upgrades.get(i).getOwned()));
-            if(upgrades.get(i).getOwned() == 0){
+            double cost = upgrades.get(i).getCost() * (Math.pow(10, upgrades.get(i).getOwned()));
+            if (upgrades.get(i).getOwned() == 0) {
                 cost = upgrades.get(i).getCost();
             }
             upgrades.get(i).setPrice(cost);
@@ -445,19 +455,16 @@ public class Controller {
             int owned = buildings.get(i).getOwned();
             if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-                step++;
-            }
-            if (canBuyUpgrade(i) && step == 1 && owned >= 100) {
+
+            } else if (canBuyUpgrade(i) && step == 1 && owned >= 100) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-                step++;
-            }
-            if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
+
+            } else if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-                step++;
+
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
-
         }
     }
 

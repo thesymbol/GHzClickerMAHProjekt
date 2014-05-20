@@ -15,14 +15,19 @@ import javax.swing.*;
 public class RegisterGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     // Making buttons to the JFrame.
-    private JButton btnRegister = new JButton("Register");
-    private JButton btnCancel = new JButton("Cancel");
+    private JButton btnRegister = new JButton("");
+    private JButton btnCancel = new JButton("");
     // Labels to the textfields.
     private JLabel lblUsername = new JLabel("Username :");
     private JLabel lblPassword = new JLabel("Password :");
     // The textfields
     private JTextField tfUsername = new JTextField();
     private JPasswordField tfPassword = new JPasswordField();
+    //Button icons
+    private ImageIcon iconRegister = new ImageIcon("res/btnRegister.png");
+    private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
+    private ImageIcon iconCancel= new ImageIcon("res/btnCancel.png");
+    private ImageIcon iconCancelPressed = new ImageIcon("res/btnCancelPressed.png");
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
@@ -34,8 +39,8 @@ public class RegisterGUI extends JFrame {
         setLayout(null);
         setName("Register");
 
-        btnRegister.setBounds(75, 100, 100, 50);
-        btnCancel.setBounds(300, 100, 100, 50);
+        btnRegister.setBounds(75, 100, 150, 50);
+        btnCancel.setBounds(300, 100, 120, 50);
         lblUsername.setBounds(50, 30, 75, 25);
         lblPassword.setBounds(250, 30, 75, 25);
         tfUsername.setBounds(125, 30, 120, 25);
@@ -49,6 +54,21 @@ public class RegisterGUI extends JFrame {
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);
+        
+        //For icons
+        btnRegister.setIcon(iconRegister);
+        btnRegister.setPressedIcon(iconRegisterPressed);
+        btnRegister.setOpaque(false);
+        btnRegister.setContentAreaFilled(false);
+        btnRegister.setBorderPainted(false);
+        btnRegister.setFocusPainted(false);
+        
+        btnCancel.setIcon(iconCancel);
+        btnCancel.setPressedIcon(iconCancelPressed);
+        btnCancel.setOpaque(false);
+        btnCancel.setContentAreaFilled(false);
+        btnCancel.setBorderPainted(false);
+        btnCancel.setFocusPainted(false);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         pack();

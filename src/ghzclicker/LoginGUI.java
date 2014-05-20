@@ -16,15 +16,22 @@ public class LoginGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     // Making buttons to the panel.
-    private JButton btnLogin = new JButton("Login");
-    private JButton btnRegister = new JButton("Register");
-    private JButton btnExit = new JButton("Exit");
+    private JButton btnLogin = new JButton("");
+    private JButton btnRegister = new JButton("");
+    private JButton btnExit = new JButton("");
 
     private JLabel lblUsername = new JLabel("Username :");
     private JLabel lblPassword = new JLabel("Password :");
 
     private JTextField tfUsername = new JTextField();
     private JPasswordField tfPassword = new JPasswordField();
+    //Button icons
+    private ImageIcon iconLogin = new ImageIcon("res/btnLogin.png");
+    private ImageIcon iconLoginPressed = new ImageIcon("res/btnLoginPressed.png");
+    private ImageIcon iconRegister = new ImageIcon("res/btnRegister.png");
+    private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
+    private ImageIcon iconExit = new ImageIcon("res/btnExit.png");
+    private ImageIcon iconExitPressed = new ImageIcon("res/btnExitPressed.png");
 
     /**
      * Constructor which puts sets upp the whole GUI with selected Dimension and adding all the variables to the JFrame.
@@ -37,7 +44,7 @@ public class LoginGUI extends JFrame {
         setName("Login");
 
         btnLogin.setBounds(50, 100, 100, 50);
-        btnRegister.setBounds(200, 100, 100, 50);
+        btnRegister.setBounds(180, 100, 150, 50);
         btnExit.setBounds(350, 100, 100, 50);
         lblUsername.setBounds(50, 30, 75, 25);
         lblPassword.setBounds(250, 30, 75, 25);
@@ -53,6 +60,28 @@ public class LoginGUI extends JFrame {
         add(lblPassword);
         add(tfUsername);
         add(tfPassword);
+        
+        //For icons
+        btnLogin.setIcon(iconLogin);
+        btnLogin.setPressedIcon(iconLoginPressed);
+        btnLogin.setOpaque(false);
+        btnLogin.setContentAreaFilled(false);
+        btnLogin.setBorderPainted(false);
+        btnLogin.setFocusPainted(false);
+        
+        btnRegister.setIcon(iconRegister);
+        btnRegister.setPressedIcon(iconRegisterPressed);
+        btnRegister.setOpaque(false);
+        btnRegister.setContentAreaFilled(false);
+        btnRegister.setBorderPainted(false);
+        btnRegister.setFocusPainted(false);
+        
+        btnExit.setIcon(iconExit);
+        btnExit.setPressedIcon(iconExitPressed);
+        btnExit.setOpaque(false);
+        btnExit.setContentAreaFilled(false);
+        btnExit.setBorderPainted(false);
+        btnExit.setFocusPainted(false);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
