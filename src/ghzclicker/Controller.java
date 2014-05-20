@@ -181,9 +181,8 @@ public class Controller {
      * @param i , keeps record which building that was bought.
      */
     public void payingBuilding(int i) {
-        double buildingPrice = buildings.get(i).getPrice();
-        if (canBuyBuilding(i)) {
-            hertz -= buildingPrice;
+        if (buildings.get(i).canBuyBuilding(hertz)) {
+            hertz -= buildings.get(i).getPrice();
         }
     }
 
@@ -193,38 +192,9 @@ public class Controller {
      * @param i , which upgrade that was bought.
      */
     public void payingUpgrade(int i) {
-        double upgradePrice = upgrades.get(i).getPrice();
-        if (canBuyUpgrade(i)) {
-            hertz -= upgradePrice;
+        if (upgrades.get(i).canBuyUpgrade(hertz)) {
+            hertz -= upgrades.get(i).getPrice();
         }
-    }
-
-    /**
-     * Check if you can buy building specified with its id (i)
-     * 
-     * @param i Id of building
-     * @return true if you can buy building else false.
-     */
-    public boolean canBuyBuilding(int i) {
-        double buildingPrice = buildings.get(i).getPrice();
-        if (hertz >= buildingPrice) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check if you can buy upgrade specified with its id (i)
-     * 
-     * @param i ID of the upgrade.
-     * @return true if you can buy upgrade, else false.
-     */
-    public boolean canBuyUpgrade(int i) {
-        double upgradePrice = upgrades.get(i).getPrice();
-        if (hertz >= upgradePrice) {
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -409,12 +379,8 @@ public class Controller {
      */
     public void calculateBuildingCosts() {
         for (int i = 0; i < buildings.size(); i++) {
-            double cost = (buildings.get(i).getBaseCost() * (Math.pow(1.1, buildings.get(i).getOwned()))); // cost algorithm
-            if (buildings.get(i).getOwned() == 0) {
-                cost = buildings.get(i).getBaseCost();
-            }
-            buildings.get(i).setPrice(cost);
-            gui.updateJButtonCost(i, stringify(cost));
+            buildings.get(i).calculateCosts();
+            gui.updateJButtonCost(i, stringify(buildings.get(i).getPrice()));
         }
     }
 
@@ -423,12 +389,8 @@ public class Controller {
      */
     public void calculateUpgradeCosts() {
         for (int i = 0; i < upgrades.size(); i++) {
-            double cost = upgrades.get(i).getCost() * (Math.pow(10, upgrades.get(i).getOwned()));
-            if (upgrades.get(i).getOwned() == 0) {
-                cost = upgrades.get(i).getCost();
-            }
-            upgrades.get(i).setPrice(cost);
-            gui.updateUpgradeCost(i, stringify(cost));
+            upgrades.get(i).calculateCosts();
+            gui.updateUpgradeCost(i, stringify(upgrades.get(i).getPrice()));
         }
     }
 
@@ -437,7 +399,7 @@ public class Controller {
      */
     public void buildingGrayiFy() {
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-            if (canBuyBuilding(i)) {
+            if (buildings.get(i).canBuyBuilding(hertz)) {
                 gui.getBtnBuildings().get(i).setEnabled(true);
             } else {
                 gui.getBtnBuildings().get(i).setEnabled(false);
@@ -454,7 +416,7 @@ public class Controller {
             int max = upgrades.get(i).getMaxOwned();
             int buildOwned = buildings.get(i).getOwned();
             
-            if(canBuyUpgrade(i) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
+            if(upgrades.get(i).canBuyUpgrade(hertz) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
