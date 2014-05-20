@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
  * A class that builds the GUI used for the High Score
  * 
  * @author Viktor Saltarski
- * 
  */
 public class HighScoreGUI extends JPanel {
     private static final long serialVersionUID = 1L;

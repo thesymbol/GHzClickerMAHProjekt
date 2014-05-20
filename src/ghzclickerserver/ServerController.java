@@ -127,7 +127,7 @@ public class ServerController extends Thread {
                     }
                 }
             }
-            
+
             /**
              * Check if we have connection to the arduino
              * 
@@ -203,6 +203,7 @@ public class ServerController extends Thread {
             socket.close();
             connected = false;
         }
+
         /**
          * check if the timeout has been reached
          * 
@@ -334,9 +335,7 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
-     * @param out The PrintWriter from client session
-     * @param in The BufferedReader from client session
-     * 
+     * @return true if the registration is successfull otherwise it will return false.
      * @throws IOException
      */
     public boolean register(String username, String password) throws IOException {
@@ -378,7 +377,6 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
-     * 
      * @return -1 if username/password is invalid, 1 if everything was successfull and 2 if user is already logged in.
      * @throws IOException
      * @throws NumberFormatException

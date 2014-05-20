@@ -87,13 +87,6 @@ public class NetworkClient {
     }
 
     /**
-     * Open a listening connection to the server.
-     */
-    public void open() {
-        new NetworkThread().start();
-    }
-
-    /**
      * Check if we have connection to the server
      * 
      * @return true if socket is closed else false
@@ -129,26 +122,6 @@ public class NetworkClient {
             socket.close();
             socket = null;
             logger.info("Disconnected from server");
-        }
-    }
-
-    /**
-     * creates a networkThread that listens to server messages
-     */
-    private class NetworkThread extends Thread {
-        /**
-         * Always recieve messages from server.
-         */
-        @Override
-        public void run() {
-            try {
-                String message = null;
-                while (((message = in.readLine()) != null)) {
-                    logger.info(message);
-                }
-            } catch (IOException e) {
-                logger.info("Disconnected from server");
-            }
         }
     }
 }
