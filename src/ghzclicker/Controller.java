@@ -57,13 +57,13 @@ public class Controller {
         buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
 
         upgrades = new ArrayList<Upgrade>();
-        upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200));
-        upgrades.add(new Upgrade("RAM upgrade", 6000, 200));
-        upgrades.add(new Upgrade("Power Supply upgrade", 20000, 200));
-        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade", 200000, 200));
-        upgrades.add(new Upgrade("Graphics card upgrade", 1000000, 200));
-        upgrades.add(new Upgrade("Processor upgrade", 4000000, 200));
-        upgrades.add(new Upgrade("MotherBoard upgrade", 30000000, 200));
+        upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200, 10, 3));
+        upgrades.add(new Upgrade("RAM upgrade", 6000, 200, 10, 3));
+        upgrades.add(new Upgrade("Power Supply upgrade", 20000, 200, 10, 3));
+        upgrades.add(new Upgrade("Hard Drive(SSD) upgrade", 200000, 200, 10, 3));
+        upgrades.add(new Upgrade("Graphics card upgrade", 1000000, 200, 10, 3));
+        upgrades.add(new Upgrade("Processor upgrade", 4000000, 200, 10, 3));
+        upgrades.add(new Upgrade("MotherBoard upgrade", 30000000, 200, 10, 3));
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
@@ -449,19 +449,13 @@ public class Controller {
      * Gray out the buttons when a player doesnt have enough money to buy upgrades.
      */
     public void upgradeGrayiFy() {
-
         for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
-            int step = upgrades.get(i).getOwned();
-            int owned = buildings.get(i).getOwned();
-            if (canBuyUpgrade(i) && step == 0 && owned >= 10) {
+            int upgOwned = upgrades.get(i).getOwned();
+            int max = upgrades.get(i).getMaxOwned();
+            int buildOwned = buildings.get(i).getOwned();
+            
+            if(canBuyUpgrade(i) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-
-            } else if (canBuyUpgrade(i) && step == 1 && owned >= 100) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-
-            } else if (canBuyUpgrade(i) && step == 2 && owned >= 200) {
-                gui.getBtnUpgrades().get(i).setEnabled(true);
-
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
@@ -521,6 +515,7 @@ public class Controller {
                     Upgrade upgrade = upgrades.get(i);
                     if (hertz >= upgrade.getPrice()) {
                         upgrade.setOwned(upgrade.getOwned() + 1);
+                        upgrade.setRequirement(upgrade.getRequirement() * 10);
                         payingUpgrade(i);
                     }
                 }
