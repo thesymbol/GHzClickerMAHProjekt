@@ -7,7 +7,7 @@ package ghzclicker;
  */
 public class Upgrade {
     private String name;
-    private double Cost;
+    private double baseCost;
     private double baseHPS;
     private double price;
     private int owned;
@@ -23,9 +23,10 @@ public class Upgrade {
      * @param requirement The requirement to buy the upgrade
      * @param maxOwned The maximum amount of upgrades to own
      */
-    public Upgrade(String name, double Cost, double baseHPS, int requirement, int maxOwned) {
+    public Upgrade(String name, double baseCost, double baseHPS, int requirement, int maxOwned) {
         this.name = name;
-        this.Cost = Cost;
+        this.baseCost = baseCost;
+        this.price = baseCost;
         this.baseHPS = baseHPS;
         this.requirement = requirement;
         this.maxOwned = maxOwned;
@@ -45,8 +46,8 @@ public class Upgrade {
      * 
      * @return baseCost The basecost of the upgrade.
      */
-    public double getCost() {
-        return Cost;
+    public double getBaseCost() {
+        return baseCost;
     }
 
     /**
@@ -119,5 +120,28 @@ public class Upgrade {
      */
     public int getOwned() {
         return owned;
+    }
+    
+    /**
+     * Calculate the cost for each upgrades.
+     */
+    public double calculateCosts() {
+        if(owned != 0) {
+            price = (baseCost * (Math.pow(10, owned)));
+        }
+        return price;
+    }
+    
+    /**
+     * Check if you can buy upgrade specified with its id (i)
+     * 
+     * @param hertz The total Hertz owned
+     * @return true if you can buy upgrade, else false.
+     */
+    public boolean canBuyUpgrade(double hertz) {
+        if (hertz >= price) {
+            return true;
+        }
+        return false;
     }
 }
