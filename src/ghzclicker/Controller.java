@@ -277,15 +277,21 @@ public class Controller {
         String hertz = stringify(this.hertz);
         gui.update(hertz);
 
-        calculateBuildingCosts();
-        calculateUpgradeCosts();
+        calculateCosts();
 
-        buildingGrayiFy();
-        upgradeGrayiFy();
-
+        grayify();
+        
         updateHertzPerClick();
         uppdateHertzPerSecond();
         uppdateStatistics();
+    }
+    
+    /**
+     * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
+     */
+    public void updateEverySecond() {
+        hertzGenerated += hertzPerSecond;
+        hertz += hertzPerSecond;
     }
 
     /**
@@ -294,14 +300,6 @@ public class Controller {
     public void hertzClicked() {
         hertz += hertzPerClick;
         hertzClicked += hertzPerClick;
-    }
-
-    /**
-     * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
-     */
-    public void updateEverySecond() {
-        hertzGenerated += hertzPerSecond;
-        hertz += hertzPerSecond;
     }
 
     /**
@@ -352,19 +350,14 @@ public class Controller {
     }
 
     /**
-     * Calculate cost for each building
+     * Calculate cost for upgrades and buildings
      */
-    public void calculateBuildingCosts() {
+    public void calculateCosts() {
         for (int i = 0; i < buildings.size(); i++) {
             buildings.get(i).calculateCosts();
             gui.updateJButtonCost(i, stringify(buildings.get(i).getPrice()));
         }
-    }
 
-    /**
-     * Calculate the cost for each upgrades.
-     */
-    public void calculateUpgradeCosts() {
         for (int i = 0; i < upgrades.size(); i++) {
             upgrades.get(i).calculateCosts();
             gui.updateUpgradeCost(i, stringify(upgrades.get(i).getPrice()));
@@ -374,7 +367,7 @@ public class Controller {
     /**
      * Gray out buttons when player dont have enough money
      */
-    public void buildingGrayiFy() {
+    public void grayify() {
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
             if (buildings.get(i).canBuyBuilding(hertz)) {
                 gui.getBtnBuildings().get(i).setEnabled(true);
@@ -382,12 +375,7 @@ public class Controller {
                 gui.getBtnBuildings().get(i).setEnabled(false);
             }
         }
-    }
 
-    /**
-     * Gray out the buttons when a player doesnt have enough money to buy upgrades.
-     */
-    public void upgradeGrayiFy() {
         for (int i = 0; i < gui.getBtnUpgrades().size(); i++) {
             int upgOwned = upgrades.get(i).getOwned();
             int max = upgrades.get(i).getMaxOwned();
