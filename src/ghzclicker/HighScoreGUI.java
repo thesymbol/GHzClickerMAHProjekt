@@ -55,7 +55,7 @@ public class HighScoreGUI extends JPanel {
         pnlHighScoreWindow.add(scrollPane);
 
         // Txt
-        scrollPane.setBounds(10, 90, 770, 700);
+        scrollPane.setBounds(10, 90, 770, 430);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setOpaque(false);
