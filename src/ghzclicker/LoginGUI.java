@@ -40,9 +40,9 @@ public class LoginGUI extends JFrame {
     public LoginGUI(ActionListener listener) {
         setName("Login");
         setResizable(false);
-        
+
         pnlLogin.setLayout(null);
-        pnlLogin.setPreferredSize(new Dimension(500,200));
+        pnlLogin.setPreferredSize(new Dimension(500, 200));
 
         btnLogin.setBounds(50, 100, 100, 50);
         btnRegister.setBounds(180, 100, 150, 50);
@@ -83,7 +83,7 @@ public class LoginGUI extends JFrame {
         btnExit.setContentAreaFilled(false);
         btnExit.setBorderPainted(false);
         btnExit.setFocusPainted(false);
-        
+
         add(pnlLogin);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 
 /**
  * A Class that makes up the whole GUI
@@ -39,7 +38,7 @@ public class GameGUI {
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new JPanel();
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-//    private JTabbedPane tabbedPane = new JTabbedPane();
+    // private JTabbedPane tabbedPane = new JTabbedPane();
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
     private CardLayout cl = new CardLayout();
@@ -56,7 +55,6 @@ public class GameGUI {
     private ImageIcon iconLoadPressed = new ImageIcon("res/btnLoadPressed.png");
     private ImageIcon iconHighScore = new ImageIcon("res/btnHighScore.png");
     private ImageIcon iconHighScorePressed = new ImageIcon("res/btnHighScorePressed.png");
-     
 
     /**
      * A Constructor that is putting all the buttons into the GUI and sets the size of the labels, buttons etc.
@@ -71,9 +69,9 @@ public class GameGUI {
         pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
-        Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets"); 
-        // bottom insets is 1 because the tabs are bottom aligned       
-        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 1, 0)); 
+        Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
+        // bottom insets is 1 because the tabs are bottom aligned
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 1, 0));
         UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setOpaque(false);

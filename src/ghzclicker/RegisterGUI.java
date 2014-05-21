@@ -27,7 +27,7 @@ public class RegisterGUI extends JFrame {
     private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
     private ImageIcon iconCancel = new ImageIcon("res/btnCancel.png");
     private ImageIcon iconCancelPressed = new ImageIcon("res/btnCancelPressed.png");
-    
+
     private JPanel pnlRegister = new BGPanel("res/loginRegister.png");
 
     /**
@@ -71,7 +71,7 @@ public class RegisterGUI extends JFrame {
         btnCancel.setContentAreaFilled(false);
         btnCancel.setBorderPainted(false);
         btnCancel.setFocusPainted(false);
-        
+
         add(pnlRegister);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
