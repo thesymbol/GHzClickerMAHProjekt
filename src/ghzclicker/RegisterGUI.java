@@ -27,7 +27,6 @@ public class RegisterGUI extends JFrame {
     private ImageIcon iconRegisterPressed = new ImageIcon("res/btnRegisterPressed.png");
     private ImageIcon iconCancel = new ImageIcon("res/btnCancel.png");
     private ImageIcon iconCancelPressed = new ImageIcon("res/btnCancelPressed.png");
-
     private JPanel pnlRegister = new BGPanel("res/loginRegister.png");
 
     /**
@@ -58,19 +57,8 @@ public class RegisterGUI extends JFrame {
         pnlRegister.add(tfPassword);
 
         // For icons
-        btnRegister.setIcon(iconRegister);
-        btnRegister.setPressedIcon(iconRegisterPressed);
-        btnRegister.setOpaque(false);
-        btnRegister.setContentAreaFilled(false);
-        btnRegister.setBorderPainted(false);
-        btnRegister.setFocusPainted(false);
-
-        btnCancel.setIcon(iconCancel);
-        btnCancel.setPressedIcon(iconCancelPressed);
-        btnCancel.setOpaque(false);
-        btnCancel.setContentAreaFilled(false);
-        btnCancel.setBorderPainted(false);
-        btnCancel.setFocusPainted(false);
+        setButtonSettings(btnRegister, iconRegister, iconRegisterPressed);
+        setButtonSettings(btnCancel, iconCancel, iconCancelPressed);
 
         add(pnlRegister);
 
@@ -80,6 +68,22 @@ public class RegisterGUI extends JFrame {
 
         btnRegister.addActionListener(listener);
         btnCancel.addActionListener(listener);
+    }
+
+    /**
+     * Sets button settings and image when not pressed and when pressed.
+     * 
+     * @param button The JButton to be modified
+     * @param icon The ImageIcon to use for non-pressed state
+     * @param pressedIcon The ImageIcon to be used for pressed state
+     */
+    private void setButtonSettings(JButton button, ImageIcon icon, ImageIcon pressedIcon) {
+        button.setIcon(icon);
+        button.setPressedIcon(pressedIcon);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
     }
 
     /**

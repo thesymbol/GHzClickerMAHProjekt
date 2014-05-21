@@ -18,7 +18,6 @@ public class LoginController {
     private Listener listener;
     private NetworkClient network;
     private Controller controller;
-
     private RegisterGUI regGUI;
     private final static Logger logger = ClientLogger.getLogger();
 

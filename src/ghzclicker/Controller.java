@@ -27,18 +27,15 @@ public class Controller {
     private double hertzClicked;
     private double hertzPerClick;
     private double hertzGenerated;
-
     private String username = "";
     private String password = "";
-
     private ArrayList<Building> buildings;
     private ArrayList<Upgrade> upgrades;
     private double hertz = 0;
     private DecimalFormat hertzFormat = new DecimalFormat("#");
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
-
     private NetworkClient network;
-    private HighScoreManager hsManager = new HighScoreManager();
+    private HighScoreManager hsManager = new HighScoreManager(this);
     private final static Logger logger = ClientLogger.getLogger();
 
     /**
@@ -71,7 +68,7 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
-    
+
     /**
      * An ArrayList to create the buttons for the buildings.
      * 
@@ -130,7 +127,7 @@ public class Controller {
             }
         }, 5000, 5000);
     }
-    
+
     /**
      * Send the save to the server to be saved, no local saves.
      */
@@ -213,12 +210,12 @@ public class Controller {
                 }
 
                 hsManager.addScore(username, hertzGenerated + hertzClicked);
-                String saveToBeSent = hsManager.getHighScoresToSave();
+                String saveToBeSent = hsManager.getHighScores(true);
                 System.out.println(saveToBeSent);
                 network.sendData("savehighscore");
                 network.sendData(saveToBeSent);
 
-                String txt = hsManager.getHighScoreString();
+                String txt = hsManager.getHighScores(false);
                 gui.setHighScore(txt);
             } catch (IOException e) {
             }
@@ -280,12 +277,12 @@ public class Controller {
         calculateCosts();
 
         grayify();
-        
+
         updateHertzPerClick();
         uppdateHertzPerSecond();
         uppdateStatistics();
     }
-    
+
     /**
      * This gets updated by the gameloop every second (used for the timing on building generating "Hertz"
      */

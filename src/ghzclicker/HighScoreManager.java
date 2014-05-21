@@ -1,7 +1,7 @@
 package ghzclicker;
 
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Class that handles the logic behind the HighScore
@@ -10,12 +10,14 @@ import java.util.*;
  */
 public class HighScoreManager {
     private ArrayList<Score> scores;
+    private Controller controller;
 
     /**
      * Creates a new HighScoreManager
      */
-    public HighScoreManager() {
+    public HighScoreManager(Controller controller) {
         scores = new ArrayList<Score>();
+        this.controller = controller;
     }
 
     /**
@@ -65,11 +67,12 @@ public class HighScoreManager {
     }
 
     /**
-     * Returns a string holding the highscores
+     * Returns the highscores to be able to save or display them.
      * 
-     * @return the highscore string
+     * @param saveformat If true it will be a save format if false it will be a display format that is returned.
+     * @return The highscore in a save format or a display format.
      */
-    public String getHighScoreString() {
+    public String getHighScores(boolean saveformat) {
         String highScoreString = "";
         int max = 50;
         ArrayList<Score> res = getScores();
@@ -79,52 +82,13 @@ public class HighScoreManager {
         }
 
         for (int i = 0; i < size; i++) {
-            highScoreString += (i + 1) + ".   " + res.get(i).getName() + "\t    " + stringify(res.get(i).getScore()) + "\n";
+            if (saveformat) {
+                highScoreString += res.get(i).getName() + ":" + res.get(i).getScore() + ";";
+            } else {
+                highScoreString += (i + 1) + ".   " + res.get(i).getName() + "\t    " + controller.stringify(res.get(i).getScore()) + "\n";
+            }
         }
 
         return highScoreString;
-    }
-
-    /**
-     * Returns the highsocres to be able to save on the server.
-     * 
-     * @retunr the highscores to be saved to the server.
-     */
-    public String getHighScoresToSave() {
-        String highscoresToSave = "";
-        int max = 50;
-        ArrayList<Score> res = getScores();
-        int size = res.size();
-        if (size > max) {
-            size = max;
-        }
-
-        for (int i = 0; i < size; i++) {
-            highscoresToSave += res.get(i).getName() + ":" + res.get(i).getScore() + ";";
-        }
-
-        return highscoresToSave;
-    }
-
-    /**
-     * Changes the visual of costs and hertz
-     * 
-     * @param value The value that is going to be used to create a prefix'ed string.
-     * @return prefixed string with M B T or something else at the end.
-     */
-    public String stringify(double value) {
-        String[] format = { "", " K", " M", " G", " T", " Qa", " Qi", " Sx", " Sp", "Oc", "No", "Dc" };
-        double temp = value;
-        int order = 0;
-        while (temp > 1000.0) {
-            temp /= 1000.0;
-            order += 1;
-        }
-        while (temp < 1.0 && temp > 0) {
-            temp *= 1000.0;
-            order -= 1;
-        }
-        DecimalFormat formatter = new DecimalFormat("#.###");
-        return formatter.format(temp) + format[order] + "Hz";
     }
 }
