@@ -330,13 +330,9 @@ public class Controller {
             totalBuildings += buildings.get(i).getOwned();
         }
         statistics += "Total Buildings : " + totalBuildings;
-        statistics += "\nTotal Harddrives : " + buildings.get(0).getOwned();
-        statistics += "\nTotal RAM : " + buildings.get(1).getOwned();
-        statistics += "\nTotal PowerSupplies : " + buildings.get(2).getOwned();
-        statistics += "\nTotal Harddrives(SSD) : " + buildings.get(3).getOwned();
-        statistics += "\nTotal Graphics Cards : " + buildings.get(4).getOwned();
-        statistics += "\nTotal Processors : " + buildings.get(5).getOwned();
-        statistics += "\nTotal Motherboards : " + buildings.get(6).getOwned();
+        for (int i = 0; i < buildings.size(); i++) {
+            statistics +="\nTotal"+  buildings.get(i).getName()+ " : " +buildings.get(i).getOwned();
+        }        
         statistics += "\nTotal Clicks : " + clickCounter;
         statistics += "\nHertz Per click : " + hpsFormat.format(hertzPerClick);
         statistics += "\nPoints By Clicks : " + hertzFormat.format(hertzClicked);

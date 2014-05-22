@@ -104,7 +104,7 @@ public class LoginController {
                     network.sendData(username);
                     network.sendData(password);
                     try {
-                        if (network.getData().equals("regsuccessfull") && username.length()>=3 && password.length()>=3) {
+                        if (username.length()>=3 && password.length()>=3 && network.getData().equals("regsuccessfull")) {
                             JOptionPane.showMessageDialog(null, "Your account is now created!");
                             regGUI.setVisible(false);
                             regGUI.dispose();
