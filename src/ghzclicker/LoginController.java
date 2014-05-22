@@ -104,12 +104,12 @@ public class LoginController {
                     network.sendData(username);
                     network.sendData(password);
                     try {
-                        if (network.getData().equals("regsuccessfull")) {
+                        if (network.getData().equals("regsuccessfull") && username.length()>=3 && password.length()>=3) {
                             JOptionPane.showMessageDialog(null, "Your account is now created!");
                             regGUI.setVisible(false);
                             regGUI.dispose();
                         } else {
-                            JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
+                            JOptionPane.showMessageDialog(null, "This username already exists or to short need to be atlest 3 letters. Please try another one.");
                         }
                     } catch (HeadlessException e1) {
                         e1.printStackTrace();
