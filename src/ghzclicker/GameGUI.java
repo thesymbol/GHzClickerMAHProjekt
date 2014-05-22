@@ -100,33 +100,10 @@ public class GameGUI {
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
         // Button Icons
-        btnHertz.setIcon(iconHertz);
-        btnHertz.setPressedIcon(iconHertzPressed);
-        btnHertz.setOpaque(false);
-        btnHertz.setContentAreaFilled(false);
-        btnHertz.setBorderPainted(false);
-        btnHertz.setFocusPainted(false);
-
-        btnSave.setIcon(iconSave);
-        btnSave.setPressedIcon(iconSavePressed);
-        btnSave.setOpaque(false);
-        btnSave.setContentAreaFilled(false);
-        btnSave.setBorderPainted(false);
-        btnSave.setFocusPainted(false);
-
-        btnLoad.setIcon(iconLoad);
-        btnLoad.setPressedIcon(iconLoadPressed);
-        btnLoad.setOpaque(false);
-        btnLoad.setContentAreaFilled(false);
-        btnLoad.setBorderPainted(false);
-        btnLoad.setFocusPainted(false);
-
-        btnHighScore.setIcon(iconHighScore);
-        btnHighScore.setPressedIcon(iconHighScorePressed);
-        btnHighScore.setOpaque(false);
-        btnHighScore.setContentAreaFilled(false);
-        btnHighScore.setBorderPainted(false);
-        btnHighScore.setFocusPainted(false);
+        setButtonSettings(btnHertz, iconHertz, iconHertzPressed);
+        setButtonSettings(btnSave, iconSave, iconSavePressed);
+        setButtonSettings(btnLoad, iconLoad, iconLoadPressed);
+        setButtonSettings(btnHighScore, iconHighScore, iconHighScorePressed);
 
         // adding the button and label to the frame.
         pnlGame.add(btnHertz);
@@ -205,6 +182,22 @@ public class GameGUI {
         frame.setLocationRelativeTo(null);
         frame.setVisible(false);
         frame.dispose();
+    }
+
+    /**
+     * Sets button settings and image when not pressed and when pressed.
+     * 
+     * @param button The JButton to be modified
+     * @param icon The ImageIcon to use for non-pressed state
+     * @param pressedIcon The ImageIcon to be used for pressed state
+     */
+    private void setButtonSettings(JButton button, ImageIcon icon, ImageIcon pressedIcon) {
+        button.setIcon(icon);
+        button.setPressedIcon(pressedIcon);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
     }
 
     /**

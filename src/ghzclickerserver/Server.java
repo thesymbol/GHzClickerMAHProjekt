@@ -8,7 +8,6 @@ import java.io.IOException;
  * @author Marcus Orwén
  */
 public class Server {
-
     /**
      * Starts the server.
      * 

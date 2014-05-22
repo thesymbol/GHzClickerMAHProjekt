@@ -17,10 +17,8 @@ public class LoginGUI extends JFrame {
     private JButton btnLogin = new JButton("");
     private JButton btnRegister = new JButton("");
     private JButton btnExit = new JButton("");
-
     private JLabel lblUsername = new JLabel("Username :");
     private JLabel lblPassword = new JLabel("Password :");
-
     private JTextField tfUsername = new JTextField();
     private JPasswordField tfPassword = new JPasswordField();
     // Button icons
@@ -63,26 +61,9 @@ public class LoginGUI extends JFrame {
         pnlLogin.add(tfPassword);
 
         // For icons
-        btnLogin.setIcon(iconLogin);
-        btnLogin.setPressedIcon(iconLoginPressed);
-        btnLogin.setOpaque(false);
-        btnLogin.setContentAreaFilled(false);
-        btnLogin.setBorderPainted(false);
-        btnLogin.setFocusPainted(false);
-
-        btnRegister.setIcon(iconRegister);
-        btnRegister.setPressedIcon(iconRegisterPressed);
-        btnRegister.setOpaque(false);
-        btnRegister.setContentAreaFilled(false);
-        btnRegister.setBorderPainted(false);
-        btnRegister.setFocusPainted(false);
-
-        btnExit.setIcon(iconExit);
-        btnExit.setPressedIcon(iconExitPressed);
-        btnExit.setOpaque(false);
-        btnExit.setContentAreaFilled(false);
-        btnExit.setBorderPainted(false);
-        btnExit.setFocusPainted(false);
+        setButtonSettings(btnLogin, iconLogin, iconLoginPressed);
+        setButtonSettings(btnRegister, iconRegister, iconRegisterPressed);
+        setButtonSettings(btnExit, iconExit, iconExitPressed);
 
         add(pnlLogin);
 
@@ -94,7 +75,22 @@ public class LoginGUI extends JFrame {
         btnLogin.addActionListener(listener);
         btnRegister.addActionListener(listener);
         btnExit.addActionListener(listener);
+    }
 
+    /**
+     * Sets button settings and image when not pressed and when pressed.
+     * 
+     * @param button The JButton to be modified
+     * @param icon The ImageIcon to use for non-pressed state
+     * @param pressedIcon The ImageIcon to be used for pressed state
+     */
+    private void setButtonSettings(JButton button, ImageIcon icon, ImageIcon pressedIcon) {
+        button.setIcon(icon);
+        button.setPressedIcon(pressedIcon);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
     }
 
     /**

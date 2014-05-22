@@ -5,6 +5,11 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ * Background panel for displaying a background.
+ * 
+ * @author Viktor Saltarski
+ */
 public class BGPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Image image = null;
