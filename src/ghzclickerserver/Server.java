@@ -14,7 +14,7 @@ public class Server {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        ServerLogger.init(); // initiate logger for the whole server so we can use logger.log
+        ServerLogger.init(); // Initiate logger for the whole server so we can use logger.log
         try {
             @SuppressWarnings("unused")
             ServerController controller = new ServerController();

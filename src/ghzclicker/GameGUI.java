@@ -38,7 +38,7 @@ public class GameGUI {
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new JPanel();
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-    // private JTabbedPane tabbedPane = new JTabbedPane();
+    // private JTabbedPane tabbedPane = new JTabbedPane(); Do we still need this one?
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
     private CardLayout cl = new CardLayout();
@@ -70,7 +70,7 @@ public class GameGUI {
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
         Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-        // bottom insets is 1 because the tabs are bottom aligned
+        // Bottom insets is 1 because the tabs are bottom aligned
         UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 1, 0));
         UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -79,7 +79,7 @@ public class GameGUI {
         pnlStatistics.setOpaque(false);
         pnlHighScore = new HighScoreGUI(listener);
         pnlHS = pnlHighScore;
-        // main panel
+        // Main panel
         frame.setPreferredSize(new Dimension(800, 553));
         frame.setResizable(false);
         pnlCont.setLayout(cl);
@@ -88,7 +88,7 @@ public class GameGUI {
         pnlCont.add(pnlHS, "2");
         cl.show(pnlCont, "1");
 
-        // setting locations and size.
+        // Setting locations and size.
         lblText.setBounds(50, 50, 500, 50);
         btnHertz.setBounds(175, 200, 150, 50);
         lblHertzPerSecond.setBounds(50, 75, 200, 50);
@@ -105,17 +105,17 @@ public class GameGUI {
         setButtonSettings(btnLoad, iconLoad, iconLoadPressed);
         setButtonSettings(btnHighScore, iconHighScore, iconHighScorePressed);
 
-        // adding the button and label to the frame.
+        // Adding the button and label to the frame.
         pnlGame.add(btnHertz);
         pnlGame.add(lblHertzPerSecond);
         pnlGame.setLayout(null);
 
-        // adding btnUpgrades to btnUpg.
+        // Adding btnUpgrades to btnUpg.
         for (JButton btn : btnUpgrades) {
             // Set listener for button
             btn.addActionListener(listener);
 
-            // set size of button
+            // Set size of button
             btn.setSize(new Dimension(200, 75));
 
             // Position text over image
@@ -131,13 +131,13 @@ public class GameGUI {
             pnlUpgrade.add(btn);
         }
 
-        // adding btnBuildings to btn.
+        // Adding btnBuildings to btn.
         for (JButton btn : btnBuildings) {
 
             // Set listener for button
             btn.addActionListener(listener);
 
-            // set size of button
+            // Set size of button
             btn.setSize(new Dimension(200, 75));
 
             // Position text over image

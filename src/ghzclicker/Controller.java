@@ -150,7 +150,6 @@ public class Controller {
             logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
-
     }
 
     /**
@@ -387,7 +386,7 @@ public class Controller {
      */
     private class Listener implements ActionListener {
         /**
-         * getting the listeners with actionPerformed
+         * Getting the listeners with actionPerformed
          * 
          * @param e ActionEvent
          */

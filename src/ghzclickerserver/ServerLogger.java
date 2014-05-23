@@ -58,7 +58,7 @@ public class ServerLogger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (fileHandler != null) { // eliminate crash if FileHandler cannot create a file
+        if (fileHandler != null) { // Eliminate crash if FileHandler cannot create a file
             logger = Logger.getLogger(name);
             logger.setUseParentHandlers(false);
             Handler[] handlers = logger.getHandlers();
@@ -116,7 +116,7 @@ public class ServerLogger {
          */
         @Override
         public String format(LogRecord rec) {
-            StringBuffer buf = new StringBuffer(1000); // to store the log output for later use
+            StringBuffer buf = new StringBuffer(1000); // To store the log output for later use
             SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
             buf.append(dateFormat.format(new Date(rec.getMillis())));
             buf.append(" [" + rec.getLevel() + "] ");

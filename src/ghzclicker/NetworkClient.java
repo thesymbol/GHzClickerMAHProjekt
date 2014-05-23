@@ -74,7 +74,7 @@ public class NetworkClient {
     }
 
     /**
-     * get data from server
+     * Get data from server
      * 
      * @throws IOException
      * @return in.readLine if true else "".

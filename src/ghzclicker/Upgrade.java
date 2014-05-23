@@ -33,7 +33,7 @@ public class Upgrade {
     }
 
     /**
-     * get the upgrade name
+     * Get the upgrade name
      * 
      * @return name The name of the upgrade.
      */
@@ -42,7 +42,7 @@ public class Upgrade {
     }
 
     /**
-     * get the BaseCost
+     * Get the BaseCost
      * 
      * @return baseCost The basecost of the upgrade.
      */
@@ -51,7 +51,7 @@ public class Upgrade {
     }
 
     /**
-     * get the baseHPS
+     * Get the baseHPS
      * 
      * @return baseHPS The base hertz per second of the upgrade
      */
@@ -78,7 +78,7 @@ public class Upgrade {
     }
 
     /**
-     * set the required buildings owned
+     * Set the required buildings owned
      * 
      * @param requirement
      */
@@ -87,7 +87,7 @@ public class Upgrade {
     }
 
     /**
-     * setting the price.
+     * Setting the price.
      * 
      * @param price Inserted price
      */

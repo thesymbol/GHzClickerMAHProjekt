@@ -55,7 +55,7 @@ public class ServerController extends Thread {
         fileHandler = new SaveFileHandler();
         networkThreads = new ArrayList<NetworkThread>();
         loggedInUsers = new ArrayList<String>();
-        if (!fileHandler.createDir("", "saves")) { // if there was a major error (permissions problem on OS) we exit the server to stop crashes.
+        if (!fileHandler.createDir("", "saves")) { // If there was a major error (permissions problem on OS) we exit the server to stop crashes.
             logger.severe("Folder could not be created exiting (no premissions?)...");
             try {
                 Thread.sleep(2000);
@@ -120,7 +120,7 @@ public class ServerController extends Thread {
                                     // ServerLogger.stacktrace(e);
                                 }
                             }
-                            sleep(5000); // wait 5 seconds before reconnecting.
+                            sleep(5000); // Wait 5 seconds before reconnecting.
                         }
                     } catch (InterruptedException | IOException e) {
                         // ServerLogger.stacktrace(e);
@@ -205,7 +205,7 @@ public class ServerController extends Thread {
         }
 
         /**
-         * check if the timeout has been reached
+         * Check if the timeout has been reached
          * 
          * @return true if timeout has not been reached, else it will return false
          */
@@ -292,7 +292,7 @@ public class ServerController extends Thread {
                     } catch (IOException | InterruptedException e) {
                     }
 
-                    // check if connection is still alive.
+                    // Check if connection is still alive.
                     if (!isConnectionAlive()) {
                         logger.severe("Connection lost");
                         try {
@@ -309,7 +309,7 @@ public class ServerController extends Thread {
     }
 
     /**
-     * gets the userdata from the arduino
+     * Gets the userdata from the arduino
      * 
      * @return if the arduino cannot send or is not avaiable it will return null, but if it is available it will return the ArrayList data of users.dat on the arduino.
      * @throws NumberFormatException

@@ -66,7 +66,6 @@ public class ClientLogger {
             fileHandler.setFormatter(formatter);
             logger.addHandler(fileHandler);
             logger.setLevel(Level.INFO);
-
         }
     }
 
