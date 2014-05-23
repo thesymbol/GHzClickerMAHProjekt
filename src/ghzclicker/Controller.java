@@ -45,7 +45,7 @@ public class Controller {
      */
     public Controller(NetworkClient network) {
         buildings = new ArrayList<Building>();
-        buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
+        buildings.add(new Building("Hard drive", 50, 2, "res/NewHardDrive.png"));
         buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
         buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
         buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
