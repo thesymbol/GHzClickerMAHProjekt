@@ -47,11 +47,11 @@ public class Controller {
         buildings = new ArrayList<Building>();
         buildings.add(new Building("Hard drive", 50, 2, "res/NewHardDrive.png"));
         buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
-        buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
-        buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
-        buildings.add(new Building("Graphics card", 50000, 1000, "res/NewGraphicsCard.png"));
-        buildings.add(new Building("Processor", 200000, 3000, "res/NewProcessor.png"));
-        buildings.add(new Building("MotherBoard", 1500000, 12000, "res/NewMotherboard.png"));
+        buildings.add(new Building("Power Supply", 2100, 40, "res/NewPowerSupply.png"));
+        buildings.add(new Building("Hard Drive(SSD)", 16800, 200, "res/NewHardDrive(SSD).png"));
+        buildings.add(new Building("Graphics card", 134400, 1000, "res/NewGraphicsCard.png"));
+        buildings.add(new Building("Processor", 1209600, 3000, "res/NewProcessor.png"));
+        buildings.add(new Building("MotherBoard", 10886400, 12000, "res/NewMotherboard.png"));
 
         upgrades = new ArrayList<Upgrade>();
         upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200, 10, 3));
