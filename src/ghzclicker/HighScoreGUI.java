@@ -37,7 +37,7 @@ public class HighScoreGUI extends JPanel {
         setBackground(Color.lightGray);
         pnlHighScoreWindow.setPreferredSize(new Dimension(800, 553));
         add(pnlHighScoreWindow);
-        // the panel
+        // The panel
         pnlHighScoreWindow.setBackground(Color.lightGray);
         pnlHighScoreWindow.setLayout(null);
 
@@ -54,7 +54,7 @@ public class HighScoreGUI extends JPanel {
         // Highscore icon
         lblHighScore.setBounds(240, 10, 320, 60);
         lblHighScore.setIcon(iconHighScore);
-        // mainPanel
+        // MainPanel
         pnlHighScoreWindow.add(lblHighScore);
         pnlHighScoreWindow.add(btnBack);
         pnlHighScoreWindow.add(scrollPane);

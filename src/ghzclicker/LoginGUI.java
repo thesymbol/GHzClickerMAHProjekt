@@ -94,7 +94,7 @@ public class LoginGUI extends JFrame {
     }
 
     /**
-     * getting the Login Button
+     * Getting the Login Button
      * 
      * @return btnLogin
      */

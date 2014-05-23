@@ -45,7 +45,7 @@ public class Controller {
      */
     public Controller(NetworkClient network) {
         buildings = new ArrayList<Building>();
-        buildings.add(new Building("Hard drive", 50, 1, "res/NewHardDrive.png"));
+        buildings.add(new Building("Hard drive", 50, 2, "res/NewHardDrive.png"));
         buildings.add(new Building("RAM", 300, 10, "res/NewRAM.png"));
         buildings.add(new Building("Power Supply", 1000, 40, "res/NewPowerSupply.png"));
         buildings.add(new Building("Hard Drive(SSD)", 10000, 200, "res/NewHardDrive(SSD).png"));
@@ -150,7 +150,6 @@ public class Controller {
             logger.severe("Server is not online or you are not connected to the internet");
             gui.showErrorMessage("Server is not online or you are not connected to the internet");
         }
-
     }
 
     /**
@@ -387,7 +386,7 @@ public class Controller {
      */
     private class Listener implements ActionListener {
         /**
-         * getting the listeners with actionPerformed
+         * Getting the listeners with actionPerformed
          * 
          * @param e ActionEvent
          */
