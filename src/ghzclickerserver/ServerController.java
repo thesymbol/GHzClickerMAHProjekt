@@ -331,7 +331,7 @@ public class ServerController extends Thread {
      * 
      * @param username The username
      * @param password The password
-     * @return true if the registration is successfull otherwise it will return false.
+     * @return A status message as a String like regtooshort, regsuccessfull
      * @throws IOException
      */
     public String register(String username, String password) throws IOException {
