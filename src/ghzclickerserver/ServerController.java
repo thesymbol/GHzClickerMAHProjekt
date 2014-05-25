@@ -259,11 +259,7 @@ public class ServerController extends Thread {
                                 }
                             }
                             if (message.equals("sendregdata")) {
-                                if (register(in.readLine(), in.readLine())) {
-                                    out.println("regsuccessfull");
-                                } else {
-                                    out.println("error");
-                                }
+                                out.println(register(in.readLine(), in.readLine()));
                             }
                             if (message.equals("sendusername")) {
                                 out.println(username);
@@ -338,12 +334,15 @@ public class ServerController extends Thread {
      * @return true if the registration is successfull otherwise it will return false.
      * @throws IOException
      */
-    public boolean register(String username, String password) throws IOException {
+    public String register(String username, String password) throws IOException {
         logger.info("Trying to register new user");
         usersdata = updateUsersData();
         if (usersdata == null) {
             logger.severe("Arduino users.dat not avaiable");
             usersdata = fileHandler.load("", "users.dat");
+        }
+        if (username.length() <= 3 || password.length() <= 3) { //username or password too short.
+            return "regtooshort";
         }
         Iterator<String> itr = usersdata.iterator();
         boolean alreadyExist = false;
@@ -359,17 +358,17 @@ public class ServerController extends Thread {
                 arduinoOut.println(username + ";" + password + "\n");
                 if (arduinoIn.readLine().equals("usersdataok")) {
                     logger.info("Registerd new user");
-                    return true;
+                    return "regsuccessfull";
                 }
             } else {
                 if (fileHandler.save((username + ";" + password + "\n"), "", "users.dat", true)) {
                     logger.info("Registerd new user");
-                    return true;
+                    return "regsuccessfull";
                 }
             }
         }
         logger.severe("User already exist");
-        return false;
+        return "error";
     }
 
     /**
