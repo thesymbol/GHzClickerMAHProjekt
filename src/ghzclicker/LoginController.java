@@ -110,7 +110,7 @@ public class LoginController {
                             regGUI.setVisible(false);
                             regGUI.dispose();
                         } else if(data.equals("regtooshort")){
-                            JOptionPane.showMessageDialog(null, "Username or Password is to short. Needs to be atlest 3 letters. Please try another one.");
+                            JOptionPane.showMessageDialog(null, "Username or Password is to short, it needs to be atleast 3 letters. Please try another one.");
                         } else {
                             JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
                         }
