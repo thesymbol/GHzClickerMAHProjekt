@@ -79,7 +79,7 @@ public class Controller {
         for (Building building : buildings) {
             JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
             btn.setName(building.getName()); // Set the name of the button
-            btn.setToolTipText(building.getName());
+            btn.setToolTipText("<html>" + building.getName() + "<br>" + " This will cost you : " + building.getBaseCost() +  "hz<br>" + "This building will give you : " + building.getBaseHPS() + "hz</html>");
             btnBuildings.add(btn);
         }
         return btnBuildings;
@@ -95,9 +95,10 @@ public class Controller {
         for (Upgrade upgrade : upgrades) {
             JButton btn = new JButton(upgrade.getName());
             btn.setName(upgrade.getName());
-            btn.setToolTipText(upgrade.getName() + "\n This will make your " + upgrade.getName() + " 2 times better.");
+            btn.setToolTipText("<html>" + upgrade.getName() + "<br" + " This will make your " + upgrade.getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have 10 of : " + upgrade.getName() + " buildings</html>");
             btnUpgrades.add(btn);
         }
+
         return btnUpgrades;
     }
 
@@ -330,8 +331,8 @@ public class Controller {
         }
         statistics += "Total Buildings : " + totalBuildings;
         for (int i = 0; i < buildings.size(); i++) {
-            statistics +="\nTotal"+  buildings.get(i).getName()+ " : " +buildings.get(i).getOwned();
-        }        
+            statistics += "\nTotal" + buildings.get(i).getName() + " : " + buildings.get(i).getOwned();
+        }
         statistics += "\nTotal Clicks : " + clickCounter;
         statistics += "\nHertz Per click : " + hpsFormat.format(hertzPerClick);
         statistics += "\nPoints By Clicks : " + hertzFormat.format(hertzClicked);
