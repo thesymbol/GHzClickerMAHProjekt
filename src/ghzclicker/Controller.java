@@ -95,7 +95,12 @@ public class Controller {
         for (Upgrade upgrade : upgrades) {
             JButton btn = new JButton(upgrade.getName());
             btn.setName(upgrade.getName());
-            btn.setToolTipText("<html>" + upgrade.getName() + "<br>" + " This will make your " + upgrade.getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have 10 of : " + upgrade.getName() + " buildings</html>");
+            for(int i = 0; i<buildings.size() ; i++){
+            btn.setToolTipText("<html>" + upgrade.getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have 10 of : " + buildings.get(i).getName() + "</html>");
+            if(buildings.get(i).getName() == "RAM"){
+                
+            }
+            }
             btnUpgrades.add(btn);
         }
 
