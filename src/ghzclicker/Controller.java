@@ -31,8 +31,7 @@ public class Controller {
     private String username = "";
     private String password = "";
     private ArrayList<Building> buildings;
-    private ArrayList<Upgrade> upgrades;
-    private ArrayList<Achievements> achievements;
+    private ArrayList<Upgrade> upgrades;    
     private double hertz = 0;
     private DecimalFormat hertzFormat = new DecimalFormat("#");
     private DecimalFormat hpsFormat = new DecimalFormat("#.#");
