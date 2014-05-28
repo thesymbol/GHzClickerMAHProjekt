@@ -101,7 +101,6 @@ public class Controller {
             btn.setToolTipText("<html>" +"peter" + upgrade.getName() + "<br>" + " This will make your " + upgrade.getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrade.getRequirement() + " of : " + upgrade.getName() + " buildings</html>");
             btnUpgrades.add(btn);
         }
-
         return btnUpgrades;
     }
 
