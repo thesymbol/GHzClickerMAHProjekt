@@ -341,7 +341,7 @@ public class ServerController extends Thread {
             logger.severe("Arduino users.dat not avaiable");
             usersdata = fileHandler.load("", "users.dat");
         }
-        if (username.length() < 3 || password.length() < 3) { //username or password too short.
+        if (username.length() <= 2 || password.length() <= 2) { //username or password too short.
             return "regtooshort";
         }
         Iterator<String> itr = usersdata.iterator();

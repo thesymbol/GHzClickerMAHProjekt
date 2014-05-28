@@ -37,6 +37,7 @@ public class Controller {
     private NetworkClient network;
     private HighScoreManager hsManager = new HighScoreManager(this);
     private final static Logger logger = ClientLogger.getLogger();
+    private int[] buildingHPSValue;
 
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
@@ -53,6 +54,8 @@ public class Controller {
         buildings.add(new Building("Processor", 1209600, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 10886400, 12000, "res/NewMotherboard.png"));
 
+		buildingHPSValue = new int[buildings.size()];
+		
         upgrades = new ArrayList<Upgrade>();
         upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200, 10, 3));
         upgrades.add(new Upgrade("RAM upgrade", 6000, 200, 10, 3));
