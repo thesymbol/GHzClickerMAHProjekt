@@ -37,6 +37,7 @@ public class GameGUI {
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new JPanel();
+    private JPanel pnlAchievements;
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
     // private JTabbedPane tabbedPane = new JTabbedPane(); Do we still need this one?
     private ArrayList<JButton> btnBuildings;
@@ -161,6 +162,7 @@ public class GameGUI {
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
         tabbedPane.add(pnlStatistics, "Statistics");
+        // tabbedPane.add(pnlAchievements, "achievements");
         pnlGame.add(tabbedPane);
 
         pnlGame.add(btnSave);
@@ -344,5 +346,10 @@ public class GameGUI {
      */
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, "[Error] " + message);
+    }
+
+    public void setToolTip(String dog, int cat) {
+
+        btnBuildings.get(cat).setToolTipText(dog);
     }
 }
