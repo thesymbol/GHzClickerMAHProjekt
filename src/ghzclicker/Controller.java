@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 
 /**
  * A class that controlls the whole program. Having all the logics within the application
