@@ -102,8 +102,11 @@ public class Controller {
             JButton btn = new JButton(upgrade.getName());
             btn.setName(upgrade.getName()); 
             btn.setToolTipText("<html>" + upgrade.getName() + "<br>" + " This will make your " + upgrade.getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " +upgrade.getRequirement() +" of : " + upgrade.getName() + " buildings</html>");
+            btn.setName(upgrade.getName());
+            btn.setToolTipText("<html>" + upgrade.getName() + "<br>" + " This will make your " + upgrade.getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have 10 of : " + upgrade.getName() + " buildings</html>");
             btnUpgrades.add(btn);
         }
+
         return btnUpgrades;
     }
 
