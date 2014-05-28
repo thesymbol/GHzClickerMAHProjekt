@@ -7,8 +7,9 @@ File userFile;
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0D, 0x01, 0xD8 };
 
 IPAddress arduino(192,168,0,50);
-IPAddress server(192,168,0,100);
-//IPAddress server(195,178,234,229);
+// IPAddress server(192,168,0,100);  // local
+// IPAddress server(195,178,234,229);// outside school
+IPAddress server(10,228,0,209);   // inside school
 
 int port = 13338;
 

@@ -100,25 +100,24 @@ public class LoginController {
                 if (!network.isClosed()) {
                     String username = regGUI.getUsername();
                     String password = regGUI.getPassword();
-                    if (username.length() >= 3 && password.length() >= 3) {
-                        network.sendData("sendregdata");// send this first to notify that we will send the username and password next
-                        network.sendData(username);
-                        network.sendData(password);
-                        try {
-                            if (network.getData().equals("regsuccessfull")) {
-                                JOptionPane.showMessageDialog(null, "Your account is now created!");
-                                regGUI.setVisible(false);
-                                regGUI.dispose();
-                            } else {
-                                JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
-                            }
-                        } catch (HeadlessException e1) {
-                            e1.printStackTrace();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                    network.sendData("sendregdata");// send this first to notify that we will send the username and password next
+                    network.sendData(username);
+                    network.sendData(password);
+                    try {
+                        String data = network.getData();
+                        if (data.equals("regsuccessfull")) {
+                            JOptionPane.showMessageDialog(null, "Your account is now created!");
+                            regGUI.setVisible(false);
+                            regGUI.dispose();
+                        } else if(data.equals("regtooshort")){
+                            JOptionPane.showMessageDialog(null, "Username or Password is to short, it needs to be atleast 3 letters. Please try another one.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Username or Password is to short. Needs to be atlest 3 letters. Please try another one.");
+                    } catch (HeadlessException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
                 } else {
                     logGUI.showErrorMessage("Server is not online or you are not connected to the internet");
