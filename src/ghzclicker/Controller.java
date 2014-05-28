@@ -71,6 +71,12 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
+    public void doge(){
+        int dog;
+        for(int i=0;i<upgrades.size();i++){
+            upgrades.get(i).getOwned();
+        }
+    }
 
     /**
      * An ArrayList to create the buttons for the buildings.
@@ -144,6 +150,9 @@ public class Controller {
             for (int i = 0; i < upgrades.size(); i++) {
                 data += upgrades.get(i).getOwned() + ":";
             }
+            for (int i = 0; i < upgrades.size(); i++) {
+                data += upgrades.get(i).getRequirement() + ":";
+            }
             data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
             logger.info("Save data sent: " + data);
@@ -174,6 +183,10 @@ public class Controller {
                     }
                     for (int i = 0; i < upgrades.size(); i++) {
                         upgrades.get(i).setOwned(Integer.parseInt(store[n]));
+                        n++;
+                    }
+                    for (int i = 0; i < upgrades.size(); i++) {
+                        upgrades.get(i).setRequirement(Integer.parseInt(store[n]));
                         n++;
                     }
                     clickCounter = Integer.parseInt(store[n]);
