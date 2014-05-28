@@ -54,8 +54,8 @@ public class Controller {
         buildings.add(new Building("Processor", 1209600, 3000, "res/NewProcessor.png"));
         buildings.add(new Building("MotherBoard", 10886400, 12000, "res/NewMotherboard.png"));
 
-		buildingHPSValue = new int[buildings.size()];
-		
+        buildingHPSValue = new int[buildings.size()];
+
         upgrades = new ArrayList<Upgrade>();
         upgrades.add(new Upgrade("Hard drive upgrade", 1000, 200, 10, 3));
         upgrades.add(new Upgrade("RAM upgrade", 6000, 200, 10, 3));
@@ -71,6 +71,12 @@ public class Controller {
         this.network = network;
         netAutoRecon();
     }
+    public void doge(){
+        int dog;
+        for(int i=0;i<upgrades.size();i++){
+            upgrades.get(i).getOwned();
+        }
+    }
 
     /**
      * An ArrayList to create the buttons for the buildings.
@@ -82,7 +88,7 @@ public class Controller {
         for (Building building : buildings) {
             JButton btn = new JButton(building.getName(), new ImageIcon(building.getImageLocation()));
             btn.setName(building.getName()); // Set the name of the button
-            btn.setToolTipText("<html>" + building.getName() + "<br>" + " This will cost you : " + building.getBaseCost() +  "hz<br>" + "This building will give you : " + building.getBaseHPS() + "hz</html>");
+            btn.setToolTipText("<html>" + building.getName() + "<br>" + " This will cost you : " + building.getBaseCost() + "hz<br>" + "This building will give you : " + building.getBaseHPS() + "hz</html>");
             btnBuildings.add(btn);
         }
         return btnBuildings;
@@ -95,13 +101,12 @@ public class Controller {
      */
     public ArrayList<JButton> createUpgradeBtns() {
         ArrayList<JButton> btnUpgrades = new ArrayList<JButton>();
-            for(int i = 0; i < upgrades.size(); i++){
+        for (int i = 0; i < upgrades.size(); i++) {
             JButton btn = new JButton(upgrades.get(i).getName());
             btn.setName(upgrades.get(i).getName()); 
             btn.setToolTipText("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() +" of : " + buildings.get(i).getName() + "</html>");              
             btnUpgrades.add(btn);
         }
-    
         return btnUpgrades;
     }
 
@@ -145,6 +150,9 @@ public class Controller {
             for (int i = 0; i < upgrades.size(); i++) {
                 data += upgrades.get(i).getOwned() + ":";
             }
+            for (int i = 0; i < upgrades.size(); i++) {
+                data += upgrades.get(i).getRequirement() + ":";
+            }
             data += clickCounter + ":" + hertzClicked + ":" + hertzGenerated + ":";
 
             logger.info("Save data sent: " + data);
@@ -175,6 +183,10 @@ public class Controller {
                     }
                     for (int i = 0; i < upgrades.size(); i++) {
                         upgrades.get(i).setOwned(Integer.parseInt(store[n]));
+                        n++;
+                    }
+                    for (int i = 0; i < upgrades.size(); i++) {
+                        upgrades.get(i).setRequirement(Integer.parseInt(store[n]));
                         n++;
                     }
                     clickCounter = Integer.parseInt(store[n]);
@@ -283,6 +295,8 @@ public class Controller {
         updateHertzPerClick();
         uppdateHertzPerSecond();
         uppdateStatistics();
+        uppdateBuildingHPSValue();
+        uppdateToolTip();
     }
 
     /**
@@ -291,6 +305,25 @@ public class Controller {
     public void updateEverySecond() {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
+    }
+
+    public void uppdateBuildingHPSValue() {
+        for (int i = 0; i < buildings.size(); i++) {
+            buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned() * (upgrades.get(i).getOwned()+1);
+            if (upgrades.get(i).getOwned() == 0) {
+                buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned();
+            }
+        }
+    }
+
+    public void uppdateToolTip() {
+        for (int i = 0; i < buildings.size(); i++) {
+            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + " This will cost you : " + hpsFormat.format(buildings.get(i).getPrice()) + "hz<br>" + "This building will give you : " + (buildings.get(i).getBaseHPS() * (upgrades.get(i).getOwned()+1)) + "hz<br>" + "you are geting " + buildingHPSValue[i] + " from all your " + buildings.get(i).getName() + "</html>"), i);
+        }
+        for (int i = 0; i < upgrades.size(); i++) {
+            gui.setToolTipUpgrades("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() + " of : " + buildings.get(i).getName() + "</html>", 1);
+        }
+
     }
 
     /**
@@ -314,10 +347,7 @@ public class Controller {
     public void uppdateHertzPerSecond() {
         hertzPerSecond = 0;
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-            hertzPerSecond += (buildings.get(i).getOwned() * buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned() * 1.5);
-            if (upgrades.get(i).getOwned() == 0) {
-                hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
-            }
+            hertzPerSecond += (buildings.get(i).getOwned() * buildings.get(i).getBaseHPS()) * ((upgrades.get(i).getOwned()+1) );
         }
         gui.updateHertzPerSecond(stringify(hertzPerSecond));
     }
