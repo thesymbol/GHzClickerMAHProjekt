@@ -346,8 +346,13 @@ public class GameGUI {
         JOptionPane.showMessageDialog(null, "[Error] " + message);
     }
 
-    public void setToolTip(String dog, int cat) {
+    public void setToolTipBuildings(String dog, int cat) {
 
         btnBuildings.get(cat).setToolTipText(dog);
+    }
+    
+    public void setToolTipUpgrades(String dog, int cat) {
+
+        btnUpgrades.get(cat).setToolTipText(dog);
     }
 }
