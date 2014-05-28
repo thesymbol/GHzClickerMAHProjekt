@@ -296,16 +296,16 @@ public class Controller {
 
     public void uppdateBuildingHPSValue() {
         for (int i = 0; i < buildings.size(); i++) {
-//            buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned() * upgrades.get(i).getOwned();
-//            if (upgrades.get(i).getOwned() == 0) {
+            buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned() * (upgrades.get(i).getOwned()+1);
+            if (upgrades.get(i).getOwned() == 0) {
                 buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned();
-//            }
+            }
         }
     }
 
     public void uppdateToolTip() {
         for (int i = 0; i < buildings.size(); i++) {
-            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + " This will cost you : " + hpsFormat.format(buildings.get(i).getPrice()) + "hz<br>" + "This building will give you : " + buildings.get(i).getBaseHPS() + "hz<br>" + "you are geting " + buildingHPSValue[i] + " from all your " + buildings.get(i).getName() + "</html>"), i);
+            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + " This will cost you : " + hpsFormat.format(buildings.get(i).getPrice()) + "hz<br>" + "This building will give you : " + (buildings.get(i).getBaseHPS() * (upgrades.get(i).getOwned()+1)) + "hz<br>" + "you are geting " + buildingHPSValue[i] + " from all your " + buildings.get(i).getName() + "</html>"), i);
         }
         for (int i = 0; i < upgrades.size(); i++) {
             gui.setToolTipUpgrades("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() + " of : " + buildings.get(i).getName() + "</html>", 1);
@@ -334,10 +334,10 @@ public class Controller {
     public void uppdateHertzPerSecond() {
         hertzPerSecond = 0;
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
-            hertzPerSecond += (buildings.get(i).getOwned() * buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned() * 2);
-            if (upgrades.get(i).getOwned() == 0) {
-                hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
-            }
+            hertzPerSecond += (buildings.get(i).getOwned() * buildings.get(i).getBaseHPS()) * ((upgrades.get(i).getOwned()+1) );
+//            if (upgrades.get(i).getOwned() == 0) {
+//                hertzPerSecond += buildings.get(i).getOwned() * buildings.get(i).getBaseHPS();
+//            }
         }
         gui.updateHertzPerSecond(stringify(hertzPerSecond));
     }
