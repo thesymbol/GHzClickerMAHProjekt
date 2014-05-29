@@ -313,9 +313,8 @@ public class Controller {
     public void uppdateToolTip() {
         for (int i = 0; i < buildings.size(); i++) {
             gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + " This will cost you : " + hpsFormat.format(buildings.get(i).getPrice()) + "hz<br>" + "This building will give you : " + (buildings.get(i).getBaseHPS() * (upgrades.get(i).getOwned()+1)) + "hz<br>" + "you are geting " + buildingHPSValue[i] + " from all your " + buildings.get(i).getName() + "</html>"), i);
-        }
-        for (int i = 0; i < upgrades.size(); i++) {
-            gui.setToolTipUpgrades("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() + " of : " + buildings.get(i).getName() + "</html>", 1);
+       
+            gui.setToolTipUpgrades("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() + " of : " + buildings.get(i).getName() + "</html>", i);
         }
 
     }
@@ -468,7 +467,7 @@ public class Controller {
                             hertz -= upgrades.get(i).getPrice();
                         }
                     }
-                }
+                }                
             }
         }
     }
