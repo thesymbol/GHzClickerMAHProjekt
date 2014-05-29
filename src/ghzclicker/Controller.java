@@ -70,13 +70,7 @@ public class Controller {
 
         this.network = network;
         netAutoRecon();
-    }
-    public void doge(){
-        int dog;
-        for(int i=0;i<upgrades.size();i++){
-            upgrades.get(i).getOwned();
-        }
-    }
+    }    
 
     /**
      * An ArrayList to create the buttons for the buildings.
