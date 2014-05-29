@@ -39,7 +39,7 @@ public class Upgrade {
      */
     public String getName() {
         return name;
-    }
+    }    
 
     /**
      * Get the BaseCost
@@ -143,5 +143,5 @@ public class Upgrade {
             return true;
         }
         return false;
-    }
+    }   
 }
