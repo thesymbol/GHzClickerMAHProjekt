@@ -301,6 +301,9 @@ public class Controller {
         hertz += hertzPerSecond;
     }
 
+    /**
+     * This updates how much your HPS from a building
+     */
     public void uppdateBuildingHPSValue() {
         for (int i = 0; i < buildings.size(); i++) {
             buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned() * (upgrades.get(i).getOwned()+1);
@@ -309,7 +312,10 @@ public class Controller {
             }
         }
     }
-
+    
+    /**
+     * This updates the tooltip on the gameGUI
+     */
     public void uppdateToolTip() {
         for (int i = 0; i < buildings.size(); i++) {
             gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + " This will cost you : " + stringify(buildings.get(i).getPrice()) + "<br>" + "This building will give you : " + stringify((buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned()+1)) + "<br>" + "you are geting " + stringify(buildingHPSValue[i]) + " from all your " + buildings.get(i).getName() + "</html>"), i);
