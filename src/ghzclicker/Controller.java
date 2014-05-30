@@ -325,7 +325,7 @@ public class Controller {
      */
     public void uppdateToolTip() {
         for (int i = 0; i < buildings.size(); i++) {
-            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + "You have " + buildings.get(i).getOwned() + " " + buildings.get(i).getName() + "<br>" + " This will cost you : " + stringify(buildings.get(i).getPrice()) + "<br>" + "This building will give you : " + stringify((buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned()+1)) + "<br>" + "you are geting " + stringify(buildingHPSValue[i]) + " from all your " + buildings.get(i).getName() + "</html>"), i);
+            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + "You have " + buildings.get(i).getOwned() + " " + buildings.get(i).getName() + "<br>" + " This will cost you : " + stringify(buildings.get(i).getPrice()) + "<br>" + "This building will give you : " + stringify((buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned()+1)) + "<br>" + "You are geting " + stringify(buildingHPSValue[i]) + " from all your " + buildings.get(i).getName() + "s</html>"), i);
     
             gui.setToolTipUpgrades("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() + " of : " + buildings.get(i).getName() + "</html>", i);
         }
