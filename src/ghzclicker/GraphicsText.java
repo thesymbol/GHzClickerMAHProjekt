@@ -59,7 +59,7 @@ public class GraphicsText extends JLabel {
 	}
 
 	/**
-	 * Sets the text in the textobject
+	 * Sets the text in the text object
 	 * 
 	 * @param text the text to be set
 	 */
