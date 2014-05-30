@@ -300,6 +300,13 @@ public class Controller {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
     }
+    
+    /**
+     * This gets updated by the gameloop every minute (used for the timing on building generating "Hertz"
+     */
+    public void updateEveryMinute() {
+        saveGame();
+    }
 
     /**
      * This updates how much your HPS from a building

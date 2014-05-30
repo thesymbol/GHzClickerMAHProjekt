@@ -44,9 +44,16 @@ public class GameLoop {
         // Constant updates (every 1 second).
         exec.scheduleAtFixedRate(new Runnable() {
             public void run() {
-                controller.updateEverySecond();
+                controller.updateEveryMinute();
             }
         }, 0, 1, TimeUnit.SECONDS);
+        
+        // Constant updates (every 1 minute).
+        exec.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                controller.saveGame();
+            }
+        }, 0, 1, TimeUnit.MINUTES);
 
         Runtime.getRuntime().addShutdownHook(new Thread() { // safely close connection to server when game is closing.
             public void run() {
