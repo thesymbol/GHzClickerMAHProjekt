@@ -80,7 +80,7 @@ public class HighScoreManager {
         if (size > max) {
             size = max;
         }
-        
+
         for (int i = 0; i < size; i++) {
             if (saveformat) {
                 highScoreString += res.get(i).getName() + ":" + res.get(i).getScore() + ";";

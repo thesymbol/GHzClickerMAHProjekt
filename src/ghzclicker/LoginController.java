@@ -109,7 +109,7 @@ public class LoginController {
                             JOptionPane.showMessageDialog(null, "Your account is now created!");
                             regGUI.setVisible(false);
                             regGUI.dispose();
-                        } else if(data.equals("regtooshort")){
+                        } else if (data.equals("regtooshort")) {
                             JOptionPane.showMessageDialog(null, "Username or Password is to short, it needs to be atleast 3 letters. Please try another one.");
                         } else {
                             JOptionPane.showMessageDialog(null, "This username already exists. Please try another one.");
