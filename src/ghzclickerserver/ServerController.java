@@ -178,7 +178,7 @@ public class ServerController extends Thread {
         private Socket socket;
         private boolean connected = true;
         private volatile long lastReadTime;
-        private int maxTimeout = 25000;
+        private int maxTimeout = 10000;
 
         /**
          * Opens a connection to and from specified client/socket.
