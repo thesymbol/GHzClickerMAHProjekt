@@ -178,7 +178,7 @@ public class ServerController extends Thread {
         private Socket socket;
         private boolean connected = true;
         private volatile long lastReadTime;
-        private int maxTimeout = 25000;
+        private int maxTimeout = 10000;
 
         /**
          * Opens a connection to and from specified client/socket.
@@ -341,7 +341,7 @@ public class ServerController extends Thread {
             logger.severe("Arduino users.dat not avaiable");
             usersdata = fileHandler.load("", "users.dat");
         }
-        if (username.length() <= 2 || password.length() <= 2) { //username or password too short.
+        if (username.length() <= 2 || password.length() <= 2) { // username or password too short.
             return "regtooshort";
         }
         Iterator<String> itr = usersdata.iterator();
