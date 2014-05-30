@@ -30,6 +30,8 @@ public class GameGUI {
     private JButton btnHertz = new JButton("");
     private JLabel lblText = new JLabel("");
     private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
+    private GraphicsText lblHertz = new GraphicsText("",45);
+    private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
     private JButton btnSave = new JButton("");
     private JButton btnLoad = new JButton("");
     private JButton btnHighScore = new JButton("");
@@ -38,7 +40,6 @@ public class GameGUI {
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new JPanel();
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-    // private JTabbedPane tabbedPane = new JTabbedPane(); Do we still need this one?
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
     private CardLayout cl = new CardLayout();
