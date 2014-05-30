@@ -444,6 +444,7 @@ public class Controller {
             // Save button
             if (e.getSource() == gui.getBtnSave()) {
                 saveGame();
+                updateHighScore();
             }
 
             // Load button
