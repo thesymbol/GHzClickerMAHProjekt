@@ -291,6 +291,10 @@ public class GameGUI {
     public void updateUpgradeCost(int i, String cost) {
         btnUpgrades.get(i).setText(btnUpgrades.get(i).getName() + " " + cost);
     }
+    
+    public void upgradeMaxedOut(int upgradeId){
+        btnUpgrades.get(upgradeId).setText(btnUpgrades.get(upgradeId).getName() + " is maxed out");
+    }
 
     /**
      * Update and sets your new hertz value all the time
