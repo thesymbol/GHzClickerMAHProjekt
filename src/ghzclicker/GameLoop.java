@@ -44,14 +44,14 @@ public class GameLoop {
         // Constant updates (every 1 second).
         exec.scheduleAtFixedRate(new Runnable() {
             public void run() {
-                controller.updateEveryMinute();
+                controller.updateEverySecond();
             }
         }, 0, 1, TimeUnit.SECONDS);
         
         // Constant updates (every 1 minute).
         exec.scheduleAtFixedRate(new Runnable() {
             public void run() {
-                controller.saveGame();
+                controller.updateEveryMinute();
             }
         }, 0, 1, TimeUnit.MINUTES);
 
