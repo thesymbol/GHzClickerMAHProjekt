@@ -390,7 +390,7 @@ public class Controller {
 
         for (int i = 0; i < upgrades.size(); i++) {
            if(upgrades.get(i).getOwned()==upgrades.get(i).getMaxOwned()){
-               
+               gui.upgradeMaxedOut(i);
            }else{
             upgrades.get(i).calculateCosts();
             gui.updateUpgradeCost(i, stringify(upgrades.get(i).getPrice()));
@@ -417,8 +417,7 @@ public class Controller {
 
             if (upgrades.get(i).canBuyUpgrade(hertz) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-            } else if (max==upgOwned){
-                gui.upgradeMaxedOut(i);
+            } else if (max==upgOwned){                               
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
