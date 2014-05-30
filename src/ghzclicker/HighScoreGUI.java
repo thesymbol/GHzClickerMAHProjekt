@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
 public class HighScoreGUI extends JPanel {
     private static final long serialVersionUID = 1L;
     private JPanel pnlHighScoreWindow = new BGPanel("res/wallpaper.png");
-    private JTextArea txtHighScore = new JTextArea();
+    private GraphicsText txtHighScore = new GraphicsText("", 30);
     private JScrollPane scrollPane = new JScrollPane(txtHighScore);
     private JButton btnBack = new JButton("");
     private JLabel lblHighScore = new JLabel("HIGH SCORE");
@@ -67,12 +67,7 @@ public class HighScoreGUI extends JPanel {
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(null);
         scrollPane.setViewportBorder(null);
-
-        txtHighScore.setEditable(false);
-        txtHighScore.setOpaque(false);
-        txtHighScore.setFont(new Font("Arial", Font.BOLD, 30));
-        txtHighScore.setForeground(Color.BLACK);
-
+        
         setVisible(true);
     }
 
@@ -92,6 +87,7 @@ public class HighScoreGUI extends JPanel {
      */
     public void setHighScore(String highScore) {
         txtHighScore.setText(highScore);
+        txtHighScore.repaint();
     }
 
 }
