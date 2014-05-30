@@ -293,7 +293,7 @@ public class GameGUI {
     }
     
     public void upgradeMaxedOut(int upgradeId){
-        btnUpgrades.get(upgradeId).setText(btnUpgrades.get(upgradeId).getName() + " is maxed out");
+        btnUpgrades.get(upgradeId).setText(btnUpgrades.get(upgradeId).getName() + " is maxed");
     }
 
     /**
