@@ -122,5 +122,5 @@ public class Building {
             return true;
         }
         return false;
-    }    
+    }
 }

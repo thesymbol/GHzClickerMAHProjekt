@@ -38,7 +38,7 @@ public class GameGUI {
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
-    private JPanel pnlStatistics = new JPanel();    
+    private JPanel pnlStatistics = new JPanel();
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
     // private JTabbedPane tabbedPane = new JTabbedPane(); Do we still need this one?
     private ArrayList<JButton> btnBuildings;
@@ -163,7 +163,7 @@ public class GameGUI {
         taStatistics.setHighlighter(null);
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
-        tabbedPane.add(pnlStatistics, "Statistics");        
+        tabbedPane.add(pnlStatistics, "Statistics");
         pnlGame.add(tabbedPane);
 
         pnlGame.add(btnSave);
@@ -296,6 +296,10 @@ public class GameGUI {
     public void updateUpgradeCost(int i, String cost) {
         btnUpgrades.get(i).setText(btnUpgrades.get(i).getName() + " " + cost);
     }
+    
+    public void upgradeMaxedOut(int upgradeId){
+        btnUpgrades.get(upgradeId).setText(btnUpgrades.get(upgradeId).getName() + " is maxed");
+    }
 
     /**
      * Update and sets your new hertz value all the time
@@ -353,13 +357,23 @@ public class GameGUI {
         JOptionPane.showMessageDialog(null, "[Error] " + message);
     }
 
-    public void setToolTipBuildings(String dog, int cat) {
-
-        btnBuildings.get(cat).setToolTipText(dog);
+    /**
+     * sets the tooltip for the buildings
+     * 
+     * @param tooltipText The text to display in the tooltip
+     * @param buildingId The id of the building in the btnBuildings array.
+     */
+    public void setToolTipBuildings(String tooltipText, int buildingId) {
+        btnBuildings.get(buildingId).setToolTipText(tooltipText);
     }
-    
-    public void setToolTipUpgrades(String dog, int cat) {
 
-        btnUpgrades.get(cat).setToolTipText(dog);
+    /**
+     * sets the tooltip for the upgrades
+     * 
+     * @param tooltipText The text to display in the tooltip
+     * @param upgradeId The id of the upgrade in the btnUpgrades array.
+     */
+    public void setToolTipUpgrades(String tooltipText, int upgradeId) {
+        btnUpgrades.get(upgradeId).setToolTipText(tooltipText);
     }
 }
