@@ -88,9 +88,7 @@ public class GameGUI {
         cl.show(pnlCont, "1");
 
         // Setting locations and size.
-//        lblText.setBounds(50, 50, 500, 50);
         btnHertz.setBounds(175, 200, 150, 50);
-//        lblHertzPerSecond.setBounds(50, 75, 200, 50);
         btnSave.setBounds(125, 455, 100, 50);
         btnLoad.setBounds(280, 455, 100, 50);
         btnHighScore.setBounds(135, 380, 230, 50);
@@ -168,9 +166,6 @@ public class GameGUI {
         pnlGame.add(btnHighScore);
         lblHertz.setBounds(120,60,500,50);
         lblHertzPerSecond.setBounds(65, 130, 500, 30);
-
-//        lblText.setFont(new Font("Arial", Font.BOLD, 16));
-//        pnlGame.add(lblText);
 
         // Adding listeners
         btnHertz.addActionListener(listener);

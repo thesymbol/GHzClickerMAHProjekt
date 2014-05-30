@@ -23,7 +23,7 @@ public class HighScoreGUI extends JPanel {
     private GraphicsText txtHighScore = new GraphicsText("", 30);
     private JScrollPane scrollPane = new JScrollPane(txtHighScore);
     private JButton btnBack = new JButton("");
-    private JLabel lblHighScore = new JLabel("HIGH SCORE");
+    private JLabel lblHighScore = new JLabel("");
     private ImageIcon iconBack = new ImageIcon("res/btnBack.png");
     private ImageIcon iconBackPressed = new ImageIcon("res/btnBackPressed.png");
     private ImageIcon iconHighScore = new ImageIcon("res/highscore.png");
@@ -34,11 +34,11 @@ public class HighScoreGUI extends JPanel {
      * @param listener Adding ActionListeners to the buttons.
      */
     public HighScoreGUI(ActionListener listener) {
-        setBackground(Color.lightGray);
+        setBackground(Color.white);
         pnlHighScoreWindow.setPreferredSize(new Dimension(800, 553));
         add(pnlHighScoreWindow);
         // The panel
-        pnlHighScoreWindow.setBackground(Color.lightGray);
+        pnlHighScoreWindow.setBackground(Color.white);
         pnlHighScoreWindow.setLayout(null);
 
         // Back button
@@ -60,7 +60,8 @@ public class HighScoreGUI extends JPanel {
         pnlHighScoreWindow.add(scrollPane);
 
         // Txt
-        scrollPane.setBounds(20, 90, 770, 430);
+        txtHighScore.setPreferredSize(new Dimension(770, 1260));
+        scrollPane.setBounds(17, 85, 770, 425);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setOpaque(false);
