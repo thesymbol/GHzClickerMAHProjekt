@@ -305,7 +305,10 @@ public class Controller {
      * This gets updated by the gameloop every minute (used for the timing on building generating "Hertz"
      */
     public void updateEveryMinute() {
-        saveGame();
+        if(username != "") {
+            saveGame();
+            updateHighScore();
+        }
     }
 
     /**
@@ -423,6 +426,15 @@ public class Controller {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
         }
+    }
+    
+    /**
+     * Get the username of the currently logged in user.
+     * 
+     * @return The username of the currently logged in user.
+     */
+    public String getUsername() {
+        return username;
     }
 
     /**

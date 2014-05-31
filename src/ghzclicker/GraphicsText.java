@@ -8,7 +8,6 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.TextLayout;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 /**
@@ -18,7 +17,8 @@ import javax.swing.JLabel;
  * 
  */
 public class GraphicsText extends JLabel {
-	private String text = "0";
+    private static final long serialVersionUID = 1L;
+    private String text = "0";
 	private int size;
 	private boolean antialiasing = true;
 

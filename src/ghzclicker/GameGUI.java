@@ -30,8 +30,8 @@ public class GameGUI {
     private JButton btnHertz = new JButton("");
     private JLabel lblText = new JLabel("");
     private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
-    private GraphicsText lblHertz = new GraphicsText("",45);
-    private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
+    //private GraphicsText lblHertz = new GraphicsText("",45);
+    //private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
     private JButton btnSave = new JButton("");
     private JButton btnLoad = new JButton("");
     private JButton btnHighScore = new JButton("");
