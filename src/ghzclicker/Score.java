@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Score implements Serializable {
     private static final long serialVersionUID = 1L;
     private double score;
-    private String namee;
+    private String name;
 
     /**
      * Construct a Score with name and score
