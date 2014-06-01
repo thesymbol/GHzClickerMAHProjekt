@@ -1,43 +1,58 @@
-<project name="GHzClickerClientBuild" default="dist" basedir=".">
-    <description>
-        simple example build file
-    </description>
+<project name="GHzClickerBuild" default="dist" basedir=".">
     <!-- set global properties for this build -->
-    <property name="srcClient" location="src/ghzclicker"/>
-    <property name="srcServer" location="src/ghzclickerserver"/>
-    <property name="buildClient" location="buildClient"/>
-    <property name="buildServer" location="buildServer"/>
-    <property name="dist" location="dist"/>
+    <property name="build.dir" location="build"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="src.client.dir" location="src/ghzclicker"/>
+    <property name="src.server.dir" location="src/ghzclickerserver"/>
+    <property name="build.client.dir" location="${build.dir}/client"/>
+    <property name="build.server.dir" location="${build.dir}/server"/>
+    <property name="client.main.class" value="ghzclicker.Main"/>
+    <property name="server.main.class" value="ghzclickerserver.Server"/>
+    <property name="client.res" location="res"/>
     
-    <target name="init">
+    
+    <target name="dist" depends="run" />
+
+    <target name="build" depends="clean" description="build the source">
         <!-- Create the time stamp -->
         <tstamp/>
 
         <!-- Create the build directory structure used by compile -->
-        <mkdir dir="${buildClient}"/>
-        <mkdir dir="${buildServer}"/>
-    </target>
-    
-    <target name="compile" depends="init" description="compile the source">
-        <!-- Compile the java code from ${src} into ${build} -->
-        <javac srcdir="${srcClient}" destdir="${buildClient}"/>
-        <javac srcdir="${srcServer}" destdir="${buildServer}"/>
-    </target>
-    
-    <target name="dist" depends="compile" description="generate the distribution">
-        <!-- Create the distribution directory -->
-        <mkdir dir="${dist}/lib"/>
+        <mkdir dir="${build.client.dir}"/>
+        <javac srcdir="${src.client.dir}" destdir="${build.client.dir}" includeantruntime="false"/>
         
-        <!-- Put everthing in ${build} into the GHzClickerClient-${DSTAMP}.jar file -->
-        <jar jarfile="${dist}/lib/GHzClickerClient-${DSTAMP}.jar" basedir="${buildClient}"/>
+        <mkdir dir="${build.server.dir}"/>
+        <javac srcdir="${src.server.dir}" destdir="${build.server.dir}" includeantruntime="false"/>
 
-        <!-- Put everthing in ${build} into the GHzClickerServer-${DSTAMP}.jar file -->
-        <jar jarfile="${dist}/lib/GHzClickerServer-${DSTAMP}.jar" basedir="${buildServer}"/>
+        <echo message="Build done" />
+    </target>
+    
+    <target name="run" depends="build" description="run the build">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist.dir}"/>
+        
+        <jar destfile="${dist.dir}/GHzClickerClient-${DSTAMP}.jar" basedir="${build.client.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${client.main.class}"/>
+            </manifest>
+        </jar>
+        <jar destfile="${dist.dir}/GHzClickerServer-${DSTAMP}.jar" basedir="${build.server.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${server.main.class}"/>
+            </manifest>
+        </jar>
+        <copy todir="${dist.dir}/res">
+            <fileset dir="${client.res}">
+                <include name="**/*.png"/>
+                <include name="**/*.wav"/>
+            </fileset>
+        </copy>
     </target>
     
     <target name="clean" description="Clean up">
         <!-- Delete the ${build} and ${dist} directory trees -->
-        <delete dir="${build}"/>
-        <delete dir="${dist}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <echo message="clean done" />
     </target>
 </project>

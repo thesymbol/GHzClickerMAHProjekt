@@ -1,5 +1,4 @@
 ﻿language: java
-install: ant init
 jdk:
   - oraclejdk7
   - openjdk7
