@@ -55,6 +55,7 @@ public class LoginController {
                     controller.loadGameServer();
                     controller.guiSetVisibel(true);
                     controller.setUsernamePassword(username, password);
+                    controller.startBackgroundMusic();
                 } else if (ret.equals("alreadylogged")) {
                     JOptionPane.showMessageDialog(null, "User is already logged in to another session");
                 } else {
