@@ -1,2 +1,4 @@
 ﻿language: java
 script: ant test
+notifications:
+  email: false
