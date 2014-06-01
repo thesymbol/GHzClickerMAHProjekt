@@ -1,4 +1,4 @@
-<project name="GHzClickerBuild" default="dist" basedir=".">
+<project name="GHzClickerBuild" default="test" basedir=".">
     <!-- set global properties for this build -->
     <property name="build.dir" location="build"/>
     <property name="dist.dir" location="dist"/>
@@ -11,7 +11,7 @@
     <property name="client.res" location="res"/>
     
     
-    <target name="dist" depends="run" />
+    <target name="test" depends="run" />
 
     <target name="build" depends="clean" description="build the source">
         <!-- Create the time stamp -->
