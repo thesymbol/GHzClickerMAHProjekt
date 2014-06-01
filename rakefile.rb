@@ -1,3 +1,3 @@
 task :default do
-    'ant run'
+    `ant run`
 end
