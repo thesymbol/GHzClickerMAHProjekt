@@ -58,6 +58,10 @@ public class GameLoop {
         Runtime.getRuntime().addShutdownHook(new Thread() { // safely close connection to server when game is closing.
             public void run() {
                 try {
+                    if(controller.getUsername() != "") {
+                        controller.saveGame();
+                        controller.updateHighScore();
+                    }
                     network.sendData("closeconnection");
                     network.close();
                     logger.info("Closing game");

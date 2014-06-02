@@ -29,11 +29,12 @@ public class GameGUI {
     private JFrame frame = new JFrame("Ghz Clicker");
     private JButton btnHertz = new JButton("");
     private JLabel lblText = new JLabel("");    
-    private GraphicsText lblHertz = new GraphicsText("",45);
-    private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
+    //private GraphicsText lblHertz = new GraphicsText("",45);
+    //private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
     private JButton btnSave = new JButton("");
     private JButton btnLoad = new JButton("");
     private JButton btnHighScore = new JButton("");
+    private JButton stopMusic =  new JButton("Stop Music");
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
@@ -96,6 +97,7 @@ public class GameGUI {
         btnLoad.setBounds(280, 455, 100, 50);
         btnHighScore.setBounds(135, 380, 230, 50);
         pnlStatistics.setBounds(250, 0, 400, 220);
+        stopMusic.setBounds(175, 300, 150, 50);
 
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
@@ -108,6 +110,7 @@ public class GameGUI {
         // Adding the button and label to the frame.
         pnlGame.add(btnHertz);
         pnlGame.add(lblHertzPerSecond);
+        pnlGame.add(stopMusic);
         pnlGame.setLayout(null);
 
         // Adding btnUpgrades to btnUpg.
@@ -175,6 +178,7 @@ public class GameGUI {
         btnSave.addActionListener(listener);
         btnLoad.addActionListener(listener);
         btnHighScore.addActionListener(listener);
+        stopMusic.addActionListener(listener);
 
         // Setting instructions for the frame.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -261,6 +265,15 @@ public class GameGUI {
      */
     public JButton getBtnBackHighScore() {
         return pnlHighScore.getBtnBack();
+    }
+    
+    /**
+     * Returns the stop music button
+     * 
+     * @return the stop music button
+     */
+    public JButton getBtnStopMusic(){
+    	return stopMusic;
     }
 
     /**

@@ -1,8 +1,12 @@
 package ghzclicker;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -38,6 +42,9 @@ public class Controller {
     private HighScoreManager hsManager = new HighScoreManager(this);
     private final static Logger logger = ClientLogger.getLogger();
     private int[] buildingHPSValue;
+	private AudioClip ghzSound;
+	private AudioClip backgroundMusic;
+	private boolean stopMusic = false;
 
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
@@ -67,9 +74,30 @@ public class Controller {
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
+        
+        loadSounds();
 
         this.network = network;
         netAutoRecon();
+    }
+    
+    /**
+     * Loading all the game sounds
+     */
+    public void loadSounds(){
+    	try {
+			this.ghzSound = Applet.newAudioClip( new URL("file:res/GhzSound.wav") );
+			this.backgroundMusic = Applet.newAudioClip( new URL("file:res/BackgroundMusic.wav") );
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Starting the background music
+     */
+    public void startBackgroundMusic(){
+    	backgroundMusic.loop();
     }
 
     /**
@@ -305,7 +333,10 @@ public class Controller {
      * This gets updated by the gameloop every minute (used for the timing on building generating "Hertz"
      */
     public void updateEveryMinute() {
-        saveGame();
+        if(username != "") {
+            saveGame();
+            updateHighScore();
+        }
     }
 
     /**
@@ -424,6 +455,15 @@ public class Controller {
             }
         }
     }
+    
+    /**
+     * Get the username of the currently logged in user.
+     * 
+     * @return The username of the currently logged in user.
+     */
+    public String getUsername() {
+        return username;
+    }
 
     /**
      * Action listener for button presses
@@ -439,6 +479,7 @@ public class Controller {
             if (e.getSource() == gui.getBtnHertz()) {
                 clickCounter++;
                 hertzClicked();
+                ghzSound.play();
             }
 
             // Save button
@@ -461,6 +502,20 @@ public class Controller {
             // High Score button back
             if (e.getSource() == gui.getBtnBackHighScore()) {
                 gui.setCard("1");
+            }
+            
+            // Stop Music button
+            if(e.getSource() == gui.getBtnStopMusic()){
+            	if(stopMusic){
+            		stopMusic = false;
+            		backgroundMusic.loop();
+            		gui.getBtnStopMusic().setText("Stop Music");
+            		
+            	} else {
+            		stopMusic = true;
+            		backgroundMusic.stop();
+            		gui.getBtnStopMusic().setText("Play Music");
+            	}
             }
 
             // Building purcheses.

@@ -1,0 +1,58 @@
+<project name="GHzClickerBuild" default="test" basedir=".">
+    <!-- set global properties for this build -->
+    <property name="build.dir" location="build"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="src.client.dir" location="src/ghzclicker"/>
+    <property name="src.server.dir" location="src/ghzclickerserver"/>
+    <property name="build.client.dir" location="${build.dir}/client"/>
+    <property name="build.server.dir" location="${build.dir}/server"/>
+    <property name="client.main.class" value="ghzclicker.Main"/>
+    <property name="server.main.class" value="ghzclickerserver.Server"/>
+    <property name="client.res" location="res"/>
+    
+    
+    <target name="test" depends="run" />
+
+    <target name="build" depends="clean" description="build the source">
+        <!-- Create the time stamp -->
+        <tstamp/>
+
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build.client.dir}"/>
+        <javac srcdir="${src.client.dir}" destdir="${build.client.dir}" includeantruntime="false"/>
+        
+        <mkdir dir="${build.server.dir}"/>
+        <javac srcdir="${src.server.dir}" destdir="${build.server.dir}" includeantruntime="false"/>
+
+        <echo message="Build done" />
+    </target>
+    
+    <target name="run" depends="build" description="run the build">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist.dir}"/>
+        
+        <jar destfile="${dist.dir}/GHzClickerClient-${DSTAMP}.jar" basedir="${build.client.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${client.main.class}"/>
+            </manifest>
+        </jar>
+        <jar destfile="${dist.dir}/GHzClickerServer-${DSTAMP}.jar" basedir="${build.server.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${server.main.class}"/>
+            </manifest>
+        </jar>
+        <copy todir="${dist.dir}/res">
+            <fileset dir="${client.res}">
+                <include name="**/*.png"/>
+                <include name="**/*.wav"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="clean" description="Clean up">
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <echo message="clean done" />
+    </target>
+</project>
