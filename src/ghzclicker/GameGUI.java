@@ -28,8 +28,7 @@ public class GameGUI {
     // Making buttons with buildings and hertz button and a Label for the hertz
     private JFrame frame = new JFrame("Ghz Clicker");
     private JButton btnHertz = new JButton("");
-    private JLabel lblText = new JLabel("");
-    private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
+    private JLabel lblText = new JLabel("");    
     private GraphicsText lblHertz = new GraphicsText("",45);
     private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
     private JButton btnSave = new JButton("");
