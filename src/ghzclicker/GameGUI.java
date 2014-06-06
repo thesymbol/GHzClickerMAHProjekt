@@ -28,25 +28,31 @@ public class GameGUI {
     // Making buttons with buildings and hertz button and a Label for the hertz
     private JFrame frame = new JFrame("Ghz Clicker");
     private JButton btnHertz = new JButton("");
-    private JLabel lblText = new JLabel("");    
+    private JLabel lblText = new JLabel("");
+    private JLabel lblHertzPerSecond = new JLabel("Hertz per second : ");
     //private GraphicsText lblHertz = new GraphicsText("",45);
     //private GraphicsText lblHertzPerSecond = new GraphicsText("Hertz per second : ",25);
     private JButton btnSave = new JButton("");
     private JButton btnLoad = new JButton("");
     private JButton btnHighScore = new JButton("");
     private JButton stopMusic =  new JButton("Stop Music");
+    private JButton btnAboutUs = new JButton("About US");
     private JTextArea taStatistics = new JTextArea();
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new JPanel();
+    private JPanel pnlAchievements;
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
+    private ArrayList<JButton> btnAchievements;
     private CardLayout cl = new CardLayout();
     private JPanel pnlGame = new BGPanel("res/wallpaper.png");
     private JPanel pnlCont = new JPanel();
-    private JPanel pnlHS;
-    private HighScoreGUI pnlHighScore;
+    private JPanel pnlHS;    
+    private HighScoreGUI pnlHighScore;   
+    private JPanel pnlAU;
+    private AboutUs pnlAboutUs;
     // Button icons
     private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
     private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
@@ -63,11 +69,13 @@ public class GameGUI {
      * @param btnBuildings , adding the buildings to the GUI
      * @param listener , adding listeners to the buttons.
      */
-    public GameGUI(ArrayList<JButton> btnBuildings, ArrayList<JButton> btnUpgrades, ActionListener listener) {
+    public GameGUI(ArrayList<JButton> btnBuildings, ArrayList<JButton> btnUpgrades, ArrayList<JButton> btnAchievements, ActionListener listener) {
         this.btnBuildings = btnBuildings;
         this.btnUpgrades = btnUpgrades;
+        this.btnAchievements = btnAchievements;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
         pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
+        pnlAchievements = new JPanel(new GridLayout(10, 10));
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
         Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
@@ -78,8 +86,11 @@ public class GameGUI {
         tabbedPane.setOpaque(false);
         UIManager.put("TabbedPane.contentBorderInsets", oldInsets);
         pnlStatistics.setOpaque(false);
+        pnlAchievements.setOpaque(false);
         pnlHighScore = new HighScoreGUI(listener);
+        pnlAboutUs = new AboutUs(listener);
         pnlHS = pnlHighScore;
+        pnlAU = pnlAboutUs;
         // Main panel
         frame.setPreferredSize(new Dimension(800, 553));
         frame.setResizable(false);
@@ -87,7 +98,9 @@ public class GameGUI {
         frame.add(pnlCont);
         pnlCont.add(pnlGame, "1");
         pnlCont.add(pnlHS, "2");
+        pnlCont.add(pnlAU, "3");
         cl.show(pnlCont, "1");
+        
 
         // Setting locations and size.
         lblText.setBounds(50, 50, 500, 50);
@@ -98,6 +111,7 @@ public class GameGUI {
         btnHighScore.setBounds(135, 380, 230, 50);
         pnlStatistics.setBounds(250, 0, 400, 220);
         stopMusic.setBounds(175, 300, 150, 50);
+        btnAboutUs.setBounds(0, 455, 100, 50);
 
         tabbedPane.setBounds(500, 0, 300, btnBuildings.size() * 75);
 
@@ -111,6 +125,7 @@ public class GameGUI {
         pnlGame.add(btnHertz);
         pnlGame.add(lblHertzPerSecond);
         pnlGame.add(stopMusic);
+        pnlGame.add(btnAboutUs);
         pnlGame.setLayout(null);
 
         // Adding btnUpgrades to btnUpg.
@@ -155,16 +170,37 @@ public class GameGUI {
 
             pnlBuilding.add(btn);
         }
+        for (JButton btn : btnAchievements) {
+
+            // Set size of button
+            btn.setSize(new Dimension(20, 20));
+
+            // Position text over image
+            btn.setVerticalTextPosition(JButton.CENTER);
+            btn.setHorizontalTextPosition(JButton.CENTER);
+
+            // Set to disabled in begining.
+            btn.setEnabled(false);
+
+            btn.setFont(new Font("Arial", Font.BOLD, 16));
+            btn.setForeground(Color.black);
+
+            pnlAchievements.add(btn);
+        }
 
         // Continues adding the button and label to the frame.
         pnlStatistics.add(taStatistics);
         taStatistics.setFont(new Font("Arial", Font.BOLD, 12));
         taStatistics.setEditable(false);
         taStatistics.setHighlighter(null);
+        
         tabbedPane.add(pnlBuilding, "Buildings");
         tabbedPane.add(pnlUpgrade, "Upgrades");
         tabbedPane.add(pnlStatistics, "Statistics");
+        tabbedPane.add(pnlAchievements, "Achievements");
         pnlGame.add(tabbedPane);
+        
+        
 
         pnlGame.add(btnSave);
         pnlGame.add(btnLoad);
@@ -179,6 +215,7 @@ public class GameGUI {
         btnLoad.addActionListener(listener);
         btnHighScore.addActionListener(listener);
         stopMusic.addActionListener(listener);
+        btnAboutUs.addActionListener(listener);
 
         // Setting instructions for the frame.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -203,7 +240,7 @@ public class GameGUI {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
     }
-
+    
     /**
      * Get hertz button
      * 
@@ -248,6 +285,9 @@ public class GameGUI {
     public ArrayList<JButton> getBtnUpgrades() {
         return btnUpgrades;
     }
+    public ArrayList<JButton> getBtnAchievements() {
+        return btnAchievements;
+    }
 
     /**
      * Returns the high score button
@@ -268,12 +308,30 @@ public class GameGUI {
     }
     
     /**
+     * Get AboutUs button
+     * 
+     * @return the AboutUs button.
+     */    
+    public JButton getBtnAboutUs(){
+        return btnAboutUs;
+    }
+    
+    /**
+    * Returns the AboutUs gui's back button
+    * 
+    * @return the AboutUs back button
+    */
+    public JButton getBtnBackAboutUs() {
+        return  pnlAboutUs.getBtnBack();
+    }
+    
+    /**
      * Returns the stop music button
      * 
      * @return the stop music button
      */
     public JButton getBtnStopMusic(){
-    	return stopMusic;
+        return stopMusic;
     }
 
     /**
@@ -334,7 +392,7 @@ public class GameGUI {
      */
     public void updateStatistics(String statistics) {
         taStatistics.setText(statistics);
-    }
+    } 
 
     /**
      * Decide which GUI to show using cardlayout.
@@ -381,5 +439,5 @@ public class GameGUI {
      */
     public void setToolTipUpgrades(String tooltipText, int upgradeId) {
         btnUpgrades.get(upgradeId).setToolTipText(tooltipText);
-    }
+    }    
 }
