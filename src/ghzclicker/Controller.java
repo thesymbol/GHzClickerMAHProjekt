@@ -2,6 +2,7 @@ package ghzclicker;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  * A class that controlls the whole program. Having all the logics within the application
@@ -42,9 +44,11 @@ public class Controller {
     private HighScoreManager hsManager = new HighScoreManager(this);
     private final static Logger logger = ClientLogger.getLogger();
     private int[] buildingHPSValue;
-	private AudioClip ghzSound;
-	private AudioClip backgroundMusic;
-	private boolean stopMusic = false;
+    private AudioClip ghzSound;
+    private AudioClip backgroundMusic;
+    private boolean stopMusic = false;
+
+    private ArrayList<Achievements> achievements;
 
     /**
      * Constructor which adds the network and the building buttons Adding hertz to an ArrayList.
@@ -72,32 +76,108 @@ public class Controller {
         upgrades.add(new Upgrade("Processor upgrade", 4000000, 200, 10, 3));
         upgrades.add(new Upgrade("MotherBoard upgrade", 30000000, 200, 10, 3));
 
+        
+
+        achievements = new ArrayList<Achievements>();
+        achievements.add(new Achievements("clicked 10 times", 10));
+        achievements.add(new Achievements("clicked 500 times", 500));
+        achievements.add(new Achievements("clicked 10000 times", 10000));
+        achievements.add(new Achievements("generated 100", 100));
+        achievements.add(new Achievements("generated 10000", 10000));
+        achievements.add(new Achievements("generated 1000000", 1000000));
+        achievements.add(new Achievements("generated 100000000", 100000000));
+        achievements.add(new Achievements("You got 1 hardrive", 1));
+        achievements.add(new Achievements("Not bad 10 HarDrives, You're getting somewhere", 10));
+        achievements.add(new Achievements("100 HardDrives, thats alot of information.", 100));
+        achievements.add(new Achievements("1 RAM not bad but i have OVER 9000", 1));
+        achievements.add(new Achievements("10 RAM", 10));
+        achievements.add(new Achievements("like you ever need 100 RAM", 100));
+        achievements.add(new Achievements("1 PowerSupply, now you can run your computer",1));
+        achievements.add(new Achievements("Comeon man you no need 10 powerSupplys okej?",10));
+        achievements.add(new Achievements("Okej, This is ridiculous 100 PowerSupply realy?", 100));
+        achievements.add(new Achievements("Nice an SSD", 1));
+        achievements.add(new Achievements("10 SSD i quess its okej", 10));
+        achievements.add(new Achievements("100SSD", 100));
+        achievements.add(new Achievements("1 Graphic card, now you can play some games", 1));
+        achievements.add(new Achievements("man what games do you need 10 Graphics card?", 10));
+        achievements.add(new Achievements("Crysis 45 on ultra or why 100 Graphics card?", 100));
+        achievements.add(new Achievements("1 Processor", 1));
+        achievements.add(new Achievements("10 Processor", 10));
+        achievements.add(new Achievements("100 Processor", 100));
+        achievements.add(new Achievements("1 MotherBoard", 1));
+        achievements.add(new Achievements("10 MotherBoard", 10));
+        achievements.add(new Achievements("100 MotherBoard", 100));
+        achievements.add(new Achievements("10 of all buildings", 10));
+        achievements.add(new Achievements("100 of all buildings, You realy likes overkill", 100));
+        
         Listener listener = new Listener();
-        gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), listener);
+        gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), createAchievementsBtns(), listener);
         
         loadSounds();
 
         this.network = network;
         netAutoRecon();
+    }    
+
+    /**
+     * This checks if you have any new achievements
+     */
+    public void unlock() {
+        int achievementsID;
+        int dog;
+        int diff = 0;
+        for (achievementsID = 0; achievementsID < 3; achievementsID++) {
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement((int) hertzClicked));
+        }
+        for (; achievementsID < 7; achievementsID++) {
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement((int) hertzGenerated));
+        }
+        for (dog = 0; dog < buildings.size(); dog++) {
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(dog).getOwned()));
+            achievementsID++;
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(dog).getOwned()));
+            achievementsID++;
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(dog).getOwned()));
+            achievementsID++;
+        }
+        for (dog = 0; dog < buildings.size() && diff == 0; dog++) {
+            if (buildings.get(dog).getOwned() < 10) {
+                diff = 1;
+            }
+        }
+        if (diff == 0) {
+            achievements.get(achievementsID).setOwned(true);
+        }
+
+        achievementsID++;
+        for (dog = 0; dog < buildings.size() && diff == 0; dog++) {
+            if (buildings.get(dog).getOwned() < 100) {
+                diff = 1;
+            }
+        }
+        if (diff == 0) {
+            achievements.get(achievementsID).setOwned(true);
+        }
+        achievementsID++;
     }
-    
+
     /**
      * Loading all the game sounds
      */
-    public void loadSounds(){
-    	try {
-			this.ghzSound = Applet.newAudioClip( new URL("file:res/GhzSound.wav") );
-			this.backgroundMusic = Applet.newAudioClip( new URL("file:res/BackgroundMusic.wav") );
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+    public void loadSounds() {
+        try {
+            this.ghzSound = Applet.newAudioClip(new URL("file:res/GhzSound.wav"));
+            this.backgroundMusic = Applet.newAudioClip(new URL("file:res/BackgroundMusic.wav"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     /**
      * Starting the background music
      */
-    public void startBackgroundMusic(){
-    	backgroundMusic.loop();
+    public void startBackgroundMusic() {
+        backgroundMusic.loop();
     }
 
     /**
@@ -131,6 +211,23 @@ public class Controller {
         }
         return btnUpgrades;
     }
+    
+    /**
+     * An ArrayList to crate the achievements for in the game.
+     * 
+     * @return the achievements buttons.
+     */
+    public ArrayList<JButton> createAchievementsBtns() {
+        ArrayList<JButton> btnAchievements = new ArrayList<JButton>();
+        for (Achievements achievement : achievements) {
+            JButton btn = new JButton(achievement.getName());
+            btn.setName(achievement.getName()); // Set the name of the button
+            btn.setToolTipText("<html>" + achievement.getName() +"<br>" + "</html>");
+            btnAchievements.add(btn);
+        }
+        return btnAchievements;
+    }
+    
 
     /**
      * Automaticly reconnect to the server with timer tasks.
@@ -313,12 +410,15 @@ public class Controller {
         calculateCosts();
 
         grayify();
+        unlock();
 
         updateHertzPerClick();
         uppdateHertzPerSecond();
-        uppdateStatistics();
         uppdateBuildingHPSValue();
         uppdateToolTip();
+        uppdateStatistics();
+
+        
     }
 
     /**
@@ -328,14 +428,15 @@ public class Controller {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
     }
-    
+
     /**
      * This gets updated by the gameloop every minute (used for the timing on building generating "Hertz"
      */
     public void updateEveryMinute() {
-        if(username != "") {
+        if (username != "") {
             saveGame();
             updateHighScore();
+
         }
     }
 
@@ -356,8 +457,8 @@ public class Controller {
      */
     public void uppdateToolTip() {
         for (int i = 0; i < buildings.size(); i++) {
-            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + "You have " + buildings.get(i).getOwned() + " " + buildings.get(i).getName() + "<br>" + " This will cost you : " + stringify(buildings.get(i).getPrice()) + "<br>" + "This building will give you : " + stringify((buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned()+1)) + "<br>" + "You are geting " + stringify(buildingHPSValue[i]) + " from all your " + buildings.get(i).getName() + "s</html>"), i);
-    
+            gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + "You have " + buildings.get(i).getOwned() + " " + buildings.get(i).getName() + "<br>" + " This will cost you : " + stringify(buildings.get(i).getPrice()) + "<br>" + "This building will give you : " + stringify((buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned() + 1)) + "<br>" + "You are geting " + stringify(buildingHPSValue[i]) + " from all your " + buildings.get(i).getName() + "s</html>"), i);
+
             gui.setToolTipUpgrades("<html>" + upgrades.get(i).getName() + "<br>" + " This will make your " + buildings.get(i).getName() + " building 2 times better." + "<br>" + "To buy this upgrade you must have " + upgrades.get(i).getRequirement() + " of : " + buildings.get(i).getName() + "</html>", i);
         }
     }
@@ -420,12 +521,12 @@ public class Controller {
         }
 
         for (int i = 0; i < upgrades.size(); i++) {
-           if(upgrades.get(i).getOwned()==upgrades.get(i).getMaxOwned()){
-               gui.upgradeMaxedOut(i);
-           }else{
-            upgrades.get(i).calculateCosts();
-            gui.updateUpgradeCost(i, stringify(upgrades.get(i).getPrice()));
-           }
+            if (upgrades.get(i).getOwned() == upgrades.get(i).getMaxOwned()) {
+                gui.upgradeMaxedOut(i);
+            } else {
+                upgrades.get(i).calculateCosts();
+                gui.updateUpgradeCost(i, stringify(upgrades.get(i).getPrice()));
+            }
         }
     }
 
@@ -448,14 +549,21 @@ public class Controller {
 
             if (upgrades.get(i).canBuyUpgrade(hertz) && buildOwned >= upgrades.get(i).getRequirement() && upgOwned < max) {
                 gui.getBtnUpgrades().get(i).setEnabled(true);
-            } else if (max==upgOwned){                               
+            } else if (max == upgOwned) {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             } else {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
         }
+        for (int i = 0; i <gui.getBtnAchievements().size(); i++){
+            if(achievements.get(i).getOwned()){
+                gui.getBtnAchievements().get(i).setEnabled(true);
+            } else {
+                gui.getBtnAchievements().get(i).setEnabled(false);
+            } 
+        }
     }
-    
+
     /**
      * Get the username of the currently logged in user.
      * 
@@ -504,18 +612,28 @@ public class Controller {
                 gui.setCard("1");
             }
             
+            // AboutUs button 
+            if (e.getSource() == gui.getBtnAboutUs()) {
+                gui.setCard("3");
+            }
+            
+            // AboutUs button back
+            if (e.getSource() == gui.getBtnBackAboutUs()) {
+                gui.setCard("1");
+            }
+
             // Stop Music button
-            if(e.getSource() == gui.getBtnStopMusic()){
-            	if(stopMusic){
-            		stopMusic = false;
-            		backgroundMusic.loop();
-            		gui.getBtnStopMusic().setText("Stop Music");
-            		
-            	} else {
-            		stopMusic = true;
-            		backgroundMusic.stop();
-            		gui.getBtnStopMusic().setText("Play Music");
-            	}
+            if (e.getSource() == gui.getBtnStopMusic()) {
+                if (stopMusic) {
+                    stopMusic = false;
+                    backgroundMusic.loop();
+                    gui.getBtnStopMusic().setText("Stop Music");
+
+                } else {
+                    stopMusic = true;
+                    backgroundMusic.stop();
+                    gui.getBtnStopMusic().setText("Play Music");
+                }
             }
 
             // Building purcheses.
