@@ -124,7 +124,7 @@ public class Controller {
      */
     public void unlock() {
         int achievementsID;
-        int dog;
+        int i;
         int diff = 0;
         for (achievementsID = 0; achievementsID < 3; achievementsID++) {
             achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement((int) hertzClicked));
@@ -132,16 +132,16 @@ public class Controller {
         for (; achievementsID < 7; achievementsID++) {
             achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement((int) hertzGenerated));
         }
-        for (dog = 0; dog < buildings.size(); dog++) {
-            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(dog).getOwned()));
+        for (i = 0; i < buildings.size(); i++) {
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(i).getOwned()));
             achievementsID++;
-            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(dog).getOwned()));
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(i).getOwned()));
             achievementsID++;
-            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(dog).getOwned()));
+            achievements.get(achievementsID).setOwned(achievements.get(achievementsID).requirement(buildings.get(i).getOwned()));
             achievementsID++;
         }
-        for (dog = 0; dog < buildings.size() && diff == 0; dog++) {
-            if (buildings.get(dog).getOwned() < 10) {
+        for (i = 0; i < buildings.size() && diff == 0; i++) {
+            if (buildings.get(i).getOwned() < 10) {
                 diff = 1;
             }
         }
@@ -150,8 +150,8 @@ public class Controller {
         }
 
         achievementsID++;
-        for (dog = 0; dog < buildings.size() && diff == 0; dog++) {
-            if (buildings.get(dog).getOwned() < 100) {
+        for (i = 0; i < buildings.size() && diff == 0; i++) {
+            if (buildings.get(i).getOwned() < 100) {
                 diff = 1;
             }
         }
