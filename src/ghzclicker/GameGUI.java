@@ -41,7 +41,7 @@ public class GameGUI {
     private JPanel pnlBuilding;
     private JPanel pnlUpgrade;
     private JPanel pnlStatistics = new JPanel();
-    private JPanel pnlAchievements;
+    private JPanel pnlAchievements;    
     Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
     private ArrayList<JButton> btnBuildings;
     private ArrayList<JButton> btnUpgrades;
@@ -53,6 +53,8 @@ public class GameGUI {
     private HighScoreGUI pnlHighScore;   
     private JPanel pnlAU;
     private AboutUs pnlAboutUs;
+    private JPanel pnlMG; 
+    private MiniGame pnlMiniGame;
     // Button icons
     private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
     private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
@@ -75,7 +77,8 @@ public class GameGUI {
         this.btnAchievements = btnAchievements;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
         pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
-        pnlAchievements = new JPanel(new GridLayout(10, 10));
+        pnlAchievements = new JPanel(new GridLayout(10, 10)); 
+        
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
         Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
@@ -86,11 +89,13 @@ public class GameGUI {
         tabbedPane.setOpaque(false);
         UIManager.put("TabbedPane.contentBorderInsets", oldInsets);
         pnlStatistics.setOpaque(false);
-        pnlAchievements.setOpaque(false);
+        pnlAchievements.setOpaque(false);                
         pnlHighScore = new HighScoreGUI(listener);
+        pnlMiniGame = new MiniGame(listener);
         pnlAboutUs = new AboutUs(listener);
         pnlHS = pnlHighScore;
         pnlAU = pnlAboutUs;
+        pnlMG = pnlMiniGame;
         // Main panel
         frame.setPreferredSize(new Dimension(800, 553));
         frame.setResizable(false);
@@ -99,6 +104,7 @@ public class GameGUI {
         pnlCont.add(pnlGame, "1");
         pnlCont.add(pnlHS, "2");
         pnlCont.add(pnlAU, "3");
+        pnlCont.add(pnlMG, "4");
         cl.show(pnlCont, "1");
         
 
@@ -187,6 +193,7 @@ public class GameGUI {
 
             pnlAchievements.add(btn);
         }
+        
 
         // Continues adding the button and label to the frame.
         pnlStatistics.add(taStatistics);
@@ -323,6 +330,17 @@ public class GameGUI {
     */
     public JButton getBtnBackAboutUs() {
         return  pnlAboutUs.getBtnBack();
+    }
+    
+    
+    public JButton getBtnOption1(){
+        return pnlMiniGame.getBtnOption1();
+    }
+    public JButton getBtnOption2(){
+        return pnlMiniGame.getBtnOption2();
+    }
+    public JButton getBtnOption3(){
+        return pnlMiniGame.getBtnOption3();
     }
     
     /**

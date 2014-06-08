@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -47,6 +48,10 @@ public class Controller {
     private AudioClip ghzSound;
     private AudioClip backgroundMusic;
     private boolean stopMusic = false;
+    private boolean dog = false;
+    private Random rand = new Random();
+    private int clock=0;
+    
 
     private ArrayList<Achievements> achievements;
 
@@ -76,8 +81,6 @@ public class Controller {
         upgrades.add(new Upgrade("Processor upgrade", 4000000, 200, 10, 3));
         upgrades.add(new Upgrade("MotherBoard upgrade", 30000000, 200, 10, 3));
 
-        
-
         achievements = new ArrayList<Achievements>();
         achievements.add(new Achievements("clicked 10 times", 10));
         achievements.add(new Achievements("clicked 500 times", 500));
@@ -92,8 +95,8 @@ public class Controller {
         achievements.add(new Achievements("1 RAM not bad but i have OVER 9000", 1));
         achievements.add(new Achievements("10 RAM", 10));
         achievements.add(new Achievements("like you ever need 100 RAM", 100));
-        achievements.add(new Achievements("1 PowerSupply, now you can run your computer",1));
-        achievements.add(new Achievements("Comeon man you no need 10 powerSupplys okej?",10));
+        achievements.add(new Achievements("1 PowerSupply, now you can run your computer", 1));
+        achievements.add(new Achievements("Comeon man you no need 10 powerSupplys okej?", 10));
         achievements.add(new Achievements("Okej, This is ridiculous 100 PowerSupply realy?", 100));
         achievements.add(new Achievements("Nice an SSD", 1));
         achievements.add(new Achievements("10 SSD i quess its okej", 10));
@@ -109,15 +112,15 @@ public class Controller {
         achievements.add(new Achievements("100 MotherBoard", 100));
         achievements.add(new Achievements("10 of all buildings", 10));
         achievements.add(new Achievements("100 of all buildings, You realy likes overkill", 100));
-        
+
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), createAchievementsBtns(), listener);
-        
+
         loadSounds();
 
         this.network = network;
         netAutoRecon();
-    }    
+    }
 
     /**
      * This checks if you have any new achievements
@@ -159,6 +162,54 @@ public class Controller {
             achievements.get(achievementsID).setOwned(true);
         }
         achievementsID++;
+    }
+
+    /**
+     * A miniGame where you get to choose a thing from 3 difrent boxes and this method randoms whats in it.           
+     */      
+    public void randomBonous() {
+        // 30% nothing
+        // 10% 1000 free hertz
+        // 20% harddrive
+        // 10% ram
+        // 20% SSD
+        // 10% graphics card
+        // 1% motherboard
+        // =101%
+
+        int randomID = rand.nextInt(101);
+        if (randomID < 10) {
+            JOptionPane.showMessageDialog(null, "A free MOTHERBOARD OMG SO GOOD BEST RNG EVER");
+            JOptionPane.showMessageDialog(null, "jkjk you get nothing");
+        } else if (randomID < 20) {
+            JOptionPane.showMessageDialog(null, "you get 1000 free Hertz");
+            hertz += 1000;
+        } else if (randomID < 30) {
+            JOptionPane.showMessageDialog(null, "You win a room full of nothing");
+        } else if (randomID < 40) {
+            JOptionPane.showMessageDialog(null, "A free SSD not bad");
+            buildings.get(3).setOwned(buildings.get(3).getOwned() + 1);
+        } else if (randomID < 50) {
+            JOptionPane.showMessageDialog(null, "A free harddrive, well i could have been better");
+            buildings.get(0).setOwned(buildings.get(0).getOwned() + 1);
+        } else if (randomID < 60) {
+            JOptionPane.showMessageDialog(null, "Not even close");
+        } else if (randomID < 70) {
+            JOptionPane.showMessageDialog(null, "A free harddrive, hats prety shit");
+            buildings.get(0).setOwned(buildings.get(0).getOwned() + 1);
+        } else if (randomID < 80) {
+            JOptionPane.showMessageDialog(null, "A free RAM, well it could be worse right?");
+            buildings.get(1).setOwned(buildings.get(1).getOwned() + 1);
+        } else if (randomID < 90) {
+            JOptionPane.showMessageDialog(null, "A free Graphics card not bad");
+            buildings.get(4).setOwned(buildings.get(4).getOwned() + 1);
+        } else if (randomID < 100) {
+            JOptionPane.showMessageDialog(null, "YOU GET TWO SSD jkjk only 1");
+            buildings.get(3).setOwned(buildings.get(3).getOwned() + 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "A free MOTHERBOARD OMG SO GOOD BEST RNG EVER");
+            buildings.get(6).setOwned(buildings.get(6).getOwned() + 1);
+        }
     }
 
     /**
@@ -211,7 +262,7 @@ public class Controller {
         }
         return btnUpgrades;
     }
-    
+
     /**
      * An ArrayList to crate the achievements for in the game.
      * 
@@ -222,12 +273,11 @@ public class Controller {
         for (Achievements achievement : achievements) {
             JButton btn = new JButton(achievement.getName());
             btn.setName(achievement.getName()); // Set the name of the button
-            btn.setToolTipText("<html>" + achievement.getName() +"<br>" + "</html>");
+            btn.setToolTipText("<html>" + achievement.getName() + "<br>" + "</html>");
             btnAchievements.add(btn);
         }
         return btnAchievements;
     }
-    
 
     /**
      * Automaticly reconnect to the server with timer tasks.
@@ -417,8 +467,6 @@ public class Controller {
         uppdateBuildingHPSValue();
         uppdateToolTip();
         uppdateStatistics();
-
-        
     }
 
     /**
@@ -427,6 +475,7 @@ public class Controller {
     public void updateEverySecond() {
         hertzGenerated += hertzPerSecond;
         hertz += hertzPerSecond;
+        clock++;
     }
 
     /**
@@ -436,8 +485,34 @@ public class Controller {
         if (username != "") {
             saveGame();
             updateHighScore();
-
+            int dog = rand.nextInt(2);
+            if (dog == 0 && clock<=10) {
+                gui.setCard("4");
+            } else {
+                doYouLikeTheGame();
+            }
         }
+
+    }
+
+    /**
+     * This will check if you like the game or nor but if u dont say yes you will be in a neverending loop
+     */
+    public void doYouLikeTheGame() {
+        String awnser = "";
+        if (dog == true) {
+            gui.setCard("4");
+        }
+        while (dog == false) {
+            if (dog == false) {
+                awnser = JOptionPane.showInputDialog(null, "Do You like the game? thx for the awnser");
+                JOptionPane.showMessageDialog(null, "thx for the yes");
+
+            }
+            if (awnser.equals("yes")) {
+                dog = true;
+            }
+        }        
     }
 
     /**
@@ -469,6 +544,8 @@ public class Controller {
     public void hertzClicked() {
         hertz += hertzPerClick;
         hertzClicked += hertzPerClick;
+        clock=0;
+        
     }
 
     /**
@@ -555,12 +632,12 @@ public class Controller {
                 gui.getBtnUpgrades().get(i).setEnabled(false);
             }
         }
-        for (int i = 0; i <gui.getBtnAchievements().size(); i++){
-            if(achievements.get(i).getOwned()){
+        for (int i = 0; i < gui.getBtnAchievements().size(); i++) {
+            if (achievements.get(i).getOwned()) {
                 gui.getBtnAchievements().get(i).setEnabled(true);
             } else {
                 gui.getBtnAchievements().get(i).setEnabled(false);
-            } 
+            }
         }
     }
 
@@ -611,12 +688,12 @@ public class Controller {
             if (e.getSource() == gui.getBtnBackHighScore()) {
                 gui.setCard("1");
             }
-            
-            // AboutUs button 
+
+            // AboutUs button
             if (e.getSource() == gui.getBtnAboutUs()) {
                 gui.setCard("3");
             }
-            
+
             // AboutUs button back
             if (e.getSource() == gui.getBtnBackAboutUs()) {
                 gui.setCard("1");
@@ -660,6 +737,11 @@ public class Controller {
                         }
                     }
                 }
+            }
+
+            if (e.getSource() == gui.getBtnOption1() || e.getSource() == gui.getBtnOption2() || e.getSource() == gui.getBtnOption3()) {
+                randomBonous();
+                gui.setCard("1");
             }
         }
     }
