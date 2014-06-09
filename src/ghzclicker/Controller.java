@@ -117,8 +117,9 @@ public class Controller {
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), createAchievementsBtns(), listener);
         loadSounds();
         
+        
         Vehicle vehicle = new Vehicle("res/vehicle.png");
-        FlyingGame FG = new FlyingGame(vehicle);
+        FlyingGame FG = new FlyingGame(vehicle,gui.getFlyingGUI());
 
         this.network = network;
         netAutoRecon();
@@ -200,7 +201,7 @@ public class Controller {
         } else if (randomID < 60) {
             JOptionPane.showMessageDialog(null, "Not even close");
         } else if (randomID < 70) {
-            JOptionPane.showMessageDialog(null, "A free harddrive, hats prety shit");
+            JOptionPane.showMessageDialog(null, "A free harddrive, thats preety shit");
             buildings.get(0).setOwned(buildings.get(0).getOwned() + 1);
         } else if (randomID < 80) {
             JOptionPane.showMessageDialog(null, "A free RAM, well it could be worse right?");
@@ -466,13 +467,15 @@ public class Controller {
 
         grayify();
         unlock();
-
+        
         updateHertzPerClick();
-        uppdateHertzPerSecond();
-        uppdateBuildingHPSValue();
-        uppdateToolTip();
-        uppdateStatistics();
+        updateHertzPerSecond();
+        updateBuildingHPSValue();
+        updateToolTip();
+        updateStatistics();
+        gui.setCard("5");
         FG.action();
+        
         
     }
 
@@ -525,7 +528,7 @@ public class Controller {
     /**
      * This updates how much your HPS from a building
      */
-    public void uppdateBuildingHPSValue() {
+    public void updateBuildingHPSValue() {
         for (int i = 0; i < buildings.size(); i++) {
             buildingHPSValue[i] = (int) buildings.get(i).getBaseHPS() * buildings.get(i).getOwned() * (upgrades.get(i).getOwned() + 1);
             if (upgrades.get(i).getOwned() == 0) {
@@ -537,7 +540,7 @@ public class Controller {
     /**
      * This updates the tooltip on the gameGUI
      */
-    public void uppdateToolTip() {
+    public void updateToolTip() {
         for (int i = 0; i < buildings.size(); i++) {
             gui.setToolTipBuildings(("<html>" + buildings.get(i).getName() + "<br>" + "You have " + buildings.get(i).getOwned() + " " + buildings.get(i).getName() + "<br>" + " This will cost you : " + stringify(buildings.get(i).getPrice()) + "<br>" + "This building will give you : " + stringify((buildings.get(i).getBaseHPS()) * (upgrades.get(i).getOwned() + 1)) + "<br>" + "You are geting " + stringify(buildingHPSValue[i]) + " from all your " + buildings.get(i).getName() + "s</html>"), i);
 
@@ -565,7 +568,7 @@ public class Controller {
     /**
      * This gets updated by the gameloop and calculate what your Hertz Per Second.
      */
-    public void uppdateHertzPerSecond() {
+    public void updateHertzPerSecond() {
         hertzPerSecond = 0;
         for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
             hertzPerSecond += (buildings.get(i).getOwned() * buildings.get(i).getBaseHPS()) * ((upgrades.get(i).getOwned() + 1));
@@ -576,7 +579,7 @@ public class Controller {
     /**
      * This will update the statistics all the time.
      */
-    public void uppdateStatistics() {
+    public void updateStatistics() {
         String statistics = "";
         int totalBuildings = 0;
         for (int i = 0; i < buildings.size(); i++) {

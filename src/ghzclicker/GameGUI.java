@@ -57,6 +57,7 @@ public class GameGUI {
     private MiniGame pnlMiniGame;
     private JPanel pnlFG;
     private FlyingGUI pnlFlyingGame;
+    private FlyingGUI flyingGUI;
     // Button icons
     private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
     private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
@@ -94,7 +95,8 @@ public class GameGUI {
         pnlHighScore = new HighScoreGUI(listener);
         pnlMiniGame = new MiniGame(listener);
         pnlAboutUs = new AboutUs(listener);
-        pnlFlyingGame = new FlyingGUI(listener);
+        flyingGUI = new FlyingGUI(listener);
+        pnlFlyingGame = flyingGUI;
         pnlHS = pnlHighScore;
         pnlAU = pnlAboutUs;
         pnlMG = pnlMiniGame;
@@ -486,5 +488,11 @@ public class GameGUI {
      */
     public void setToolTipUpgrades(String tooltipText, int upgradeId) {
         btnUpgrades.get(upgradeId).setToolTipText(tooltipText);
-    }    
+    }   
+    
+    public FlyingGUI getFlyingGUI(){        
+        return flyingGUI;        
+    }
+
+    
 }
