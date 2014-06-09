@@ -4,8 +4,7 @@ package ghzclicker;
 public class Achievements {
     private String name;
     private boolean owned=false;    
-    private int requierment;
-    private String imageLocation;
+    private int requierment;    
     
     /**
      * Construct a Achievement

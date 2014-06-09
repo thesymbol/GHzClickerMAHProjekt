@@ -55,6 +55,8 @@ public class GameGUI {
     private AboutUs pnlAboutUs;
     private JPanel pnlMG; 
     private MiniGame pnlMiniGame;
+    private JPanel pnlFG;
+    private FlyingGUI pnlFlyingGame;
     // Button icons
     private ImageIcon iconHertz = new ImageIcon("res/btnHertz.png");
     private ImageIcon iconHertzPressed = new ImageIcon("res/btnHertzPressed.png");
@@ -77,8 +79,7 @@ public class GameGUI {
         this.btnAchievements = btnAchievements;
         pnlBuilding = new JPanel(new GridLayout(btnBuildings.size(), 1));
         pnlUpgrade = new JPanel(new GridLayout(btnUpgrades.size(), 1));
-        pnlAchievements = new JPanel(new GridLayout(10, 10)); 
-        
+        pnlAchievements = new JPanel(new GridLayout(10, 10));         
         taStatistics.setPreferredSize(new Dimension(280, 250));
         taStatistics.setOpaque(false);
         Insets oldInsets = UIManager.getInsets("TabbedPane.contentBorderInsets");
@@ -93,9 +94,11 @@ public class GameGUI {
         pnlHighScore = new HighScoreGUI(listener);
         pnlMiniGame = new MiniGame(listener);
         pnlAboutUs = new AboutUs(listener);
+        pnlFlyingGame = new FlyingGUI(listener);
         pnlHS = pnlHighScore;
         pnlAU = pnlAboutUs;
         pnlMG = pnlMiniGame;
+        pnlFG = pnlFlyingGame;
         // Main panel
         frame.setPreferredSize(new Dimension(800, 553));
         frame.setResizable(false);
@@ -105,6 +108,7 @@ public class GameGUI {
         pnlCont.add(pnlHS, "2");
         pnlCont.add(pnlAU, "3");
         pnlCont.add(pnlMG, "4");
+        pnlCont.add(pnlFG, "5");
         cl.show(pnlCont, "1");
         
 
@@ -332,13 +336,38 @@ public class GameGUI {
         return  pnlAboutUs.getBtnBack();
     }
     
+    /**
+     * Returns the FlyingGame gui's back button
+     * 
+     * @return the FlyingGame back button
+     */
+     public JButton getBtnBackFlyingGame() {
+         return  pnlFlyingGame.getBtnBack();
+     }
     
+    /**
+     * Return option button 1 on MiniGame GUI
+     * 
+     * @return Option button 1
+     */
     public JButton getBtnOption1(){
         return pnlMiniGame.getBtnOption1();
     }
+    
+    /**
+     * Return option button 2 on MiniGame GUI
+     * 
+     * @return Option button 2
+     */
     public JButton getBtnOption2(){
         return pnlMiniGame.getBtnOption2();
     }
+    
+    /**
+     * Return option button 3 on MiniGame GUI
+     * 
+     * @return Option button 3
+     */
     public JButton getBtnOption3(){
         return pnlMiniGame.getBtnOption3();
     }

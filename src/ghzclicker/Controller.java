@@ -1,7 +1,6 @@
 package ghzclicker;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
+import java.applet.Applet;import java.applet.AudioClip;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class Controller {
     private GameGUI gui;
+    private FlyingGame FG;
     private int baseValueClick = 1;
     private double clickModifier = 1;
     private double hertzPerSecond = 0;
@@ -115,12 +115,17 @@ public class Controller {
 
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), createAchievementsBtns(), listener);
-
         loadSounds();
+        
+        Vehicle vehicle = new Vehicle("res/vehicle.png");
+        FlyingGame FG = new FlyingGame(vehicle);
 
         this.network = network;
         netAutoRecon();
-    }
+        
+        
+    }    
+    
 
     /**
      * This checks if you have any new achievements
@@ -467,6 +472,8 @@ public class Controller {
         uppdateBuildingHPSValue();
         uppdateToolTip();
         uppdateStatistics();
+        FG.action();
+        
     }
 
     /**
@@ -694,10 +701,15 @@ public class Controller {
                 gui.setCard("3");
             }
 
-            // AboutUs button back
+            // AboutUs back button
             if (e.getSource() == gui.getBtnBackAboutUs()) {
                 gui.setCard("1");
             }
+            
+            // FlyingGame back button
+            if (e.getSource() == gui.getBtnBackFlyingGame()){
+                gui.setCard("1");                
+            } 
 
             // Stop Music button
             if (e.getSource() == gui.getBtnStopMusic()) {
@@ -711,7 +723,8 @@ public class Controller {
                     backgroundMusic.stop();
                     gui.getBtnStopMusic().setText("Play Music");
                 }
-            }
+            }  
+                       
 
             // Building purcheses.
             for (int i = 0; i < gui.getBtnBuildings().size(); i++) {
