@@ -1,6 +1,7 @@
 package ghzclicker;
 
-import java.applet.Applet;import java.applet.AudioClip;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,10 +50,7 @@ public class Controller {
     private AudioClip backgroundMusic;
     private boolean stopMusic = false;
     private boolean dog = false;
-    private Random rand = new Random();
-    private int clock=0;
-    
-
+    private Random rand = new Random();    
     private ArrayList<Achievements> achievements;
 
     /**
@@ -116,17 +114,14 @@ public class Controller {
         Listener listener = new Listener();
         gui = new GameGUI(createBuildingBtns(), createUpgradeBtns(), createAchievementsBtns(), listener);
         loadSounds();
-        
-        
-        Vehicle vehicle = new Vehicle("res/vehicle.png");
-        FlyingGame FG = new FlyingGame(vehicle,gui.getFlyingGUI());
+
+        Vehicle vehicle = new Vehicle("res/vehicle.png", 375, 251);
+        FG = new FlyingGame(vehicle, gui.getFlyingGUI());
 
         this.network = network;
         netAutoRecon();
-        
-        
-    }    
-    
+
+    }
 
     /**
      * This checks if you have any new achievements
@@ -171,8 +166,8 @@ public class Controller {
     }
 
     /**
-     * A miniGame where you get to choose a thing from 3 difrent boxes and this method randoms whats in it.           
-     */      
+     * A miniGame where you get to choose a thing from 3 difrent boxes and this method randoms whats in it.
+     */
     public void randomBonous() {
         // 30% nothing
         // 10% 1000 free hertz
@@ -467,16 +462,15 @@ public class Controller {
 
         grayify();
         unlock();
-        
+
         updateHertzPerClick();
         updateHertzPerSecond();
         updateBuildingHPSValue();
         updateToolTip();
         updateStatistics();
-        gui.setCard("5");
-        FG.action();
-        
-        
+//        gui.setCard("5");
+//        FG.action();
+
     }
 
     /**
@@ -484,8 +478,7 @@ public class Controller {
      */
     public void updateEverySecond() {
         hertzGenerated += hertzPerSecond;
-        hertz += hertzPerSecond;
-        clock++;
+        hertz += hertzPerSecond;        
     }
 
     /**
@@ -496,7 +489,7 @@ public class Controller {
             saveGame();
             updateHighScore();
             int dog = rand.nextInt(2);
-            if (dog == 0 && clock<=10) {
+            if (dog == 0) {
                 gui.setCard("4");
             } else {
                 doYouLikeTheGame();
@@ -522,7 +515,7 @@ public class Controller {
             if (awnser.equals("yes")) {
                 dog = true;
             }
-        }        
+        }
     }
 
     /**
@@ -554,8 +547,6 @@ public class Controller {
     public void hertzClicked() {
         hertz += hertzPerClick;
         hertzClicked += hertzPerClick;
-        clock=0;
-        
     }
 
     /**
@@ -708,11 +699,11 @@ public class Controller {
             if (e.getSource() == gui.getBtnBackAboutUs()) {
                 gui.setCard("1");
             }
-            
+
             // FlyingGame back button
-            if (e.getSource() == gui.getBtnBackFlyingGame()){
-                gui.setCard("1");                
-            } 
+            if (e.getSource() == gui.getBtnBackFlyingGame()) {
+                gui.setCard("1");
+            }
 
             // Stop Music button
             if (e.getSource() == gui.getBtnStopMusic()) {
@@ -726,8 +717,7 @@ public class Controller {
                     backgroundMusic.stop();
                     gui.getBtnStopMusic().setText("Play Music");
                 }
-            }  
-                       
+            }
 
             // Building purcheses.
             for (int i = 0; i < gui.getBtnBuildings().size(); i++) {

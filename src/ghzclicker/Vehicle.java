@@ -7,8 +7,10 @@ public class Vehicle {
     private int x=1;
     private int y=1;
 
-    public Vehicle(String imageLocation) {
+    public Vehicle(String imageLocation, int x, int y) {
         this.imageLocation = imageLocation;
+        this.x=x;
+        this.y=y;
         
     }
 

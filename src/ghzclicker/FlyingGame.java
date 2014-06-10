@@ -10,77 +10,114 @@ import javax.swing.JPanel;
 public class FlyingGame {
     private Vehicle vehicle;
     private Random rand = new Random();
-    private boolean gameRunning=true;
+    private boolean gameRunning = true;
     private JPanel pnlFlyingGUI;
     private FlyingGUI flyingGUI;
     private double vlX;
     private double vlY;
+    private boolean upp;
+    private boolean down;
+    private boolean right;
+    private boolean left;
 
     public FlyingGame(Vehicle vehicle, FlyingGUI flyingGUI) {
-        this.vehicle=vehicle;
-        this.flyingGUI=flyingGUI;
-        
+        this.vehicle = vehicle;
+        this.flyingGUI = flyingGUI;
 
     }
 
     public void action() {
         while (gameRunning) {
-            System.out.println("BALÖREHKSJDAFLJKDa");
-            JOptionPane.showMessageDialog(null, "DOGDOG");
             flyingGUI.moveVehicle(vehicle.getX(), vehicle.getY());
-            JOptionPane.showMessageDialog(null, "DOGDOG");
-            
+            actionUpp();
+            actionDown();
+            actionRight();
+            actionLeft();
         }
     }
 
-    public void actionUpp() {        
-        vehicle.setY(vehicle.getY() -(int) vlY);
-        vlY+=0.5;
+    public void actionUpp() {
+        if (upp) {
+            vehicle.setY(vehicle.getY() - (int) vlY);
+            vlY += 0.5;
+        }
     }
 
     public void actionDown() {
-        vehicle.setY(vehicle.getY() +(int) vlY);
-        vlY+=0.5;
+        if (down) {
+            vehicle.setY(vehicle.getY() + (int) vlY);
+            vlY += 0.5;
+        }
     }
 
     public void actionRight() {
-        vehicle.setX(vehicle.getX() + (int) vlX);
-        vlX+=0.5;
+        if (right) {
+            vehicle.setX(vehicle.getX() + (int) vlX);
+            vlX += 0.5;
+        }
     }
 
     public void actionLeft() {
-        vehicle.setY(vehicle.getX() - (int) vlX);
-        vlX+=0.5;
+        if (left) {
+            vehicle.setY(vehicle.getX() - (int) vlX);
+            vlX += 0.5;
+        }
+
     }
 
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            vlY=0;
-        } 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            vlY=0;
-        } 
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            vlX=0;
-        } 
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            vlX=0;
+    private class Listener implements KeyListener {
+        
+        private Listener (){
+           JOptionPane.showMessageDialog(null, "fukcignbullshit");
+        }
+           
+        @Override
+        public void keyTyped(KeyEvent e) {
+            System.out.println("Entered Listener");
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                right = true;
+                System.out.println("dog");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                left = true;
+                System.out.println("dog");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                upp = true;
+                System.out.println("dog");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                down = true;
+                System.out.println("dog");
+            }
+        }
+
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                vlY = 0;
+                right = false;
+                System.out.println("dog");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                vlY = 0;
+                left = false;
+                System.out.println("dog");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                upp = false;
+                System.out.println("dog");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                down = false;
+                System.out.println("dog");
+            }
+        }
+
+       
+        public void keyPressed(KeyEvent e) {         
+            
+            
+            
         }
     }
-
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            actionRight();
-        } 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            actionLeft();
-        } 
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            actionUpp();
-        } 
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            actionDown();
-        }
-    }
-
 }
